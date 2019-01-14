@@ -1,0 +1,73 @@
+<h4>Class {{moduleName}}</h4>
+{{#if uses}}
+    Uses:
+    {{#each uses}}
+        <a href="{{this}}.html">{{this}}</a>
+    {{/each}}
+    <br>
+{{/if}}
+{{#if extension_for}}
+    Extension For:
+    {{#each extension_for}}
+        <a href="{{this}}.html">{{this}}</a>
+    {{/each}}
+    <br>
+{{/if}}
+{{#if extends}}
+    Extends: {{#crossLink extends}}{{/crossLink}}<br>
+{{/if}}
+<span class="foundat">Class defined in: <a href="{{foundAt}}">`{{file}}:{{line}}`</a></span>
+<div class="intro">{{{classDescription}}}</div>
+
+{{#if is_constructor}}
+    {{#is_constructor}}
+{{>method}}
+    {{/is_constructor}}
+{{/if}}
+
+<div id="classdocs"><style>#classdocs .menuli { list-style: none; display: inline-block; border-left: 1px solid black; padding: .5em 1em; }</style>
+    <ul>
+        {{#if methods}}
+        <li class="menuli"><a href="#methods">Methods</a></li>
+        {{/if}}
+        {{#if properties}}
+        <li class="menuli"><a href="#props">Properties</a></li>
+        {{/if}}
+        {{#if attrs}}
+        <li class="menuli"><a href="#attrs">Attributes</a></li>
+        {{/if}}
+        {{#if events}}
+        <li class="menuli"><a href="#events">Events</a></li>
+        {{/if}}
+    </ul>
+    <div>
+        {{#if methods}}
+            <div id="methods"><h4>Methods</h4>
+            {{#methods}}
+{{>method}}
+            {{/methods}}
+            </div>
+        {{/if}}
+        {{#if properties}}
+            <div id="props"><h4>Properties</h4>
+            {{#properties}}
+{{>props}}
+            {{/properties}}
+            </div>
+        {{/if}}
+        {{#if attrs}}
+            <div id="attrs"><h4>Attributes</h4>
+            {{#attrs}}
+                {{>attrs}}
+            {{/attrs}}
+            </div>
+        {{/if}}
+        {{#if events}}
+            <div id="events"><h4>Events</h4>
+            {{#events}}
+                {{>events}}
+            {{/events}}
+            </div>
+        {{/if}}
+    </div>
+</div>

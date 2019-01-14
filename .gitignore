@@ -1,0 +1,3 @@
+node_modules
+*.log
+gulp/gulp-crossplatform.js

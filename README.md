@@ -43,12 +43,10 @@ Subrepository for jaandrle/jaaJSU ($dom namespace)
 ```JavaScript
 const main_el= document.getElementById("main");
 let counter= 1;
-for(let i=0, test_update; i<1; i++){
-    test_update= li({ nth: "A", first: counter++, last: counter++ });
-    test_update.mount(main_el);
-    li({ nth: "B", first: counter++, last: counter++ }).mount(main_el);
-    test_update.update({ nth: "UPDATED", first: counter++, last: "Updated" });
-}
+const test_update= li({ nth: "A", first: counter++, last: counter++ });
+test_update.mount(main_el);
+li({ nth: "B", first: counter++, last: counter++ }).mount(main_el);
+test_update.update({ nth: "UPDATED", first: counter++, last: "Updated" });
 
 function li({ nth, first, last }){
     let counter= 0;

@@ -38,7 +38,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "src\\$dom_component.js",
-            "line": 49,
+            "line": 42,
             "description": "This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.",
             "is_constructor": 1,
             "params": [
@@ -49,7 +49,7 @@
                 },
                 {
                     "name": "attrs",
-                    "description": "- The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)\n - There is one change. It is supported using `onupdate` key ... see [`add`](#methods_add)",
+                    "description": "- The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)\n - There is one change. It is supported using `onupdate` key ... see [`add`](#methods_add)\n     - `onupdate` is array `[ object, function]`, the function is called during creating element and evry `update`calls\n     - It returns additional `attrs`, for example this `attrs`: `{ className: \"class\", onupdate: [ { a }, _=>({ textContent: a }) ] }` => final `attrs= { className: \"class\", textContent: \"A\" }` (if `a=\"A\"`)\n     - it use similar algorithm like [`$dom.assign`](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)",
                     "type": "Object"
                 },
                 {
@@ -130,12 +130,12 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 68,
+            "line": 64,
             "class": "$dom.component"
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 87,
+            "line": 83,
             "description": "This add element to component",
             "itemtype": "method",
             "name": "add",
@@ -174,7 +174,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 133,
+            "line": 129,
             "description": "Method for including another component by usint its `share` key.",
             "itemtype": "method",
             "name": "component",
@@ -196,7 +196,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 150,
+            "line": 146,
             "description": "Add element to live DOM",
             "itemtype": "method",
             "name": "mount",
@@ -220,7 +220,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 187,
+            "line": 183,
             "description": "Method remove element form live DOM and returns null",
             "itemtype": "method",
             "name": "destroy",
@@ -233,7 +233,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 200,
+            "line": 196,
             "description": "Updates `deep`",
             "access": "private",
             "tagname": "",
@@ -250,7 +250,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 211,
+            "line": 207,
             "description": "Returns current `deep` (last element in array)",
             "itemtype": "method",
             "name": "getParentIndex",
@@ -260,7 +260,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 219,
+            "line": 215,
             "description": "Initialize internal storage",
             "itemtype": "method",
             "name": "initStorage",
@@ -274,7 +274,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 293,
+            "line": 289,
             "description": "Method updates all registered varibles by keys `onupdates` and calls follower functions",
             "itemtype": "method",
             "name": "update",
@@ -283,7 +283,7 @@
             "params": [
                 {
                     "name": "new_data",
-                    "description": "- When `$dom.component` is initialized, it is possible to register `mapUpdate`",
+                    "description": "- When `$dom.component` is initialized, it is possible to register `mapUpdate`\n - **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**",
                     "type": "Object"
                 }
             ],
@@ -294,7 +294,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 318,
+            "line": 315,
             "description": "Methods returns if it was `onupdate` used",
             "itemtype": "method",
             "name": "isStatic",
@@ -308,7 +308,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 329,
+            "line": 354,
             "description": "Procedure for merging object into the element properties.\nVery simple example: `$dom.assign(document.body, { className: \"test\" });` is equivalent to `document.body.className= \"test\";`.\nIt is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).",
             "itemtype": "method",
             "name": "assign",
@@ -333,11 +333,11 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\$dom_component.js:219"
+            "line": " src\\$dom_component.js:215"
         },
         {
             "message": "Missing item type",
-            "line": " src\\$dom_component.js:68"
+            "line": " src\\$dom_component.js:64"
         }
     ]
 }

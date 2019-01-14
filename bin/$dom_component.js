@@ -39,13 +39,6 @@ function init(global){
             el_old.remove();
         }
     };
-    /* !!!
-     * for `attrs.onupdate`
-     *  - no deep copy for assign fun. result and attrs (updating whole keys like `dataset`, is neccesary)
-     *      - can be fixed by using similar function to `$dom.assign` (deep copy is not neccesary)
-     *  - no deep copy for updating data vs internaly stored
-     *      - the notation follows this
-     */
     /**
      * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
      * @class $dom.component
@@ -56,6 +49,9 @@ function init(global){
      * @param {Object} attrs
      *  - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)
      *  - There is one change. It is supported using `onupdate` key ... see [`add`](#methods_add)
+     *      - `onupdate` is array `[ object, function]`, the function is called during creating element and evry `update`calls
+     *      - It returns additional `attrs`, for example this `attrs`: `{ className: "class", onupdate: [ { a }, _=>({ textContent: a }) ] }` => final `attrs= { className: "class", textContent: "A" }` (if `a="A"`)
+     *      - it use similar algorithm like [`$dom.assign`](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)
      * @param {Object} params
      * @param {Function|Boolean} params.mapUpdate
      *  - `[params.mapUpdate=undefined]`
@@ -123,7 +119,7 @@ function init(global){
             let el= els[all_els_counter];
             if(attrs.onupdate){
                 if(!internal_storage) internal_storage= initStorage();
-                Object.assign(attrs, internal_storage.register(el, ...attrs.onupdate));
+                attrs_assign(attrs, internal_storage.register(el, ...attrs.onupdate));
                 delete attrs.onupdate;
             }
             all_els_counter++;
@@ -296,6 +292,7 @@ function init(global){
          * @public
          * @param {Object} new_data
          *  - When `$dom.component` is initialized, it is possible to register `mapUpdate`
+         *  - **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**
          * @example
          *      const data_A= { a: "A" };
          *      const data_A_update= { a: "AAA" };
@@ -324,6 +321,34 @@ function init(global){
          */
         function isStatic(){
             return !internal_storage;
+        }
+        function attrs_assign(attrs_A, attrs_B){
+            const attrs_B_keys= Object.keys(attrs_B);
+            for(let i=0, key, attr, i_length= attrs_B_keys.length; i<i_length; i++){
+                key= attrs_B_keys[i];
+                attr= attrs_B[key];
+                switch(key){
+                    case "style":
+                        if(typeof attr==="string"){
+                            attrs_A[key]= attr;
+                        } else {
+                            if(typeof attrs_A[key]!=="object") attrs_A[key]= {};
+                            for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
+                        }
+                        break;
+                    case "style_vars":
+                        if(typeof attrs_A[key]!=="object") attrs_A[key]= {};
+                        for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
+                        break;
+                    case "dataset":
+                        if(typeof attrs_A[key]!=="object") attrs_A[key]= {};
+                        for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
+                        break;
+                    default:
+                        attrs_A[key]= attr;
+                        break;
+                }
+            }
         }
     };
     /**

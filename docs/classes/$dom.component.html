@@ -90,7 +90,7 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><h4>Class $dom.component</h4>
-<span class="foundat">Class defined in: <a href="../files/src_$dom_component.js.html#l49"><code>src\$dom_component.js:49</code></a></span>
+<span class="foundat">Class defined in: <a href="../files/src_$dom_component.js.html#l42"><code>src\$dom_component.js:42</code></a></span>
 <div class="intro"><p>This 'functional class' is syntax sugar around <a href="https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment"><code>DocumentFragment</code></a> for creating DOM components and their adding to live DOM in performance friendly way.</p>
 </div>
 
@@ -100,7 +100,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l49"><code>src\$dom_component.js:49</code></a>
+        <a href="../files/src_$dom_component.js.html#l42"><code>src\$dom_component.js:42</code></a>
     </span><br>
     
     <strong>Parameters:</strong>
@@ -117,7 +117,13 @@
             <code>attrs</code> <strong>&lt;Object&gt;</strong>
         <ul>
 <li>The second argument for <a href="./$dom.%7Bnamespace%7D.html#methods_assign"><code>$dom.assign</code></a></li>
-<li>There is one change. It is supported using <code>onupdate</code> key ... see <a href="#methods_add"><code>add</code></a></li>
+<li>There is one change. It is supported using <code>onupdate</code> key ... see <a href="#methods_add"><code>add</code></a>
+<ul>
+<li><code>onupdate</code> is array <code>[ object, function]</code>, the function is called during creating element and evry <code>update</code>calls</li>
+<li>It returns additional <code>attrs</code>, for example this <code>attrs</code>: <code>{ className: &quot;class&quot;, onupdate: [ { a }, _=&gt;({ textContent: a }) ] }</code> =&gt; final <code>attrs= { className: &quot;class&quot;, textContent: &quot;A&quot; }</code> (if <code>a=&quot;A&quot;</code>)</li>
+<li>it use similar algorithm like <a href="./$dom.%7Bnamespace%7D.html#methods_assign"><code>$dom.assign</code></a> (<strong>no deep copy!!!</strong>)</li>
+</ul>
+</li>
 </ul>
 
         </li>
@@ -157,7 +163,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l87"><code>src\$dom_component.js:87</code></a>
+        <a href="../files/src_$dom_component.js.html#l83"><code>src\$dom_component.js:83</code></a>
     </span><br>
     <p>This add element to component</p>
 
@@ -217,7 +223,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l133"><code>src\$dom_component.js:133</code></a>
+        <a href="../files/src_$dom_component.js.html#l129"><code>src\$dom_component.js:129</code></a>
     </span><br>
     <p>Method for including another component by usint its <code>share</code> key.</p>
 
@@ -242,7 +248,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l187"><code>src\$dom_component.js:187</code></a>
+        <a href="../files/src_$dom_component.js.html#l183"><code>src\$dom_component.js:183</code></a>
     </span><br>
     <p>Method remove element form live DOM and returns null</p>
 
@@ -258,7 +264,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l211"><code>src\$dom_component.js:211</code></a>
+        <a href="../files/src_$dom_component.js.html#l207"><code>src\$dom_component.js:207</code></a>
     </span><br>
     <p>Returns current <code>deep</code> (last element in array)</p>
 
@@ -269,7 +275,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l219"><code>src\$dom_component.js:219</code></a>
+        <a href="../files/src_$dom_component.js.html#l215"><code>src\$dom_component.js:215</code></a>
     </span><br>
     <p>Initialize internal storage</p>
 
@@ -284,7 +290,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l318"><code>src\$dom_component.js:318</code></a>
+        <a href="../files/src_$dom_component.js.html#l315"><code>src\$dom_component.js:315</code></a>
     </span><br>
     <p>Methods returns if it was <code>onupdate</code> used</p>
 
@@ -299,7 +305,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l150"><code>src\$dom_component.js:150</code></a>
+        <a href="../files/src_$dom_component.js.html#l146"><code>src\$dom_component.js:146</code></a>
     </span><br>
     <p>Add element to live DOM</p>
 
@@ -333,7 +339,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l200"><code>src\$dom_component.js:200</code></a>
+        <a href="../files/src_$dom_component.js.html#l196"><code>src\$dom_component.js:196</code></a>
     </span><br>
     <p>Updates <code>deep</code></p>
 
@@ -354,7 +360,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l293"><code>src\$dom_component.js:293</code></a>
+        <a href="../files/src_$dom_component.js.html#l289"><code>src\$dom_component.js:289</code></a>
     </span><br>
     <p>Method updates all registered varibles by keys <code>onupdates</code> and calls follower functions</p>
 
@@ -364,6 +370,7 @@ test= test.destroy();</p>
             <code>new_data</code> <strong>&lt;Object&gt;</strong>
         <ul>
 <li>When <code>$dom.component</code> is initialized, it is possible to register <code>mapUpdate</code></li>
+<li><strong>It's because internally, it is used <code>Object.assign</code> (no deep copy) to merge new data with older one!!!</strong></li>
 </ul>
 
         </li>

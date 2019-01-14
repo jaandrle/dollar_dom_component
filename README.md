@@ -42,11 +42,11 @@ Subrepository for jaandrle/jaaJSU ($dom namespace)
 ## Input
 ```JavaScript
 const main_el= document.getElementById("main");
-let counter= 1;
-const test_update= li({ nth: "A", first: counter++, last: counter++ });
+let global_counter= 1;
+const test_update= li({ nth: "A", first: global_counter++, last: global_counter++ });
 test_update.mount(main_el);
-li({ nth: "B", first: counter++, last: counter++ }).mount(main_el);
-test_update.update({ nth: "UPDATED", first: counter++, last: "Updated" });
+li({ nth: "B", first: global_counter++, last: global_counter++ }).mount(main_el);
+test_update.update({ nth: "UPDATED", first: global_counter++, last: "Updated" });
 
 function li({ nth, first, last }){
     let counter= 0;

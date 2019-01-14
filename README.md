@@ -1,6 +1,6 @@
 # $dom_component
 Subrepository for jaandrle/jaaJSU ($dom namespace)
-# [Dokumentation](https://jaandrle.github.io/dollar_dom_component/)
+# [Documentation](https://jaandrle.github.io/dollar_dom_component/)
 # [Examples](example/index.html)
 ## Output
 ```HTML

@@ -17,26 +17,28 @@ function li({ nth, first, last }){
         add("UL", null);
             component(sub_li({ nth, counter }));
             add("LI", null, -1);
-                add("SPAN", { textContent: "First text in parent component (remove this span when clicked 2times): ", onupdate: [{counter}, removeThisElement] });
-                add("STRONG", { 
-                    onclick, 
-                    style: {cursor: "pointer", 'border-bottom': "1px solid black" },
-                    onupdate: [ {first, counter}, _=>({ textContent: "Element no.: "+_.first+", clicked: "+_.counter+"times" })]
+                add("SPAN", { textContent: "First text in parent component (remove this span when clicked 2times): ", onupdate: [ {counter}, removeThisElement ] });
+                add("STRONG", {
+                    onclick, onupdate: [ {counter}, ({counter})=>({
+                    textContent: `Element no.: ${first}, clicked: ${counter}times` }) ],
+                    style: {cursor: "pointer", 'border-bottom': "1px solid black" }
                 }, -1);
             add("LI", null, -2);
                 add("SPAN", { textContent: "Last text in parent component: " });
-                add("STRONG", { onupdate: [ { last }, _=>({ textContent: _.last })] }, -1);
+                add("STRONG", { textContent: last }, -1);
     return share;
     
-    function onclick(){ counter++; update({counter}); }
+    function onclick(){ counter++; update({ counter }); }
+
     function removeThisElement(input){ if(input.counter===2) this.remove(); }
 }
 function sub_li({ nth, counter }){
     const { add, share }= $dom.component("LI", null);
             add("SPAN", { textContent: "This is sub-component: " });
             add("STRONG", {
-                style: "color: darkblue",
-                onupdate: [{nth, counter}, _=>({ textContent: _.nth+" ('counter' is visible also here: "+_.counter+" ;-))" })]
+                onupdate: [ {counter}, ({counter})=>({
+                textContent: `${nth} ('counter' is visible also here: ${counter} ;-))` })],
+                style: "color: darkblue"
             }, -1);
     return share;
 }

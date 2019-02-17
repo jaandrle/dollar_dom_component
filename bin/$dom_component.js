@@ -77,9 +77,10 @@ function init(global){
                 - see `shift` in `add`
             */
             deep= [];
-        add(el_name, attrs);
+        const { onupdate }= add(el_name, attrs);
         const share= { mount, update, destroy, isStatic };
-        return { add, component, mount, update, share };
+        const component_out= { add, component, mount, update, share };
+        return Object.assign({}, component_out, { onupdate: function(...attrs){ onupdate(...attrs); return component_out; } });
         /**
          * This add element to component
          * @method add
@@ -117,14 +118,12 @@ function init(global){
             if(!all_els_counter) container= els[0]= fragment.appendChild(prepare_el);
             else els[all_els_counter]= els[getParentIndex()].appendChild(prepare_el);
             let el= els[all_els_counter];
-            if(attrs.onupdate){
-                if(!internal_storage) internal_storage= initStorage();
-                attrs_assign(attrs, internal_storage.register(el, ...attrs.onupdate));
-                delete attrs.onupdate;
-            }
             all_els_counter++;
             $dom.assign(el, attrs);
-            return el;
+            return {
+                getReference: ()=> el,
+                onupdate: function(...attrs){ if(!internal_storage) internal_storage= initStorage(); $dom.assign(el, internal_storage.register(el, ...attrs)); }
+            };
         }
         /**
          * Method for including another component by usint its `share` key.
@@ -322,34 +321,6 @@ function init(global){
         function isStatic(){
             return !internal_storage;
         }
-        function attrs_assign(attrs_A, attrs_B){
-            const attrs_B_keys= Object.keys(attrs_B);
-            for(let i=0, key, attr, i_length= attrs_B_keys.length; i<i_length; i++){
-                key= attrs_B_keys[i];
-                attr= attrs_B[key];
-                switch(key){
-                    case "style":
-                        if(typeof attr==="string"){
-                            attrs_A[key]= attr;
-                        } else {
-                            if(typeof attrs_A[key]!=="object") attrs_A[key]= {};
-                            for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
-                        }
-                        break;
-                    case "style_vars":
-                        if(typeof attrs_A[key]!=="object") attrs_A[key]= {};
-                        for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
-                        break;
-                    case "dataset":
-                        if(typeof attrs_A[key]!=="object") attrs_A[key]= {};
-                        for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
-                        break;
-                    default:
-                        attrs_A[key]= attr;
-                        break;
-                }
-            }
-        }
     };
     /**
      * Procedure for merging object into the element properties.
@@ -363,6 +334,7 @@ function init(global){
      *  - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
      *  - The same notation can be used for **CSS variables** (the key is called `style_vars`).
      *  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
+     *  - **IMPORTANT DIFFERENCE**: `classList.toggle` accepts *Array* in the form of `[classNa
      *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
      * @example
      *      const el= document.body;
@@ -376,6 +348,7 @@ function init(global){
         for(let i=0, key, attr, i_length= object_attributes_keys.length; i<i_length; i++){
             key= object_attributes_keys[i];
             attr= object_attributes[key];
+            if(typeof attr==="undefined"){ if(element[key]){ delete element[key]; } continue; }
             switch(key){
                 case "style":
                     if(typeof attr==="string") element.setAttribute("style", attr);
@@ -383,6 +356,14 @@ function init(global){
                     break;
                 case "style_vars":
                     for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.style.setProperty(k_key, attr[k_key]); }
+                    break;
+                case "classList":
+                    if(!element[key].toggle) break;
+                    for(let k=0, k_key, k_attr, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){
+                        k_key= k_keys[k]; k_attr= attr[k_key];
+                        if(k_attr===-1) element.classList.toggle(k_key);
+                        else element.classList.toggle(k_key, Boolean(k_attr));
+                    }
                     break;
                 case "dataset":
                     for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.dataset[k_key]= attr[k_key]; }

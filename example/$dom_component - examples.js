@@ -13,16 +13,15 @@ console.timeEnd();
 
 function li({ nth, first, last }){
     let counter= 0;
-    const { add, component, update, share }= $dom.component("LI", null);
+    const { add, component, update, share }= $dom.component("LI", null)
+        .onupdate({counter}, ({counter})=> ({ style: `padding-left: ${counter}px;` }));
         add("UL", null);
             component(sub_li({ nth, counter }));
             add("LI", null, -1);
-                add("SPAN", { textContent: "First text in parent component (remove this span when clicked 2times): ", onupdate: [ {counter}, removeThisElement ] });
-                add("STRONG", {
-                    onclick, onupdate: [ {counter}, ({counter})=>({
-                    textContent: `Element no.: ${first}, clicked: ${counter}times` }) ],
-                    style: {cursor: "pointer", 'border-bottom': "1px solid black" }
-                }, -1);
+                add("SPAN", { textContent: "First text in parent component (remove this span when clicked 2times): " })
+                .onupdate({counter}, removeThisElement);
+                add("STRONG", { onclick, style: {cursor: "pointer", 'border-bottom': "1px solid black" } }, -1)
+                .onupdate({counter}, ({counter})=>({ textContent: `Element no.: ${first}, clicked: ${counter}times`, classList: { pokus: counter===3 } }));
             add("LI", null, -2);
                 add("SPAN", { textContent: "Last text in parent component: " });
                 add("STRONG", { textContent: last }, -1);
@@ -35,10 +34,7 @@ function li({ nth, first, last }){
 function sub_li({ nth, counter }){
     const { add, share }= $dom.component("LI", null);
             add("SPAN", { textContent: "This is sub-component: " });
-            add("STRONG", {
-                onupdate: [ {counter}, ({counter})=>({
-                textContent: `${nth} ('counter' is visible also here: ${counter} ;-))` })],
-                style: "color: darkblue"
-            }, -1);
+            add("STRONG", { style: "color: darkblue" }, -1)
+                .onupdate({counter}, ({counter})=>({ textContent: `${nth} ('counter' is visible also here: ${counter} ;-))` }));
     return share;
 }

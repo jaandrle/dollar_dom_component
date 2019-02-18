@@ -82,7 +82,7 @@
                     <h2 class="no-toc">Files</h2>
                 </div>
                 <div class="bd">
-                    <ul><li>src/<ul><li><a href="../files/src_$dom_component.js.html">$dom_component.js</a></li></ul></li></ul>
+                    <ul><li>src\$dom_component.js/<ul></ul></li></ul>
                 </div>
             </div>
             
@@ -90,7 +90,7 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><h4>Class $dom.component</h4>
-<span class="foundat">Class defined in: <a href="../files/src_$dom_component.js.html#l42"><code>src&#x2F;$dom_component.js:42</code></a></span>
+<span class="foundat">Class defined in: <a href="../files/src_$dom_component.js.html#l42"><code>src\$dom_component.js:42</code></a></span>
 <div class="intro"><p>This 'functional class' is syntax sugar around <a href="https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment"><code>DocumentFragment</code></a> for creating DOM components and their adding to live DOM in performance friendly way.</p>
 </div>
 
@@ -100,7 +100,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l42"><code>src&#x2F;$dom_component.js:42</code></a>
+        <a href="../files/src_$dom_component.js.html#l42"><code>src\$dom_component.js:42</code></a>
     </span><br>
     
     <strong>Parameters:</strong>
@@ -117,13 +117,6 @@
             <code>attrs</code> <strong>&lt;Object&gt;</strong>
         <ul>
 <li>The second argument for <a href="./$dom.%7Bnamespace%7D.html#methods_assign"><code>$dom.assign</code></a></li>
-<li>There is one change. It is supported using <code>onupdate</code> key ... see <a href="#methods_add"><code>add</code></a>
-<ul>
-<li><code>onupdate</code> is array <code>[ object, function]</code>, the function is called during creating element and evry <code>update</code>calls</li>
-<li>It returns additional <code>attrs</code>, for example this <code>attrs</code>: <code>{ className: &quot;class&quot;, onupdate: [ { a }, _=&gt;({ textContent: a }) ] }</code> =&gt; final <code>attrs= { className: &quot;class&quot;, textContent: &quot;A&quot; }</code> (if <code>a=&quot;A&quot;</code>)</li>
-<li>it use similar algorithm like <a href="./$dom.%7Bnamespace%7D.html#methods_assign"><code>$dom.assign</code></a> (<strong>no deep copy!!!</strong>)</li>
-</ul>
-</li>
 </ul>
 
         </li>
@@ -141,10 +134,18 @@
         </li>
     </ul>
     <br><div class="returns"><strong>Returns:</strong> &lt;<a href="../classes/$dom.component.html" class="crosslink">$dom.component</a>&gt; <ul>
-<li>'functional class instance': object <code>{ add, component, mount, update, share }</code></li>
+<li>'functional class instance': object <code>{ add, component, mount, update, share, onupdate }</code></li>
 <li><code>share</code> is Object for transfering methods somewhere else (like for using in another component, see <a href="#methods_component"><code>component</code></a>)
 <ul>
 <li><code>share= { mount, update, destroy, isStatic }</code></li>
+</ul>
+</li>
+<li><code>onupdate</code>
+<ul>
+<li>It returns {$dom.component} and it is only one differnece against <a href="#methods_add"><code>add</code></a></li>
+<li><code>onupdate</code> is function which accepts two params <code>object, function</code>, the function is called during creating element and evry <code>update</code>calls</li>
+<li>It returns additional <code>attrs</code>, for example this <code>attrs</code>: <code>$dom.component(&quot;DIV&quot;, { className: &quot;class&quot; }).onupdate({ a }, _=&gt;({ textContent: a }))</code> =&gt; final <code>attrs= { className: &quot;class&quot;, textContent: &quot;A&quot; }</code> (if <code>a=&quot;A&quot;</code>)</li>
+<li>it use <a href="./$dom.%7Bnamespace%7D.html#methods_assign"><code>$dom.assign</code></a> (<strong>no deep copy!!!</strong>)</li>
 </ul>
 </li>
 </ul>
@@ -159,11 +160,11 @@
             <div id="methods"><h4>Methods</h4>
 <a name="methods_add"></a>
 <div class="method item public">
-     <strong class="name"><code>add</code></strong>( <code>el_name</code>, <code>attrs</code>, [ <code>shift</code> = 0 ] ) <em><code>&#x2F;* public method *&#x2F;</code></em>
+    Object <strong class="name"><code>add</code></strong>( <code>el_name</code>, <code>attrs</code>, [ <code>shift</code> = 0 ] ) <em><code>&#x2F;* public method *&#x2F;</code></em>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l84"><code>src&#x2F;$dom_component.js:84</code></a>
+        <a href="../files/src_$dom_component.js.html#l85"><code>src\$dom_component.js:85</code></a>
     </span><br>
     <p>This add element to component</p>
 
@@ -183,16 +184,6 @@
 <li>The second argument for <a href="./$dom.%7Bnamespace%7D.html#methods_assign"><code>$dom.assign</code></a></li>
 </ul>
 
-            <ul>
-                <li><code>onupdate</code> <strong>&lt;Array&gt;</strong> <ul>
-<li>Pattern: <code>attrs.onupdate= [ Values: Object, Retuns_attrs_keys: Function ]</code></li>
-<li>This register listener/subscriber function (<code>Retuns_attrs_keys</code>) for keys (variables) in <code>Values</code></li>
-<li>Example: <code>[ {counter}, _=&gt;({ textContent: counter }) ]</code> registers listerner to <code>counter</code>. When the <code>udate({ ... counter: something, ...})</code> is called this element changes <code>textContent</code>.</li>
-<li>See <a href="#methods_update"><code>update</code></a></li>
-</ul>
-
-                </li>
-            </ul>
         </li>
         <li>
             [<code>shift</code>= 0] <strong>&lt;Number&gt;</strong>
@@ -202,6 +193,18 @@
 
         </li>
     </ul>
+    <br><div class="returns"><strong>Returns:</strong> &lt;Object&gt; <ul>
+<li><code>getReference</code> {Function}: return NodeElement reference of added element</li>
+<li><code>onupdate</code>
+<ul>
+<li>Pattern: <code>add(...).onupdate(Values: Object, Retuns_attrs_keys: Function)</code></li>
+<li>This register listener/subscriber function (<code>Retuns_attrs_keys</code>) for keys (variables) in <code>Values</code></li>
+<li>Example: <code>add(...).onupdate({counter}, _=&gt;({ textContent: counter }))</code> registers listerner to <code>counter</code>. When the <code>udate({ ... counter: something, ...})</code> is called this element changes <code>textContent</code>.</li>
+<li>See <a href="#methods_update"><code>update</code></a></li>
+</ul>
+</li>
+</ul>
+</div>
         <h5>Example</h5>
         <pre class="code prettyprint"><code> //#1
  const UL= document.getElementById('SOME UL');
@@ -223,7 +226,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l128"><code>src&#x2F;$dom_component.js:128</code></a>
+        <a href="../files/src_$dom_component.js.html#l131"><code>src\$dom_component.js:131</code></a>
     </span><br>
     <p>Method for including another component by usint its <code>share</code> key.</p>
 
@@ -248,7 +251,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l182"><code>src&#x2F;$dom_component.js:182</code></a>
+        <a href="../files/src_$dom_component.js.html#l185"><code>src\$dom_component.js:185</code></a>
     </span><br>
     <p>Method remove element form live DOM and returns null</p>
 
@@ -264,7 +267,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l206"><code>src&#x2F;$dom_component.js:206</code></a>
+        <a href="../files/src_$dom_component.js.html#l209"><code>src\$dom_component.js:209</code></a>
     </span><br>
     <p>Returns current <code>deep</code> (last element in array)</p>
 
@@ -275,7 +278,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l214"><code>src&#x2F;$dom_component.js:214</code></a>
+        <a href="../files/src_$dom_component.js.html#l217"><code>src\$dom_component.js:217</code></a>
     </span><br>
     <p>Initialize internal storage</p>
 
@@ -290,7 +293,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l314"><code>src&#x2F;$dom_component.js:314</code></a>
+        <a href="../files/src_$dom_component.js.html#l317"><code>src\$dom_component.js:317</code></a>
     </span><br>
     <p>Methods returns if it was <code>onupdate</code> used</p>
 
@@ -305,7 +308,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l145"><code>src&#x2F;$dom_component.js:145</code></a>
+        <a href="../files/src_$dom_component.js.html#l148"><code>src\$dom_component.js:148</code></a>
     </span><br>
     <p>Add element to live DOM</p>
 
@@ -339,7 +342,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l195"><code>src&#x2F;$dom_component.js:195</code></a>
+        <a href="../files/src_$dom_component.js.html#l198"><code>src\$dom_component.js:198</code></a>
     </span><br>
     <p>Updates <code>deep</code></p>
 
@@ -360,7 +363,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l288"><code>src&#x2F;$dom_component.js:288</code></a>
+        <a href="../files/src_$dom_component.js.html#l291"><code>src\$dom_component.js:291</code></a>
     </span><br>
     <p>Method updates all registered varibles by keys <code>onupdates</code> and calls follower functions</p>
 

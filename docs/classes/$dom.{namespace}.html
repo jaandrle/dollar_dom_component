@@ -77,7 +77,7 @@
                     <h2 class="no-toc">Files</h2>
                 </div>
                 <div class="bd">
-                    <ul><li>src/<ul><li><a href="../files/src_$dom_component.js.html">$dom_component.js</a></li></ul></li></ul>
+                    <ul><li>src\$dom_component.js/<ul></ul></li></ul>
                 </div>
             </div>
             
@@ -85,7 +85,7 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><h4>Class $dom.{namespace}</h4>
-<span class="foundat">Class defined in: <a href="../files/src_$dom_component.js.html#l5"><code>src&#x2F;$dom_component.js:5</code></a></span>
+<span class="foundat">Class defined in: <a href="../files/src_$dom_component.js.html#l5"><code>src\$dom_component.js:5</code></a></span>
 <div class="intro"><p>This NAMESPACE provides features for DOM elemnts.</p>
 </div>
 
@@ -102,7 +102,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l325"><code>src&#x2F;$dom_component.js:325</code></a>
+        <a href="../files/src_$dom_component.js.html#l328"><code>src\$dom_component.js:328</code></a>
     </span><br>
     <p>Procedure for merging object into the element properties.
 Very simple example: <code>$dom.assign(document.body, { className: &quot;test&quot; });</code> is equivalent to <code>document.body.className= &quot;test&quot;;</code>.
@@ -121,7 +121,7 @@ It is not deep copy in general, but it supports <code>style</code>, <code>style_
 <li>For <code>dataset</code> can be used also <code>Object</code> notation: <code>$dom.assign(document.getElementById(&quot;ID&quot;), { dataset: { test: &quot;TEST&quot; } }); //&lt;p id=&quot;ID&quot; data-test=&quot;TEST&quot;&gt;&lt;/p&gt;</code>.</li>
 <li>The same notation can be used for <strong>CSS variables</strong> (the key is called <code>style_vars</code>).</li>
 <li><strong>IMPORTANT CHANGE</strong>: Key <code>style</code> also supports <strong>text</strong>, so <code>$dom.assign(el, { style: &quot;color: red;&quot; });</code> and <code>$dom.assign(el, { style: { color: &quot;red&quot; } })</code> is equivalent to <code>el.setAttribute(&quot;style&quot;, &quot;color: red;&quot;);</code></li>
-<li><strong>IMPORTANT DIFFERENCE</strong>: <code>classList.toggle</code> accepts <em>Array</em> in the form of `[classNa</li>
+<li><strong>IMPORTANT DIFFERENCE</strong>: <code>classList</code> accepts <em>Object</em> in the form of <code>class_name: -1|0|1</code> where '-1' means <code>el.classList(class_name)</code> others <code>el.classList(class_name, Booleans(...))</code></li>
 <li><em>Speed optimalization</em>: It is recommended to use <code>textContent</code> (instead of <code>innerText</code>) and <code>$dom.add</code> or <code>$dom.component</code> (instead of <code>innerHTML</code>).</li>
 </ul>
 
@@ -132,7 +132,14 @@ It is not deep copy in general, but it supports <code>style</code>, <code>style_
  const onclick= function(){ console.log(this.dataset.js_param); };
  $dom.assign(el, { textContent: &quot;BODY&quot;, style: &quot;color: red;&quot;, dataset: { js_param: &quot;CLICKED&quot; }, onclick });
  //result HTML: &lt;body style=&quot;color: red;&quot; data-js_param=&quot;CLICKED&quot;&gt;BODY&lt;/body&gt;
- //console output on click: &quot;CLICKED&quot;</code></pre>
+ //console output on click: &quot;CLICKED&quot;
+ $dom.assign(el, { classList: { testClass: -1 } });
+ //result HTML: &lt;body class=&quot;testClass&quot; style=&quot;color: red;&quot; data-js_param=&quot;CLICKED&quot;&gt;BODY&lt;/body&gt;
+ $dom.assign(el, { classList: { testClass: -1 } });
+ //result HTML: &lt;body class=&quot;&quot; style=&quot;color: red;&quot; data-js_param=&quot;CLICKED&quot;&gt;BODY&lt;/body&gt;
+ $dom.assign(el, { classList: { testClass: true } });//or 1
+ //result HTML: &lt;body class=&quot;testClass&quot; style=&quot;color: red;&quot; data-js_param=&quot;CLICKED&quot;&gt;BODY&lt;/body&gt;
+ //...</code></pre>
 
 </div>
 <a name="methods_empty"></a>
@@ -141,7 +148,7 @@ It is not deep copy in general, but it supports <code>style</code>, <code>style_
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l11"><code>src&#x2F;$dom_component.js:11</code></a>
+        <a href="../files/src_$dom_component.js.html#l11"><code>src\$dom_component.js:11</code></a>
     </span><br>
     <p>Procedure removes all children of <code>container</code></p>
 
@@ -159,7 +166,7 @@ It is not deep copy in general, but it supports <code>style</code>, <code>style_
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l20"><code>src&#x2F;$dom_component.js:20</code></a>
+        <a href="../files/src_$dom_component.js.html#l20"><code>src\$dom_component.js:20</code></a>
     </span><br>
     <p>Procedure places <code>new_element</code> after <code>reference</code> elements</p>
 
@@ -181,7 +188,7 @@ It is not deep copy in general, but it supports <code>style</code>, <code>style_
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l31"><code>src&#x2F;$dom_component.js:31</code></a>
+        <a href="../files/src_$dom_component.js.html#l31"><code>src\$dom_component.js:31</code></a>
     </span><br>
     <p>Procedure replaces <code>el_old</code> element by new one (<code>new_el</code>)</p>
 

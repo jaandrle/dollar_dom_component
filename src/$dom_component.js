@@ -48,18 +48,19 @@ function init(global){
      *  - This is parent element of component.
      * @param {Object} attrs
      *  - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)
-     *  - There is one change. It is supported using `onupdate` key ... see [`add`](#methods_add)
-     *      - `onupdate` is array `[ object, function]`, the function is called during creating element and evry `update`calls
-     *      - It returns additional `attrs`, for example this `attrs`: `{ className: "class", onupdate: [ { a }, _=>({ textContent: a }) ] }` => final `attrs= { className: "class", textContent: "A" }` (if `a="A"`)
-     *      - it use similar algorithm like [`$dom.assign`](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)
      * @param {Object} params
      * @param {Function|Boolean} params.mapUpdate
      *  - `[params.mapUpdate=undefined]`
      *  - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` ... see [`add`](#methods_add)
      * @return {$dom.component}
-     *  - 'functional class instance': object `{ add, component, mount, update, share }`
+     *  - 'functional class instance': object `{ add, component, mount, update, share, onupdate }`
      *  - `share` is Object for transfering methods somewhere else (like for using in another component, see [`component`](#methods_component))
      *      - `share= { mount, update, destroy, isStatic }`
+     *  - `onupdate`
+     *      - It returns {$dom.component} and it is only one differnece against [`add`](#methods_add)
+     *      - `onupdate` is function which accepts two params `object, function`, the function is called during creating element and evry `update`calls
+     *      - It returns additional `attrs`, for example this `attrs`: `$dom.component("DIV", { className: "class" }).onupdate({ a }, _=>({ textContent: a }))` => final `attrs= { className: "class", textContent: "A" }` (if `a="A"`)
+     *      - it use [`$dom.assign`](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)
      */
     /** */
     $dom.component= function(el_name, attrs, { mapUpdate }={}){
@@ -77,9 +78,10 @@ function init(global){
                 - see `shift` in `add`
             */
             deep= [];
-        add(el_name, attrs);
+        const { onupdate }= add(el_name, attrs);
         const share= { mount, update, destroy, isStatic };
-        return { add, component, mount, update, share };
+        const component_out= { add, component, mount, update, share };
+        return Object.assign({}, component_out, { onupdate: function(...attrs){ onupdate(...attrs); return component_out; } });
         /**
          * This add element to component
          * @method add
@@ -89,13 +91,15 @@ function init(global){
          * @param {Object} attrs
          *  - `null|undefined` is also supported (`null` is probably recommendet for better readability)
          *  - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)
-         * @param {Array} attrs.onupdate
-         *  - Pattern: `attrs.onupdate= [ Values: Object, Retuns_attrs_keys: Function ]`
-         *  - This register listener/subscriber function (`Retuns_attrs_keys`) for keys (variables) in `Values`
-         *  - Example: `[ {counter}, _=>({ textContent: counter }) ]` registers listerner to `counter`. When the `udate({ ... counter: something, ...})` is called this element changes `textContent`.
-         *  - See [`update`](#methods_update)
          * @param {Number} [shift= 0]
          *  - Modify nesting behaviur. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
+         * @returns {Object}
+         *  - `getReference` {Function}: return NodeElement reference of added element
+         *  - `onupdate`
+         *      - Pattern: `add(...).onupdate(Values: Object, Retuns_attrs_keys: Function)`
+         *      - This register listener/subscriber function (`Retuns_attrs_keys`) for keys (variables) in `Values`
+         *      - Example: `add(...).onupdate({counter}, _=>({ textContent: counter }))` registers listerner to `counter`. When the `udate({ ... counter: something, ...})` is called this element changes `textContent`.
+         *      - See [`update`](#methods_update)
          * @example
          *      //#1
          *      const UL= document.getElementById('SOME UL');
@@ -117,14 +121,12 @@ function init(global){
             if(!all_els_counter) container= els[0]= fragment.appendChild(prepare_el);
             else els[all_els_counter]= els[getParentIndex()].appendChild(prepare_el);
             let el= els[all_els_counter];
-            if(attrs.onupdate){
-                if(!internal_storage) internal_storage= initStorage();
-                attrs_assign(attrs, internal_storage.register(el, ...attrs.onupdate));
-                delete attrs.onupdate;
-            }
             all_els_counter++;
             $dom.assign(el, attrs);
-            return el;
+            return {
+                getReference: ()=> el,
+                onupdate: function(...attrs){ if(!internal_storage) internal_storage= initStorage(); $dom.assign(el, internal_storage.register(el, ...attrs)); }
+            };
         }
         /**
          * Method for including another component by usint its `share` key.
@@ -322,34 +324,6 @@ function init(global){
         function isStatic(){
             return !internal_storage;
         }
-        function attrs_assign(attrs_A, attrs_B){
-            const attrs_B_keys= Object.keys(attrs_B);
-            for(let i=0, key, attr, i_length= attrs_B_keys.length; i<i_length; i++){
-                key= attrs_B_keys[i];
-                attr= attrs_B[key];
-                switch(key){
-                    case "style":
-                        if(typeof attr==="string"){
-                            attrs_A[key]= attr;
-                        } else {
-                            if(typeof attrs_A[key]!=="object") attrs_A[key]= {};
-                            for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
-                        }
-                        break;
-                    case "style_vars":
-                        if(typeof attrs_A[key]!=="object") attrs_A[key]= {};
-                        for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
-                        break;
-                    case "dataset":
-                        if(typeof attrs_A[key]!=="object") attrs_A[key]= {};
-                        for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
-                        break;
-                    default:
-                        attrs_A[key]= attr;
-                        break;
-                }
-            }
-        }
     };
     /**
      * Procedure for merging object into the element properties.
@@ -363,7 +337,7 @@ function init(global){
      *  - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
      *  - The same notation can be used for **CSS variables** (the key is called `style_vars`).
      *  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
-     *  - **IMPORTANT DIFFERENCE**: `classList.toggle` accepts *Array* in the form of `[classNa
+     *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`
      *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
      * @example
      *      const el= document.body;
@@ -371,6 +345,13 @@ function init(global){
      *      $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
      *      //result HTML: <body style="color: red;" data-js_param="CLICKED">BODY</body>
      *      //console output on click: "CLICKED"
+     *      $dom.assign(el, { classList: { testClass: -1 } });
+     *      //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+     *      $dom.assign(el, { classList: { testClass: -1 } });
+     *      //result HTML: <body class="" style="color: red;" data-js_param="CLICKED">BODY</body>
+     *      $dom.assign(el, { classList: { testClass: true } });//or 1
+     *      //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+     *      //...
      */
     $dom.assign= function(element, object_attributes){
         const object_attributes_keys= Object.keys(object_attributes);
@@ -387,7 +368,12 @@ function init(global){
                     for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.style.setProperty(k_key, attr[k_key]); }
                     break;
                 case "classList":
-                    if(element[key].toggle&&attr.toggle) element[key].toggle(...attr.toggle);
+                    if(!element[key].toggle) break;
+                    for(let k=0, k_key, k_attr, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){
+                        k_key= k_keys[k]; k_attr= attr[k_key];
+                        if(k_attr===-1) element.classList.toggle(k_key);
+                        else element.classList.toggle(k_key, Boolean(k_attr));
+                    }
                     break;
                 case "dataset":
                     for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.dataset[k_key]= attr[k_key]; }

@@ -49,7 +49,7 @@
                 },
                 {
                     "name": "attrs",
-                    "description": "- The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)\n - There is one change. It is supported using `onupdate` key ... see [`add`](#methods_add)\n     - `onupdate` is array `[ object, function]`, the function is called during creating element and evry `update`calls\n     - It returns additional `attrs`, for example this `attrs`: `{ className: \"class\", onupdate: [ { a }, _=>({ textContent: a }) ] }` => final `attrs= { className: \"class\", textContent: \"A\" }` (if `a=\"A\"`)\n     - it use similar algorithm like [`$dom.assign`](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)",
+                    "description": "- The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)",
                     "type": "Object"
                 },
                 {
@@ -66,7 +66,7 @@
                 }
             ],
             "return": {
-                "description": "- 'functional class instance': object `{ add, component, mount, update, share }`\n - `share` is Object for transfering methods somewhere else (like for using in another component, see [`component`](#methods_component))\n     - `share= { mount, update, destroy, isStatic }`",
+                "description": "- 'functional class instance': object `{ add, component, mount, update, share, onupdate }`\n - `share` is Object for transfering methods somewhere else (like for using in another component, see [`component`](#methods_component))\n     - `share= { mount, update, destroy, isStatic }`\n - `onupdate`\n     - It returns {$dom.component} and it is only one differnece against [`add`](#methods_add)\n     - `onupdate` is function which accepts two params `object, function`, the function is called during creating element and evry `update`calls\n     - It returns additional `attrs`, for example this `attrs`: `$dom.component(\"DIV\", { className: \"class\" }).onupdate({ a }, _=>({ textContent: a }))` => final `attrs= { className: \"class\", textContent: \"A\" }` (if `a=\"A\"`)\n     - it use [`$dom.assign`](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)",
                 "type": "$dom.component"
             }
         }
@@ -130,12 +130,12 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 64,
+            "line": 65,
             "class": "$dom.component"
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 83,
+            "line": 85,
             "description": "This add element to component",
             "itemtype": "method",
             "name": "add",
@@ -150,14 +150,7 @@
                 {
                     "name": "attrs",
                     "description": "- `null|undefined` is also supported (`null` is probably recommendet for better readability)\n - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)",
-                    "type": "Object",
-                    "props": [
-                        {
-                            "name": "onupdate",
-                            "description": "- Pattern: `attrs.onupdate= [ Values: Object, Retuns_attrs_keys: Function ]`\n - This register listener/subscriber function (`Retuns_attrs_keys`) for keys (variables) in `Values`\n - Example: `[ {counter}, _=>({ textContent: counter }) ]` registers listerner to `counter`. When the `udate({ ... counter: something, ...})` is called this element changes `textContent`.\n - See [`update`](#methods_update)",
-                            "type": "Array"
-                        }
-                    ]
+                    "type": "Object"
                 },
                 {
                     "name": "shift",
@@ -167,6 +160,10 @@
                     "optdefault": " 0"
                 }
             ],
+            "return": {
+                "description": "- `getReference` {Function}: return NodeElement reference of added element\n - `onupdate`\n     - Pattern: `add(...).onupdate(Values: Object, Retuns_attrs_keys: Function)`\n     - This register listener/subscriber function (`Retuns_attrs_keys`) for keys (variables) in `Values`\n     - Example: `add(...).onupdate({counter}, _=>({ textContent: counter }))` registers listerner to `counter`. When the `udate({ ... counter: something, ...})` is called this element changes `textContent`.\n     - See [`update`](#methods_update)",
+                "type": "Object"
+            },
             "example": [
                 "\n     //#1\n     const UL= document.getElementById('SOME UL');\n     const { add }= $dom.component(\"LI\", { className: \"list_item\" });//<li class=\"list_item\">...</li>\n     add(\"DIV\", { textContent: \"Child of .list_item\", className: \"deep1\" });//<li class=\"list_item\"><div class=\"deep1\">...</div></li>\n         add(\"DIV\", { textContent: \"Child of div.deep1\", className: \"deep2\" });//...<div class=\"deep1\"><div class=\"deep2\">...</div></div>...\n             add(\"DIV\", { textContent: \"Child of div.deep2\", className: \"deep3\" });//...<div class=\"deep1\"><div class=\"deep2\"><div class=\"deep3\">...</div></div></div>...\n             add(\"DIV\", { textContent: \"Child of div.deep2\", className: \"deep3 mark\" }, -1);//...<div class=\"deep2\"><div class=\"deep3\">...</div><div class=\"deep3\">...</div></div>...\n     //next add(*) schoul be child of div.deep3.mark, by -1 it is ch.of div.deep2, by -2 ch.of div.deep1, by -3 ch.of li.list_item because div.deep3.mark is on 3rd level\n         add(\"DIV\", { textContent: \"Child of div.deep1\", className: \"deep2 nextone\" }, -2);//this is on 2nd level\n     add(\"DIV\", { textContent: \"Child of div.deep1\", className: \"deep2 nextone\" }, -2);//this is on 0 level\n         add(\"DIV\", null); // just DIV without attributes\n     ..."
             ],
@@ -174,7 +171,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 129,
+            "line": 131,
             "description": "Method for including another component by usint its `share` key.",
             "itemtype": "method",
             "name": "component",
@@ -196,7 +193,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 146,
+            "line": 148,
             "description": "Add element to live DOM",
             "itemtype": "method",
             "name": "mount",
@@ -220,7 +217,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 183,
+            "line": 185,
             "description": "Method remove element form live DOM and returns null",
             "itemtype": "method",
             "name": "destroy",
@@ -233,7 +230,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 196,
+            "line": 198,
             "description": "Updates `deep`",
             "access": "private",
             "tagname": "",
@@ -250,7 +247,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 207,
+            "line": 209,
             "description": "Returns current `deep` (last element in array)",
             "itemtype": "method",
             "name": "getParentIndex",
@@ -260,7 +257,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 215,
+            "line": 217,
             "description": "Initialize internal storage",
             "itemtype": "method",
             "name": "initStorage",
@@ -274,7 +271,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 289,
+            "line": 291,
             "description": "Method updates all registered varibles by keys `onupdates` and calls follower functions",
             "itemtype": "method",
             "name": "update",
@@ -294,7 +291,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 315,
+            "line": 317,
             "description": "Methods returns if it was `onupdate` used",
             "itemtype": "method",
             "name": "isStatic",
@@ -308,7 +305,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 354,
+            "line": 328,
             "description": "Procedure for merging object into the element properties.\nVery simple example: `$dom.assign(document.body, { className: \"test\" });` is equivalent to `document.body.className= \"test\";`.\nIt is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).",
             "itemtype": "method",
             "name": "assign",
@@ -320,12 +317,12 @@
                 },
                 {
                     "name": "object_attributes",
-                    "description": "- Object shall holds **NodeElement** properties like `className`, `textContent`, ...\n - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById(\"ID\"), { dataset: { test: \"TEST\" } }); //<p id=\"ID\" data-test=\"TEST\"></p>`.\n - The same notation can be used for **CSS variables** (the key is called `style_vars`).\n - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: \"color: red;\" });` and `$dom.assign(el, { style: { color: \"red\" } })` is equivalent to `el.setAttribute(\"style\", \"color: red;\");`\n - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).",
+                    "description": "- Object shall holds **NodeElement** properties like `className`, `textContent`, ...\n - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById(\"ID\"), { dataset: { test: \"TEST\" } }); //<p id=\"ID\" data-test=\"TEST\"></p>`.\n - The same notation can be used for **CSS variables** (the key is called `style_vars`).\n - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: \"color: red;\" });` and `$dom.assign(el, { style: { color: \"red\" } })` is equivalent to `el.setAttribute(\"style\", \"color: red;\");`\n - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`\n - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).",
                     "type": "Object"
                 }
             ],
             "example": [
-                "\n     const el= document.body;\n     const onclick= function(){ console.log(this.dataset.js_param); };\n     $dom.assign(el, { textContent: \"BODY\", style: \"color: red;\", dataset: { js_param: \"CLICKED\" }, onclick });\n     //result HTML: <body style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     //console output on click: \"CLICKED\""
+                "\n     const el= document.body;\n     const onclick= function(){ console.log(this.dataset.js_param); };\n     $dom.assign(el, { textContent: \"BODY\", style: \"color: red;\", dataset: { js_param: \"CLICKED\" }, onclick });\n     //result HTML: <body style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     //console output on click: \"CLICKED\"\n     $dom.assign(el, { classList: { testClass: -1 } });\n     //result HTML: <body class=\"testClass\" style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     $dom.assign(el, { classList: { testClass: -1 } });\n     //result HTML: <body class=\"\" style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     $dom.assign(el, { classList: { testClass: true } });//or 1\n     //result HTML: <body class=\"testClass\" style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     //..."
             ],
             "class": "$dom.{namespace}"
         }
@@ -333,11 +330,15 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\$dom_component.js:215"
+            "line": " src\\$dom_component.js:85"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src\\$dom_component.js:217"
         },
         {
             "message": "Missing item type",
-            "line": " src\\$dom_component.js:64"
+            "line": " src\\$dom_component.js:65"
         }
     ]
 }

@@ -124,18 +124,19 @@ function init(global){
      *  - This is parent element of component.
      * @param {Object} attrs
      *  - The second argument for [&#x60;$dom.assign&#x60;](./$dom.{namespace}.html#methods_assign)
-     *  - There is one change. It is supported using &#x60;onupdate&#x60; key ... see [&#x60;add&#x60;](#methods_add)
-     *      - &#x60;onupdate&#x60; is array &#x60;[ object, function]&#x60;, the function is called during creating element and evry &#x60;update&#x60;calls
-     *      - It returns additional &#x60;attrs&#x60;, for example this &#x60;attrs&#x60;: &#x60;{ className: &quot;class&quot;, onupdate: [ { a }, _=&gt;({ textContent: a }) ] }&#x60; =&gt; final &#x60;attrs= { className: &quot;class&quot;, textContent: &quot;A&quot; }&#x60; (if &#x60;a=&quot;A&quot;&#x60;)
-     *      - it use similar algorithm like [&#x60;$dom.assign&#x60;](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)
      * @param {Object} params
      * @param {Function|Boolean} params.mapUpdate
      *  - &#x60;[params.mapUpdate=undefined]&#x60;
      *  - This function (if defined) remap &#x60;update(DATA)&#x60; to varibales used in keys &#x60;attrs.onupdate&#x60; ... see [&#x60;add&#x60;](#methods_add)
      * @return {$dom.component}
-     *  - &#x27;functional class instance&#x27;: object &#x60;{ add, component, mount, update, share }&#x60;
+     *  - &#x27;functional class instance&#x27;: object &#x60;{ add, component, mount, update, share, onupdate }&#x60;
      *  - &#x60;share&#x60; is Object for transfering methods somewhere else (like for using in another component, see [&#x60;component&#x60;](#methods_component))
      *      - &#x60;share= { mount, update, destroy, isStatic }&#x60;
+     *  - &#x60;onupdate&#x60;
+     *      - It returns {$dom.component} and it is only one differnece against [&#x60;add&#x60;](#methods_add)
+     *      - &#x60;onupdate&#x60; is function which accepts two params &#x60;object, function&#x60;, the function is called during creating element and evry &#x60;update&#x60;calls
+     *      - It returns additional &#x60;attrs&#x60;, for example this &#x60;attrs&#x60;: &#x60;$dom.component(&quot;DIV&quot;, { className: &quot;class&quot; }).onupdate({ a }, _=&gt;({ textContent: a }))&#x60; =&gt; final &#x60;attrs= { className: &quot;class&quot;, textContent: &quot;A&quot; }&#x60; (if &#x60;a=&quot;A&quot;&#x60;)
+     *      - it use [&#x60;$dom.assign&#x60;](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)
      */
     /** */
     $dom.component= function(el_name, attrs, { mapUpdate }={}){
@@ -153,9 +154,10 @@ function init(global){
                 - see &#x60;shift&#x60; in &#x60;add&#x60;
             */
             deep= [];
-        add(el_name, attrs);
+        const { onupdate }= add(el_name, attrs);
         const share= { mount, update, destroy, isStatic };
-        return { add, component, mount, update, share };
+        const component_out= { add, component, mount, update, share };
+        return Object.assign({}, component_out, { onupdate: function(...attrs){ onupdate(...attrs); return component_out; } });
         /**
          * This add element to component
          * @method add
@@ -165,13 +167,15 @@ function init(global){
          * @param {Object} attrs
          *  - &#x60;null|undefined&#x60; is also supported (&#x60;null&#x60; is probably recommendet for better readability)
          *  - The second argument for [&#x60;$dom.assign&#x60;](./$dom.{namespace}.html#methods_assign)
-         * @param {Array} attrs.onupdate
-         *  - Pattern: &#x60;attrs.onupdate= [ Values: Object, Retuns_attrs_keys: Function ]&#x60;
-         *  - This register listener/subscriber function (&#x60;Retuns_attrs_keys&#x60;) for keys (variables) in &#x60;Values&#x60;
-         *  - Example: &#x60;[ {counter}, _=&gt;({ textContent: counter }) ]&#x60; registers listerner to &#x60;counter&#x60;. When the &#x60;udate({ ... counter: something, ...})&#x60; is called this element changes &#x60;textContent&#x60;.
-         *  - See [&#x60;update&#x60;](#methods_update)
          * @param {Number} [shift= 0]
          *  - Modify nesting behaviur. By default (&#x60;shift= 0&#x60;), new element is child of previus element. Every &#x60;-1&#x60; means moving to the upper level against current one - see example.
+         * @returns {Object}
+         *  - &#x60;getReference&#x60; {Function}: return NodeElement reference of added element
+         *  - &#x60;onupdate&#x60;
+         *      - Pattern: &#x60;add(...).onupdate(Values: Object, Retuns_attrs_keys: Function)&#x60;
+         *      - This register listener/subscriber function (&#x60;Retuns_attrs_keys&#x60;) for keys (variables) in &#x60;Values&#x60;
+         *      - Example: &#x60;add(...).onupdate({counter}, _=&gt;({ textContent: counter }))&#x60; registers listerner to &#x60;counter&#x60;. When the &#x60;udate({ ... counter: something, ...})&#x60; is called this element changes &#x60;textContent&#x60;.
+         *      - See [&#x60;update&#x60;](#methods_update)
          * @example
          *      //#1
          *      const UL= document.getElementById(&#x27;SOME UL&#x27;);
@@ -193,14 +197,12 @@ function init(global){
             if(!all_els_counter) container= els[0]= fragment.appendChild(prepare_el);
             else els[all_els_counter]= els[getParentIndex()].appendChild(prepare_el);
             let el= els[all_els_counter];
-            if(attrs.onupdate){
-                if(!internal_storage) internal_storage= initStorage();
-                attrs_assign(attrs, internal_storage.register(el, ...attrs.onupdate));
-                delete attrs.onupdate;
-            }
             all_els_counter++;
             $dom.assign(el, attrs);
-            return el;
+            return {
+                getReference: ()=&gt; el,
+                onupdate: function(...attrs){ if(!internal_storage) internal_storage= initStorage(); $dom.assign(el, internal_storage.register(el, ...attrs)); }
+            };
         }
         /**
          * Method for including another component by usint its &#x60;share&#x60; key.
@@ -398,34 +400,6 @@ function init(global){
         function isStatic(){
             return !internal_storage;
         }
-        function attrs_assign(attrs_A, attrs_B){
-            const attrs_B_keys= Object.keys(attrs_B);
-            for(let i=0, key, attr, i_length= attrs_B_keys.length; i&lt;i_length; i++){
-                key= attrs_B_keys[i];
-                attr= attrs_B[key];
-                switch(key){
-                    case &quot;style&quot;:
-                        if(typeof attr===&quot;string&quot;){
-                            attrs_A[key]= attr;
-                        } else {
-                            if(typeof attrs_A[key]!==&quot;object&quot;) attrs_A[key]= {};
-                            for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k&lt;k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
-                        }
-                        break;
-                    case &quot;style_vars&quot;:
-                        if(typeof attrs_A[key]!==&quot;object&quot;) attrs_A[key]= {};
-                        for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k&lt;k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
-                        break;
-                    case &quot;dataset&quot;:
-                        if(typeof attrs_A[key]!==&quot;object&quot;) attrs_A[key]= {};
-                        for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k&lt;k_length; k++){ k_key= k_keys[k]; attrs_A[key][k_key]= attr[k_key]; }
-                        break;
-                    default:
-                        attrs_A[key]= attr;
-                        break;
-                }
-            }
-        }
     };
     /**
      * Procedure for merging object into the element properties.
@@ -439,6 +413,7 @@ function init(global){
      *  - For &#x60;dataset&#x60; can be used also &#x60;Object&#x60; notation: &#x60;$dom.assign(document.getElementById(&quot;ID&quot;), { dataset: { test: &quot;TEST&quot; } }); //&lt;p id=&quot;ID&quot; data-test=&quot;TEST&quot;&gt;&lt;/p&gt;&#x60;.
      *  - The same notation can be used for **CSS variables** (the key is called &#x60;style_vars&#x60;).
      *  - **IMPORTANT CHANGE**: Key &#x60;style&#x60; also supports **text**, so &#x60;$dom.assign(el, { style: &quot;color: red;&quot; });&#x60; and &#x60;$dom.assign(el, { style: { color: &quot;red&quot; } })&#x60; is equivalent to &#x60;el.setAttribute(&quot;style&quot;, &quot;color: red;&quot;);&#x60;
+     *  - **IMPORTANT DIFFERENCE**: &#x60;classList&#x60; accepts *Object* in the form of &#x60;class_name: -1|0|1&#x60; where &#x27;-1&#x27; means &#x60;el.classList(class_name)&#x60; others &#x60;el.classList(class_name, Booleans(...))&#x60;
      *  - *Speed optimalization*: It is recommended to use &#x60;textContent&#x60; (instead of &#x60;innerText&#x60;) and &#x60;$dom.add&#x60; or &#x60;$dom.component&#x60; (instead of &#x60;innerHTML&#x60;).
      * @example
      *      const el= document.body;
@@ -446,12 +421,20 @@ function init(global){
      *      $dom.assign(el, { textContent: &quot;BODY&quot;, style: &quot;color: red;&quot;, dataset: { js_param: &quot;CLICKED&quot; }, onclick });
      *      //result HTML: &lt;body style=&quot;color: red;&quot; data-js_param=&quot;CLICKED&quot;&gt;BODY&lt;/body&gt;
      *      //console output on click: &quot;CLICKED&quot;
+     *      $dom.assign(el, { classList: { testClass: -1 } });
+     *      //result HTML: &lt;body class=&quot;testClass&quot; style=&quot;color: red;&quot; data-js_param=&quot;CLICKED&quot;&gt;BODY&lt;/body&gt;
+     *      $dom.assign(el, { classList: { testClass: -1 } });
+     *      //result HTML: &lt;body class=&quot;&quot; style=&quot;color: red;&quot; data-js_param=&quot;CLICKED&quot;&gt;BODY&lt;/body&gt;
+     *      $dom.assign(el, { classList: { testClass: true } });//or 1
+     *      //result HTML: &lt;body class=&quot;testClass&quot; style=&quot;color: red;&quot; data-js_param=&quot;CLICKED&quot;&gt;BODY&lt;/body&gt;
+     *      //...
      */
     $dom.assign= function(element, object_attributes){
         const object_attributes_keys= Object.keys(object_attributes);
         for(let i=0, key, attr, i_length= object_attributes_keys.length; i&lt;i_length; i++){
             key= object_attributes_keys[i];
             attr= object_attributes[key];
+            if(typeof attr===&quot;undefined&quot;){ if(element[key]){ delete element[key]; } continue; }
             switch(key){
                 case &quot;style&quot;:
                     if(typeof attr===&quot;string&quot;) element.setAttribute(&quot;style&quot;, attr);
@@ -459,6 +442,14 @@ function init(global){
                     break;
                 case &quot;style_vars&quot;:
                     for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k&lt;k_length; k++){ k_key= k_keys[k]; element.style.setProperty(k_key, attr[k_key]); }
+                    break;
+                case &quot;classList&quot;:
+                    if(!element[key].toggle) break;
+                    for(let k=0, k_key, k_attr, k_keys= Object.keys(attr), k_length= k_keys.length; k&lt;k_length; k++){
+                        k_key= k_keys[k]; k_attr= attr[k_key];
+                        if(k_attr===-1) element.classList.toggle(k_key);
+                        else element.classList.toggle(k_key, Boolean(k_attr));
+                    }
                     break;
                 case &quot;dataset&quot;:
                     for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k&lt;k_length; k++){ k_key= k_keys[k]; element.dataset[k_key]= attr[k_key]; }
@@ -474,6 +465,7 @@ function init(global){
     };
     global.$dom= $dom;
 }
+
 </pre>
 
 </div>

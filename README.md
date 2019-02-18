@@ -8,7 +8,7 @@ Subrepository for jaandrle/jaaJSU ($dom namespace)
 ## Output
 ```HTML
 <ul id="main">
-    <li>
+    <li style='padding-left: 0px;'>
         <ul>
             <li>
                 <span>This is sub-component: </span>
@@ -24,7 +24,7 @@ Subrepository for jaandrle/jaaJSU ($dom namespace)
             </li>
         </ul>
     </li>
-    <li>
+    <li style='padding-left: 0px;'>
         <ul>
             <li>
                 <span>This is sub-component: </span>
@@ -53,30 +53,27 @@ test_update.update({ nth: "UPDATED", first: global_counter++, last: "Updated" })
 
 function li({ nth, first, last }){
     let counter= 0;
-    const { add, component, update, share }= $dom.component("LI", null);
+    const { add, component, update, share }= $dom.component("LI", null)
+        .onupdate({counter}, ({counter})=> ({ style: `padding-left: ${counter}px;` }));
         add("UL", null);
             component(sub_li({ nth, counter }));
             add("LI", null, -1);
-                add("SPAN", { textContent: "First text in parent component (remove this span when clicked 2times): ", onupdate: [{counter}, removeThisElement] });
-                add("STRONG", { 
-                    onclick, 
-                    style: {cursor: "pointer", 'border-bottom': "1px solid black" },
-                    onupdate: [ {first, counter}, _=>({ textContent: "Element no.: "+_.first+", clicked: "+_.counter+"times" })]
-                }, -1);
+                add("SPAN", { textContent: "First text in parent component (remove this span when clicked 2times): " })
+                .onupdate({counter}, removeThisElement);
+                add("STRONG", { onclick, style: {cursor: "pointer", 'border-bottom': "1px solid black" } }, -1)
+                .onupdate({counter}, ({counter})=>({ textContent: `Element no.: ${first}, clicked: ${counter}times`, classList: { pokus: counter===3 } }));
             add("LI", null, -2);
                 add("SPAN", { textContent: "Last text in parent component: " });
-                add("STRONG", { onupdate: [ { last }, _=>({ textContent: _.last })] }, -1);
+                add("STRONG", { textContent: last }, -1);
     return share;
     
-    function onclick(){ counter++; update({counter}); }
+    function onclick(){ counter++; update({ counter }); }
     function removeThisElement(input){ if(input.counter===2) this.remove(); }
 }
 function sub_li({ nth, counter }){
     const { add, share }= $dom.component("LI", null);
             add("SPAN", { textContent: "This is sub-component: " });
-            add("STRONG", {
-                style: "color: darkblue",
-                onupdate: [{nth, counter}, _=>({ textContent: _.nth+" ('counter' is visible also here: "+_.counter+" ;-))" })]
-            }, -1);
+            add("STRONG", { style: "color: darkblue" }, -1)
+                .onupdate({counter}, ({counter})=>({ textContent: `${nth} ('counter' is visible also here: ${counter} ;-))` }));
     return share;
 }

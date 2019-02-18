@@ -28,7 +28,6 @@ function li({ nth, first, last }){
     return share;
     
     function onclick(){ counter++; update({ counter }); }
-
     function removeThisElement(input){ if(input.counter===2) this.remove(); }
 }
 function sub_li({ nth, counter }){

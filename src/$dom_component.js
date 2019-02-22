@@ -125,7 +125,11 @@ function init(global){
             $dom.assign(el, attrs);
             return {
                 getReference: ()=> el,
-                onupdate: function(...attrs){ if(!internal_storage) internal_storage= initStorage(); $dom.assign(el, internal_storage.register(el, ...attrs)); }
+                onupdate: function(data, onUpdateFunction){
+                    if(!data) return false;
+                    if(!internal_storage) internal_storage= initStorage();
+                    $dom.assign(el, internal_storage.register(el, data, onUpdateFunction));
+                }
             };
         }
         /**

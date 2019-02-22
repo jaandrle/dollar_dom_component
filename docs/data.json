@@ -171,7 +171,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 131,
+            "line": 135,
             "description": "Method for including another component by usint its `share` key.",
             "itemtype": "method",
             "name": "component",
@@ -193,7 +193,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 148,
+            "line": 152,
             "description": "Add element to live DOM",
             "itemtype": "method",
             "name": "mount",
@@ -217,7 +217,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 185,
+            "line": 189,
             "description": "Method remove element form live DOM and returns null",
             "itemtype": "method",
             "name": "destroy",
@@ -230,7 +230,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 198,
+            "line": 202,
             "description": "Updates `deep`",
             "access": "private",
             "tagname": "",
@@ -247,7 +247,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 209,
+            "line": 213,
             "description": "Returns current `deep` (last element in array)",
             "itemtype": "method",
             "name": "getParentIndex",
@@ -257,7 +257,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 217,
+            "line": 221,
             "description": "Initialize internal storage",
             "itemtype": "method",
             "name": "initStorage",
@@ -271,7 +271,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 291,
+            "line": 295,
             "description": "Method updates all registered varibles by keys `onupdates` and calls follower functions",
             "itemtype": "method",
             "name": "update",
@@ -291,7 +291,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 317,
+            "line": 321,
             "description": "Methods returns if it was `onupdate` used",
             "itemtype": "method",
             "name": "isStatic",
@@ -305,7 +305,7 @@
         },
         {
             "file": "src\\$dom_component.js",
-            "line": 328,
+            "line": 332,
             "description": "Procedure for merging object into the element properties.\nVery simple example: `$dom.assign(document.body, { className: \"test\" });` is equivalent to `document.body.className= \"test\";`.\nIt is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).",
             "itemtype": "method",
             "name": "assign",
@@ -334,7 +334,7 @@
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\$dom_component.js:217"
+            "line": " src\\$dom_component.js:221"
         },
         {
             "message": "Missing item type",

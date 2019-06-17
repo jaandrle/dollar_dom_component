@@ -2,7 +2,7 @@
 Subrepository for jaandrle/jaaJSU ($dom namespace)
 # [Documentation](https://jaandrle.github.io/dollar_dom_component/)
 # Playgrounds
-- [Simple form](https://codepen.io/anon/pen/roPGpR?editors=0011)
+- [Simple form](https://codepen.io/anon/pen/ZdWPLW?editors=0011)
 - [Complex one (see below)](https://codepen.io/anon/pen/WLPZyJ?editors=1010)
 # [Examples](example/index.html)
 ## Output

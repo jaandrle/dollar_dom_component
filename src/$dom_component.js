@@ -39,6 +39,40 @@ function init(global){
             el_old.remove();
         }
     };
+    const $dom_emptyPseudoComponent= (function(){
+        const share= { mount, update, destroy, isStatic };
+        const component_out= { add, component, mount, update, share };
+        return component_out;
+    
+        function mount(element, type= "childLast"){
+            // let temp_el;
+            switch ( type ) {
+                case "replace":
+                    element.remove();
+                    break;
+                case "replaceContent":
+                    $dom.empty(element);
+                    break;
+                // case "before":
+                //     temp_el= element.previousElementSibling;
+                //     if(temp_el) temp_el.remove();
+                //     break;
+                // case "after":
+                //     temp_el= element.nextElementSibling;
+                //     if(temp_el) temp_el.remove();
+                //     break;
+                // default:
+                //     if(element.childNodes.length) element.childNodes[type==="childFirst" ? 0 : element.childNodes.length-1].remove();
+                //     break;
+            }
+            return null;
+        }
+        function add(){ return component_out; }
+        function component(){ return component_out; }
+        function update(){ return true; }
+        function isStatic(){ return true; }
+        function destroy(){ return null; }
+    })();
     /**
      * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
      * @class $dom.component
@@ -62,8 +96,8 @@ function init(global){
      *      - It returns additional `attrs`, for example this `attrs`: `$dom.component("DIV", { className: "class" }).onupdate({ a }, _=>({ textContent: a }))` => final `attrs= { className: "class", textContent: "A" }` (if `a="A"`)
      *      - it use [`$dom.assign`](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)
      */
-    /** */
     $dom.component= function(el_name, attrs, { mapUpdate }={}){
+        if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
         let /* holds `initStorage()` if `onupdate` was registered */
             internal_storage= null;
         const /* 'drawer' (container) for component elements */
@@ -78,10 +112,9 @@ function init(global){
                 - see `shift` in `add`
             */
             deep= [];
-        const { onupdate }= add(el_name, attrs);
         const share= { mount, update, destroy, isStatic };
-        const component_out= { add, component, mount, update, share };
-        return Object.assign({}, component_out, { onupdate: function(...attrs){ onupdate(...attrs); return component_out; } });
+        const component_out= { add, addText, component, setShift, mount, update, share };
+        return add(el_name, attrs);
         /**
          * This add element to component
          * @method add
@@ -92,7 +125,7 @@ function init(global){
          *  - `null|undefined` is also supported (`null` is probably recommendet for better readability)
          *  - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)
          * @param {Number} [shift= 0]
-         *  - Modify nesting behaviur. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
+         *  - Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
          * @returns {Object}
          *  - `getReference` {Function}: return NodeElement reference of added element
          *  - `onupdate`
@@ -119,18 +152,52 @@ function init(global){
             attrs= attrs || {};
             const prepare_el= document.createElement(el_name);
             if(!all_els_counter) container= els[0]= fragment.appendChild(prepare_el);
-            else els[all_els_counter]= els[getParentIndex()].appendChild(prepare_el);
+            else els[all_els_counter]= getParentElement().appendChild(prepare_el);
             let el= els[all_els_counter];
-            all_els_counter++;
+            all_els_counter+= 1;
             $dom.assign(el, attrs);
-            return {
+            return Object.assign({
                 getReference: ()=> el,
+                oninit: function(fn){ fn(el); return component_out; },
                 onupdate: function(data, onUpdateFunction){
                     if(!data) return false;
                     if(!internal_storage) internal_storage= initStorage();
                     $dom.assign(el, internal_storage.register(el, data, onUpdateFunction));
+                    return component_out;
                 }
-            };
+            }, component_out);
+        }
+        /**
+         * This add element to component
+         * @method addText
+         * @public
+         * @param {String} text
+         *  - Argument for `document.createTextNode`
+         * @param {Number} shift
+         *  - see [`add`](#methods_add)
+         * @returns {Object}
+         *  - `oninit` {Function}: TBD
+         * @example
+         *      function testTextLi({ href= "https://www.seznam.cz" }= {}){
+         *          const { add, addText, share }= $dom.component("LI", null);
+         *              add("P", { textContent: "Link test: " });
+         *                  add("A", { textContent: "link ", href });
+         *                      add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
+         *                  addText("!", -2);
+         *                  add("BR", null, -1);
+         *                  addText("Test new line.", -1);
+         *          return share;
+         *      }
+         *      //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
+         */
+        function addText(text, shift= 0){
+            recalculateDeep(shift);
+            const text_node= document.createTextNode(text);
+            let el= els[all_els_counter]= getParentElement().appendChild(text_node);
+            all_els_counter+= 1;
+            return Object.assign({
+                oninit: function(fn){ fn(el); return component_out; }
+            }, component_out);
         }
         /**
          * Method for including another component by usint its `share` key.
@@ -142,12 +209,13 @@ function init(global){
          */
         function component({ mount, update, isStatic }, shift= 0){
             recalculateDeep(shift);
-            els[all_els_counter]= mount(els[getParentIndex()]);
+            els[all_els_counter]= mount(getParentElement());
             if(!isStatic()){
                 if(!internal_storage) internal_storage= initStorage();
                 internal_storage.registerComponent(update);
             }
             all_els_counter+= 1;
+            return component_out;
         }
         /**
          * Add element to live DOM
@@ -207,17 +275,39 @@ function init(global){
          *  - see [`add`](#methods_add)
          */
         function recalculateDeep(shift){
+            /* global console */console.log(deep);
             if(!shift) deep.push(all_els_counter);
             else { deep.splice(deep.length+1+shift); deep[deep.length-1]= all_els_counter; }
         }
         /**
-         * Returns current `deep` (last element in array)
-         * @method getParentIndex
+         * Returns parent element (or "fragment pseudo element")
+         * @method getParentElement
          * @private
          */
-        function getParentIndex(){
-            return deep[deep.length-2];
+        function getParentElement(){
+            return els[deep[deep.length-2]] || fragment;
         }
+        /**
+         * Method provide way to change nesting behaviour. It can be helpful for loops
+         * @method setShift
+         * @public
+         * @param {Number} shift
+         *  - see [`add`](#methods_add)
+         * @example
+         *      function testNesting(){
+         *          const { add, setShift, share }= $dom.component("DIV", null);
+         *              setShift(0);
+         *          for(let i= 0; i<5; i++){
+         *              add("P", { textContent: `Paragraph no. ${i}.` }, -1);
+         *          }
+         *          return share;
+         *      }
+         */
+        function setShift(shift= 0){
+            let last;
+            if(!shift){ last= deep.pop(); deep.push(last, last); }
+            else deep.splice(deep.length+1+shift);
+         }
         /**
          * Initialize internal storage
          * @method initStorage
@@ -362,7 +452,7 @@ function init(global){
         for(let i=0, key, attr, i_length= object_attributes_keys.length; i<i_length; i++){
             key= object_attributes_keys[i];
             attr= object_attributes[key];
-            if(typeof attr==="undefined"){ if(element[key]){ delete element[key]; } continue; }
+            if(typeof attr==="undefined"){ if(Reflect.has(element, key)){ Reflect.deleteProperty(element, key); } continue; }
             switch(key){
                 case "style":
                     if(typeof attr==="string") element.setAttribute("style", attr);

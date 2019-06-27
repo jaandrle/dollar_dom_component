@@ -62,13 +62,15 @@
                 <div class="bd">
                     <ul>
                             <li class="menuli"><a href="#methods_add">add</a> <i style="color: green;">(public)</i></li>
+                            <li class="menuli"><a href="#methods_addText">addText</a> <i style="color: green;">(public)</i></li>
                             <li class="menuli"><a href="#methods_component">component</a> <i style="color: green;">(public)</i></li>
                             <li class="menuli"><a href="#methods_destroy">destroy</a> <i style="color: green;">(public)</i></li>
-                            <li class="menuli"><a href="#methods_getParentIndex">getParentIndex</a> <i style="color: green;">(private)</i></li>
+                            <li class="menuli"><a href="#methods_getParentElement">getParentElement</a> <i style="color: green;">(private)</i></li>
                             <li class="menuli"><a href="#methods_initStorage">initStorage</a> <i style="color: green;">(private)</i></li>
                             <li class="menuli"><a href="#methods_isStatic">isStatic</a> <i style="color: green;">(public)</i></li>
                             <li class="menuli"><a href="#methods_mount">mount</a> <i style="color: green;">(public)</i></li>
                             <li class="menuli"><a href="#methods_recalculateDeep">recalculateDeep</a> <i style="color: green;">(private)</i></li>
+                            <li class="menuli"><a href="#methods_setShift">setShift</a> <i style="color: green;">(public)</i></li>
                             <li class="menuli"><a href="#methods_update">update</a> <i style="color: green;">(public)</i></li>
                     </ul>
                 </div>
@@ -90,7 +92,7 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><h4>Class $dom.component</h4>
-<span class="foundat">Class defined in: <a href="../files/src_$dom_component.js.html#l42"><code>src\$dom_component.js:42</code></a></span>
+<span class="foundat">Class defined in: <a href="../files/src_$dom_component.js.html#l76"><code>src\$dom_component.js:76</code></a></span>
 <div class="intro"><p>This 'functional class' is syntax sugar around <a href="https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment"><code>DocumentFragment</code></a> for creating DOM components and their adding to live DOM in performance friendly way.</p>
 </div>
 
@@ -100,7 +102,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l42"><code>src\$dom_component.js:42</code></a>
+        <a href="../files/src_$dom_component.js.html#l76"><code>src\$dom_component.js:76</code></a>
     </span><br>
     
     <strong>Parameters:</strong>
@@ -164,7 +166,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l85"><code>src\$dom_component.js:85</code></a>
+        <a href="../files/src_$dom_component.js.html#l118"><code>src\$dom_component.js:118</code></a>
     </span><br>
     <p>This add element to component</p>
 
@@ -188,7 +190,7 @@
         <li>
             [<code>shift</code>= 0] <strong>&lt;Number&gt;</strong>
         <ul>
-<li>Modify nesting behaviur. By default (<code>shift= 0</code>), new element is child of previus element. Every <code>-1</code> means moving to the upper level against current one - see example.</li>
+<li>Modify nesting behaviour. By default (<code>shift= 0</code>), new element is child of previus element. Every <code>-1</code> means moving to the upper level against current one - see example.</li>
 </ul>
 
         </li>
@@ -220,13 +222,58 @@
  ...</code></pre>
 
 </div>
+<a name="methods_addText"></a>
+<div class="method item public">
+    Object <strong class="name"><code>addText</code></strong>( <code>text</code>, <code>shift</code> ) <em><code>&#x2F;* public method *&#x2F;</code></em>
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/src_$dom_component.js.html#l170"><code>src\$dom_component.js:170</code></a>
+    </span><br>
+    <p>This add element to component</p>
+
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>text</code> <strong>&lt;String&gt;</strong>
+        <ul>
+<li>Argument for <code>document.createTextNode</code></li>
+</ul>
+
+        </li>
+        <li>
+            <code>shift</code> <strong>&lt;Number&gt;</strong>
+        <ul>
+<li>see <a href="#methods_add"><code>add</code></a></li>
+</ul>
+
+        </li>
+    </ul>
+    <br><div class="returns"><strong>Returns:</strong> &lt;Object&gt; <ul>
+<li><code>oninit</code> {Function}: TBD</li>
+</ul>
+</div>
+        <h5>Example</h5>
+        <pre class="code prettyprint"><code> function testTextLi({ href= &quot;https://www.seznam.cz&quot; }= {}){
+     const { add, addText, share }= $dom.component(&quot;LI&quot;, null);
+         add(&quot;P&quot;, { textContent: &quot;Link test: &quot; });
+             add(&quot;A&quot;, { textContent: &quot;link &quot;, href });
+                 add(&quot;STRONG&quot;, { textContent: <code>(${href.replace(&amp;quot;https:&#x2F;&#x2F;www.&amp;quot;, &amp;quot;&amp;quot;)})</code> });
+             addText(&quot;!&quot;, -2);
+             add(&quot;BR&quot;, null, -1);
+             addText(&quot;Test new line.&quot;, -1);
+     return share;
+ }
+ //result: '&lt;p&gt;Link test: &lt;a href=&quot;...&quot;&gt;link &lt;strong&gt;...&lt;/strong&gt;&lt;/a&gt;!&lt;br&gt;Test new line.&lt;/p&gt;'</code></pre>
+
+</div>
 <a name="methods_component"></a>
 <div class="method item public">
      <strong class="name"><code>component</code></strong>( <code>share</code>, <code>shift</code> ) <em><code>&#x2F;* public method *&#x2F;</code></em>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l135"><code>src\$dom_component.js:135</code></a>
+        <a href="../files/src_$dom_component.js.html#l202"><code>src\$dom_component.js:202</code></a>
     </span><br>
     <p>Method for including another component by usint its <code>share</code> key.</p>
 
@@ -251,7 +298,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l189"><code>src\$dom_component.js:189</code></a>
+        <a href="../files/src_$dom_component.js.html#l257"><code>src\$dom_component.js:257</code></a>
     </span><br>
     <p>Method remove element form live DOM and returns null</p>
 
@@ -261,15 +308,15 @@ test.mount(document.body);
 test= test.destroy();</p>
 
 </div>
-<a name="methods_getParentIndex"></a>
+<a name="methods_getParentElement"></a>
 <div class="method item private">
-     <strong class="name"><code>getParentIndex</code></strong>(  ) <em><code>&#x2F;* private method *&#x2F;</code></em>
+     <strong class="name"><code>getParentElement</code></strong>(  ) <em><code>&#x2F;* private method *&#x2F;</code></em>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l213"><code>src\$dom_component.js:213</code></a>
+        <a href="../files/src_$dom_component.js.html#l282"><code>src\$dom_component.js:282</code></a>
     </span><br>
-    <p>Returns current <code>deep</code> (last element in array)</p>
+    <p>Returns parent element (or &quot;fragment pseudo element&quot;)</p>
 
 </div>
 <a name="methods_initStorage"></a>
@@ -278,7 +325,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l221"><code>src\$dom_component.js:221</code></a>
+        <a href="../files/src_$dom_component.js.html#l311"><code>src\$dom_component.js:311</code></a>
     </span><br>
     <p>Initialize internal storage</p>
 
@@ -293,7 +340,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l321"><code>src\$dom_component.js:321</code></a>
+        <a href="../files/src_$dom_component.js.html#l411"><code>src\$dom_component.js:411</code></a>
     </span><br>
     <p>Methods returns if it was <code>onupdate</code> used</p>
 
@@ -308,7 +355,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l152"><code>src\$dom_component.js:152</code></a>
+        <a href="../files/src_$dom_component.js.html#l220"><code>src\$dom_component.js:220</code></a>
     </span><br>
     <p>Add element to live DOM</p>
 
@@ -342,7 +389,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l202"><code>src\$dom_component.js:202</code></a>
+        <a href="../files/src_$dom_component.js.html#l270"><code>src\$dom_component.js:270</code></a>
     </span><br>
     <p>Updates <code>deep</code></p>
 
@@ -357,13 +404,44 @@ test= test.destroy();</p>
         </li>
     </ul>
 </div>
+<a name="methods_setShift"></a>
+<div class="method item public">
+     <strong class="name"><code>setShift</code></strong>( <code>shift</code> ) <em><code>&#x2F;* public method *&#x2F;</code></em>
+    <br>
+    <span class="foundat">
+        
+        <a href="../files/src_$dom_component.js.html#l290"><code>src\$dom_component.js:290</code></a>
+    </span><br>
+    <p>Method provide way to change nesting behaviour. It can be helpful for loops</p>
+
+    <strong>Parameters:</strong>
+    <ul class="params">
+        <li>
+            <code>shift</code> <strong>&lt;Number&gt;</strong>
+        <ul>
+<li>see <a href="#methods_add"><code>add</code></a></li>
+</ul>
+
+        </li>
+    </ul>
+        <h5>Example</h5>
+        <pre class="code prettyprint"><code> function testNesting(){
+     const { add, setShift, share }= $dom.component(&quot;DIV&quot;, null);
+         setShift(0);
+     for(let i= 0; i&lt;5; i++){
+         add(&quot;P&quot;, { textContent: <code>Paragraph no. ${i}.</code> }, -1);
+     }
+     return share;
+ }</code></pre>
+
+</div>
 <a name="methods_update"></a>
 <div class="method item public">
      <strong class="name"><code>update</code></strong>( <code>new_data</code> ) <em><code>&#x2F;* public method *&#x2F;</code></em>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l295"><code>src\$dom_component.js:295</code></a>
+        <a href="../files/src_$dom_component.js.html#l385"><code>src\$dom_component.js:385</code></a>
     </span><br>
     <p>Method updates all registered varibles by keys <code>onupdates</code> and calls follower functions</p>
 

@@ -28,12 +28,42 @@ function li({ nth, first, last }){
     return share;
     
     function onclick(){ counter++; update({ counter }); }
-    function removeThisElement(input){ if(input.counter===2) this.remove(); }
+    function removeThisElement({ counter }){ if(counter===2) this.remove(); }
 }
 function sub_li({ nth, counter }){
     const { add, share }= $dom.component("LI", null);
             add("SPAN", { textContent: "This is sub-component: " });
             add("STRONG", { style: "color: darkblue" }, -1)
                 .onupdate({counter}, ({counter})=>({ textContent: `${nth} ('counter' is visible also here: ${counter} ;-))` }));
+    return share;
+}
+
+function testTextLi({ href= "https://www.seznam.cz" }= {}){
+    const { add, addText, setShift, share }= $dom.component("LI", null);
+        add("P", { textContent: "Link test: " });
+            add("A", { textContent: "link " }).onupdate({href}, ({href})=> ({ href }));
+                add("STRONG", null).onupdate({href}, ({href})=> ({ textContent: `(${href.replace("https://www.", "")})` }));
+            addText("!", -2);
+            add("BR", null, -1);
+            addText("Test new line.", -1);
+        setShift(-2);
+    for(let i=1; i<6; i++){
+        add("P", { textContent: "Test line no. " }, -1);
+            add("STRONG", { textContent: `${i}` });
+            addText("!", -1);
+        setShift(-2);
+    }
+    return share;
+}
+
+function testNesting(){
+    const { add, addText, setShift, share }= $dom.component("DIV", null);
+        setShift(0);
+    for(let i= 1; i<6; i++){
+        add("P", { textContent: `Paragraph no. ` }, -1);
+            add("STRONG", { textContent: `${i}` });
+            addText("!", -1);
+        setShift(-2);
+    }
     return share;
 }

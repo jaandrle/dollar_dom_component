@@ -7,34 +7,34 @@ for(let i=0, test_update; i<1; i++){
     test_update= li({ nth: "A", first: counter++, last: counter++ });
     test_update.mount(main_el);
     li({ nth: "B", first: counter++, last: counter++ }).mount(main_el);
-    test_update.update({ nth: "UPDATED", first: counter++, last: "Updated" });
+    test_update.update({ nth: "A UPDATED" });
 }
 console.timeEnd();
 
 function li({ nth, first, last }){
-    let counter= 0;
+    const counter= 0; /* init value */
     const { add, component, update, share }= $dom.component("LI", null)
-        .onupdate({counter}, ({counter})=> ({ style: `padding-left: ${counter}px;` }));
+         .onupdate(nth==="B" ? {counter} : null, ({counter})=> ({ style: `padding-left: ${counter}px;` }));
         add("UL", null);
             component(sub_li({ nth, counter }));
             add("LI", null, -1);
                 add("SPAN", { textContent: "First text in parent component (remove this span when clicked 2times): " })
-                .onupdate({counter}, removeThisElement);
+                 .onupdate({counter}, removeThisElement);
                 add("STRONG", { onclick, style: {cursor: "pointer", 'border-bottom': "1px solid black" } }, -1)
-                .onupdate({counter}, ({counter})=>({ textContent: `Element no.: ${first}, clicked: ${counter}times`, classList: { pokus: counter===3 } }));
+                 .onupdate({counter}, ({counter})=>({ textContent: `Element no.: ${first}, clicked: ${counter}times`, classList: { pokus: counter===3 } }));
             add("LI", null, -2);
                 add("SPAN", { textContent: "Last text in parent component: " });
                 add("STRONG", { textContent: last }, -1);
     return share;
     
-    function onclick(){ counter++; update({ counter }); }
+    function onclick(){ update(({ counter })=> ({ counter: counter+1 })); }
     function removeThisElement({ counter }){ if(counter===2) this.remove(); }
 }
 function sub_li({ nth, counter }){
     const { add, share }= $dom.component("LI", null);
             add("SPAN", { textContent: "This is sub-component: " });
             add("STRONG", { style: "color: darkblue" }, -1)
-                .onupdate({counter}, ({counter})=>({ textContent: `${nth} ('counter' is visible also here: ${counter} ;-))` }));
+             .onupdate({counter, nth}, ({counter, nth})=>({ textContent: `${nth} ('counter' is visible also here: ${counter} ;-))` }));
     return share;
 }
 

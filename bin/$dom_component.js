@@ -160,7 +160,7 @@ function init(global){
                 getReference: ()=> el,
                 oninit: function(fn){ fn(el); return component_out; },
                 onupdate: function(data, onUpdateFunction){
-                    if(!data) return false;
+                    if(!data) return component_out;
                     if(!internal_storage) internal_storage= initStorage();
                     $dom.assign(el, internal_storage.register(el, data, onUpdateFunction));
                     return component_out;
@@ -275,7 +275,6 @@ function init(global){
          *  - see [`add`](#methods_add)
          */
         function recalculateDeep(shift){
-            /* global console */console.log(deep);
             if(!shift) deep.push(all_els_counter);
             else { deep.splice(deep.length+1+shift); deep[deep.length-1]= all_els_counter; }
         }
@@ -368,6 +367,9 @@ function init(global){
                         else $dom.assign(el, new_attrs);
                     }
                 },
+                getData: function(){
+                    return data;
+                },
                 unregister
             };
             function unregister(el_id, data_keys){
@@ -406,7 +408,7 @@ function init(global){
          */
         function update(new_data){
             if(!internal_storage) return false;
-            return internal_storage.update(new_data);
+            return internal_storage.update(typeof new_data==="function" ? new_data(internal_storage.getData()) : new_data);
         }
         /**
          * Methods returns if it was `onupdate` used

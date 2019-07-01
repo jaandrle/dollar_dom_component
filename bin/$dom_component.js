@@ -78,7 +78,7 @@ function init(global){
      * @class $dom.component
      * @constructor
      * @param {String} el_name
-     *  - Name of element (for example `LI`, `P`, `A`, ...).
+     *  - Name of element (for example `LI`, `P`, `A`, …).
      *  - This is parent element of component.
      * @param {Object} attrs
      *  - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)

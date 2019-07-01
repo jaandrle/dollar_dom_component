@@ -447,7 +447,7 @@ function init(global){
      *      //result HTML: <body class="" style="color: red;" data-js_param="CLICKED">BODY</body>
      *      $dom.assign(el, { classList: { testClass: true } });//or 1
      *      //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
-     *      //...
+     *      //…
      */
     $dom.assign= function(element, object_attributes){
         const object_attributes_keys= Object.keys(object_attributes);

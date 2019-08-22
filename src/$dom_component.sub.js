@@ -4,7 +4,7 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
 /* global $dom_emptyPseudoComponent */
 /**
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
- * @class gulp_place("${app.standalone}/$dom_component_class_name.sub.js", "file")
+ * @class gulp_place("'$dom.component'+(app.standalone==='cordova' ? ' [cordova]' : '')", "eval")
  * @constructor
  * @param {String} el_name
  *  - Name of element (for example `LI`, `P`, `A`, …).

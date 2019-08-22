@@ -47,6 +47,7 @@ module.exports= function({gulp_replace= false, fs= false, variable_eval= false}=
                 else if(type==="file") return fileHandler(false, folder, fileNameVarHandler(name), spaces);
                 else if(type==="file_once") return fileHandler(true, folder, fileNameVarHandler(name), spaces);
                 else if(type==="variable") return spaces+string_wrapper+variable_eval(name)+string_wrapper+semicol+jshint_global;
+                else if(type==="eval") return spaces+variable_eval(name)+jshint_global;
             }
             function parseFile(file_data){
                 return file_data.replace(gulp_place_regex, function(full_match, spaces= "", name= false, type="file", semicol= "", jshint_global= ""){

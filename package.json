@@ -8,8 +8,8 @@
   "standalone": "standalone",
   "__Comment__sequence": "exclamation mark (!) on the start of task name means to escape it",
   "sequence": [
-    "doc",
-    "javascript"
+    "javascript",
+    "doc"
   ],
   "__SECTION_NPM": "",
   "name": "dollar_dom_component",

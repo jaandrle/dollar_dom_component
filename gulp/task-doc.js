@@ -12,6 +12,7 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
     "};";
     return function(cb){
         gulp.src(['./node_modules/yuidocjs/themes/simple/**/*'])
+            .pipe($g.replace("#main { width: 754px; }", "#main { width: calc(100% - 310px); }"))
             .pipe($g.replace("{{htmlTitle}}", "Documentation: "+app.name+"@"+app.version))
             .pipe($g.replace("{{projectVersion}}", app.version))
             .pipe($g.replace("{{title}}</a>", app.name+"</a>: {{moduleName}}"))
@@ -46,7 +47,7 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
             .pipe(gulp.dest('./gulp/theme/'))
             .on("end", function(){
                 let cmd;
-                cmd= $o.spawn("node", ['node_modules/yuidocjs/lib/cli', "--themedir", "./gulp/theme", "-o", "./docs", app.src_folder], {});
+                cmd= $o.spawn("node", ['node_modules/yuidocjs/lib/cli', "--themedir", "./gulp/theme", "-o", "./docs", app.bin_folder], {});
                 cmd.stdout.on('data', a=>$o.fs.appendFileSync($gulp_folder+'build.log', a.toString()));
                 cmd.on('close', cb);
             });

@@ -1,8 +1,8 @@
 {
     "project": {},
     "files": {
-        "src\\$dom_component.js": {
-            "name": "src\\$dom_component.js",
+        "bin\\$dom_component.js": {
+            "name": "bin\\$dom_component.js",
             "modules": {},
             "classes": {
                 "$dom.{namespace}": 1,
@@ -24,8 +24,8 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "file": "src\\$dom_component.js",
-            "line": 5,
+            "file": "bin\\$dom_component.js",
+            "line": 6,
             "description": "This NAMESPACE provides features for DOM elemnts.",
             "static": 1
         },
@@ -37,8 +37,8 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "file": "src\\$dom_component.js",
-            "line": 76,
+            "file": "bin\\$dom_component.js",
+            "line": 78,
             "description": "This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.",
             "is_constructor": 1,
             "params": [
@@ -59,7 +59,7 @@
                     "props": [
                         {
                             "name": "mapUpdate",
-                            "description": "- `[params.mapUpdate=undefined]`\n - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` ... see [`add`](#methods_add)",
+                            "description": "- `[params.mapUpdate=undefined]`\n - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [`add`](#methods_add)",
                             "type": "Function|Boolean"
                         }
                     ]
@@ -74,8 +74,8 @@
     "elements": {},
     "classitems": [
         {
-            "file": "src\\$dom_component.js",
-            "line": 11,
+            "file": "bin\\$dom_component.js",
+            "line": 12,
             "description": "Procedure removes all children of `container`",
             "itemtype": "method",
             "name": "empty",
@@ -89,8 +89,8 @@
             "class": "$dom.{namespace}"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 20,
+            "file": "bin\\$dom_component.js",
+            "line": 21,
             "description": "Procedure places `new_element` after `reference` elements",
             "itemtype": "method",
             "name": "insertAfter",
@@ -109,8 +109,8 @@
             "class": "$dom.{namespace}"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 31,
+            "file": "bin\\$dom_component.js",
+            "line": 32,
             "description": "Procedure replaces `el_old` element by new one (`new_el`)",
             "itemtype": "method",
             "name": "replace",
@@ -129,8 +129,8 @@
             "class": "$dom.{namespace}"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 118,
+            "file": "bin\\$dom_component.js",
+            "line": 120,
             "description": "This add element to component",
             "itemtype": "method",
             "name": "add",
@@ -160,13 +160,13 @@
                 "type": "Object"
             },
             "example": [
-                "\n     //#1\n     const UL= document.getElementById('SOME UL');\n     const { add }= $dom.component(\"LI\", { className: \"list_item\" });//<li class=\"list_item\">...</li>\n     add(\"DIV\", { textContent: \"Child of .list_item\", className: \"deep1\" });//<li class=\"list_item\"><div class=\"deep1\">...</div></li>\n         add(\"DIV\", { textContent: \"Child of div.deep1\", className: \"deep2\" });//...<div class=\"deep1\"><div class=\"deep2\">...</div></div>...\n             add(\"DIV\", { textContent: \"Child of div.deep2\", className: \"deep3\" });//...<div class=\"deep1\"><div class=\"deep2\"><div class=\"deep3\">...</div></div></div>...\n             add(\"DIV\", { textContent: \"Child of div.deep2\", className: \"deep3 mark\" }, -1);//...<div class=\"deep2\"><div class=\"deep3\">...</div><div class=\"deep3\">...</div></div>...\n     //next add(*) schoul be child of div.deep3.mark, by -1 it is ch.of div.deep2, by -2 ch.of div.deep1, by -3 ch.of li.list_item because div.deep3.mark is on 3rd level\n         add(\"DIV\", { textContent: \"Child of div.deep1\", className: \"deep2 nextone\" }, -2);//this is on 2nd level\n     add(\"DIV\", { textContent: \"Child of div.deep1\", className: \"deep2 nextone\" }, -2);//this is on 0 level\n         add(\"DIV\", null); // just DIV without attributes\n     ..."
+                "\n     const UL= document.getElementById('SOME UL');\n     const { add }= $dom.component(\"LI\", { className: \"list_item\" });\n     //result: <li class=\"list_item\">...</li>\n     add(\"DIV\", { textContent: \"Child of .list_item\", className: \"deep1\" });\n     //result: <li class=\"list_item\"><div class=\"deep1\">...</div></li>\n         add(\"DIV\", { textContent: \"Child of div.deep1\", className: \"deep2\" });\n         //result: ...<div class=\"deep1\"><div class=\"deep2\">...</div></div>...\n             add(\"DIV\", { textContent: \"Child of div.deep2\", className: \"deep3\" });\n             //result: ...<div class=\"deep1\"><div class=\"deep2\"><div class=\"deep3\">...</div></div></div>...\n             add(\"DIV\", { textContent: \"Child of div.deep2\", className: \"deep3 mark\" }, -1);\n             //result: ...<div class=\"deep2\"><div class=\"deep3\">...</div><div class=\"deep3\">...</div></div>...\n     //next add(*) schoul be child of div.deep3.mark, by -1 it is ch.of div.deep2, by -2 ch.of div.deep1, by -3 ch.of li.list_item because div.deep3.mark is on 3rd level\n         add(\"DIV\", { textContent: \"Child of div.deep1\", className: \"deep2 nextone\" }, -2);\n         //result: this is on 2nd level\n     add(\"DIV\", { textContent: \"Child of div.deep1\", className: \"deep2 nextone\" }, -2);\n     //result: this is on 0 level\n         add(\"DIV\", null);\n         //just DIV without attributes"
             ],
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 170,
+            "file": "bin\\$dom_component.js",
+            "line": 179,
             "description": "This add element to component",
             "itemtype": "method",
             "name": "addText",
@@ -194,8 +194,8 @@
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 202,
+            "file": "bin\\$dom_component.js",
+            "line": 212,
             "description": "Method for including another component by usint its `share` key.",
             "itemtype": "method",
             "name": "component",
@@ -216,8 +216,8 @@
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 220,
+            "file": "bin\\$dom_component.js",
+            "line": 231,
             "description": "Add element to live DOM",
             "itemtype": "method",
             "name": "mount",
@@ -240,21 +240,21 @@
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 257,
+            "file": "bin\\$dom_component.js",
+            "line": 269,
             "description": "Method remove element form live DOM and returns null",
             "itemtype": "method",
             "name": "destroy",
             "access": "public",
             "tagname": "",
             "example": [
-                "\n let { share: test }= $dom.component(\"DIV\", null);\n test.mount(document.body);\n test= test.destroy();"
+                "\n     let { share: test }= $dom.component(\"DIV\", null);\n     test.mount(document.body);\n     test= test.destroy();"
             ],
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 270,
+            "file": "bin\\$dom_component.js",
+            "line": 283,
             "description": "Updates `deep`",
             "access": "private",
             "tagname": "",
@@ -270,8 +270,8 @@
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 281,
+            "file": "bin\\$dom_component.js",
+            "line": 295,
             "description": "Returns parent element (or \"fragment pseudo element\")",
             "itemtype": "method",
             "name": "getParentElement",
@@ -280,8 +280,8 @@
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 289,
+            "file": "bin\\$dom_component.js",
+            "line": 304,
             "description": "Method provide way to change nesting behaviour. It can be helpful for loops",
             "itemtype": "method",
             "name": "setShift",
@@ -300,8 +300,8 @@
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 310,
+            "file": "bin\\$dom_component.js",
+            "line": 326,
             "description": "Initialize internal storage",
             "itemtype": "method",
             "name": "initStorage",
@@ -314,8 +314,8 @@
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 387,
+            "file": "bin\\$dom_component.js",
+            "line": 404,
             "description": "Method updates all registered varibles by keys `onupdates` and calls follower functions",
             "itemtype": "method",
             "name": "update",
@@ -334,8 +334,8 @@
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 413,
+            "file": "bin\\$dom_component.js",
+            "line": 431,
             "description": "Methods returns if it was `onupdate` used",
             "itemtype": "method",
             "name": "isStatic",
@@ -348,8 +348,8 @@
             "class": "$dom.component"
         },
         {
-            "file": "src\\$dom_component.js",
-            "line": 424,
+            "file": "bin\\$dom_component.js",
+            "line": 443,
             "description": "Procedure for merging object into the element properties.\nVery simple example: `$dom.assign(document.body, { className: \"test\" });` is equivalent to `document.body.className= \"test\";`.\nIt is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).",
             "itemtype": "method",
             "name": "assign",
@@ -362,11 +362,11 @@
                 {
                     "name": "object_attributes",
                     "description": "- Object shall holds **NodeElement** properties like `className`, `textContent`, ...\n - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById(\"ID\"), { dataset: { test: \"TEST\" } }); //<p id=\"ID\" data-test=\"TEST\"></p>`.\n - The same notation can be used for **CSS variables** (the key is called `style_vars`).\n - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: \"color: red;\" });` and `$dom.assign(el, { style: { color: \"red\" } })` is equivalent to `el.setAttribute(\"style\", \"color: red;\");`\n - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`\n - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).",
-                    "type": "Object"
+                    "type": "...Object"
                 }
             ],
             "example": [
-                "\n     const el= document.body;\n     const onclick= function(){ console.log(this.dataset.js_param); };\n     $dom.assign(el, { textContent: \"BODY\", style: \"color: red;\", dataset: { js_param: \"CLICKED\" }, onclick });\n     //result HTML: <body style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     //console output on click: \"CLICKED\"\n     $dom.assign(el, { classList: { testClass: -1 } });\n     //result HTML: <body class=\"testClass\" style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     $dom.assign(el, { classList: { testClass: -1 } });\n     //result HTML: <body class=\"\" style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     $dom.assign(el, { classList: { testClass: true } });//or 1\n     //result HTML: <body class=\"testClass\" style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     //…"
+                "\n     const el= document.body;\n     const onclick= function(){ console.log(this.dataset.js_param); };\n     $dom.assign(el, { textContent: \"BODY\", style: \"color: red;\", dataset: { js_param: \"CLICKED\" }, onclick });\n     //result HTML: <body style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     //console output on click: \"CLICKED\"\n     $dom.assign(el, { classList: { testClass: -1 } });\n     //result HTML: <body class=\"testClass\" style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     $dom.assign(el, { classList: { testClass: -1 } });\n     //result HTML: <body class=\"\" style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     $dom.assign(el, { classList: { testClass: true } });//or 1\n     //result HTML: <body class=\"testClass\" style=\"color: red;\" data-js_param=\"CLICKED\">BODY</body>\n     //..."
             ],
             "class": "$dom.{namespace}"
         }
@@ -374,15 +374,15 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\$dom_component.js:118"
+            "line": " bin\\$dom_component.js:120"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\$dom_component.js:170"
+            "line": " bin\\$dom_component.js:179"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src\\$dom_component.js:310"
+            "line": " bin\\$dom_component.js:326"
         }
     ]
 }

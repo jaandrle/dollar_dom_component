@@ -84,7 +84,7 @@
                     <h2 class="no-toc">Files</h2>
                 </div>
                 <div class="bd">
-                    <ul><li>src\$dom_component.js/<ul></ul></li></ul>
+                    <ul><li>bin\$dom_component.js/<ul></ul></li></ul>
                 </div>
             </div>
             
@@ -92,7 +92,7 @@
 
         <div id="main" class="yui3-u">
             <div class="content"><h4>Class $dom.component</h4>
-<span class="foundat">Class defined in: <a href="../files/src_$dom_component.js.html#l76"><code>src\$dom_component.js:76</code></a></span>
+<span class="foundat">Class defined in: <a href="../files/bin_$dom_component.js.html#l78"><code>bin\$dom_component.js:78</code></a></span>
 <div class="intro"><p>This 'functional class' is syntax sugar around <a href="https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment"><code>DocumentFragment</code></a> for creating DOM components and their adding to live DOM in performance friendly way.</p>
 </div>
 
@@ -102,7 +102,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l76"><code>src\$dom_component.js:76</code></a>
+        <a href="../files/bin_$dom_component.js.html#l78"><code>bin\$dom_component.js:78</code></a>
     </span><br>
     
     <strong>Parameters:</strong>
@@ -128,7 +128,7 @@
             <ul>
                 <li><code>mapUpdate</code> <strong>&lt;Function | Boolean&gt;</strong> <ul>
 <li><code>[params.mapUpdate=undefined]</code></li>
-<li>This function (if defined) remap <code>update(DATA)</code> to varibales used in keys <code>attrs.onupdate</code> ... see <a href="#methods_add"><code>add</code></a></li>
+<li>This function (if defined) remap <code>update(DATA)</code> to varibales used in keys <code>attrs.onupdate</code> … see <a href="#methods_add"><code>add</code></a></li>
 </ul>
 
                 </li>
@@ -166,7 +166,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l118"><code>src\$dom_component.js:118</code></a>
+        <a href="../files/bin_$dom_component.js.html#l120"><code>bin\$dom_component.js:120</code></a>
     </span><br>
     <p>This add element to component</p>
 
@@ -208,18 +208,24 @@
 </ul>
 </div>
         <h5>Example</h5>
-        <pre class="code prettyprint"><code> //#1
- const UL= document.getElementById('SOME UL');
- const { add }= $dom.component(&quot;LI&quot;, { className: &quot;list_item&quot; });//&lt;li class=&quot;list_item&quot;&gt;...&lt;/li&gt;
- add(&quot;DIV&quot;, { textContent: &quot;Child of .list_item&quot;, className: &quot;deep1&quot; });//&lt;li class=&quot;list_item&quot;&gt;&lt;div class=&quot;deep1&quot;&gt;...&lt;/div&gt;&lt;/li&gt;
-     add(&quot;DIV&quot;, { textContent: &quot;Child of div.deep1&quot;, className: &quot;deep2&quot; });//...&lt;div class=&quot;deep1&quot;&gt;&lt;div class=&quot;deep2&quot;&gt;...&lt;/div&gt;&lt;/div&gt;...
-         add(&quot;DIV&quot;, { textContent: &quot;Child of div.deep2&quot;, className: &quot;deep3&quot; });//...&lt;div class=&quot;deep1&quot;&gt;&lt;div class=&quot;deep2&quot;&gt;&lt;div class=&quot;deep3&quot;&gt;...&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;...
-         add(&quot;DIV&quot;, { textContent: &quot;Child of div.deep2&quot;, className: &quot;deep3 mark&quot; }, -1);//...&lt;div class=&quot;deep2&quot;&gt;&lt;div class=&quot;deep3&quot;&gt;...&lt;/div&gt;&lt;div class=&quot;deep3&quot;&gt;...&lt;/div&gt;&lt;/div&gt;...
+        <pre class="code prettyprint"><code> const UL= document.getElementById('SOME UL');
+ const { add }= $dom.component(&quot;LI&quot;, { className: &quot;list_item&quot; });
+ //result: &lt;li class=&quot;list_item&quot;&gt;...&lt;/li&gt;
+ add(&quot;DIV&quot;, { textContent: &quot;Child of .list_item&quot;, className: &quot;deep1&quot; });
+ //result: &lt;li class=&quot;list_item&quot;&gt;&lt;div class=&quot;deep1&quot;&gt;...&lt;/div&gt;&lt;/li&gt;
+     add(&quot;DIV&quot;, { textContent: &quot;Child of div.deep1&quot;, className: &quot;deep2&quot; });
+     //result: ...&lt;div class=&quot;deep1&quot;&gt;&lt;div class=&quot;deep2&quot;&gt;...&lt;/div&gt;&lt;/div&gt;...
+         add(&quot;DIV&quot;, { textContent: &quot;Child of div.deep2&quot;, className: &quot;deep3&quot; });
+         //result: ...&lt;div class=&quot;deep1&quot;&gt;&lt;div class=&quot;deep2&quot;&gt;&lt;div class=&quot;deep3&quot;&gt;...&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;...
+         add(&quot;DIV&quot;, { textContent: &quot;Child of div.deep2&quot;, className: &quot;deep3 mark&quot; }, -1);
+         //result: ...&lt;div class=&quot;deep2&quot;&gt;&lt;div class=&quot;deep3&quot;&gt;...&lt;/div&gt;&lt;div class=&quot;deep3&quot;&gt;...&lt;/div&gt;&lt;/div&gt;...
  //next add(*) schoul be child of div.deep3.mark, by -1 it is ch.of div.deep2, by -2 ch.of div.deep1, by -3 ch.of li.list_item because div.deep3.mark is on 3rd level
-     add(&quot;DIV&quot;, { textContent: &quot;Child of div.deep1&quot;, className: &quot;deep2 nextone&quot; }, -2);//this is on 2nd level
- add(&quot;DIV&quot;, { textContent: &quot;Child of div.deep1&quot;, className: &quot;deep2 nextone&quot; }, -2);//this is on 0 level
-     add(&quot;DIV&quot;, null); // just DIV without attributes
- ...</code></pre>
+     add(&quot;DIV&quot;, { textContent: &quot;Child of div.deep1&quot;, className: &quot;deep2 nextone&quot; }, -2);
+     //result: this is on 2nd level
+ add(&quot;DIV&quot;, { textContent: &quot;Child of div.deep1&quot;, className: &quot;deep2 nextone&quot; }, -2);
+ //result: this is on 0 level
+     add(&quot;DIV&quot;, null);
+     //just DIV without attributes</code></pre>
 
 </div>
 <a name="methods_addText"></a>
@@ -228,7 +234,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l170"><code>src\$dom_component.js:170</code></a>
+        <a href="../files/bin_$dom_component.js.html#l179"><code>bin\$dom_component.js:179</code></a>
     </span><br>
     <p>This add element to component</p>
 
@@ -273,7 +279,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l202"><code>src\$dom_component.js:202</code></a>
+        <a href="../files/bin_$dom_component.js.html#l212"><code>bin\$dom_component.js:212</code></a>
     </span><br>
     <p>Method for including another component by usint its <code>share</code> key.</p>
 
@@ -298,14 +304,14 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l257"><code>src\$dom_component.js:257</code></a>
+        <a href="../files/bin_$dom_component.js.html#l269"><code>bin\$dom_component.js:269</code></a>
     </span><br>
     <p>Method remove element form live DOM and returns null</p>
 
         <h5>Example</h5>
-        <p>let { share: test }= $dom.component(&quot;DIV&quot;, null);
-test.mount(document.body);
-test= test.destroy();</p>
+        <pre class="code prettyprint"><code> let { share: test }= $dom.component(&quot;DIV&quot;, null);
+ test.mount(document.body);
+ test= test.destroy();</code></pre>
 
 </div>
 <a name="methods_getParentElement"></a>
@@ -314,7 +320,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l281"><code>src\$dom_component.js:281</code></a>
+        <a href="../files/bin_$dom_component.js.html#l295"><code>bin\$dom_component.js:295</code></a>
     </span><br>
     <p>Returns parent element (or &quot;fragment pseudo element&quot;)</p>
 
@@ -325,7 +331,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l310"><code>src\$dom_component.js:310</code></a>
+        <a href="../files/bin_$dom_component.js.html#l326"><code>bin\$dom_component.js:326</code></a>
     </span><br>
     <p>Initialize internal storage</p>
 
@@ -340,7 +346,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l413"><code>src\$dom_component.js:413</code></a>
+        <a href="../files/bin_$dom_component.js.html#l431"><code>bin\$dom_component.js:431</code></a>
     </span><br>
     <p>Methods returns if it was <code>onupdate</code> used</p>
 
@@ -355,7 +361,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l220"><code>src\$dom_component.js:220</code></a>
+        <a href="../files/bin_$dom_component.js.html#l231"><code>bin\$dom_component.js:231</code></a>
     </span><br>
     <p>Add element to live DOM</p>
 
@@ -389,7 +395,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l270"><code>src\$dom_component.js:270</code></a>
+        <a href="../files/bin_$dom_component.js.html#l283"><code>bin\$dom_component.js:283</code></a>
     </span><br>
     <p>Updates <code>deep</code></p>
 
@@ -410,7 +416,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l289"><code>src\$dom_component.js:289</code></a>
+        <a href="../files/bin_$dom_component.js.html#l304"><code>bin\$dom_component.js:304</code></a>
     </span><br>
     <p>Method provide way to change nesting behaviour. It can be helpful for loops</p>
 
@@ -441,7 +447,7 @@ test= test.destroy();</p>
     <br>
     <span class="foundat">
         
-        <a href="../files/src_$dom_component.js.html#l387"><code>src\$dom_component.js:387</code></a>
+        <a href="../files/bin_$dom_component.js.html#l404"><code>bin\$dom_component.js:404</code></a>
     </span><br>
     <p>Method updates all registered varibles by keys <code>onupdates</code> and calls follower functions</p>
 

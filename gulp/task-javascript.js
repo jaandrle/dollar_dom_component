@@ -1,7 +1,6 @@
 /* jshint esversion: 6,-W097, -W040, node: true, expr: true, undef: true */
 module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
     /* jshint -W061 */const gulp_place= require("./gulp_place.js")({gulp_replace: $g.replace, fs: $o.fs, variable_eval: (str)=> eval(str)});/* jshint +W061 */
-    const new_line= ()=>"\n";
     return function(cb){
         let cmd;
         cmd= $o.spawn("node", ['node_modules/jshint/bin/jshint', app.src_folder], {});

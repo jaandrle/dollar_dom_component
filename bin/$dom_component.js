@@ -1,4 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
+/* global gulp_place */
 init(window);
 function init(global){
     "use strict";
@@ -7,7 +8,7 @@ function init(global){
      * @class $dom.{namespace}
      * @static
      */
-    let $dom= {
+    const $dom= {
         /**
          * Procedure removes all children of `container`
          * @method empty
@@ -39,6 +40,7 @@ function init(global){
             el_old.remove();
         }
     };
+    /* standalone= "standalone"; */
     const $dom_emptyPseudoComponent= (function(){
         const share= { mount, update, destroy, isStatic };
         const component_out= { add, component, mount, update, share };
@@ -85,7 +87,7 @@ function init(global){
      * @param {Object} params
      * @param {Function|Boolean} params.mapUpdate
      *  - `[params.mapUpdate=undefined]`
-     *  - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` ... see [`add`](#methods_add)
+     *  - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [`add`](#methods_add)
      * @return {$dom.component}
      *  - 'functional class instance': object `{ add, component, mount, update, share, onupdate }`
      *  - `share` is Object for transfering methods somewhere else (like for using in another component, see [`component`](#methods_component))
@@ -134,18 +136,24 @@ function init(global){
          *      - Example: `add(...).onupdate({counter}, _=>({ textContent: counter }))` registers listerner to `counter`. When the `udate({ ... counter: something, ...})` is called this element changes `textContent`.
          *      - See [`update`](#methods_update)
          * @example
-         *      //#1
          *      const UL= document.getElementById('SOME UL');
-         *      const { add }= $dom.component("LI", { className: "list_item" });//<li class="list_item">...</li>
-         *      add("DIV", { textContent: "Child of .list_item", className: "deep1" });//<li class="list_item"><div class="deep1">...</div></li>
-         *          add("DIV", { textContent: "Child of div.deep1", className: "deep2" });//...<div class="deep1"><div class="deep2">...</div></div>...
-         *              add("DIV", { textContent: "Child of div.deep2", className: "deep3" });//...<div class="deep1"><div class="deep2"><div class="deep3">...</div></div></div>...
-         *              add("DIV", { textContent: "Child of div.deep2", className: "deep3 mark" }, -1);//...<div class="deep2"><div class="deep3">...</div><div class="deep3">...</div></div>...
+         *      const { add }= $dom.component("LI", { className: "list_item" });
+         *      //result: <li class="list_item">...</li>
+         *      add("DIV", { textContent: "Child of .list_item", className: "deep1" });
+         *      //result: <li class="list_item"><div class="deep1">...</div></li>
+         *          add("DIV", { textContent: "Child of div.deep1", className: "deep2" });
+         *          //result: ...<div class="deep1"><div class="deep2">...</div></div>...
+         *              add("DIV", { textContent: "Child of div.deep2", className: "deep3" });
+         *              //result: ...<div class="deep1"><div class="deep2"><div class="deep3">...</div></div></div>...
+         *              add("DIV", { textContent: "Child of div.deep2", className: "deep3 mark" }, -1);
+         *              //result: ...<div class="deep2"><div class="deep3">...</div><div class="deep3">...</div></div>...
          *      //next add(*) schoul be child of div.deep3.mark, by -1 it is ch.of div.deep2, by -2 ch.of div.deep1, by -3 ch.of li.list_item because div.deep3.mark is on 3rd level
-         *          add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);//this is on 2nd level
-         *      add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);//this is on 0 level
-         *          add("DIV", null); // just DIV without attributes
-         *      ...
+         *          add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
+         *          //result: this is on 2nd level
+         *      add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
+         *      //result: this is on 0 level
+         *          add("DIV", null);
+         *          //just DIV without attributes
          */
         function add(el_name, attrs, shift= 0){
             recalculateDeep(shift);
@@ -167,6 +175,7 @@ function init(global){
                 }
             }, component_out);
         }
+        
         /**
          * This add element to component
          * @method addText
@@ -199,6 +208,7 @@ function init(global){
                 oninit: function(fn){ fn(el); return component_out; }
             }, component_out);
         }
+        
         /**
          * Method for including another component by usint its `share` key.
          * @method component
@@ -217,6 +227,7 @@ function init(global){
             all_els_counter+= 1;
             return component_out;
         }
+        
         /**
          * Add element to live DOM
          * @method mount
@@ -254,19 +265,21 @@ function init(global){
             }
             return container;
         }
+        
         /**
          * Method remove element form live DOM and returns null
          * @method destroy
          * @public
          * @example
-         *  let { share: test }= $dom.component("DIV", null);
-         *  test.mount(document.body);
-         *  test= test.destroy();
+         *      let { share: test }= $dom.component("DIV", null);
+         *      test.mount(document.body);
+         *      test= test.destroy();
          */
         function destroy(){
             container.remove();
             return null;
         }
+        
         /**
          * Updates `deep`
          * @private
@@ -278,6 +291,7 @@ function init(global){
             if(!shift) deep.push(all_els_counter);
             else { deep.splice(deep.length+1+shift); deep[deep.length-1]= all_els_counter; }
         }
+        
         /**
          * Returns parent element (or "fragment pseudo element")
          * @method getParentElement
@@ -286,6 +300,7 @@ function init(global){
         function getParentElement(){
             return els[deep[deep.length-2]] || fragment;
         }
+        
         /**
          * Method provide way to change nesting behaviour. It can be helpful for loops
          * @method setShift
@@ -294,19 +309,20 @@ function init(global){
          *  - see [`add`](#methods_add)
          * @example
          *      function testNesting(){
-         *          const { add, setShift, share }= $dom.component("DIV", null);
-         *              setShift(0);
-         *          for(let i= 0; i<5; i++){
-         *              add("P", { textContent: `Paragraph no. ${i}.` }, -1);
-         *          }
-         *          return share;
-         *      }
-         */
-        function setShift(shift= 0){
-            let last;
-            if(!shift){ last= deep.pop(); deep.push(last, last); }
-            else deep.splice(deep.length+1+shift);
-         }
+            *          const { add, setShift, share }= $dom.component("DIV", null);
+            *              setShift(0);
+            *          for(let i= 0; i<5; i++){
+            *              add("P", { textContent: `Paragraph no. ${i}.` }, -1);
+            *          }
+            *          return share;
+            *      }
+            */
+            function setShift(shift= 0){
+                let last;
+                if(!shift){ last= deep.pop(); deep.push(last, last); }
+                else deep.splice(deep.length+1+shift);
+            }
+        
         /**
          * Initialize internal storage
          * @method initStorage
@@ -384,6 +400,7 @@ function init(global){
                 function el_idFilter(v){ return v!==el_id; }
             }
         }
+        
         /**
          * Method updates all registered varibles by keys `onupdates` and calls follower functions
          * @method update
@@ -410,6 +427,7 @@ function init(global){
             if(!internal_storage) return false;
             return internal_storage.update(typeof new_data==="function" ? new_data(internal_storage.getData()) : new_data);
         }
+        
         /**
          * Methods returns if it was `onupdate` used
          * @method isStatic
@@ -420,6 +438,7 @@ function init(global){
         function isStatic(){
             return !internal_storage;
         }
+        
     };
     /**
      * Procedure for merging object into the element properties.
@@ -428,7 +447,7 @@ function init(global){
      * @method assign
      * @for $dom.{namespace}
      * @param {NodeElement} element
-     * @param {Object} object_attributes
+     * @param {...Object} object_attributes
      *  - Object shall holds **NodeElement** properties like `className`, `textContent`, ...
      *  - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
      *  - The same notation can be used for **CSS variables** (the key is called `style_vars`).
@@ -447,9 +466,10 @@ function init(global){
      *      //result HTML: <body class="" style="color: red;" data-js_param="CLICKED">BODY</body>
      *      $dom.assign(el, { classList: { testClass: true } });//or 1
      *      //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
-     *      //…
+     *      //...
      */
-    $dom.assign= function(element, object_attributes){
+    $dom.assign= function(element, ...objects_attributes){
+        const object_attributes= Object.assign({}, ...objects_attributes);
         const object_attributes_keys= Object.keys(object_attributes);
         for(let i=0, key, attr, i_length= object_attributes_keys.length; i<i_length; i++){
             key= object_attributes_keys[i];
@@ -483,5 +503,6 @@ function init(global){
             }
         }
     };
+    
     global.$dom= $dom;
 }

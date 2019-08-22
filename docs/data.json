@@ -25,7 +25,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "bin\\$dom_component.js",
-            "line": 6,
+            "line": 5,
             "description": "This NAMESPACE provides features for DOM elemnts.",
             "static": 1
         },
@@ -38,7 +38,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "bin\\$dom_component.js",
-            "line": 78,
+            "line": 77,
             "description": "This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.",
             "is_constructor": 1,
             "params": [
@@ -75,7 +75,7 @@
     "classitems": [
         {
             "file": "bin\\$dom_component.js",
-            "line": 12,
+            "line": 11,
             "description": "Procedure removes all children of `container`",
             "itemtype": "method",
             "name": "empty",
@@ -90,7 +90,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 21,
+            "line": 20,
             "description": "Procedure places `new_element` after `reference` elements",
             "itemtype": "method",
             "name": "insertAfter",
@@ -110,7 +110,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 32,
+            "line": 31,
             "description": "Procedure replaces `el_old` element by new one (`new_el`)",
             "itemtype": "method",
             "name": "replace",
@@ -130,7 +130,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 120,
+            "line": 119,
             "description": "This add element to component",
             "itemtype": "method",
             "name": "add",
@@ -166,7 +166,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 179,
+            "line": 178,
             "description": "This add element to component",
             "itemtype": "method",
             "name": "addText",
@@ -195,7 +195,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 212,
+            "line": 211,
             "description": "Method for including another component by usint its `share` key.",
             "itemtype": "method",
             "name": "component",
@@ -217,7 +217,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 231,
+            "line": 230,
             "description": "Add element to live DOM",
             "itemtype": "method",
             "name": "mount",
@@ -241,7 +241,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 269,
+            "line": 268,
             "description": "Method remove element form live DOM and returns null",
             "itemtype": "method",
             "name": "destroy",
@@ -254,7 +254,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 283,
+            "line": 282,
             "description": "Updates `deep`",
             "access": "private",
             "tagname": "",
@@ -271,7 +271,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 295,
+            "line": 294,
             "description": "Returns parent element (or \"fragment pseudo element\")",
             "itemtype": "method",
             "name": "getParentElement",
@@ -281,7 +281,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 304,
+            "line": 303,
             "description": "Method provide way to change nesting behaviour. It can be helpful for loops",
             "itemtype": "method",
             "name": "setShift",
@@ -301,7 +301,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 326,
+            "line": 325,
             "description": "Initialize internal storage",
             "itemtype": "method",
             "name": "initStorage",
@@ -315,7 +315,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 404,
+            "line": 403,
             "description": "Method updates all registered varibles by keys `onupdates` and calls follower functions",
             "itemtype": "method",
             "name": "update",
@@ -335,7 +335,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 438,
+            "line": 437,
             "description": "Methods returns if it was `onupdate` used",
             "itemtype": "method",
             "name": "isStatic",
@@ -349,7 +349,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 450,
+            "line": 449,
             "description": "Procedure for merging object into the element properties.\nVery simple example: `$dom.assign(document.body, { className: \"test\" });` is equivalent to `document.body.className= \"test\";`.\nIt is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).",
             "itemtype": "method",
             "name": "assign",
@@ -374,15 +374,15 @@
     "warnings": [
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " bin\\$dom_component.js:120"
+            "line": " bin\\$dom_component.js:119"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " bin\\$dom_component.js:179"
+            "line": " bin\\$dom_component.js:178"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " bin\\$dom_component.js:326"
+            "line": " bin\\$dom_component.js:325"
         }
     ]
 }

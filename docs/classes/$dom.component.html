@@ -346,7 +346,7 @@
     <br>
     <span class="foundat">
         
-        <a href="../files/bin_$dom_component.js.html#l431"><code>bin\$dom_component.js:431</code></a>
+        <a href="../files/bin_$dom_component.js.html#l438"><code>bin\$dom_component.js:438</code></a>
     </span><br>
     <p>Methods returns if it was <code>onupdate</code> used</p>
 
@@ -454,28 +454,35 @@
     <strong>Parameters:</strong>
     <ul class="params">
         <li>
-            <code>new_data</code> <strong>&lt;Object&gt;</strong>
+            <code>new_data</code> <strong>&lt;Object | Function&gt;</strong>
         <ul>
 <li>When <code>$dom.component</code> is initialized, it is possible to register <code>mapUpdate</code></li>
 <li><strong>It's because internally, it is used <code>Object.assign</code> (no deep copy) to merge new data with older one!!!</strong></li>
+<li>It is also possible to register function to detect changes itself see examples</li>
 </ul>
 
         </li>
     </ul>
         <h5>Example</h5>
-        <pre class="code prettyprint"><code> const data_A= { a: &quot;A&quot; };
+        <pre class="code prettyprint"><code> // SIMPLE example
+ const data_A= { a: &quot;A&quot; };
  const data_A_update= { a: &quot;AAA&quot; };
  const { add, mount, update }= $dom.component(&quot;UL&quot;, null);
-     add(&quot;LI&quot;, { onupdate: [ { a }, ({ a })=&gt;({ textContent: a }) ] });//<code>[ { a },</code> add listener for &quot;a&quot;
+     add(&quot;LI&quot;, { onupdate: [ data_A, ({ a })=&gt;({ textContent: a }) ] });//<code>[ { a },</code> add listener for &quot;a&quot;
  mount(document.body);
  update(data_A_update);
- //BUT
+ // EXAMPLE WITH <code>mapUpdate</code>
  const data_B= { a: { b: &quot;A&quot; }};
  const data_B_update= { a: { b: &quot;AAA&quot; }};
  const { add, mount, update }= $dom.component(&quot;UL&quot;, null, { mapUpdate: d=&gt;({ a: d.a.b }) });
-     add(&quot;LI&quot;, { onupdate: [ { a: data_B.a.b }, ({ a })=&gt;({ textContent: a }) ] });//<code>[ { a },</code> add listener for &quot;a&quot;
+     add(&quot;LI&quot;, { onupdate: [ data_B, ({ a })=&gt;({ textContent: a }) ] });//<code>[ { a },</code> add listener for &quot;a&quot; see <code>mapUpdate</code>
  mount(document.body);
- update(data_B_update);</code></pre>
+ update(data_B_update);
+ // EXAMPLE WITH FUNCTION AS ARGUMENT OF <code>update</code>
+ const { add, mount, update }= $dom.component(&quot;UL&quot;, null, { mapUpdate: d=&gt;({ a: d.a.b }) });
+     add(&quot;LI&quot;, { onupdate: [ { a: 1 }, ({ a })=&gt;({ textContent: a }) ] });//<code>[ { a },</code> add listener for &quot;a&quot; see <code>mapUpdate</code>
+ mount(document.body);
+ update(({ a })=&gt; { a: ++a });</code></pre>
 
 </div>
             </div>

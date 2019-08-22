@@ -481,23 +481,30 @@ function init(global){
          * Method updates all registered varibles by keys &#x60;onupdates&#x60; and calls follower functions
          * @method update
          * @public
-         * @param {Object} new_data
+         * @param {Object|Function} new_data
          *  - When &#x60;$dom.component&#x60; is initialized, it is possible to register &#x60;mapUpdate&#x60;
          *  - **It&#x27;s because internally, it is used &#x60;Object.assign&#x60; (no deep copy) to merge new data with older one!!!**
+         *  - It is also possible to register function to detect changes itself see examples
          * @example
+         *      // SIMPLE example
          *      const data_A= { a: &quot;A&quot; };
          *      const data_A_update= { a: &quot;AAA&quot; };
          *      const { add, mount, update }= $dom.component(&quot;UL&quot;, null);
-         *          add(&quot;LI&quot;, { onupdate: [ { a }, ({ a })=&gt;({ textContent: a }) ] });//&#x60;[ { a },&#x60; add listener for &quot;a&quot;
+         *          add(&quot;LI&quot;, { onupdate: [ data_A, ({ a })=&gt;({ textContent: a }) ] });//&#x60;[ { a },&#x60; add listener for &quot;a&quot;
          *      mount(document.body);
          *      update(data_A_update);
-         *      //BUT
+         *      // EXAMPLE WITH &#x60;mapUpdate&#x60;
          *      const data_B= { a: { b: &quot;A&quot; }};
          *      const data_B_update= { a: { b: &quot;AAA&quot; }};
          *      const { add, mount, update }= $dom.component(&quot;UL&quot;, null, { mapUpdate: d=&gt;({ a: d.a.b }) });
-         *          add(&quot;LI&quot;, { onupdate: [ { a: data_B.a.b }, ({ a })=&gt;({ textContent: a }) ] });//&#x60;[ { a },&#x60; add listener for &quot;a&quot;
+         *          add(&quot;LI&quot;, { onupdate: [ data_B, ({ a })=&gt;({ textContent: a }) ] });//&#x60;[ { a },&#x60; add listener for &quot;a&quot; see &#x60;mapUpdate&#x60;
          *      mount(document.body);
          *      update(data_B_update);
+         *      // EXAMPLE WITH FUNCTION AS ARGUMENT OF &#x60;update&#x60;
+         *      const { add, mount, update }= $dom.component(&quot;UL&quot;, null, { mapUpdate: d=&gt;({ a: d.a.b }) });
+         *          add(&quot;LI&quot;, { onupdate: [ { a: 1 }, ({ a })=&gt;({ textContent: a }) ] });//&#x60;[ { a },&#x60; add listener for &quot;a&quot; see &#x60;mapUpdate&#x60;
+         *      mount(document.body);
+         *      update(({ a })=&gt; { a: ++a });
          */
         function update(new_data){
             if(!internal_storage) return false;

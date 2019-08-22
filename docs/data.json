@@ -324,18 +324,18 @@
             "params": [
                 {
                     "name": "new_data",
-                    "description": "- When `$dom.component` is initialized, it is possible to register `mapUpdate`\n - **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**",
-                    "type": "Object"
+                    "description": "- When `$dom.component` is initialized, it is possible to register `mapUpdate`\n - **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**\n - It is also possible to register function to detect changes itself see examples",
+                    "type": "Object|Function"
                 }
             ],
             "example": [
-                "\n     const data_A= { a: \"A\" };\n     const data_A_update= { a: \"AAA\" };\n     const { add, mount, update }= $dom.component(\"UL\", null);\n         add(\"LI\", { onupdate: [ { a }, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for \"a\"\n     mount(document.body);\n     update(data_A_update);\n     //BUT\n     const data_B= { a: { b: \"A\" }};\n     const data_B_update= { a: { b: \"AAA\" }};\n     const { add, mount, update }= $dom.component(\"UL\", null, { mapUpdate: d=>({ a: d.a.b }) });\n         add(\"LI\", { onupdate: [ { a: data_B.a.b }, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for \"a\"\n     mount(document.body);\n     update(data_B_update);"
+                "\n     // SIMPLE example\n     const data_A= { a: \"A\" };\n     const data_A_update= { a: \"AAA\" };\n     const { add, mount, update }= $dom.component(\"UL\", null);\n         add(\"LI\", { onupdate: [ data_A, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for \"a\"\n     mount(document.body);\n     update(data_A_update);\n     // EXAMPLE WITH `mapUpdate`\n     const data_B= { a: { b: \"A\" }};\n     const data_B_update= { a: { b: \"AAA\" }};\n     const { add, mount, update }= $dom.component(\"UL\", null, { mapUpdate: d=>({ a: d.a.b }) });\n         add(\"LI\", { onupdate: [ data_B, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for \"a\" see `mapUpdate`\n     mount(document.body);\n     update(data_B_update);\n     // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`\n     const { add, mount, update }= $dom.component(\"UL\", null, { mapUpdate: d=>({ a: d.a.b }) });\n         add(\"LI\", { onupdate: [ { a: 1 }, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for \"a\" see `mapUpdate`\n     mount(document.body);\n     update(({ a })=> { a: ++a });"
             ],
             "class": "$dom.component"
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 431,
+            "line": 438,
             "description": "Methods returns if it was `onupdate` used",
             "itemtype": "method",
             "name": "isStatic",
@@ -349,7 +349,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 443,
+            "line": 450,
             "description": "Procedure for merging object into the element properties.\nVery simple example: `$dom.assign(document.body, { className: \"test\" });` is equivalent to `document.body.className= \"test\";`.\nIt is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).",
             "itemtype": "method",
             "name": "assign",

@@ -39,6 +39,7 @@ const $dom_emptyPseudoComponent= (function(){
 /**
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
  * @class $dom.component
+ * @version 1.0.0
  * @constructor
  * @param {String} el_name
  *  - Name of element (for example `LI`, `P`, `A`, …).

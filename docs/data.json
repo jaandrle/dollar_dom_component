@@ -40,6 +40,7 @@
             "file": "bin\\$dom_component.js",
             "line": 77,
             "description": "This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.",
+            "version": "1.0.0",
             "is_constructor": 1,
             "params": [
                 {
@@ -130,7 +131,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 119,
+            "line": 120,
             "description": "This add element to component",
             "itemtype": "method",
             "name": "add",
@@ -166,7 +167,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 178,
+            "line": 179,
             "description": "This add element to component",
             "itemtype": "method",
             "name": "addText",
@@ -195,7 +196,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 211,
+            "line": 212,
             "description": "Method for including another component by usint its `share` key.",
             "itemtype": "method",
             "name": "component",
@@ -217,7 +218,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 230,
+            "line": 231,
             "description": "Add element to live DOM",
             "itemtype": "method",
             "name": "mount",
@@ -241,7 +242,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 268,
+            "line": 269,
             "description": "Method remove element form live DOM and returns null",
             "itemtype": "method",
             "name": "destroy",
@@ -254,7 +255,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 282,
+            "line": 283,
             "description": "Updates `deep`",
             "access": "private",
             "tagname": "",
@@ -271,7 +272,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 294,
+            "line": 295,
             "description": "Returns parent element (or \"fragment pseudo element\")",
             "itemtype": "method",
             "name": "getParentElement",
@@ -281,7 +282,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 303,
+            "line": 304,
             "description": "Method provide way to change nesting behaviour. It can be helpful for loops",
             "itemtype": "method",
             "name": "setShift",
@@ -301,7 +302,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 325,
+            "line": 326,
             "description": "Initialize internal storage",
             "itemtype": "method",
             "name": "initStorage",
@@ -315,7 +316,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 403,
+            "line": 404,
             "description": "Method updates all registered varibles by keys `onupdates` and calls follower functions",
             "itemtype": "method",
             "name": "update",
@@ -335,7 +336,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 437,
+            "line": 438,
             "description": "Methods returns if it was `onupdate` used",
             "itemtype": "method",
             "name": "isStatic",
@@ -349,7 +350,7 @@
         },
         {
             "file": "bin\\$dom_component.js",
-            "line": 449,
+            "line": 450,
             "description": "Procedure for merging object into the element properties.\nVery simple example: `$dom.assign(document.body, { className: \"test\" });` is equivalent to `document.body.className= \"test\";`.\nIt is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).",
             "itemtype": "method",
             "name": "assign",
@@ -373,16 +374,20 @@
     ],
     "warnings": [
         {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " bin\\$dom_component.js:119"
+            "message": "unknown tag: version",
+            "line": " bin\\$dom_component.js:77"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " bin\\$dom_component.js:178"
+            "line": " bin\\$dom_component.js:120"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " bin\\$dom_component.js:325"
+            "line": " bin\\$dom_component.js:179"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " bin\\$dom_component.js:326"
         }
     ]
 }

@@ -47,7 +47,7 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
             .pipe(gulp.dest('./gulp/theme/'))
             .on("end", function(){
                 let cmd;
-                cmd= $o.spawn("node", ['node_modules/yuidocjs/lib/cli', "--themedir", "./gulp/theme", "-o", "./docs", app.bin_folder], {});
+                cmd= $o.spawn("node", ['node_modules/yuidocjs/lib/cli', "--themedir", "./gulp/theme", "-x", "_jaaJSU", "-o", "./docs", app.bin_folder], {});
                 cmd.stdout.on('data', a=>$o.fs.appendFileSync($gulp_folder+'build.log', a.toString()));
                 cmd.on('close', cb);
             });

@@ -9,7 +9,7 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
         function run(code){
             let main_stream;
             if(!code){
-                main_stream= gulp.src([app.src_folder+"*.js", '!'+app.src_folder+'*.sub.js'])
+                main_stream= gulp.src([app.src_folder+"*/*.js", '!'+app.src_folder+'*/*.sub.js'])
                     .pipe(gulp_place({folder: "src/", string_wrapper: '"'}))
                     .pipe($g.replace(/\/\* gulp \*\/\/\* global gulp_place \*\/\r?\n/g,""));
     

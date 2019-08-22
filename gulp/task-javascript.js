@@ -15,6 +15,10 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
     
                 main_stream
                     .on('error', error.handler)
+                    .pipe($g.rename(function(p){
+                        if(p.dirname==="_jaaJSU") p.basename+= ".sub";
+                        return p;
+                    }))
                     .pipe(gulp.dest(app.bin_folder))
                     .on('end', function minify(){
                         gulp.src([app.bin_folder+"*js", "!"+app.bin_folder+"*-min.js"])

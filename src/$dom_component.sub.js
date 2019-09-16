@@ -3,15 +3,20 @@
 gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
 /* global $dom_emptyPseudoComponent */
 /**
+ * Just virtual key!!! This is overwiev of all internal types for better description.
+ * @namespace types
+ * @memberof $dom
+ */
+/**
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
  * @method gulp_place("'component'+(app.standalone==='cordova' ? '_cordova' : '')", "eval")
  * @memberof $dom
  * @version gulp_place("app.version", "eval")
  * @param {String} el_name Name of element (for example `LI`, `P`, `A`, …). This is parent element of component.
- * @param {DomAssignObject} attrs The second argument for [`$dom.assign`](#domassign)
+ * @param {$dom.types.DomAssignObject} attrs The second argument for {@link $dom.assign}
  * @param {Object} params
  * @param {Function|Boolean} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see {@link Component.add}
- * @return {Component__Add}
+ * @return {$dom.types.Component__Add}
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -32,17 +37,18 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, addText, component, setShift, mount, update, share };
     /**
-     * Is key `share` in {@link Component}. Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link Component.component} method).
+     * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link $dom.types.Component.component} method).
      * 
      * In additional, it includes `mount`, `update` from {@link Component}.
-     * @typedef ComponentShare
+     * @typedef share
+     * @memberof $dom.types.Component
      * @type {Object}
      */
     /**
      * This is minimal export of "functional class" {@link $dom.component} and its methods (if they are chainable).
      * @typedef Component
+     * @memberof $dom.types
      * @type {Object}
-     * @property {ComponentShare} share
      */
     return add(el_name, attrs);
     gulp_place("both/add.sub.js", "file");

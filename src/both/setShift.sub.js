@@ -3,9 +3,9 @@
 /**
  * Method provide way to change nesting behaviour. It can be helpful for loops
  * @method setShift
- * @memberof Component
+ * @memberof $dom.types.Component
  * @public
- * @param {Number} shift see {@link Component.add}
+ * @param {Number} shift see {@link $dom.types.Component.add}
  * @example
  *      function testNesting(){
  *          const { add, setShift, share }= $dom.component("DIV", null);

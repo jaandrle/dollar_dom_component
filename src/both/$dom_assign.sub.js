@@ -8,6 +8,7 @@
  *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`
  *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
  * @typedef DomAssignObject
+ * @memberof $dom.types
  * @type {Object}
  */
 /**
@@ -17,7 +18,7 @@
  * @method gulp_place("'assign'+(app.standalone==='cordova' ? ' [cordova]' : '')", "eval")
  * @memberof $dom
  * @param {NodeElement} element
- * @param {...DomAssignObject} object_attributes
+ * @param {...$dom.types.DomAssignObject} object_attributes
  * @example
  *      const el= document.body;
  *      const onclick= function(){ console.log(this.dataset.js_param); };

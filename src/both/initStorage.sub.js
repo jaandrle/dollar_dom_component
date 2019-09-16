@@ -3,7 +3,7 @@
 /**
  * Initialize internal storage
  * @method initStorage
- * @memberof Component
+ * @memberof $dom.types.Component
  * @private
  * @returns {Object} `{ register, registerComponent, update, unregister}`
  */

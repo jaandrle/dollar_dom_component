@@ -5,11 +5,11 @@
 /**
  * Method for including another component by usint its `share` key.
  * @method component
- * @memberof Component
+ * @memberof $dom.types.Component
  * @public
- * @param {ComponentShare} share
- * @param {Number} shift see {@link Component.add}
- * @return {Component}
+ * @param {$dom.types.Component.share} share
+ * @param {Number} shift see {@link $dom.Component.add}
+ * @return {$dom.types.Component}
  */
 function component({ mount, update, isStatic }, shift= 0){
     recalculateDeep(shift);

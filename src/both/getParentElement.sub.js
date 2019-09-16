@@ -3,6 +3,7 @@
 /**
  * Returns parent element (or "fragment pseudo element")
  * @method getParentElement
+ * @memberof $dom.types.Component
  * @private
  */
 function getParentElement(){

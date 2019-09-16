@@ -5,16 +5,17 @@
 /**
  * This is `Component` with aditional methods
  * @typedef Component__AddText
- * @type Component
+ * @memberof $dom.types
+ * @type {Component}
  */
 /**
  * This add element to component
  * @method addText
- * @memberof Component
+ * @memberof $dom.types.Component
  * @public
  * @param {String} text Argument for `document.createTextNode`
  * @param {Number} shift see {@link Component.add}
- * @returns {Component__AddText}
+ * @returns {$dom.types.Component__AddText}
  * @example
  *      function testTextLi({ href= "https://www.seznam.cz" }= {}){
  *          const { add, addText, share }= $dom.component("LI", null);
@@ -37,9 +38,9 @@ function addText(text, shift= 0){
         /**
          * This procedure allows to call given function `fn` during registering element.
          * @method oninit
-         * @memberof Component__AddText
+         * @memberof $dom.types.Component__AddText
          * @param {Function} fn
-         * @returns {Component}
+         * @returns {$dom.types.Component}
          */
         oninit: function(fn){ fn(el); return component_out; }
     }, component_out);

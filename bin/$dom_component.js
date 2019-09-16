@@ -77,15 +77,20 @@ function init(global){
         function destroy(){ return null; }
     })();
     /**
+     * Just virtual key!!! This is overwiev of all internal types for better description.
+     * @namespace types
+     * @memberof $dom
+     */
+    /**
      * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
      * @method component
      * @memberof $dom
      * @version 1.0.0
      * @param {String} el_name Name of element (for example `LI`, `P`, `A`, …). This is parent element of component.
-     * @param {DomAssignObject} attrs The second argument for [`$dom.assign`](#domassign)
+     * @param {$dom.types.DomAssignObject} attrs The second argument for {@link $dom.assign}
      * @param {Object} params
      * @param {Function|Boolean} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see {@link Component.add}
-     * @return {Component__Add}
+     * @return {$dom.types.Component__Add}
      */
     $dom.component= function(el_name, attrs, { mapUpdate }={}){
         if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -106,33 +111,35 @@ function init(global){
         const share= { mount, update, destroy, isStatic };
         const component_out= { add, addText, component, setShift, mount, update, share };
         /**
-         * Is key `share` in {@link Component}. Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link Component.component} method).
+         * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link $dom.types.Component.component} method).
          * 
          * In additional, it includes `mount`, `update` from {@link Component}.
-         * @typedef ComponentShare
+         * @typedef share
+         * @memberof $dom.types.Component
          * @type {Object}
          */
         /**
          * This is minimal export of "functional class" {@link $dom.component} and its methods (if they are chainable).
          * @typedef Component
+         * @memberof $dom.types
          * @type {Object}
-         * @property {ComponentShare} share
          */
         return add(el_name, attrs);
         /**
          * This is `Component` with aditional methods
          * @typedef Component__Add
-         * @type Component
+         * @memberof $dom.types
+         * @type $dom.types.Component
          */
         /**
          * This add element to component
          * @method add
-         * @memberof Component
+         * @memberof $dom.types.Component
          * @public
          * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
-         * @param {DomAssignObject} attrs Internally uses {@link $dom.assign}, `null|undefined` is also supported (`null` is probably recommendet for better readability)
+         * @param {$dom.types.DomAssignObject} attrs Internally uses {@link $dom.assign}, `null|undefined` is also supported (`null` is probably recommendet for better readability)
          * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
-         * @returns {Component__Add}
+         * @returns {$dom.types.Component__Add}
          * @example
          *      const UL= document.getElementById('SOME UL');
          *      const { add }= $dom.component("LI", { className: "list_item" });
@@ -166,25 +173,25 @@ function init(global){
                 /**
                  * Returns reference of currently added element
                  * @method getReference
-                 * @memberof Component__Add
+                 * @memberof $dom.types.Component__Add
                  * @returns {NodeElement}
                  */
                 getReference: ()=> el,
                 /**
                  * This procedure allows to call given function `fn` during registering element.
                  * @method oninit
-                 * @memberof Component__Add
+                 * @memberof $dom.types.Component__Add
                  * @param {Function} fn
-                 * @returns {Component}
+                 * @returns {$dom.types.Component}
                  */
                 oninit: function(fn){ fn(el); return component_out; },
                 /**
                  * This procedure allows to call given function `fn` during registering element.
                  * @method onupdate
-                 * @memberof Component__Add
+                 * @memberof $dom.types.Component__Add
                  * @param {Object} data This allows register listener for given keys of Object `data`
                  * @param {onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
-                 * @returns {Component}
+                 * @returns {$dom.types.Component}
                  * @example
                  *      const c= $dom.component("DIV", null);
                  *      …
@@ -194,8 +201,8 @@ function init(global){
                  */
                 /**
                  * @callback onUpdateFunction
-                 * @param {Object} data Includes all subsribed keys from `data` see {@link Component__Add.onupdate}
-                 * @returns {*|DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when {@link Component.update} is called.
+                 * @param {Object} data Includes all subsribed keys from `data` see {@link $dom.types.Component__Add.onupdate}
+                 * @returns {*|DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when {@link $dom.types.Component.update} is called.
                  */
                 onupdate: function(data, onUpdateFunction){
                     if(!data) return component_out;
@@ -209,16 +216,17 @@ function init(global){
         /**
          * This is `Component` with aditional methods
          * @typedef Component__AddText
-         * @type Component
+         * @memberof $dom.types
+         * @type {Component}
          */
         /**
          * This add element to component
          * @method addText
-         * @memberof Component
+         * @memberof $dom.types.Component
          * @public
          * @param {String} text Argument for `document.createTextNode`
          * @param {Number} shift see {@link Component.add}
-         * @returns {Component__AddText}
+         * @returns {$dom.types.Component__AddText}
          * @example
          *      function testTextLi({ href= "https://www.seznam.cz" }= {}){
          *          const { add, addText, share }= $dom.component("LI", null);
@@ -241,9 +249,9 @@ function init(global){
                 /**
                  * This procedure allows to call given function `fn` during registering element.
                  * @method oninit
-                 * @memberof Component__AddText
+                 * @memberof $dom.types.Component__AddText
                  * @param {Function} fn
-                 * @returns {Component}
+                 * @returns {$dom.types.Component}
                  */
                 oninit: function(fn){ fn(el); return component_out; }
             }, component_out);
@@ -252,11 +260,11 @@ function init(global){
         /**
          * Method for including another component by usint its `share` key.
          * @method component
-         * @memberof Component
+         * @memberof $dom.types.Component
          * @public
-         * @param {ComponentShare} share
-         * @param {Number} shift see {@link Component.add}
-         * @return {Component}
+         * @param {$dom.types.Component.share} share
+         * @param {Number} shift see {@link $dom.Component.add}
+         * @return {$dom.types.Component}
          */
         function component({ mount, update, isStatic }, shift= 0){
             recalculateDeep(shift);
@@ -312,7 +320,7 @@ function init(global){
         /**
          * Method remove element form live DOM and returns null
          * @method destroy
-         * @memberof ComponentShare
+         * @memberof $dom.types.Component.share
          * @public
          * @returns {Null}
          * @example
@@ -329,8 +337,8 @@ function init(global){
          * Updates `deep`
          * @private
          * @method recalculateDeep
-         * @memberof Component
-         * @param {Number} shift see {@link Component.add}
+         * @memberof $dom.types.Component
+         * @param {Number} shift see {@link $dom.types.Component.add}
          */
         function recalculateDeep(shift){
             if(!shift) deep.push(all_els_counter);
@@ -340,6 +348,7 @@ function init(global){
         /**
          * Returns parent element (or "fragment pseudo element")
          * @method getParentElement
+         * @memberof $dom.types.Component
          * @private
          */
         function getParentElement(){
@@ -349,9 +358,9 @@ function init(global){
         /**
          * Method provide way to change nesting behaviour. It can be helpful for loops
          * @method setShift
-         * @memberof Component
+         * @memberof $dom.types.Component
          * @public
-         * @param {Number} shift see {@link Component.add}
+         * @param {Number} shift see {@link $dom.types.Component.add}
          * @example
          *      function testNesting(){
          *          const { add, setShift, share }= $dom.component("DIV", null);
@@ -371,7 +380,7 @@ function init(global){
         /**
          * Initialize internal storage
          * @method initStorage
-         * @memberof Component
+         * @memberof $dom.types.Component
          * @private
          * @returns {Object} `{ register, registerComponent, update, unregister}`
          */
@@ -449,7 +458,7 @@ function init(global){
         /**
          * Method updates all registered varibles by keys `onupdates` and calls follower functions
          * @method update
-         * @memberof Component
+         * @memberof $dom.types.Component
          * @public
          * @param {Object|Function} new_data
          * <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate`
@@ -460,19 +469,19 @@ function init(global){
          *      const data_A= { a: "A" };
          *      const data_A_update= { a: "AAA" };
          *      const { add, mount, update }= $dom.component("UL", null);
-         *          add("LI", { onupdate: [ data_A, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for "a"
+         *          add("LI", null).onupdate(data_A, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a"
          *      mount(document.body);
          *      update(data_A_update);
          *      // EXAMPLE WITH `mapUpdate`
          *      const data_B= { a: { b: "A" }};
          *      const data_B_update= { a: { b: "AAA" }};
          *      const { add, mount, update }= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-         *          add("LI", { onupdate: [ data_B, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for "a" see `mapUpdate`
+         *          add("LI", null).onupdate(data_B, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a" see `mapUpdate`
          *      mount(document.body);
          *      update(data_B_update);
          *      // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
          *      const { add, mount, update }= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-         *          add("LI", { onupdate: [ { a: 1 }, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for "a" see `mapUpdate`
+         *          add("LI", null).onupdate({ a: 1 }, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a" see `mapUpdate`
          *      mount(document.body);
          *      update(({ a })=> { a: ++a });
          */
@@ -484,7 +493,7 @@ function init(global){
         /**
          * Methods returns if it was `onupdate` used
          * @method isStatic
-         * @memberof ComponentShare
+         * @memberof $dom.types.Component.share
          * @public
          * @return {Boolean} If there is some listeners `onupdate`
          */
@@ -501,6 +510,7 @@ function init(global){
      *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`
      *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
      * @typedef DomAssignObject
+     * @memberof $dom.types
      * @type {Object}
      */
     /**
@@ -510,7 +520,7 @@ function init(global){
      * @method assign
      * @memberof $dom
      * @param {NodeElement} element
-     * @param {...DomAssignObject} object_attributes
+     * @param {...$dom.types.DomAssignObject} object_attributes
      * @example
      *      const el= document.body;
      *      const onclick= function(){ console.log(this.dataset.js_param); };

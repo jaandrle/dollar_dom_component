@@ -3,7 +3,7 @@
 /**
  * Methods returns if it was `onupdate` used
  * @method isStatic
- * @memberof ComponentShare
+ * @memberof $dom.types.Component.share
  * @public
  * @return {Boolean} If there is some listeners `onupdate`
  */

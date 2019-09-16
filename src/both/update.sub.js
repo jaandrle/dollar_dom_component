@@ -3,7 +3,7 @@
 /**
  * Method updates all registered varibles by keys `onupdates` and calls follower functions
  * @method update
- * @memberof Component
+ * @memberof $dom.types.Component
  * @public
  * @param {Object|Function} new_data
  * <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate`
@@ -14,19 +14,19 @@
  *      const data_A= { a: "A" };
  *      const data_A_update= { a: "AAA" };
  *      const { add, mount, update }= $dom.component("UL", null);
- *          add("LI", { onupdate: [ data_A, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for "a"
+ *          add("LI", null).onupdate(data_A, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a"
  *      mount(document.body);
  *      update(data_A_update);
  *      // EXAMPLE WITH `mapUpdate`
  *      const data_B= { a: { b: "A" }};
  *      const data_B_update= { a: { b: "AAA" }};
  *      const { add, mount, update }= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
- *          add("LI", { onupdate: [ data_B, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for "a" see `mapUpdate`
+ *          add("LI", null).onupdate(data_B, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a" see `mapUpdate`
  *      mount(document.body);
  *      update(data_B_update);
  *      // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
  *      const { add, mount, update }= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
- *          add("LI", { onupdate: [ { a: 1 }, ({ a })=>({ textContent: a }) ] });//`[ { a },` add listener for "a" see `mapUpdate`
+ *          add("LI", null).onupdate({ a: 1 }, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a" see `mapUpdate`
  *      mount(document.body);
  *      update(({ a })=> { a: ++a });
  */

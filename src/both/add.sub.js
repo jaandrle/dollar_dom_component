@@ -5,17 +5,18 @@
 /**
  * This is `Component` with aditional methods
  * @typedef Component__Add
- * @type Component
+ * @memberof $dom.types
+ * @type $dom.types.Component
  */
 /**
  * This add element to component
  * @method add
- * @memberof Component
+ * @memberof $dom.types.Component
  * @public
  * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
- * @param {DomAssignObject} attrs Internally uses {@link $dom.assign}, `null|undefined` is also supported (`null` is probably recommendet for better readability)
+ * @param {$dom.types.DomAssignObject} attrs Internally uses {@link $dom.assign}, `null|undefined` is also supported (`null` is probably recommendet for better readability)
  * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
- * @returns {Component__Add}
+ * @returns {$dom.types.Component__Add}
  * @example
  *      const UL= document.getElementById('SOME UL');
  *      const { add }= $dom.component("LI", { className: "list_item" });
@@ -49,25 +50,25 @@ function add(el_name, attrs, shift= 0){
         /**
          * Returns reference of currently added element
          * @method getReference
-         * @memberof Component__Add
+         * @memberof $dom.types.Component__Add
          * @returns {NodeElement}
          */
         getReference: ()=> el,
         /**
          * This procedure allows to call given function `fn` during registering element.
          * @method oninit
-         * @memberof Component__Add
+         * @memberof $dom.types.Component__Add
          * @param {Function} fn
-         * @returns {Component}
+         * @returns {$dom.types.Component}
          */
         oninit: function(fn){ fn(el); return component_out; },
         /**
          * This procedure allows to call given function `fn` during registering element.
          * @method onupdate
-         * @memberof Component__Add
+         * @memberof $dom.types.Component__Add
          * @param {Object} data This allows register listener for given keys of Object `data`
          * @param {onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
-         * @returns {Component}
+         * @returns {$dom.types.Component}
          * @example
          *      const c= $dom.component("DIV", null);
          *      …
@@ -77,8 +78,8 @@ function add(el_name, attrs, shift= 0){
          */
         /**
          * @callback onUpdateFunction
-         * @param {Object} data Includes all subsribed keys from `data` see {@link Component__Add.onupdate}
-         * @returns {*|DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when {@link Component.update} is called.
+         * @param {Object} data Includes all subsribed keys from `data` see {@link $dom.types.Component__Add.onupdate}
+         * @returns {*|DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when {@link $dom.types.Component.update} is called.
          */
         onupdate: function(data, onUpdateFunction){
             if(!data) return component_out;

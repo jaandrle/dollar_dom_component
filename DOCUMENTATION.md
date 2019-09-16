@@ -325,22 +325,30 @@ This procedure allows to call given function `fn` during registering element.
 <a name="$dom.types.Component__Add.onupdate"></a>
 
 ##### Component__Add.onupdate(data, onUpdateFunction) ⇒ [<code>Component</code>](#$dom.types.Component)
-This procedure allows to call given function `fn` during registering element.
+This method allows to register function ([onUpdateFunction](#$dom.types.onUpdateFunction)) which shoul be invoke when given **keys** in `data` will be changed (see [update](#$dom.types.Component.update)).
 
 **Kind**: static method of [<code>Component\_\_Add</code>](#$dom.types.Component__Add)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>Object</code> | This allows register listener for given keys of Object `data` |
+| data | <code>Object</code> | This allows register listener for given **keys** of Object `data`. For `data= { a: "A", b: "B" }` it means that when `a` or `b` will be changed the `onUpdateFunction` is called. |
 | onUpdateFunction | [<code>onUpdateFunction</code>](#$dom.types.onUpdateFunction) | This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element. |
 
 **Example**  
 ```js
 const c= $dom.component("DIV", null);
-     …
-     c.add("P", null).onupdate({ key: "This is init value" }, ({ key })=> ({ textContent: key }));//=> <p>This is init value</p>
-     …
-     c.update({ key: "Value changed" });//=> <p>Value changed</p>
+…
+c.add("P", null).onupdate({ key: "This is init value" }, ({ key })=> ({ textContent: key }));//=> <p>This is init value</p>
+…
+c.update({ key: "Value changed" });//=> <p>Value changed</p>
+```
+**Example**  
+```js
+const c= $dom.component("DIV", null);
+…
+c.add("P", null).onupdate({ A: "A", B: "b" }, ({ A, B })=> ({ textContent: A+B }));//=> <p>Ab</p>
+…
+c.update({ B: "B" });//=> <p>AB</p>
 ```
 <a name="$dom.types.onUpdateFunction"></a>
 

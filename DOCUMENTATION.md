@@ -119,7 +119,7 @@ This add element to component
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | el_name | <code>String</code> |  | Name of element (for example `LI`, `P`, `A`, ...). |
-| attrs | [<code>DomAssignObject</code>](#$dom.types.DomAssignObject) |  | Internally uses [assign](#$dom.assign), <code>null|undefined</code> is also supported (`null` is probably better readability) |
+| attrs | [<code>DomAssignObject</code>](#$dom.types.DomAssignObject) |  | Internally uses [assign](#$dom.assign), `null`\|`undefined` is also supported (`null` is probably better for readability). |
 | [shift] | <code>Number</code> | <code>0</code> | Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example. |
 
 **Example**  

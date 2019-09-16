@@ -3,19 +3,20 @@
 /**
  * Add element to live DOM
  * @method mount
+ * @memberof Component
  * @public
  * @param {NodeElement} element
  *  - Element where to places this component
  * @param {Boolean} call_parseHTML
  *  - If call parseHTML
  * @param {String} [type= "childLast"]
- *  - Change type of mounting
- *  - `childLast` places component as last child
- *  - `childFirst` places component as first child
- *  - `replaceContent` removes content of `element` and places component as child (uses `$dom.empty`)
- *  - `replace` replaces `element` by component
- *  - `before` places component before `element`
- *  - `after` places component after `element` (uses `$dom.insertAfter`)
+ *  <br/>- Change type of mounting
+ *  <br/>- `childLast` places component as last child
+ *  <br/>- `childFirst` places component as first child
+ *  <br/>- `replaceContent` removes content of `element` and places component as child (uses `$dom.empty`)
+ *  <br/>- `replace` replaces `element` by component
+ *  <br/>- `before` places component before `element`
+ *  <br/>- `after` places component after `element` (uses `$dom.insertAfter`)
  */
 function mount(element, call_parseHTML, type= "childLast"){
     switch ( type ) {

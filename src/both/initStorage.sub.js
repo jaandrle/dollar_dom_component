@@ -3,9 +3,9 @@
 /**
  * Initialize internal storage
  * @method initStorage
+ * @memberof Component
  * @private
- * @returns {Object}
- *  - `{ register, registerComponent, update, unregister}`
+ * @returns {Object} `{ register, registerComponent, update, unregister}`
  */
 function initStorage(){
     const /* storage for component, functions for updates and mapping data keys and corresponding elements */

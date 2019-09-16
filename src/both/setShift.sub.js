@@ -3,9 +3,10 @@
 /**
  * Method provide way to change nesting behaviour. It can be helpful for loops
  * @method setShift
+ * @memberof Component
  * @public
  * @param {Number} shift
- *  - see [`add`](#methods_add)
+ *  - see [`add`](#componentadd)
  * @example
  *      function testNesting(){
  *          const { add, setShift, share }= $dom.component("DIV", null);

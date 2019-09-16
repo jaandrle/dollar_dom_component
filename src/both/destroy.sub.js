@@ -3,7 +3,9 @@
 /**
  * Method remove element form live DOM and returns null
  * @method destroy
+ * @memberof ComponentShare
  * @public
+ * @returns {Null}
  * @example
  *      let { share: test }= $dom.component("DIV", null);
  *      test.mount(document.body);

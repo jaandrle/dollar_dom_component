@@ -5,15 +5,15 @@
  * Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
  * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
  * @method gulp_place("'assign'+(app.standalone==='cordova' ? ' [cordova]' : '')", "eval")
- * @for $dom.{namespace}
+ * @memberof $dom
  * @param {NodeElement} element
- * @param {...Object} object_attributes
- *  - Object shall holds **NodeElement** properties like `className`, `textContent`, ...
- *  - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
- *  - The same notation can be used for **CSS variables** (the key is called `style_vars`).
- *  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
- *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`
- *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
+ * @param {...Object} object_attributes 
+ *  <br/>- Object shall holds **NodeElement** properties like `className`, `textContent`, ...
+ *  <br/>- For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
+ *  <br/>- The same notation can be used for **CSS variables** (the key is called `style_vars`).
+ *  <br/>- **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
+ *  <br/>- **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`
+ *  <br/>- *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
  * @example
  *      const el= document.body;
  *      const onclick= function(){ console.log(this.dataset.js_param); };

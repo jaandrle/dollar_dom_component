@@ -3,23 +3,21 @@
 /* internal vars *//* global all_els_counter: true, container: true, internal_storage: true */
 /* out *//* global $dom, els, fragment, component_out */
 /**
+ * This is `Component` with aditional methods
+ * @typedef Component__Add
+ * @type Component
+ */
+/**
  * This add element to component
  * @method add
+ * @memberof Component
  * @public
- * @param {String} el_name
- *  - Name of element (for example `LI`, `P`, `A`, ...).
+ * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
  * @param {Object} attrs
- *  - `null|undefined` is also supported (`null` is probably recommendet for better readability)
- *  - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)
- * @param {Number} [shift= 0]
- *  - Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
- * @returns {Object}
- *  - `getReference` {Function}: return NodeElement reference of added element
- *  - `onupdate`
- *      - Pattern: `add(...).onupdate(Values: Object, Retuns_attrs_keys: Function)`
- *      - This register listener/subscriber function (`Retuns_attrs_keys`) for keys (variables) in `Values`
- *      - Example: `add(...).onupdate({counter}, _=>({ textContent: counter }))` registers listerner to `counter`. When the `udate({ ... counter: something, ...})` is called this element changes `textContent`.
- *      - See [`update`](#methods_update)
+ * <br/>- `null|undefined` is also supported (`null` is probably recommendet for better readability)
+ * <br/>- The second argument for [`$dom.assign`](#domassign)
+ * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
+ * @returns {Component__Add}
  * @example
  *      const UL= document.getElementById('SOME UL');
  *      const { add }= $dom.component("LI", { className: "list_item" });
@@ -50,8 +48,35 @@ function add(el_name, attrs, shift= 0){
     all_els_counter+= 1;
     $dom.assign(el, attrs);
     return Object.assign({
+        /**
+         * Returns reference of currently added element
+         * @method getReference
+         * @memberof Component__Add
+         * @returns {NodeElement}
+         */
         getReference: ()=> el,
+        /**
+         * This procedure allows to call given function `fn` during registering element.
+         * @method oninit
+         * @memberof Component__Add
+         * @param {Function} fn
+         * @returns {Component}
+         */
         oninit: function(fn){ fn(el); return component_out; },
+        /**
+         * This procedure allows to call given function `fn` during registering element.
+         * @method onupdate
+         * @memberof Component__Add
+         * @param {Object} data This allows register listener for given keys of Object `data`
+         * @param {Function} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
+         * @returns {Component}
+         * @example
+         *      const c= $dom.component("DIV", null);
+         *      …
+         *      c.add("P", null).onupdate({ key: "This is init value" }, ({ key })=> ({ textContent: key }));//=> <p>This is init value</p>
+         *      …
+         *      c.update({ key: "Value changed" });//=> <p>Value changed</p>
+         */
         onupdate: function(data, onUpdateFunction){
             if(!data) return component_out;
             if(!internal_storage) internal_storage= initStorage();

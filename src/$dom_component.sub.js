@@ -4,27 +4,19 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
 /* global $dom_emptyPseudoComponent */
 /**
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
- * @class gulp_place("'$dom.component'+(app.standalone==='cordova' ? ' [cordova]' : '')", "eval")
+ * @method gulp_place("'component'+(app.standalone==='cordova' ? '_cordova' : '')", "eval")
+ * @memberof $dom
  * @version gulp_place("app.version", "eval")
- * @constructor
  * @param {String} el_name
  *  - Name of element (for example `LI`, `P`, `A`, …).
  *  - This is parent element of component.
  * @param {Object} attrs
- *  - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)
+ *  - The second argument for [`$dom.assign`](#domassign)
  * @param {Object} params
  * @param {Function|Boolean} params.mapUpdate
  *  - `[params.mapUpdate=undefined]`
- *  - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [`add`](#methods_add)
- * @return {$dom.component}
- *  - 'functional class instance': object `{ add, component, mount, update, share, onupdate }`
- *  - `share` is Object for transfering methods somewhere else (like for using in another component, see [`component`](#methods_component))
- *      - `share= { mount, update, destroy, isStatic }`
- *  - `onupdate`
- *      - It returns {$dom.component} and it is only one differnece against [`add`](#methods_add)
- *      - `onupdate` is function which accepts two params `object, function`, the function is called during creating element and evry `update`calls
- *      - It returns additional `attrs`, for example this `attrs`: `$dom.component("DIV", { className: "class" }).onupdate({ a }, _=>({ textContent: a }))` => final `attrs= { className: "class", textContent: "A" }` (if `a="A"`)
- *      - it use [`$dom.assign`](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)
+ *  - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [`add`](#componentadd)
+ * @return {Component}
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -44,6 +36,21 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
         deep= [];
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, addText, component, setShift, mount, update, share };
+    /**
+     * Is key `share` in [`Component`](#component). Its purpose is to make easy transfering methods somewhere else (like for using in another component, see [`component`](#componentcomponent) method).
+     * 
+     * In additional, it includes `mount`, `update` from [`Component`](#component).
+     * @typedef ComponentShare
+     * @type {Object}
+     */
+    /**
+     * This is output of "functional class" [$dom.component](#domcomponent).
+     * 
+     * Some methods can add another methods! For example, for `$dom.component` it also includes methods from [Component.add](#componentadd).
+     * @typedef Component
+     * @type {Object}
+     * @property {ComponentShare} share
+     */
     return add(el_name, attrs);
     gulp_place("both/add.sub.js", "file");
     /* global add */

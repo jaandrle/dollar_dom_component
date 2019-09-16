@@ -4,13 +4,13 @@ function init(global){
     "use strict";
     /**
      * This NAMESPACE provides features for DOM elemnts.
-     * @class $dom.{namespace}
-     * @static
+     * @namespace $dom
      */
     const $dom= {
         /**
          * Procedure removes all children of `container`
          * @method empty
+         * @memberof $dom
          * @param {NodeElement} container
          */
         empty: function(container){
@@ -20,6 +20,7 @@ function init(global){
         /**
          * Procedure places `new_element` after `reference` elements
          * @method insertAfter
+         * @memberof $dom
          * @param {NodeElement} new_element
          * @param {NodeElement} reference
          */
@@ -31,6 +32,7 @@ function init(global){
         /**
          * Procedure replaces `el_old` element by new one (`new_el`)
          * @method replace
+         * @memberof $dom
          * @param {NodeElement} el_old
          * @param {NodeElement} el_new
          */
@@ -76,9 +78,9 @@ function init(global){
     })();
     /**
      * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
-     * @class $dom.component
+     * @method component
+     * @memberof $dom
      * @version 1.0.0
-     * @constructor
      * @param {String} el_name
      *  - Name of element (for example `LI`, `P`, `A`, …).
      *  - This is parent element of component.
@@ -88,15 +90,7 @@ function init(global){
      * @param {Function|Boolean} params.mapUpdate
      *  - `[params.mapUpdate=undefined]`
      *  - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [`add`](#methods_add)
-     * @return {$dom.component}
-     *  - 'functional class instance': object `{ add, component, mount, update, share, onupdate }`
-     *  - `share` is Object for transfering methods somewhere else (like for using in another component, see [`component`](#methods_component))
-     *      - `share= { mount, update, destroy, isStatic }`
-     *  - `onupdate`
-     *      - It returns {$dom.component} and it is only one differnece against [`add`](#methods_add)
-     *      - `onupdate` is function which accepts two params `object, function`, the function is called during creating element and evry `update`calls
-     *      - It returns additional `attrs`, for example this `attrs`: `$dom.component("DIV", { className: "class" }).onupdate({ a }, _=>({ textContent: a }))` => final `attrs= { className: "class", textContent: "A" }` (if `a="A"`)
-     *      - it use [`$dom.assign`](./$dom.{namespace}.html#methods_assign) (**no deep copy!!!**)
+     * @return {Component}
      */
     $dom.component= function(el_name, attrs, { mapUpdate }={}){
         if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -116,25 +110,38 @@ function init(global){
             deep= [];
         const share= { mount, update, destroy, isStatic };
         const component_out= { add, addText, component, setShift, mount, update, share };
+        /**
+         * Is key `share` in [`Component`](#component). Its purpose is to make easy transfering methods somewhere else (like for using in another component, see [`component`](#componentcomponent) method).
+         * 
+         * In additional, it includes `mount`, `update` from [`Component`](#component).
+         * @typedef ComponentShare
+         * @type {Object}
+         */
+        /**
+         * This is output of "functional class" [$dom.component](#domcomponent).
+         * 
+         * Some methods can add another methods! For example, for `$dom.component` it also includes methods from [Component.add](#componentadd).
+         * @typedef Component
+         * @type {Object}
+         * @property {ComponentShare} share
+         */
         return add(el_name, attrs);
+        /**
+         * This is `Component` with aditional methods
+         * @typedef Component__Add
+         * @type Component
+         */
         /**
          * This add element to component
          * @method add
+         * @memberof Component
          * @public
-         * @param {String} el_name
-         *  - Name of element (for example `LI`, `P`, `A`, ...).
+         * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
          * @param {Object} attrs
-         *  - `null|undefined` is also supported (`null` is probably recommendet for better readability)
-         *  - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)
-         * @param {Number} [shift= 0]
-         *  - Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
-         * @returns {Object}
-         *  - `getReference` {Function}: return NodeElement reference of added element
-         *  - `onupdate`
-         *      - Pattern: `add(...).onupdate(Values: Object, Retuns_attrs_keys: Function)`
-         *      - This register listener/subscriber function (`Retuns_attrs_keys`) for keys (variables) in `Values`
-         *      - Example: `add(...).onupdate({counter}, _=>({ textContent: counter }))` registers listerner to `counter`. When the `udate({ ... counter: something, ...})` is called this element changes `textContent`.
-         *      - See [`update`](#methods_update)
+         * <br/>- `null|undefined` is also supported (`null` is probably recommendet for better readability)
+         * <br/>- The second argument for [`$dom.assign`](#domassign)
+         * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
+         * @returns {Component__Add}
          * @example
          *      const UL= document.getElementById('SOME UL');
          *      const { add }= $dom.component("LI", { className: "list_item" });
@@ -165,8 +172,35 @@ function init(global){
             all_els_counter+= 1;
             $dom.assign(el, attrs);
             return Object.assign({
+                /**
+                 * Returns reference of currently added element
+                 * @method getReference
+                 * @memberof Component__Add
+                 * @returns {NodeElement}
+                 */
                 getReference: ()=> el,
+                /**
+                 * This procedure allows to call given function `fn` during registering element.
+                 * @method oninit
+                 * @memberof Component__Add
+                 * @param {Function} fn
+                 * @returns {Component}
+                 */
                 oninit: function(fn){ fn(el); return component_out; },
+                /**
+                 * This procedure allows to call given function `fn` during registering element.
+                 * @method onupdate
+                 * @memberof Component__Add
+                 * @param {Object} data This allows register listener for given keys of Object `data`
+                 * @param {Function} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
+                 * @returns {Component}
+                 * @example
+                 *      const c= $dom.component("DIV", null);
+                 *      …
+                 *      c.add("P", null).onupdate({ key: "This is init value" }, ({ key })=> ({ textContent: key }));//=> <p>This is init value</p>
+                 *      …
+                 *      c.update({ key: "Value changed" });//=> <p>Value changed<p>
+                 */
                 onupdate: function(data, onUpdateFunction){
                     if(!data) return component_out;
                     if(!internal_storage) internal_storage= initStorage();
@@ -177,15 +211,20 @@ function init(global){
         }
         
         /**
+         * This is `Component` with aditional methods
+         * @typedef Component__AddText
+         * @type Component
+         */
+        /**
          * This add element to component
          * @method addText
+         * @memberof Component
          * @public
          * @param {String} text
          *  - Argument for `document.createTextNode`
          * @param {Number} shift
-         *  - see [`add`](#methods_add)
-         * @returns {Object}
-         *  - `oninit` {Function}: TBD
+         *  - see [`add`](#componentadd)
+         * @returns {Component__AddText}
          * @example
          *      function testTextLi({ href= "https://www.seznam.cz" }= {}){
          *          const { add, addText, share }= $dom.component("LI", null);
@@ -205,6 +244,13 @@ function init(global){
             let el= els[all_els_counter]= getParentElement().appendChild(text_node);
             all_els_counter+= 1;
             return Object.assign({
+                /**
+                 * This procedure allows to call given function `fn` during registering element.
+                 * @method oninit
+                 * @memberof Component__AddText
+                 * @param {Function} fn
+                 * @returns {Component}
+                 */
                 oninit: function(fn){ fn(el); return component_out; }
             }, component_out);
         }
@@ -212,10 +258,12 @@ function init(global){
         /**
          * Method for including another component by usint its `share` key.
          * @method component
+         * @memberof Component
          * @public
          * @param {Object} share
          * @param {Number} shift
          *  - see [`add`](#methods_add)
+         * @return {Component}
          */
         function component({ mount, update, isStatic }, shift= 0){
             recalculateDeep(shift);
@@ -231,17 +279,19 @@ function init(global){
         /**
          * Add element to live DOM
          * @method mount
+         * @memberof Component
          * @public
          * @param {NodeElement} element
          *  - Element where to places this component
          * @param {String} [type= "childLast"]
-         *  - Change type of mounting
-         *  - `childLast` places component as last child
-         *  - `childFirst` places component as first child
-         *  - `replaceContent` removes content of `element` and places component as child (uses `$dom.empty`)
-         *  - `replace` replaces `element` by component
-         *  - `before` places component before `element`
-         *  - `after` places component after `element` (uses `$dom.insertAfter`)
+         *  <br/>- Change type of mounting
+         *  <br/>- `childLast` places component as last child
+         *  <br/>- `childFirst` places component as first child
+         *  <br/>- `replaceContent` removes content of `element` and places component as child (uses `$dom.empty`)
+         *  <br/>- `replace` replaces `element` by component
+         *  <br/>- `before` places component before `element`
+         *  <br/>- `after` places component after `element` (uses `$dom.insertAfter`)
+         * @returns {NodeElement} `container`
          */
         function mount(element, type= "childLast"){
             switch ( type ) {
@@ -269,7 +319,9 @@ function init(global){
         /**
          * Method remove element form live DOM and returns null
          * @method destroy
+         * @memberof ComponentShare
          * @public
+         * @returns {Null}
          * @example
          *      let { share: test }= $dom.component("DIV", null);
          *      test.mount(document.body);
@@ -284,6 +336,7 @@ function init(global){
          * Updates `deep`
          * @private
          * @method recalculateDeep
+         * @memberof Component
          * @param {Number} shift
          *  - see [`add`](#methods_add)
          */
@@ -304,6 +357,7 @@ function init(global){
         /**
          * Method provide way to change nesting behaviour. It can be helpful for loops
          * @method setShift
+         * @memberof Component
          * @public
          * @param {Number} shift
          *  - see [`add`](#methods_add)
@@ -326,9 +380,9 @@ function init(global){
         /**
          * Initialize internal storage
          * @method initStorage
+         * @memberof Component
          * @private
-         * @returns {Object}
-         *  - `{ register, registerComponent, update, unregister}`
+         * @returns {Object} `{ register, registerComponent, update, unregister}`
          */
         function initStorage(){
             const /* storage for component, functions for updates and mapping data keys and corresponding elements */
@@ -404,6 +458,7 @@ function init(global){
         /**
          * Method updates all registered varibles by keys `onupdates` and calls follower functions
          * @method update
+         * @memberof Component
          * @public
          * @param {Object|Function} new_data
          *  - When `$dom.component` is initialized, it is possible to register `mapUpdate`
@@ -438,9 +493,9 @@ function init(global){
         /**
          * Methods returns if it was `onupdate` used
          * @method isStatic
+         * @memberof ComponentShare
          * @public
-         * @return {Boolean}
-         *  - If there is some listeners `onupdate`
+         * @return {Boolean} If there is some listeners `onupdate`
          */
         function isStatic(){
             return !internal_storage;
@@ -452,15 +507,15 @@ function init(global){
      * Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
      * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
      * @method assign
-     * @for $dom.{namespace}
+     * @memberof $dom
      * @param {NodeElement} element
-     * @param {...Object} object_attributes
-     *  - Object shall holds **NodeElement** properties like `className`, `textContent`, ...
-     *  - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
-     *  - The same notation can be used for **CSS variables** (the key is called `style_vars`).
-     *  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
-     *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`
-     *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
+     * @param {...Object} object_attributes 
+     *  <br/>- Object shall holds **NodeElement** properties like `className`, `textContent`, ...
+     *  <br/>- For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
+     *  <br/>- The same notation can be used for **CSS variables** (the key is called `style_vars`).
+     *  <br/>- **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
+     *  <br/>- **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`
+     *  <br/>- *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
      * @example
      *      const el= document.body;
      *      const onclick= function(){ console.log(this.dataset.js_param); };

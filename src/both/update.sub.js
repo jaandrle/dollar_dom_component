@@ -3,6 +3,7 @@
 /**
  * Method updates all registered varibles by keys `onupdates` and calls follower functions
  * @method update
+ * @memberof Component
  * @public
  * @param {Object|Function} new_data
  *  - When `$dom.component` is initialized, it is possible to register `mapUpdate`

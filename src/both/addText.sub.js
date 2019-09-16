@@ -3,15 +3,20 @@
 /* internal vars *//* global all_els_counter: true */
 /* global component_out, els */
 /**
+ * This is `Component` with aditional methods
+ * @typedef Component__AddText
+ * @type Component
+ */
+/**
  * This add element to component
  * @method addText
+ * @memberof Component
  * @public
  * @param {String} text
  *  - Argument for `document.createTextNode`
  * @param {Number} shift
- *  - see [`add`](#methods_add)
- * @returns {Object}
- *  - `oninit` {Function}: TBD
+ *  - see [`add`](#componentadd)
+ * @returns {Component__AddText}
  * @example
  *      function testTextLi({ href= "https://www.seznam.cz" }= {}){
  *          const { add, addText, share }= $dom.component("LI", null);
@@ -31,6 +36,13 @@ function addText(text, shift= 0){
     let el= els[all_els_counter]= getParentElement().appendChild(text_node);
     all_els_counter+= 1;
     return Object.assign({
+        /**
+         * This procedure allows to call given function `fn` during registering element.
+         * @method oninit
+         * @memberof Component__AddText
+         * @param {Function} fn
+         * @returns {Component}
+         */
         oninit: function(fn){ fn(el); return component_out; }
     }, component_out);
 }

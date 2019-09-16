@@ -3,9 +3,9 @@
 /**
  * Methods returns if it was `onupdate` used
  * @method isStatic
+ * @memberof ComponentShare
  * @public
- * @return {Boolean}
- *  - If there is some listeners `onupdate`
+ * @return {Boolean} If there is some listeners `onupdate`
  */
 function isStatic(){
     return !internal_storage;

@@ -31,7 +31,7 @@ This NAMESPACE provides features for DOM elemnts.
     * [.empty(container)](#$dom.empty)
     * [.insertAfter(new_element, reference)](#$dom.insertAfter)
     * [.replace(el_old, el_new)](#$dom.replace)
-    * [.component(el_name, attrs, params)](#$dom.component) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
+    * [.component(el_name, attrs, [params])](#$dom.component) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
     * [.assign(element, ...object_attributes)](#$dom.assign)
 
 <a name="$dom.types"></a>
@@ -417,18 +417,18 @@ Procedure replaces `el_old` element by new one (`new_el`)
 
 <a name="$dom.component"></a>
 
-### $dom.component(el_name, attrs, params) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
+### $dom.component(el_name, attrs, [params]) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
 This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
 
 **Kind**: static method of [<code>$dom</code>](#$dom)  
 **Version**: 1.0.0  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| el_name | <code>String</code> | Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. |
-| attrs | [<code>DomAssignObject</code>](#$dom.types.DomAssignObject) | The second argument for [assign](#$dom.assign) |
-| params | <code>Object</code> |  |
-| [params.mapUpdate] | <code>function</code> \| <code>Boolean</code> | This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [Component.add](Component.add) |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| el_name | <code>String</code> |  | Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. |
+| attrs | [<code>DomAssignObject</code>](#$dom.types.DomAssignObject) |  | The second argument for [assign](#$dom.assign) |
+| [params] | <code>Object</code> | <code>{}</code> | Parameters |
+| [params.mapUpdate] | <code>function</code> \| <code>Undefined</code> | <code>Undefined</code> | This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [Component.add](Component.add) |
 
 <a name="$dom.assign"></a>
 

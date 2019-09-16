@@ -49,8 +49,8 @@ const $dom_emptyPseudoComponent= (function(){
  * @version 1.0.0
  * @param {String} el_name Name of element (for example `LI`, `P`, `A`, …). This is parent element of component.
  * @param {$dom.types.DomAssignObject} attrs The second argument for {@link $dom.assign}
- * @param {Object} params
- * @param {Function|Boolean} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see {@link Component.add}
+ * @param {Object} [params= {}] Parameters
+ * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see {@link Component.add}
  * @return {$dom.types.Component__Add}
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){

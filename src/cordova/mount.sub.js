@@ -3,12 +3,10 @@
 /**
  * Add element to live DOM
  * @method mount
- * @memberof Component
+ * @memberof $dom.types.Component
  * @public
- * @param {NodeElement} element
- *  - Element where to places this component
- * @param {Boolean} call_parseHTML
- *  - If call parseHTML
+ * @param {NodeElement} element Element where to places this component
+ * @param {Boolean} call_parseHTML If call parseHTML
  * @param {String} [type= "childLast"]
  *  <br/>- Change type of mounting
  *  <br/>- `childLast` places component as last child

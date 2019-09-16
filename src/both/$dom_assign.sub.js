@@ -20,18 +20,18 @@
  * @param {NodeElement} element
  * @param {...$dom.types.DomAssignObject} object_attributes
  * @example
- *      const el= document.body;
- *      const onclick= function(){ console.log(this.dataset.js_param); };
- *      $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
- *      //result HTML: <body style="color: red;" data-js_param="CLICKED">BODY</body>
- *      //console output on click: "CLICKED"
- *      $dom.assign(el, { classList: { testClass: -1 } });
- *      //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
- *      $dom.assign(el, { classList: { testClass: -1 } });
- *      //result HTML: <body class="" style="color: red;" data-js_param="CLICKED">BODY</body>
- *      $dom.assign(el, { classList: { testClass: true } });//or 1
- *      //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
- *      //...
+ * const el= document.body;
+ * const onclick= function(){ console.log(this.dataset.js_param); };
+ * $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
+ * //result HTML: <body style="color: red;" data-js_param="CLICKED">BODY</body>
+ * //console output on click: "CLICKED"
+ * $dom.assign(el, { classList: { testClass: -1 } });
+ * //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+ * $dom.assign(el, { classList: { testClass: -1 } });
+ * //result HTML: <body class="" style="color: red;" data-js_param="CLICKED">BODY</body>
+ * $dom.assign(el, { classList: { testClass: true } });//or 1
+ * //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+ * //...
  */
 $dom.assign= function(element, ...objects_attributes){
     const object_attributes= Object.assign({}, ...objects_attributes);

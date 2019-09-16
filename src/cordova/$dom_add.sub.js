@@ -1,12 +1,13 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
 /* global $dom, parseHTML, c_CMD*/
 /**
- * See [add](#methods_add)
- * @method add [cordova]
+ * See {@link $dom.add}
+ * @method add_cordova
  * @memberof $dom
- * @param parent {NodeElement}
- * @param $$$ {...Array} Works also with "jsif_var" and/or "data-cmd='condition-changeval'" see [$dom.assign \[cordova\]](#methods_$dom.assign [cordova])
- * @param [call_parseHTML=undefined] {Boolean} If **true** calls `parseHTML(parent.querySelectorAll(c_CMD))`
+ * @deprecated
+ * @param {NodeElement} parent
+ * @param {...Array} $$$ Works also with "jsif_var" and/or "data-cmd='condition-changeval'" see [$dom.assign \[cordova\]](#methods_$dom.assign [cordova])
+ * @param {Boolean} [call_parseHTML=undefined] If **true** calls `parseHTML(parent.querySelectorAll(c_CMD))`
  * @return {NodeElement} First created element (usualy wrapper thanks nesting)
  */
 $dom.add= function(parent,$$$, call_parseHTML){

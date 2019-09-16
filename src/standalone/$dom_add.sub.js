@@ -4,8 +4,8 @@
  * Procedure for adding elements into the `parent` (in background use `createDocumentFragment`, `createElement`, `appendChild`)
  * @method add
  * @memberof $dom
- * @param parent {NodeElement}
- *  * Wrapper (for example `<ul>`) where to cerate children elements (for example `<li>`)
+ * @deprecated
+ * @param {NodeElement} parent Wrapper (for example `<ul>`) where to cerate children elements (for example `<li>`)
  * @param $$$ {...Array}
  *  <br/>* `[ [ __NAME__, __PARAMS__ ], [ __NAME__, __PARAMS__ ], ..., [ __NAME__, __PARAMS__ ] ]`
  *  <br/>* Element in array is automatically nested into the previous element. `[["UL",...], ["LI",...], ["SPAN",...]]` creates `<ul><li><span></span></li></ul>`
@@ -14,22 +14,21 @@
  *  <br/>    * see [$dom.assign](#methods_assign)
  *  <br/>    * There is one change with using key "$", which modify elements order and it is not parsed by [$dom.assign](#methods_assign)
  *  <br/>        * `__PARAMS__.$`: Modify nesting behaviur (accepts index of element in `$$$`). `[["UL",...], ["LI",...], ["LI",{$:0,...}]]` creates `<ul><li></li><li></li></ul>`
- * @return {NodeElement}
- *  * First created element (usualy wrapper thanks nesting)
+ * @return {NodeElement} First created element (usualy wrapper thanks nesting)
  * @example
- *     $dom.add(ul_element,[
- *         ["LI", {className: "nejake-tridy", onclick: clickFCE}],
- *             ["SPAN", {innerText: "Prvni SPAN v LI"}],
- *             ["SPAN", {$:0, innerText: "Druhy SPAN v LI"}]
- *     ]);
- *     // = <ul><li class="nejake-tridy" onclick="clickFCE"><span>Prvni SPAN v LI</span><span>Druhy SPAN v LI</span></li></ul>
- *     // !!! VS !!!
- *     $dom.add(ul_element,[
- *         ["LI", {className: "nejake-tridy", onclick: clickFCE}],
- *             ["SPAN", {innerText: "Prvni SPAN v LI"}],
- *                 ["SPAN", {innerText: "Druhy SPAN v LI"}]
- *     ]);
- *     // = <ul><li class="nejake-tridy" onclick="clickFCE"><span>Prvni SPAN v LI<span>Druhy SPAN v LI</span></span></li></ul>
+ * $dom.add(ul_element,[
+ *     ["LI", {className: "nejake-tridy", onclick: clickFCE}],
+ *         ["SPAN", {innerText: "Prvni SPAN v LI"}],
+ *         ["SPAN", {$:0, innerText: "Druhy SPAN v LI"}]
+ * ]);
+ * // = <ul><li class="nejake-tridy" onclick="clickFCE"><span>Prvni SPAN v LI</span><span>Druhy SPAN v LI</span></li></ul>
+ * // !!! VS !!!
+ * $dom.add(ul_element,[
+ *     ["LI", {className: "nejake-tridy", onclick: clickFCE}],
+ *         ["SPAN", {innerText: "Prvni SPAN v LI"}],
+ *             ["SPAN", {innerText: "Druhy SPAN v LI"}]
+ * ]);
+ * // = <ul><li class="nejake-tridy" onclick="clickFCE"><span>Prvni SPAN v LI<span>Druhy SPAN v LI</span></span></li></ul>
  */
 $dom.add= function(parent,$$$){
     let fragment= document.createDocumentFragment();

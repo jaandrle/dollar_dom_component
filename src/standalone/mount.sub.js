@@ -3,10 +3,9 @@
 /**
  * Add element to live DOM
  * @method mount
- * @memberof Component
+ * @memberof $dom.types.Component
  * @public
- * @param {NodeElement} element
- *  - Element where to places this component
+ * @param {NodeElement} element Element where to places this component
  * @param {String} [type= "childLast"]
  *  <br/>- Change type of mounting
  *  <br/>- `childLast` places component as last child

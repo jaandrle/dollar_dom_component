@@ -79,6 +79,7 @@ function init(global){
     /**
      * Just virtual key!!! This is overwiev of all internal types for better description.
      * @namespace types
+     * @private
      * @memberof $dom
      */
     /**
@@ -137,28 +138,28 @@ function init(global){
          * @memberof $dom.types.Component
          * @public
          * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
-         * @param {$dom.types.DomAssignObject} attrs Internally uses {@link $dom.assign}, `null|undefined` is also supported (`null` is probably recommendet for better readability)
+         * @param {$dom.types.DomAssignObject} attrs Internally uses {@link $dom.assign}, <code>null|undefined</code> is also supported (`null` is probably better readability)
          * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
          * @returns {$dom.types.Component__Add}
          * @example
-         *      const UL= document.getElementById('SOME UL');
-         *      const { add }= $dom.component("LI", { className: "list_item" });
-         *      //result: <li class="list_item">...</li>
-         *      add("DIV", { textContent: "Child of .list_item", className: "deep1" });
-         *      //result: <li class="list_item"><div class="deep1">...</div></li>
-         *          add("DIV", { textContent: "Child of div.deep1", className: "deep2" });
-         *          //result: ...<div class="deep1"><div class="deep2">...</div></div>...
-         *              add("DIV", { textContent: "Child of div.deep2", className: "deep3" });
-         *              //result: ...<div class="deep1"><div class="deep2"><div class="deep3">...</div></div></div>...
-         *              add("DIV", { textContent: "Child of div.deep2", className: "deep3 mark" }, -1);
-         *              //result: ...<div class="deep2"><div class="deep3">...</div><div class="deep3">...</div></div>...
-         *      //next add(*) schoul be child of div.deep3.mark, by -1 it is ch.of div.deep2, by -2 ch.of div.deep1, by -3 ch.of li.list_item because div.deep3.mark is on 3rd level
-         *          add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
-         *          //result: this is on 2nd level
-         *      add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
-         *      //result: this is on 0 level
-         *          add("DIV", null);
-         *          //just DIV without attributes
+         * const UL= document.getElementById('SOME UL');
+         * const { add }= $dom.component("LI", { className: "list_item" });
+         * //result: <li class="list_item">...</li>
+         * add("DIV", { textContent: "Child of .list_item", className: "deep1" });
+         * //result: <li class="list_item"><div class="deep1">...</div></li>
+         *     add("DIV", { textContent: "Child of div.deep1", className: "deep2" });
+         *     //result: ...<div class="deep1"><div class="deep2">...</div></div>...
+         *         add("DIV", { textContent: "Child of div.deep2", className: "deep3" });
+         *         //result: ...<div class="deep1"><div class="deep2"><div class="deep3">...</div></div></div>...
+         *         add("DIV", { textContent: "Child of div.deep2", className: "deep3 mark" }, -1);
+         *         //result: ...<div class="deep2"><div class="deep3">...</div><div class="deep3">...</div></div>...
+         * //next add(*) schoul be child of div.deep3.mark, by -1 it is ch.of div.deep2, by -2 ch.of div.deep1, by -3 ch.of li.list_item because div.deep3.mark is on 3rd level
+         *     add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
+         *     //result: this is on 2nd level
+         * add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
+         * //result: this is on 0 level
+         *     add("DIV", null);
+         *     //just DIV without attributes
          */
         function add(el_name, attrs, shift= 0){
             recalculateDeep(shift);
@@ -225,20 +226,20 @@ function init(global){
          * @memberof $dom.types.Component
          * @public
          * @param {String} text Argument for `document.createTextNode`
-         * @param {Number} shift see {@link Component.add}
+         * @param {Number} shift see {@link $dom.types.Component.add}
          * @returns {$dom.types.Component__AddText}
          * @example
-         *      function testTextLi({ href= "https://www.seznam.cz" }= {}){
-         *          const { add, addText, share }= $dom.component("LI", null);
-         *              add("P", { textContent: "Link test: " });
-         *                  add("A", { textContent: "link ", href });
-         *                      add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
-         *                  addText("!", -2);
-         *                  add("BR", null, -1);
-         *                  addText("Test new line.", -1);
-         *          return share;
-         *      }
-         *      //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
+         * function testTextLi({ href= "https://www.seznam.cz" }= {}){
+         *     const { add, addText, share }= $dom.component("LI", null);
+         *         add("P", { textContent: "Link test: " });
+         *             add("A", { textContent: "link ", href });
+         *                 add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
+         *             addText("!", -2);
+         *             add("BR", null, -1);
+         *             addText("Test new line.", -1);
+         *     return share;
+         * }
+         * //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
          */
         function addText(text, shift= 0){
             recalculateDeep(shift);
@@ -263,7 +264,7 @@ function init(global){
          * @memberof $dom.types.Component
          * @public
          * @param {$dom.types.Component.share} share
-         * @param {Number} shift see {@link $dom.Component.add}
+         * @param {Number} shift see {@link $dom.types.Component.add}
          * @return {$dom.types.Component}
          */
         function component({ mount, update, isStatic }, shift= 0){
@@ -280,10 +281,9 @@ function init(global){
         /**
          * Add element to live DOM
          * @method mount
-         * @memberof Component
+         * @memberof $dom.types.Component
          * @public
-         * @param {NodeElement} element
-         *  - Element where to places this component
+         * @param {NodeElement} element Element where to places this component
          * @param {String} [type= "childLast"]
          *  <br/>- Change type of mounting
          *  <br/>- `childLast` places component as last child
@@ -324,9 +324,9 @@ function init(global){
          * @public
          * @returns {Null}
          * @example
-         *      let { share: test }= $dom.component("DIV", null);
-         *      test.mount(document.body);
-         *      test= test.destroy();
+         * let { share: test }= $dom.component("DIV", null);
+         * test.mount(document.body);
+         * test= test.destroy();
          */
         function destroy(){
             container.remove();
@@ -362,14 +362,14 @@ function init(global){
          * @public
          * @param {Number} shift see {@link $dom.types.Component.add}
          * @example
-         *      function testNesting(){
-         *          const { add, setShift, share }= $dom.component("DIV", null);
-         *              setShift(0);
-         *          for(let i= 0; i<5; i++){
-         *              add("P", { textContent: `Paragraph no. ${i}.` }, -1);
-         *          }
-         *          return share;
-         *      }
+         * function testNesting(){
+         *     const { add, setShift, share }= $dom.component("DIV", null);
+         *         setShift(0);
+         *     for(let i= 0; i<5; i++){
+         *         add("P", { textContent: `Paragraph no. ${i}.` }, -1);
+         *     }
+         *     return share;
+         * }
          */
         function setShift(shift= 0){
             let last;
@@ -522,18 +522,18 @@ function init(global){
      * @param {NodeElement} element
      * @param {...$dom.types.DomAssignObject} object_attributes
      * @example
-     *      const el= document.body;
-     *      const onclick= function(){ console.log(this.dataset.js_param); };
-     *      $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
-     *      //result HTML: <body style="color: red;" data-js_param="CLICKED">BODY</body>
-     *      //console output on click: "CLICKED"
-     *      $dom.assign(el, { classList: { testClass: -1 } });
-     *      //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
-     *      $dom.assign(el, { classList: { testClass: -1 } });
-     *      //result HTML: <body class="" style="color: red;" data-js_param="CLICKED">BODY</body>
-     *      $dom.assign(el, { classList: { testClass: true } });//or 1
-     *      //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
-     *      //...
+     * const el= document.body;
+     * const onclick= function(){ console.log(this.dataset.js_param); };
+     * $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
+     * //result HTML: <body style="color: red;" data-js_param="CLICKED">BODY</body>
+     * //console output on click: "CLICKED"
+     * $dom.assign(el, { classList: { testClass: -1 } });
+     * //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+     * $dom.assign(el, { classList: { testClass: -1 } });
+     * //result HTML: <body class="" style="color: red;" data-js_param="CLICKED">BODY</body>
+     * $dom.assign(el, { classList: { testClass: true } });//or 1
+     * //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+     * //...
      */
     $dom.assign= function(element, ...objects_attributes){
         const object_attributes= Object.assign({}, ...objects_attributes);

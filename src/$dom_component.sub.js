@@ -5,6 +5,7 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
 /**
  * Just virtual key!!! This is overwiev of all internal types for better description.
  * @namespace types
+ * @private
  * @memberof $dom
  */
 /**

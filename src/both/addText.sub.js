@@ -14,20 +14,20 @@
  * @memberof $dom.types.Component
  * @public
  * @param {String} text Argument for `document.createTextNode`
- * @param {Number} shift see {@link Component.add}
+ * @param {Number} shift see {@link $dom.types.Component.add}
  * @returns {$dom.types.Component__AddText}
  * @example
- *      function testTextLi({ href= "https://www.seznam.cz" }= {}){
- *          const { add, addText, share }= $dom.component("LI", null);
- *              add("P", { textContent: "Link test: " });
- *                  add("A", { textContent: "link ", href });
- *                      add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
- *                  addText("!", -2);
- *                  add("BR", null, -1);
- *                  addText("Test new line.", -1);
- *          return share;
- *      }
- *      //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
+ * function testTextLi({ href= "https://www.seznam.cz" }= {}){
+ *     const { add, addText, share }= $dom.component("LI", null);
+ *         add("P", { textContent: "Link test: " });
+ *             add("A", { textContent: "link ", href });
+ *                 add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
+ *             addText("!", -2);
+ *             add("BR", null, -1);
+ *             addText("Test new line.", -1);
+ *     return share;
+ * }
+ * //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
  */
 function addText(text, shift= 0){
     recalculateDeep(shift);

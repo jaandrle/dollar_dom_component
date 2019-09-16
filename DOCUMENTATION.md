@@ -7,13 +7,15 @@ This NAMESPACE provides features for DOM elemnts.
 
 * [$dom](#$dom) : <code>object</code>
     * [.types](#$dom.types) : <code>object</code> ℗
+        * [.ComponentEmpty](#$dom.types.ComponentEmpty) : [<code>Component</code>](#$dom.types.Component)
+            * [.mount()](#$dom.types.ComponentEmpty.mount)
         * [.Component](#$dom.types.Component) : <code>Object</code>
             * [.add(el_name, attrs, [shift])](#$dom.types.Component.add) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
             * [.addText(text, [shift])](#$dom.types.Component.addText) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
             * [.component(share, [shift])](#$dom.types.Component.component) ⇒ [<code>Component</code>](#$dom.types.Component)
             * [.mount(element, [type])](#$dom.types.Component.mount) ⇒ <code>NodeElement</code>
             * [.recalculateDeep(shift)](#$dom.types.Component.recalculateDeep) ℗
-            * [.getParentElement()](#$dom.types.Component.getParentElement) ℗
+            * [.getParentElement()](#$dom.types.Component.getParentElement) ⇒ <code>NodeElement</code> ℗
             * [.setShift([shift])](#$dom.types.Component.setShift)
             * [.initStorage()](#$dom.types.Component.initStorage) ⇒ <code>Object</code> ℗
             * [.update(new_data)](#$dom.types.Component.update)
@@ -31,7 +33,7 @@ This NAMESPACE provides features for DOM elemnts.
     * [.empty(container)](#$dom.empty)
     * [.insertAfter(new_element, reference)](#$dom.insertAfter)
     * [.replace(el_old, el_new)](#$dom.replace)
-    * [.component(el_name, attrs, [params])](#$dom.component) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
+    * [.component([el_name], attrs, [params])](#$dom.component) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add) \| [<code>ComponentEmpty</code>](#$dom.types.ComponentEmpty)
     * [.assign(element, ...object_attributes)](#$dom.assign)
 
 <a name="$dom.types"></a>
@@ -43,13 +45,15 @@ Just virtual key!!! This is overwiev of all internal types for better descriptio
 **Access**: private  
 
 * [.types](#$dom.types) : <code>object</code> ℗
+    * [.ComponentEmpty](#$dom.types.ComponentEmpty) : [<code>Component</code>](#$dom.types.Component)
+        * [.mount()](#$dom.types.ComponentEmpty.mount)
     * [.Component](#$dom.types.Component) : <code>Object</code>
         * [.add(el_name, attrs, [shift])](#$dom.types.Component.add) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
         * [.addText(text, [shift])](#$dom.types.Component.addText) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
         * [.component(share, [shift])](#$dom.types.Component.component) ⇒ [<code>Component</code>](#$dom.types.Component)
         * [.mount(element, [type])](#$dom.types.Component.mount) ⇒ <code>NodeElement</code>
         * [.recalculateDeep(shift)](#$dom.types.Component.recalculateDeep) ℗
-        * [.getParentElement()](#$dom.types.Component.getParentElement) ℗
+        * [.getParentElement()](#$dom.types.Component.getParentElement) ⇒ <code>NodeElement</code> ℗
         * [.setShift([shift])](#$dom.types.Component.setShift)
         * [.initStorage()](#$dom.types.Component.initStorage) ⇒ <code>Object</code> ℗
         * [.update(new_data)](#$dom.types.Component.update)
@@ -65,6 +69,18 @@ Just virtual key!!! This is overwiev of all internal types for better descriptio
         * [.oninit(fn)](#$dom.types.Component__AddText.oninit) ⇒ [<code>Component</code>](#$dom.types.Component)
     * [.DomAssignObject](#$dom.types.DomAssignObject) : <code>Object</code>
 
+<a name="$dom.types.ComponentEmpty"></a>
+
+#### types.ComponentEmpty : [<code>Component</code>](#$dom.types.Component)
+In generall, all methods from [Component](#$dom.types.Component) don't do anything. Also during "mounting" there are some changes see method [mount](#$dom.types.ComponentEmpty.mount).
+
+**Kind**: static typedef of [<code>types</code>](#$dom.types)  
+<a name="$dom.types.ComponentEmpty.mount"></a>
+
+##### ComponentEmpty.mount()
+The same syntax as [mount](#$dom.types.Component.mount). But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
+
+**Kind**: static method of [<code>ComponentEmpty</code>](#$dom.types.ComponentEmpty)  
 <a name="$dom.types.Component"></a>
 
 #### types.Component : <code>Object</code>
@@ -78,7 +94,7 @@ This is minimal export of "functional class" [component](#$dom.component) and it
     * [.component(share, [shift])](#$dom.types.Component.component) ⇒ [<code>Component</code>](#$dom.types.Component)
     * [.mount(element, [type])](#$dom.types.Component.mount) ⇒ <code>NodeElement</code>
     * [.recalculateDeep(shift)](#$dom.types.Component.recalculateDeep) ℗
-    * [.getParentElement()](#$dom.types.Component.getParentElement) ℗
+    * [.getParentElement()](#$dom.types.Component.getParentElement) ⇒ <code>NodeElement</code> ℗
     * [.setShift([shift])](#$dom.types.Component.setShift)
     * [.initStorage()](#$dom.types.Component.initStorage) ⇒ <code>Object</code> ℗
     * [.update(new_data)](#$dom.types.Component.update)
@@ -136,15 +152,22 @@ This add element to component
 
 **Example**  
 ```js
+const c1= $dom.component("P", { textContent: "TEXT" });
+const c2= $dom.component("P", null);
+    c2.addText("TEXT");
+//c1-> <p>TEXT</p>  ===  <p>TEXT</p> <-c2
+```
+**Example**  
+```js
 function testTextLi({ href= "https://www.seznam.cz" }= {}){
-    const { add, addText, share }= $dom.component("LI", null);
-        add("P", { textContent: "Link test: " });
-            add("A", { textContent: "link ", href });
-                add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
-            addText("!", -2);
-            add("BR", null, -1);
-            addText("Test new line.", -1);
-    return share;
+    const c= $dom.component("LI", null);
+        c.add("P", { textContent: "Link test: " });
+            c.add("A", { textContent: "link ", href });
+                c.add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
+            c.addText("!", -2);
+            c.add("BR", null, -1);
+            c.addText("Test new line.", -1);
+    return c.share;
 }
 //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
 ```
@@ -161,6 +184,17 @@ Method for including another component by usint its `share` key.
 | share | [<code>share</code>](#$dom.types.Component.share) |  |  |
 | [shift] | <code>Number</code> | <code>0</code> | see [add](#$dom.types.Component.add) |
 
+**Example**  
+```js
+function p({ textContent }){
+     const cP= $dom.component("P", { textContent });
+     return cP.share;
+}
+const c= $dom.component("DIV", null);
+for(let i=0; i<3; i++){ c.component(p({ textContent: i })); }
+c.mount(document.body, "replaceContent");
+//= <body><div><p>0</p><p>1</p><p>2</p></div></body>
+```
 <a name="$dom.types.Component.mount"></a>
 
 ##### Component.mount(element, [type]) ⇒ <code>NodeElement</code>
@@ -189,10 +223,11 @@ Updates `deep`
 
 <a name="$dom.types.Component.getParentElement"></a>
 
-##### Component.getParentElement() ℗
+##### Component.getParentElement() ⇒ <code>NodeElement</code> ℗
 Returns parent element (or "fragment pseudo element")
 
 **Kind**: static method of [<code>Component</code>](#$dom.types.Component)  
+**Returns**: <code>NodeElement</code> - Returns parent element (i. e. `DocumenFragment` if component is empty)  
 **Access**: private  
 <a name="$dom.types.Component.setShift"></a>
 
@@ -255,24 +290,33 @@ Method updates all registered varibles by keys `onupdates` and calls follower fu
 **Example**  
 ```js
 // SIMPLE example
-     const data_A= { a: "A" };
-     const data_A_update= { a: "AAA" };
-     const { add, mount, update }= $dom.component("UL", null);
-         add("LI", null).onupdate(data_A, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a"
-     mount(document.body);
-     update(data_A_update);
-     // EXAMPLE WITH `mapUpdate`
-     const data_B= { a: { b: "A" }};
-     const data_B_update= { a: { b: "AAA" }};
-     const { add, mount, update }= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-         add("LI", null).onupdate(data_B, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a" see `mapUpdate`
-     mount(document.body);
-     update(data_B_update);
-     // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
-     const { add, mount, update }= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-         add("LI", null).onupdate({ a: 1 }, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a" see `mapUpdate`
-     mount(document.body);
-     update(({ a })=> { a: ++a });
+const data_A= { a: "A" };
+const data_A_update= { a: "AAA" };
+const c= $dom.component("UL", null);
+    c.add("LI", null)
+         .onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
+c.mount(document.body);
+c.update(data_A_update);
+```
+**Example**  
+```js
+// EXAMPLE WITH `mapUpdate`
+const data_B= { a: { b: "A" }};
+const data_B_update= { a: { b: "AAA" }};
+const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+    c.add("LI", null)
+         .onupdate(data_B, ({ a })=>({ textContent: a }));
+c.mount(document.body);
+c.update(data_B_update);
+```
+**Example**  
+```js
+// EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
+const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+    c.add("LI", null)
+         .onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
+c.mount(document.body);
+c.update(({ a })=> { a: ++a });
 ```
 <a name="$dom.types.Component.share"></a>
 
@@ -296,9 +340,10 @@ Method remove element form live DOM and returns null
 **Access**: public  
 **Example**  
 ```js
-let { share: test }= $dom.component("DIV", null);
-test.mount(document.body);
-test= test.destroy();
+let c= $dom.component("DIV", null);
+c.mount(document.body, "replaceContent");
+c= c.destroy();
+//=> c===null AND <body></body>
 ```
 <a name="$dom.types.Component.share.isStatic"></a>
 
@@ -369,11 +414,11 @@ c.update({ B: "B" });//=> <p>AB</p>
 
 #### types.onUpdateFunction ⇒ <code>\*</code> \| [<code>DomAssignObject</code>](#$dom.types.DomAssignObject)
 **Kind**: static typedef of [<code>types</code>](#$dom.types)  
-**Returns**: <code>\*</code> \| [<code>DomAssignObject</code>](#$dom.types.DomAssignObject) - Primary should use `DomAssignObject`, but in generall this can do anything what make sence when [update](#$dom.types.Component.update) is called. This callback can be registered when element is created (see [add](#$dom.types.Component.add)) see [Component__Add](#$dom.types.Component__Add).  
+**Returns**: <code>\*</code> \| [<code>DomAssignObject</code>](#$dom.types.DomAssignObject) - Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method [update](#$dom.types.Component.update) is called. This callback can be registered when element is created (see method [add](#$dom.types.Component.add)) see [Component__Add](#$dom.types.Component__Add).  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>Object</code> | Includes all subsribed keys from `data` see [onupdate](#$dom.types.Component__Add.onupdate) |
+| data | <code>Object</code> | Includes all subsribed keys from `data` see method [onupdate](#$dom.types.Component__Add.onupdate) |
 
 <a name="$dom.types.Component__AddText"></a>
 
@@ -401,6 +446,7 @@ Object shall holds **NodeElement** properties like `className`, `textContent`, �
  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList.toggle(class_name)` others `el.classList.toggle(class_name, Booleans(...))`
  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
+ - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
 
 **Kind**: static typedef of [<code>types</code>](#$dom.types)  
 <a name="$dom.empty"></a>
@@ -440,18 +486,19 @@ Procedure replaces `el_old` element by new one (`new_el`)
 
 <a name="$dom.component"></a>
 
-### $dom.component(el_name, attrs, [params]) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
+### $dom.component([el_name], attrs, [params]) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add) \| [<code>ComponentEmpty</code>](#$dom.types.ComponentEmpty)
 This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
 
 **Kind**: static method of [<code>$dom</code>](#$dom)  
+**Returns**: [<code>Component\_\_Add</code>](#$dom.types.Component__Add) \| [<code>ComponentEmpty</code>](#$dom.types.ComponentEmpty) - Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!  
 **Version**: 1.0.0  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| el_name | <code>String</code> |  | Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. |
+| [el_name] | <code>String</code> | <code>&quot;EMPTY&quot;</code> | Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. |
 | attrs | [<code>DomAssignObject</code>](#$dom.types.DomAssignObject) |  | The second argument for [assign](#$dom.assign) |
 | [params] | <code>Object</code> | <code>{}</code> | Parameters |
-| [params.mapUpdate] | <code>function</code> \| <code>Undefined</code> | <code>Undefined</code> | This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [Component.add](Component.add) |
+| [params.mapUpdate] | <code>function</code> \| <code>Undefined</code> | <code>Undefined</code> | This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method [add](#$dom.types.Component.add) |
 
 <a name="$dom.assign"></a>
 
@@ -474,11 +521,29 @@ const onclick= function(){ console.log(this.dataset.js_param); };
 $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
 //result HTML: <body style="color: red;" data-js_param="CLICKED">BODY</body>
 //console output on click: "CLICKED"
+$dom.assign(el, { style: { color: "green" } });
+//result HTML: <body style="color: green;" data-js_param="CLICKED">BODY</body>
+//console output on click: "CLICKED"
+```
+**Example**  
+```js
+const el= document.body;
 $dom.assign(el, { classList: { testClass: -1 } });
-//result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+//result HTML: <body class="testClass">…</body>
 $dom.assign(el, { classList: { testClass: -1 } });
-//result HTML: <body class="" style="color: red;" data-js_param="CLICKED">BODY</body>
+//result HTML: <body class="">…</body>
+```
+**Example**  
+```js
+const el= document.body;
 $dom.assign(el, { classList: { testClass: true } });//or 1
-//result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+//result HTML: <body class="testClass">…</body>
+$dom.assign(el, { classList: { testClass: false } });//or 0
+//result HTML: <body class="">…</body>
 //...
+```
+**Example**  
+```js
+$dom.assign(A_ELEMENT, { href: "www.google.com" });//=> <a href="www.google.com" …
+$dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
 ```

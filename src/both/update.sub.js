@@ -10,25 +10,30 @@
  * <br/>- **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**
  * <br/>- It is also possible to register function to detect changes itself see examples
  * @example
- *      // SIMPLE example
- *      const data_A= { a: "A" };
- *      const data_A_update= { a: "AAA" };
- *      const { add, mount, update }= $dom.component("UL", null);
- *          add("LI", null).onupdate(data_A, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a"
- *      mount(document.body);
- *      update(data_A_update);
- *      // EXAMPLE WITH `mapUpdate`
- *      const data_B= { a: { b: "A" }};
- *      const data_B_update= { a: { b: "AAA" }};
- *      const { add, mount, update }= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
- *          add("LI", null).onupdate(data_B, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a" see `mapUpdate`
- *      mount(document.body);
- *      update(data_B_update);
- *      // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
- *      const { add, mount, update }= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
- *          add("LI", null).onupdate({ a: 1 }, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a" see `mapUpdate`
- *      mount(document.body);
- *      update(({ a })=> { a: ++a });
+ * // SIMPLE example
+ * const data_A= { a: "A" };
+ * const data_A_update= { a: "AAA" };
+ * const c= $dom.component("UL", null);
+ *     c.add("LI", null)
+ *          .onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
+ * c.mount(document.body);
+ * c.update(data_A_update);
+ * @example
+ * // EXAMPLE WITH `mapUpdate`
+ * const data_B= { a: { b: "A" }};
+ * const data_B_update= { a: { b: "AAA" }};
+ * const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+ *     c.add("LI", null)
+ *          .onupdate(data_B, ({ a })=>({ textContent: a }));
+ * c.mount(document.body);
+ * c.update(data_B_update);
+ * @example
+ * // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
+ * const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+ *     c.add("LI", null)
+ *          .onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
+ * c.mount(document.body);
+ * c.update(({ a })=> { a: ++a });
  */
 function update(new_data){
     if(!internal_storage) return false;

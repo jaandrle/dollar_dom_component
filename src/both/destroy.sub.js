@@ -7,9 +7,10 @@
  * @public
  * @returns {Null}
  * @example
- * let { share: test }= $dom.component("DIV", null);
- * test.mount(document.body);
- * test= test.destroy();
+ * let c= $dom.component("DIV", null);
+ * c.mount(document.body, "replaceContent");
+ * c= c.destroy();
+ * //=> c===null AND <body></body>
  */
 function destroy(){
     container.remove();

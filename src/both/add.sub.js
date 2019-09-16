@@ -85,8 +85,8 @@ function add(el_name, attrs, shift= 0){
         /**
          * @callback onUpdateFunction
          * @memberof $dom.types
-         * @param {Object} data Includes all subsribed keys from `data` see {@link $dom.types.Component__Add.onupdate}
-         * @returns {*|$dom.types.DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when {@link $dom.types.Component.update} is called. This callback can be registered when element is created (see {@link $dom.types.Component.add}) see {@link $dom.types.Component__Add}.
+         * @param {Object} data Includes all subsribed keys from `data` see method {@link $dom.types.Component__Add.onupdate}
+         * @returns {*|$dom.types.DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link $dom.types.Component.update} is called. This callback can be registered when element is created (see method {@link $dom.types.Component.add}) see {@link $dom.types.Component__Add}.
          */
         onupdate: function(data, onUpdateFunction){
             if(!data) return component_out;

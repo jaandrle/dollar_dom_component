@@ -7,6 +7,7 @@
  *  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
  *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList.toggle(class_name)` others `el.classList.toggle(class_name, Booleans(...))`
  *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
+ *  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
  * @typedef DomAssignObject
  * @memberof $dom.types
  * @type {Object}
@@ -25,13 +26,25 @@
  * $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
  * //result HTML: <body style="color: red;" data-js_param="CLICKED">BODY</body>
  * //console output on click: "CLICKED"
+ * $dom.assign(el, { style: { color: "green" } });
+ * //result HTML: <body style="color: green;" data-js_param="CLICKED">BODY</body>
+ * //console output on click: "CLICKED"
+ * @example
+ * const el= document.body;
  * $dom.assign(el, { classList: { testClass: -1 } });
- * //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+ * //result HTML: <body class="testClass">…</body>
  * $dom.assign(el, { classList: { testClass: -1 } });
- * //result HTML: <body class="" style="color: red;" data-js_param="CLICKED">BODY</body>
+ * //result HTML: <body class="">…</body>
+ * @example
+ * const el= document.body;
  * $dom.assign(el, { classList: { testClass: true } });//or 1
- * //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+ * //result HTML: <body class="testClass">…</body>
+ * $dom.assign(el, { classList: { testClass: false } });//or 0
+ * //result HTML: <body class="">…</body>
  * //...
+ * @example
+ * $dom.assign(A_ELEMENT, { href: "www.google.com" });//=> <a href="www.google.com" …
+ * $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
  */
 $dom.assign= function(element, ...objects_attributes){
     const object_attributes= Object.assign({}, ...objects_attributes);

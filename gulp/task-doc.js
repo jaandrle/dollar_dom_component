@@ -3,7 +3,8 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
     return function(cb){
         let cmd;
         cmd= $o.spawn("node", ['node_modules/jsdoc-to-markdown/bin/cli', "-f", app.bin_folder+"$dom_component.js", "--private"], {});
-        cmd.stdout.on('data', a=> $o.fs.writeFile("./DOCUMENTATION.md", a.toString(), ()=>{}))
+        cmd.stderr.on("data", a=> { throw new Error(a.toString()); });
+        cmd.stdout.on('data', a=> $o.fs.writeFile("./DOCUMENTATION.md", a.toString(), ()=>{}));
         cmd.on('close', cb);
     };
 };

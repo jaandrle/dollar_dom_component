@@ -17,15 +17,20 @@
  * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
  * @returns {$dom.types.Component__AddText}
  * @example
+ * const c1= $dom.component("P", { textContent: "TEXT" });
+ * const c2= $dom.component("P", null);
+ *     c2.addText("TEXT");
+ * //c1-> <p>TEXT</p>  ===  <p>TEXT</p> <-c2
+ * @example
  * function testTextLi({ href= "https://www.seznam.cz" }= {}){
- *     const { add, addText, share }= $dom.component("LI", null);
- *         add("P", { textContent: "Link test: " });
- *             add("A", { textContent: "link ", href });
- *                 add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
- *             addText("!", -2);
- *             add("BR", null, -1);
- *             addText("Test new line.", -1);
- *     return share;
+ *     const c= $dom.component("LI", null);
+ *         c.add("P", { textContent: "Link test: " });
+ *             c.add("A", { textContent: "link ", href });
+ *                 c.add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
+ *             c.addText("!", -2);
+ *             c.add("BR", null, -1);
+ *             c.addText("Test new line.", -1);
+ *     return c.share;
  * }
  * //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
  */

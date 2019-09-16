@@ -13,11 +13,11 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
  * @method gulp_place("'component'+(app.standalone==='cordova' ? '_cordova' : '')", "eval")
  * @memberof $dom
  * @version gulp_place("app.version", "eval")
- * @param {String} el_name Name of element (for example `LI`, `P`, `A`, …). This is parent element of component.
+ * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
  * @param {$dom.types.DomAssignObject} attrs The second argument for {@link $dom.assign}
  * @param {Object} [params= {}] Parameters
- * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see {@link Component.add}
- * @return {$dom.types.Component__Add}
+ * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link $dom.types.Component.add}
+ * @return {$dom.types.Component__Add|$dom.types.ComponentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;

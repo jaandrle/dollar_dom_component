@@ -42,11 +42,21 @@ function init(global){
         }
     };
     /* standalone= "standalone"; */
+    /**
+     * In generall, all methods from {@link $dom.types.Component} don't do anything. Also during "mounting" there are some changes see method {@link $dom.types.ComponentEmpty.mount}.
+     * @typedef ComponentEmpty
+     * @memberof $dom.types
+     * @type {$dom.types.Component}
+     */
     const $dom_emptyPseudoComponent= (function(){
         const share= { mount, update, destroy, isStatic };
         const component_out= { add, component, mount, update, share };
         return component_out;
-    
+        /**
+         * The same syntax as {@link $dom.types.Component.mount}. But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
+         * @method mount
+         * @memberof $dom.types.ComponentEmpty
+         */
         function mount(element, type= "childLast"){
             // let temp_el;
             switch ( type ) {
@@ -87,11 +97,11 @@ function init(global){
      * @method component
      * @memberof $dom
      * @version 1.0.0
-     * @param {String} el_name Name of element (for example `LI`, `P`, `A`, …). This is parent element of component.
+     * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
      * @param {$dom.types.DomAssignObject} attrs The second argument for {@link $dom.assign}
      * @param {Object} [params= {}] Parameters
-     * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see {@link Component.add}
-     * @return {$dom.types.Component__Add}
+     * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link $dom.types.Component.add}
+     * @return {$dom.types.Component__Add|$dom.types.ComponentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
      */
     $dom.component= function(el_name, attrs, { mapUpdate }={}){
         if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -209,8 +219,8 @@ function init(global){
                 /**
                  * @callback onUpdateFunction
                  * @memberof $dom.types
-                 * @param {Object} data Includes all subsribed keys from `data` see {@link $dom.types.Component__Add.onupdate}
-                 * @returns {*|$dom.types.DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when {@link $dom.types.Component.update} is called. This callback can be registered when element is created (see {@link $dom.types.Component.add}) see {@link $dom.types.Component__Add}.
+                 * @param {Object} data Includes all subsribed keys from `data` see method {@link $dom.types.Component__Add.onupdate}
+                 * @returns {*|$dom.types.DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link $dom.types.Component.update} is called. This callback can be registered when element is created (see method {@link $dom.types.Component.add}) see {@link $dom.types.Component__Add}.
                  */
                 onupdate: function(data, onUpdateFunction){
                     if(!data) return component_out;
@@ -236,15 +246,20 @@ function init(global){
          * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
          * @returns {$dom.types.Component__AddText}
          * @example
+         * const c1= $dom.component("P", { textContent: "TEXT" });
+         * const c2= $dom.component("P", null);
+         *     c2.addText("TEXT");
+         * //c1-> <p>TEXT</p>  ===  <p>TEXT</p> <-c2
+         * @example
          * function testTextLi({ href= "https://www.seznam.cz" }= {}){
-         *     const { add, addText, share }= $dom.component("LI", null);
-         *         add("P", { textContent: "Link test: " });
-         *             add("A", { textContent: "link ", href });
-         *                 add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
-         *             addText("!", -2);
-         *             add("BR", null, -1);
-         *             addText("Test new line.", -1);
-         *     return share;
+         *     const c= $dom.component("LI", null);
+         *         c.add("P", { textContent: "Link test: " });
+         *             c.add("A", { textContent: "link ", href });
+         *                 c.add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
+         *             c.addText("!", -2);
+         *             c.add("BR", null, -1);
+         *             c.addText("Test new line.", -1);
+         *     return c.share;
          * }
          * //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
          */
@@ -273,6 +288,15 @@ function init(global){
          * @param {$dom.types.Component.share} share
          * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
          * @return {$dom.types.Component}
+         * @example
+         * function p({ textContent }){
+         *      const cP= $dom.component("P", { textContent });
+         *      return cP.share;
+         * }
+         * const c= $dom.component("DIV", null);
+         * for(let i=0; i<3; i++){ c.component(p({ textContent: i })); }
+         * c.mount(document.body, "replaceContent");
+         * //= <body><div><p>0</p><p>1</p><p>2</p></div></body>
          */
         function component({ mount, update, isStatic }, shift= 0){
             recalculateDeep(shift);
@@ -331,9 +355,10 @@ function init(global){
          * @public
          * @returns {Null}
          * @example
-         * let { share: test }= $dom.component("DIV", null);
-         * test.mount(document.body);
-         * test= test.destroy();
+         * let c= $dom.component("DIV", null);
+         * c.mount(document.body, "replaceContent");
+         * c= c.destroy();
+         * //=> c===null AND <body></body>
          */
         function destroy(){
             container.remove();
@@ -357,6 +382,7 @@ function init(global){
          * @method getParentElement
          * @memberof $dom.types.Component
          * @private
+         * @returns {NodeElement} Returns parent element (i. e. `DocumenFragment` if component is empty)
          */
         function getParentElement(){
             return els[deep[deep.length-2]] || fragment;
@@ -485,25 +511,30 @@ function init(global){
          * <br/>- **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**
          * <br/>- It is also possible to register function to detect changes itself see examples
          * @example
-         *      // SIMPLE example
-         *      const data_A= { a: "A" };
-         *      const data_A_update= { a: "AAA" };
-         *      const { add, mount, update }= $dom.component("UL", null);
-         *          add("LI", null).onupdate(data_A, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a"
-         *      mount(document.body);
-         *      update(data_A_update);
-         *      // EXAMPLE WITH `mapUpdate`
-         *      const data_B= { a: { b: "A" }};
-         *      const data_B_update= { a: { b: "AAA" }};
-         *      const { add, mount, update }= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-         *          add("LI", null).onupdate(data_B, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a" see `mapUpdate`
-         *      mount(document.body);
-         *      update(data_B_update);
-         *      // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
-         *      const { add, mount, update }= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-         *          add("LI", null).onupdate({ a: 1 }, ({ a })=>({ textContent: a }));//`[ { a },` add listener for "a" see `mapUpdate`
-         *      mount(document.body);
-         *      update(({ a })=> { a: ++a });
+         * // SIMPLE example
+         * const data_A= { a: "A" };
+         * const data_A_update= { a: "AAA" };
+         * const c= $dom.component("UL", null);
+         *     c.add("LI", null)
+         *          .onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
+         * c.mount(document.body);
+         * c.update(data_A_update);
+         * @example
+         * // EXAMPLE WITH `mapUpdate`
+         * const data_B= { a: { b: "A" }};
+         * const data_B_update= { a: { b: "AAA" }};
+         * const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+         *     c.add("LI", null)
+         *          .onupdate(data_B, ({ a })=>({ textContent: a }));
+         * c.mount(document.body);
+         * c.update(data_B_update);
+         * @example
+         * // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
+         * const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+         *     c.add("LI", null)
+         *          .onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
+         * c.mount(document.body);
+         * c.update(({ a })=> { a: ++a });
          */
         function update(new_data){
             if(!internal_storage) return false;
@@ -529,6 +560,7 @@ function init(global){
      *  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
      *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList.toggle(class_name)` others `el.classList.toggle(class_name, Booleans(...))`
      *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
+     *  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
      * @typedef DomAssignObject
      * @memberof $dom.types
      * @type {Object}
@@ -547,13 +579,25 @@ function init(global){
      * $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
      * //result HTML: <body style="color: red;" data-js_param="CLICKED">BODY</body>
      * //console output on click: "CLICKED"
+     * $dom.assign(el, { style: { color: "green" } });
+     * //result HTML: <body style="color: green;" data-js_param="CLICKED">BODY</body>
+     * //console output on click: "CLICKED"
+     * @example
+     * const el= document.body;
      * $dom.assign(el, { classList: { testClass: -1 } });
-     * //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+     * //result HTML: <body class="testClass">…</body>
      * $dom.assign(el, { classList: { testClass: -1 } });
-     * //result HTML: <body class="" style="color: red;" data-js_param="CLICKED">BODY</body>
+     * //result HTML: <body class="">…</body>
+     * @example
+     * const el= document.body;
      * $dom.assign(el, { classList: { testClass: true } });//or 1
-     * //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
+     * //result HTML: <body class="testClass">…</body>
+     * $dom.assign(el, { classList: { testClass: false } });//or 0
+     * //result HTML: <body class="">…</body>
      * //...
+     * @example
+     * $dom.assign(A_ELEMENT, { href: "www.google.com" });//=> <a href="www.google.com" …
+     * $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
      */
     $dom.assign= function(element, ...objects_attributes){
         const object_attributes= Object.assign({}, ...objects_attributes);

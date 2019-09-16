@@ -10,6 +10,15 @@
  * @param {$dom.types.Component.share} share
  * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
  * @return {$dom.types.Component}
+ * @example
+ * function p({ textContent }){
+ *      const cP= $dom.component("P", { textContent });
+ *      return cP.share;
+ * }
+ * const c= $dom.component("DIV", null);
+ * for(let i=0; i<3; i++){ c.component(p({ textContent: i })); }
+ * c.mount(document.body, "replaceContent");
+ * //= <body><div><p>0</p><p>1</p><p>2</p></div></body>
  */
 function component({ mount, update, isStatic }, shift= 0){
     recalculateDeep(shift);

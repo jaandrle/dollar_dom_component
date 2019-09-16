@@ -14,7 +14,7 @@
  * @memberof $dom.types.Component
  * @public
  * @param {String} text Argument for `document.createTextNode`
- * @param {Number} shift see {@link $dom.types.Component.add}
+ * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
  * @returns {$dom.types.Component__AddText}
  * @example
  * function testTextLi({ href= "https://www.seznam.cz" }= {}){

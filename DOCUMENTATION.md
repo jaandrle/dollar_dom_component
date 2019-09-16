@@ -9,12 +9,12 @@ This NAMESPACE provides features for DOM elemnts.
     * [.types](#$dom.types) : <code>object</code> ℗
         * [.Component](#$dom.types.Component) : <code>Object</code>
             * [.add(el_name, attrs, [shift])](#$dom.types.Component.add) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
-            * [.addText(text, shift)](#$dom.types.Component.addText) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
-            * [.component(share, shift)](#$dom.types.Component.component) ⇒ [<code>Component</code>](#$dom.types.Component)
+            * [.addText(text, [shift])](#$dom.types.Component.addText) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
+            * [.component(share, [shift])](#$dom.types.Component.component) ⇒ [<code>Component</code>](#$dom.types.Component)
             * [.mount(element, [type])](#$dom.types.Component.mount) ⇒ <code>NodeElement</code>
             * [.recalculateDeep(shift)](#$dom.types.Component.recalculateDeep) ℗
             * [.getParentElement()](#$dom.types.Component.getParentElement) ℗
-            * [.setShift(shift)](#$dom.types.Component.setShift)
+            * [.setShift([shift])](#$dom.types.Component.setShift)
             * [.initStorage()](#$dom.types.Component.initStorage) ⇒ <code>Object</code> ℗
             * [.update(new_data)](#$dom.types.Component.update)
             * [.share](#$dom.types.Component.share) : <code>Object</code>
@@ -45,12 +45,12 @@ Just virtual key!!! This is overwiev of all internal types for better descriptio
 * [.types](#$dom.types) : <code>object</code> ℗
     * [.Component](#$dom.types.Component) : <code>Object</code>
         * [.add(el_name, attrs, [shift])](#$dom.types.Component.add) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
-        * [.addText(text, shift)](#$dom.types.Component.addText) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
-        * [.component(share, shift)](#$dom.types.Component.component) ⇒ [<code>Component</code>](#$dom.types.Component)
+        * [.addText(text, [shift])](#$dom.types.Component.addText) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
+        * [.component(share, [shift])](#$dom.types.Component.component) ⇒ [<code>Component</code>](#$dom.types.Component)
         * [.mount(element, [type])](#$dom.types.Component.mount) ⇒ <code>NodeElement</code>
         * [.recalculateDeep(shift)](#$dom.types.Component.recalculateDeep) ℗
         * [.getParentElement()](#$dom.types.Component.getParentElement) ℗
-        * [.setShift(shift)](#$dom.types.Component.setShift)
+        * [.setShift([shift])](#$dom.types.Component.setShift)
         * [.initStorage()](#$dom.types.Component.initStorage) ⇒ <code>Object</code> ℗
         * [.update(new_data)](#$dom.types.Component.update)
         * [.share](#$dom.types.Component.share) : <code>Object</code>
@@ -74,12 +74,12 @@ This is minimal export of "functional class" [component](#$dom.component) and it
 
 * [.Component](#$dom.types.Component) : <code>Object</code>
     * [.add(el_name, attrs, [shift])](#$dom.types.Component.add) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
-    * [.addText(text, shift)](#$dom.types.Component.addText) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
-    * [.component(share, shift)](#$dom.types.Component.component) ⇒ [<code>Component</code>](#$dom.types.Component)
+    * [.addText(text, [shift])](#$dom.types.Component.addText) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
+    * [.component(share, [shift])](#$dom.types.Component.component) ⇒ [<code>Component</code>](#$dom.types.Component)
     * [.mount(element, [type])](#$dom.types.Component.mount) ⇒ <code>NodeElement</code>
     * [.recalculateDeep(shift)](#$dom.types.Component.recalculateDeep) ℗
     * [.getParentElement()](#$dom.types.Component.getParentElement) ℗
-    * [.setShift(shift)](#$dom.types.Component.setShift)
+    * [.setShift([shift])](#$dom.types.Component.setShift)
     * [.initStorage()](#$dom.types.Component.initStorage) ⇒ <code>Object</code> ℗
     * [.update(new_data)](#$dom.types.Component.update)
     * [.share](#$dom.types.Component.share) : <code>Object</code>
@@ -123,16 +123,16 @@ add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2
 ```
 <a name="$dom.types.Component.addText"></a>
 
-##### Component.addText(text, shift) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
+##### Component.addText(text, [shift]) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
 This add element to component
 
 **Kind**: static method of [<code>Component</code>](#$dom.types.Component)  
 **Access**: public  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| text | <code>String</code> | Argument for `document.createTextNode` |
-| shift | <code>Number</code> | see [add](#$dom.types.Component.add) |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| text | <code>String</code> |  | Argument for `document.createTextNode` |
+| [shift] | <code>Number</code> | <code>0</code> | see [add](#$dom.types.Component.add) |
 
 **Example**  
 ```js
@@ -150,16 +150,16 @@ function testTextLi({ href= "https://www.seznam.cz" }= {}){
 ```
 <a name="$dom.types.Component.component"></a>
 
-##### Component.component(share, shift) ⇒ [<code>Component</code>](#$dom.types.Component)
+##### Component.component(share, [shift]) ⇒ [<code>Component</code>](#$dom.types.Component)
 Method for including another component by usint its `share` key.
 
 **Kind**: static method of [<code>Component</code>](#$dom.types.Component)  
 **Access**: public  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| share | [<code>share</code>](#$dom.types.Component.share) |  |
-| shift | <code>Number</code> | see [add](#$dom.types.Component.add) |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| share | [<code>share</code>](#$dom.types.Component.share) |  |  |
+| [shift] | <code>Number</code> | <code>0</code> | see [add](#$dom.types.Component.add) |
 
 <a name="$dom.types.Component.mount"></a>
 
@@ -196,26 +196,41 @@ Returns parent element (or "fragment pseudo element")
 **Access**: private  
 <a name="$dom.types.Component.setShift"></a>
 
-##### Component.setShift(shift)
+##### Component.setShift([shift])
 Method provide way to change nesting behaviour. It can be helpful for loops
 
 **Kind**: static method of [<code>Component</code>](#$dom.types.Component)  
 **Access**: public  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| shift | <code>Number</code> | see [add](#$dom.types.Component.add) |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [shift] | <code>Number</code> | <code>0</code> | see [add](#$dom.types.Component.add) |
 
 **Example**  
 ```js
 function testNesting(){
-    const { add, setShift, share }= $dom.component("DIV", null);
-        setShift(0);
+    const c= $dom.component("DIV", null);
+        c.setShift(0);
     for(let i= 0; i<5; i++){
-        add("P", { textContent: `Paragraph no. ${i}.` }, -1);
+        c.add("P", { textContent: `Paragraph no. ${i}.` }, -1);
     }
-    return share;
+    return c.share;
 }
+//=> div> 5*p
+```
+**Example**  
+```js
+function testNesting(){
+    const c= $dom.component("DIV", null);
+    for(let i= 0; i<5; i++){
+        c.add("P", { textContent: `Paragraph no. ${i}.` });
+         //c.setShift();//or 0 => div> p> p> p> …
+      //c.setShift(-1); => div> p> p> p> …
+    c.setShift(-2);
+    }
+    return c.share;
+}
+//=> div> 5*p
 ```
 <a name="$dom.types.Component.initStorage"></a>
 

@@ -8,7 +8,7 @@
  * @memberof $dom.types.Component
  * @public
  * @param {$dom.types.Component.share} share
- * @param {Number} shift see {@link $dom.types.Component.add}
+ * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
  * @return {$dom.types.Component}
  */
 function component({ mount, update, isStatic }, shift= 0){

@@ -192,7 +192,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @memberof $dom.types.Component
      * @public
      * @param {String} text Argument for `document.createTextNode`
-     * @param {Number} shift see {@link $dom.types.Component.add}
+     * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
      * @returns {$dom.types.Component__AddText}
      * @example
      * function testTextLi({ href= "https://www.seznam.cz" }= {}){
@@ -230,7 +230,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @memberof $dom.types.Component
      * @public
      * @param {$dom.types.Component.share} share
-     * @param {Number} shift see {@link $dom.types.Component.add}
+     * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
      * @return {$dom.types.Component}
      */
     function component({ mount, update, isStatic }, shift= 0){
@@ -326,16 +326,29 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @method setShift
      * @memberof $dom.types.Component
      * @public
-     * @param {Number} shift see {@link $dom.types.Component.add}
+     * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
      * @example
      * function testNesting(){
-     *     const { add, setShift, share }= $dom.component("DIV", null);
-     *         setShift(0);
+     *     const c= $dom.component("DIV", null);
+     *         c.setShift(0);
      *     for(let i= 0; i<5; i++){
-     *         add("P", { textContent: `Paragraph no. ${i}.` }, -1);
+     *         c.add("P", { textContent: `Paragraph no. ${i}.` }, -1);
      *     }
-     *     return share;
+     *     return c.share;
      * }
+     * //=> div> 5*p
+     * @example
+     * function testNesting(){
+     *     const c= $dom.component("DIV", null);
+     *     for(let i= 0; i<5; i++){
+     *         c.add("P", { textContent: `Paragraph no. ${i}.` });
+     *          //c.setShift();//or 0 => div> p> p> p> …
+     *       //c.setShift(-1); => div> p> p> p> …
+     *     c.setShift(-2);
+     *     }
+     *     return c.share;
+     * }
+     * //=> div> 5*p
      */
     function setShift(shift= 0){
         let last;

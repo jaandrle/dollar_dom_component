@@ -151,7 +151,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
              * @method onupdate
              * @memberof $dom.types.Component__Add
              * @param {Object} data This allows register listener for given keys of Object `data`
-             * @param {onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
+             * @param {$dom.types.onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
              * @returns {$dom.types.Component}
              * @example
              *      const c= $dom.component("DIV", null);
@@ -162,8 +162,9 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
              */
             /**
              * @callback onUpdateFunction
+             * @memberof $dom.types
              * @param {Object} data Includes all subsribed keys from `data` see {@link $dom.types.Component__Add.onupdate}
-             * @returns {*|DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when {@link $dom.types.Component.update} is called.
+             * @returns {*|$dom.types.DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when {@link $dom.types.Component.update} is called. This callback can be registered when element is created (see {@link $dom.types.Component.add}) see {@link $dom.types.Component__Add}.
              */
             onupdate: function(data, onUpdateFunction){
                 if(!data) return component_out;

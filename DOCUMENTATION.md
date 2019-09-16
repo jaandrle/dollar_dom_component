@@ -1,18 +1,3 @@
-## Objects
-
-<dl>
-<dt><a href="#$dom">$dom</a> : <code>object</code></dt>
-<dd><p>This NAMESPACE provides features for DOM elemnts.</p>
-</dd>
-</dl>
-
-## Typedefs
-
-<dl>
-<dt><a href="#onUpdateFunction">onUpdateFunction</a> ⇒ <code>*</code> | <code>DomAssignObject</code></dt>
-<dd></dd>
-</dl>
-
 <a name="$dom"></a>
 
 ## $dom : <code>object</code>
@@ -39,6 +24,7 @@ This NAMESPACE provides features for DOM elemnts.
             * [.getReference()](#$dom.types.Component__Add.getReference) ⇒ <code>NodeElement</code>
             * [.oninit(fn)](#$dom.types.Component__Add.oninit) ⇒ [<code>Component</code>](#$dom.types.Component)
             * [.onupdate(data, onUpdateFunction)](#$dom.types.Component__Add.onupdate) ⇒ [<code>Component</code>](#$dom.types.Component)
+        * [.onUpdateFunction](#$dom.types.onUpdateFunction) ⇒ <code>\*</code> \| [<code>DomAssignObject</code>](#$dom.types.DomAssignObject)
         * [.Component__AddText](#$dom.types.Component__AddText) : <code>Component</code>
             * [.oninit(fn)](#$dom.types.Component__AddText.oninit) ⇒ [<code>Component</code>](#$dom.types.Component)
         * [.DomAssignObject](#$dom.types.DomAssignObject) : <code>Object</code>
@@ -74,6 +60,7 @@ Just virtual key!!! This is overwiev of all internal types for better descriptio
         * [.getReference()](#$dom.types.Component__Add.getReference) ⇒ <code>NodeElement</code>
         * [.oninit(fn)](#$dom.types.Component__Add.oninit) ⇒ [<code>Component</code>](#$dom.types.Component)
         * [.onupdate(data, onUpdateFunction)](#$dom.types.Component__Add.onupdate) ⇒ [<code>Component</code>](#$dom.types.Component)
+    * [.onUpdateFunction](#$dom.types.onUpdateFunction) ⇒ <code>\*</code> \| [<code>DomAssignObject</code>](#$dom.types.DomAssignObject)
     * [.Component__AddText](#$dom.types.Component__AddText) : <code>Component</code>
         * [.oninit(fn)](#$dom.types.Component__AddText.oninit) ⇒ [<code>Component</code>](#$dom.types.Component)
     * [.DomAssignObject](#$dom.types.DomAssignObject) : <code>Object</code>
@@ -345,7 +332,7 @@ This procedure allows to call given function `fn` during registering element.
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>Object</code> | This allows register listener for given keys of Object `data` |
-| onUpdateFunction | [<code>onUpdateFunction</code>](#onUpdateFunction) | This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element. |
+| onUpdateFunction | [<code>onUpdateFunction</code>](#$dom.types.onUpdateFunction) | This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element. |
 
 **Example**  
 ```js
@@ -355,6 +342,16 @@ const c= $dom.component("DIV", null);
      …
      c.update({ key: "Value changed" });//=> <p>Value changed</p>
 ```
+<a name="$dom.types.onUpdateFunction"></a>
+
+#### types.onUpdateFunction ⇒ <code>\*</code> \| [<code>DomAssignObject</code>](#$dom.types.DomAssignObject)
+**Kind**: static typedef of [<code>types</code>](#$dom.types)  
+**Returns**: <code>\*</code> \| [<code>DomAssignObject</code>](#$dom.types.DomAssignObject) - Primary should use `DomAssignObject`, but in generall this can do anything what make sence when [update](#$dom.types.Component.update) is called. This callback can be registered when element is created (see [add](#$dom.types.Component.add)) see [Component__Add](#$dom.types.Component__Add).  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | Includes all subsribed keys from `data` see [onupdate](#$dom.types.Component__Add.onupdate) |
+
 <a name="$dom.types.Component__AddText"></a>
 
 #### types.Component\_\_AddText : <code>Component</code>
@@ -462,13 +459,3 @@ $dom.assign(el, { classList: { testClass: true } });//or 1
 //result HTML: <body class="testClass" style="color: red;" data-js_param="CLICKED">BODY</body>
 //...
 ```
-<a name="onUpdateFunction"></a>
-
-## onUpdateFunction ⇒ <code>\*</code> \| <code>DomAssignObject</code>
-**Kind**: global typedef  
-**Returns**: <code>\*</code> \| <code>DomAssignObject</code> - Primary should use `DomAssignObject`, but in generall this can do anything what make sence when [update](#$dom.types.Component.update) is called.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>Object</code> | Includes all subsribed keys from `data` see [onupdate](#$dom.types.Component__Add.onupdate) |
-

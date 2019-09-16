@@ -38,6 +38,9 @@ This NAMESPACE provides features for DOM elemnts.
     * [.component([el_name], attrs, [params])](#$dom.component) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add) \| [<code>ComponentEmpty</code>](#$dom.types.ComponentEmpty)
     * [.assign(element, ...object_attributes)](#$dom.assign)
 
+
+* * *
+
 <a name="$dom.types"></a>
 
 ### $dom.types : <code>object</code> ℗
@@ -73,18 +76,27 @@ Just virtual key!!! This is overwiev of all internal types for better descriptio
         * [.oninit(fn)](#$dom.types.Component__AddText.oninit) ⇒ [<code>Component</code>](#$dom.types.Component)
     * [.DomAssignObject](#$dom.types.DomAssignObject) : <code>Object</code>
 
+
+* * *
+
 <a name="$dom.types.ComponentEmpty"></a>
 
 #### types.ComponentEmpty : [<code>Component</code>](#$dom.types.Component)
 In generall, all methods from [Component](#$dom.types.Component) don't do anything. Also during "mounting" there are some changes see method [mount](#$dom.types.ComponentEmpty.mount).
 
 **Kind**: static typedef of [<code>types</code>](#$dom.types)  
+
+* * *
+
 <a name="$dom.types.ComponentEmpty.mount"></a>
 
 ##### ComponentEmpty.mount()
 The same syntax as [mount](#$dom.types.Component.mount). But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
 
 **Kind**: static method of [<code>ComponentEmpty</code>](#$dom.types.ComponentEmpty)  
+
+* * *
+
 <a name="$dom.types.Component"></a>
 
 #### types.Component : <code>Object</code>
@@ -107,6 +119,9 @@ This is minimal export of "functional class" [component](#$dom.component) and it
         * [.isStatic()](#$dom.types.Component.share.isStatic) ⇒ <code>Boolean</code>
         * [.mount(element, [type])](#$dom.types.Component.share.mount) ⇒ <code>NodeElement</code>
         * [.update(new_data)](#$dom.types.Component.share.update)
+
+
+* * *
 
 <a name="$dom.types.Component.add"></a>
 
@@ -143,6 +158,9 @@ add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2
     add("DIV", null);
     //just DIV without attributes
 ```
+
+* * *
+
 <a name="$dom.types.Component.addText"></a>
 
 ##### Component.addText(text, [shift]) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
@@ -177,6 +195,9 @@ function testTextLi({ href= "https://www.seznam.cz" }= {}){
 }
 //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
 ```
+
+* * *
+
 <a name="$dom.types.Component.component"></a>
 
 ##### Component.component(share, [shift]) ⇒ [<code>Component</code>](#$dom.types.Component)
@@ -201,6 +222,9 @@ for(let i=0; i<3; i++){ c.component(p({ textContent: i })); }
 c.mount(document.body, "replaceContent");
 //= <body><div><p>0</p><p>1</p><p>2</p></div></body>
 ```
+
+* * *
+
 <a name="$dom.types.Component.mount"></a>
 
 ##### Component.mount(element, [type]) ⇒ <code>NodeElement</code>
@@ -215,6 +239,9 @@ Add element to live DOM
 | element | <code>NodeElement</code> |  | Element where to places this component |
 | [type] | <code>String</code> | <code>&quot;childLast&quot;</code> | <br/>- Change type of mounting  <br/>- `childLast` places component as last child  <br/>- `childFirst` places component as first child  <br/>- `replaceContent` removes content of `element` and places component as child (uses `$dom.empty`)  <br/>- `replace` replaces `element` by component  <br/>- `before` places component before `element`  <br/>- `after` places component after `element` (uses `$dom.insertAfter`) |
 
+
+* * *
+
 <a name="$dom.types.Component.recalculateDeep"></a>
 
 ##### Component.recalculateDeep(shift) ℗
@@ -227,6 +254,9 @@ Updates `deep`
 | --- | --- | --- |
 | shift | <code>Number</code> | see [add](#$dom.types.Component.add) |
 
+
+* * *
+
 <a name="$dom.types.Component.getParentElement"></a>
 
 ##### Component.getParentElement() ⇒ <code>NodeElement</code> ℗
@@ -235,6 +265,9 @@ Returns parent element (or "fragment pseudo element")
 **Kind**: static method of [<code>Component</code>](#$dom.types.Component)  
 **Returns**: <code>NodeElement</code> - Returns parent element (i. e. `DocumenFragment` if component is empty)  
 **Access**: private  
+
+* * *
+
 <a name="$dom.types.Component.setShift"></a>
 
 ##### Component.setShift([shift])
@@ -273,6 +306,9 @@ function testNesting(){
 }
 //=> div> 5*p
 ```
+
+* * *
+
 <a name="$dom.types.Component.initStorage"></a>
 
 ##### Component.initStorage() ⇒ <code>Object</code> ℗
@@ -281,6 +317,9 @@ Initialize internal storage
 **Kind**: static method of [<code>Component</code>](#$dom.types.Component)  
 **Returns**: <code>Object</code> - `{ register, registerComponent, update, unregister}`  
 **Access**: private  
+
+* * *
+
 <a name="$dom.types.Component.update"></a>
 
 ##### Component.update(new_data)
@@ -324,6 +363,9 @@ const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
 c.mount(document.body);
 c.update(({ a })=> { a: ++a });
 ```
+
+* * *
+
 <a name="$dom.types.Component.share"></a>
 
 ##### Component.share : <code>Object</code>
@@ -336,6 +378,9 @@ Its purpose is to make easy transfering methods somewhere else (like for using i
     * [.isStatic()](#$dom.types.Component.share.isStatic) ⇒ <code>Boolean</code>
     * [.mount(element, [type])](#$dom.types.Component.share.mount) ⇒ <code>NodeElement</code>
     * [.update(new_data)](#$dom.types.Component.share.update)
+
+
+* * *
 
 <a name="$dom.types.Component.share.destroy"></a>
 
@@ -351,6 +396,9 @@ c.mount(document.body, "replaceContent");
 c= c.destroy();
 //=> c===null AND <body></body>
 ```
+
+* * *
+
 <a name="$dom.types.Component.share.isStatic"></a>
 
 ###### share.isStatic() ⇒ <code>Boolean</code>
@@ -359,6 +407,9 @@ Methods returns if it was `onupdate` used
 **Kind**: static method of [<code>share</code>](#$dom.types.Component.share)  
 **Returns**: <code>Boolean</code> - If there is some listeners `onupdate`  
 **Access**: public  
+
+* * *
+
 <a name="$dom.types.Component.share.mount"></a>
 
 ###### share.mount(element, [type]) ⇒ <code>NodeElement</code>
@@ -372,6 +423,9 @@ Add element to live DOM
 | --- | --- | --- | --- |
 | element | <code>NodeElement</code> |  | Element where to places this component |
 | [type] | <code>String</code> | <code>&quot;childLast&quot;</code> | <br/>- Change type of mounting  <br/>- `childLast` places component as last child  <br/>- `childFirst` places component as first child  <br/>- `replaceContent` removes content of `element` and places component as child (uses `$dom.empty`)  <br/>- `replace` replaces `element` by component  <br/>- `before` places component before `element`  <br/>- `after` places component after `element` (uses `$dom.insertAfter`) |
+
+
+* * *
 
 <a name="$dom.types.Component.share.update"></a>
 
@@ -416,6 +470,9 @@ const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
 c.mount(document.body);
 c.update(({ a })=> { a: ++a });
 ```
+
+* * *
+
 <a name="$dom.types.Component__Add"></a>
 
 #### types.Component\_\_Add : [<code>Component</code>](#$dom.types.Component)
@@ -428,12 +485,18 @@ This is `Component` with aditional methods
     * [.oninit(fn)](#$dom.types.Component__Add.oninit) ⇒ [<code>Component</code>](#$dom.types.Component)
     * [.onupdate(data, onUpdateFunction)](#$dom.types.Component__Add.onupdate) ⇒ [<code>Component</code>](#$dom.types.Component)
 
+
+* * *
+
 <a name="$dom.types.Component__Add.getReference"></a>
 
 ##### Component__Add.getReference() ⇒ <code>NodeElement</code>
 Returns reference of currently added element
 
 **Kind**: static method of [<code>Component\_\_Add</code>](#$dom.types.Component__Add)  
+
+* * *
+
 <a name="$dom.types.Component__Add.oninit"></a>
 
 ##### Component__Add.oninit(fn) ⇒ [<code>Component</code>](#$dom.types.Component)
@@ -444,6 +507,9 @@ This procedure allows to call given function `fn` during registering element.
 | Param | Type |
 | --- | --- |
 | fn | <code>function</code> | 
+
+
+* * *
 
 <a name="$dom.types.Component__Add.onupdate"></a>
 
@@ -473,6 +539,9 @@ c.add("P", null).onupdate({ A: "A", B: "b" }, ({ A, B })=> ({ textContent: A+B }
 …
 c.update({ B: "B" });//=> <p>AB</p>
 ```
+
+* * *
+
 <a name="$dom.types.onUpdateFunction"></a>
 
 #### types.onUpdateFunction ⇒ <code>\*</code> \| [<code>DomAssignObject</code>](#$dom.types.DomAssignObject)
@@ -483,12 +552,18 @@ c.update({ B: "B" });//=> <p>AB</p>
 | --- | --- | --- |
 | data | <code>Object</code> | Includes all subsribed keys from `data` see method [onupdate](#$dom.types.Component__Add.onupdate) |
 
+
+* * *
+
 <a name="$dom.types.Component__AddText"></a>
 
 #### types.Component\_\_AddText : <code>Component</code>
 This is `Component` with aditional methods
 
 **Kind**: static typedef of [<code>types</code>](#$dom.types)  
+
+* * *
+
 <a name="$dom.types.Component__AddText.oninit"></a>
 
 ##### Component__AddText.oninit(fn) ⇒ [<code>Component</code>](#$dom.types.Component)
@@ -499,6 +574,9 @@ This procedure allows to call given function `fn` during registering element.
 | Param | Type |
 | --- | --- |
 | fn | <code>function</code> | 
+
+
+* * *
 
 <a name="$dom.types.DomAssignObject"></a>
 
@@ -512,6 +590,9 @@ Object shall holds **NodeElement** properties like `className`, `textContent`, �
  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
 
 **Kind**: static typedef of [<code>types</code>](#$dom.types)  
+
+* * *
+
 <a name="$dom.empty"></a>
 
 ### $dom.empty(container)
@@ -522,6 +603,9 @@ Procedure removes all children of `container`
 | Param | Type |
 | --- | --- |
 | container | <code>NodeElement</code> | 
+
+
+* * *
 
 <a name="$dom.insertAfter"></a>
 
@@ -535,6 +619,9 @@ Procedure places `new_element` after `reference` elements
 | new_element | <code>NodeElement</code> | 
 | reference | <code>NodeElement</code> | 
 
+
+* * *
+
 <a name="$dom.replace"></a>
 
 ### $dom.replace(el_old, el_new)
@@ -546,6 +633,9 @@ Procedure replaces `el_old` element by new one (`new_el`)
 | --- | --- |
 | el_old | <code>NodeElement</code> | 
 | el_new | <code>NodeElement</code> | 
+
+
+* * *
 
 <a name="$dom.component"></a>
 
@@ -562,6 +652,9 @@ This 'functional class' is syntax sugar around [`DocumentFragment`](https://deve
 | attrs | [<code>DomAssignObject</code>](#$dom.types.DomAssignObject) |  | The second argument for [assign](#$dom.assign) |
 | [params] | <code>Object</code> | <code>{}</code> | Parameters |
 | [params.mapUpdate] | <code>function</code> \| <code>Undefined</code> | <code>Undefined</code> | This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method [add](#$dom.types.Component.add) |
+
+
+* * *
 
 <a name="$dom.assign"></a>
 
@@ -610,3 +703,6 @@ $dom.assign(el, { classList: { testClass: false } });//or 0
 $dom.assign(A_ELEMENT, { href: "www.google.com" });//=> <a href="www.google.com" …
 $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
 ```
+
+* * *
+

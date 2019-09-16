@@ -323,9 +323,14 @@ c.update(({ a })=> { a: ++a });
 ##### Component.share : <code>Object</code>
 Its purpose is to make easy transfering methods somewhere else (like for using in another component, see [component](#$dom.types.Component.component) method).
 
-In additional, it includes `mount`, `update` from [Component](Component).
-
 **Kind**: static typedef of [<code>Component</code>](#$dom.types.Component)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| mount | <code>function</code> | [mount](#$dom.types.Component.mount) |
+| update | <code>function</code> | [update](#$dom.types.Component.update) |
+
 
 * [.share](#$dom.types.Component.share) : <code>Object</code>
     * [.destroy()](#$dom.types.Component.share.destroy) ⇒ <code>Null</code>

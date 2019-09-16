@@ -39,11 +39,11 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     const component_out= { add, addText, component, setShift, mount, update, share };
     /**
      * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link $dom.types.Component.component} method).
-     * 
-     * In additional, it includes `mount`, `update` from {@link Component}.
      * @typedef share
      * @memberof $dom.types.Component
      * @type {Object}
+     * @property {Function} mount {@link $dom.types.Component.mount}
+     * @property {Function} update {@link $dom.types.Component.update}
      */
     /**
      * This is minimal export of "functional class" {@link $dom.component} and its methods (if they are chainable).

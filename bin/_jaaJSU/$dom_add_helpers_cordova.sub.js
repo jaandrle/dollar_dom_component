@@ -41,16 +41,11 @@ const $dom_emptyPseudoComponent= (function(){
  * @method component_cordova
  * @memberof $dom
  * @version 1.0.0
- * @param {String} el_name
- *  - Name of element (for example `LI`, `P`, `A`, …).
- *  - This is parent element of component.
- * @param {Object} attrs
- *  - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign)
+ * @param {String} el_name Name of element (for example `LI`, `P`, `A`, …). This is parent element of component.
+ * @param {DomAssignObject} attrs The second argument for [`$dom.assign`](#domassign)
  * @param {Object} params
- * @param {Function|Boolean} params.mapUpdate
- *  - `[params.mapUpdate=undefined]`
- *  - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [`add`](#methods_add)
- * @return {Component}
+ * @param {Function|Boolean} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see {@link Component.add}
+ * @return {Component__Add}
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -71,16 +66,14 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, addText, component, setShift, mount, update, share };
     /**
-     * Is key `share` in [`Component`](#component). Its purpose is to make easy transfering methods somewhere else (like for using in another component, see [`component`](#componentcomponent) method).
+     * Is key `share` in {@link Component}. Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link Component.component} method).
      * 
-     * In additional, it includes `mount`, `update` from [`Component`](#component).
+     * In additional, it includes `mount`, `update` from {@link Component}.
      * @typedef ComponentShare
      * @type {Object}
      */
     /**
-     * This is output of "functional class" [$dom.component](#domcomponent).
-     * 
-     * Some methods can add another methods! For example, for `$dom.component` it also includes methods from [Component.add](#componentadd).
+     * This is minimal export of "functional class" {@link $dom.component} and its methods (if they are chainable).
      * @typedef Component
      * @type {Object}
      * @property {ComponentShare} share
@@ -97,9 +90,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @memberof Component
      * @public
      * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
-     * @param {Object} attrs
-     * <br/>- `null|undefined` is also supported (`null` is probably recommendet for better readability)
-     * <br/>- The second argument for [`$dom.assign`](#domassign)
+     * @param {DomAssignObject} attrs Internally uses {@link $dom.assign}, `null|undefined` is also supported (`null` is probably recommendet for better readability)
      * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
      * @returns {Component__Add}
      * @example
@@ -152,14 +143,19 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
              * @method onupdate
              * @memberof Component__Add
              * @param {Object} data This allows register listener for given keys of Object `data`
-             * @param {Function} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
+             * @param {onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
              * @returns {Component}
              * @example
              *      const c= $dom.component("DIV", null);
              *      …
              *      c.add("P", null).onupdate({ key: "This is init value" }, ({ key })=> ({ textContent: key }));//=> <p>This is init value</p>
              *      …
-             *      c.update({ key: "Value changed" });//=> <p>Value changed<p>
+             *      c.update({ key: "Value changed" });//=> <p>Value changed</p>
+             */
+            /**
+             * @callback onUpdateFunction
+             * @param {Object} data Includes all subsribed keys from `data` see {@link Component__Add.onupdate}
+             * @returns {*|DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when {@link Component.update} is called.
              */
             onupdate: function(data, onUpdateFunction){
                 if(!data) return component_out;
@@ -180,10 +176,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @method addText
      * @memberof Component
      * @public
-     * @param {String} text
-     *  - Argument for `document.createTextNode`
-     * @param {Number} shift
-     *  - see [`add`](#componentadd)
+     * @param {String} text Argument for `document.createTextNode`
+     * @param {Number} shift see {@link Component.add}
      * @returns {Component__AddText}
      * @example
      *      function testTextLi({ href= "https://www.seznam.cz" }= {}){
@@ -220,9 +214,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @method component
      * @memberof Component
      * @public
-     * @param {Object} share
-     * @param {Number} shift
-     *  - see [`add`](#methods_add)
+     * @param {ComponentShare} share
+     * @param {Number} shift see {@link Component.add}
      * @return {Component}
      */
     function component({ mount, update, isStatic }, shift= 0){
@@ -303,8 +296,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @private
      * @method recalculateDeep
      * @memberof Component
-     * @param {Number} shift
-     *  - see [`add`](#methods_add)
+     * @param {Number} shift see {@link Component.add}
      */
     function recalculateDeep(shift){
         if(!shift) deep.push(all_els_counter);
@@ -325,8 +317,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @method setShift
      * @memberof Component
      * @public
-     * @param {Number} shift
-     *  - see [`add`](#methods_add)
+     * @param {Number} shift see {@link Component.add}
      * @example
      *      function testNesting(){
      *          const { add, setShift, share }= $dom.component("DIV", null);
@@ -427,9 +418,9 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @memberof Component
      * @public
      * @param {Object|Function} new_data
-     *  - When `$dom.component` is initialized, it is possible to register `mapUpdate`
-     *  - **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**
-     *  - It is also possible to register function to detect changes itself see examples
+     * <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate`
+     * <br/>- **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**
+     * <br/>- It is also possible to register function to detect changes itself see examples
      * @example
      *      // SIMPLE example
      *      const data_A= { a: "A" };
@@ -469,19 +460,23 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     
 };
 /**
+ * Object shall holds **NodeElement** properties like `className`, `textContent`, …. This is primary argument for {@link $dom.assign}. There are some notes and changes:
+ *  - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
+ *  - The same notation can be used for **CSS variables** (the key is called `style_vars`).
+ *  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
+ *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`
+ *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
+ * @typedef DomAssignObject
+ * @type {Object}
+ */
+/**
  * Procedure for merging object into the element properties.
  * Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
  * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
  * @method assign [cordova]
  * @memberof $dom
  * @param {NodeElement} element
- * @param {...Object} object_attributes 
- *  <br/>- Object shall holds **NodeElement** properties like `className`, `textContent`, ...
- *  <br/>- For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
- *  <br/>- The same notation can be used for **CSS variables** (the key is called `style_vars`).
- *  <br/>- **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
- *  <br/>- **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`
- *  <br/>- *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
+ * @param {...DomAssignObject} object_attributes
  * @example
  *      const el= document.body;
  *      const onclick= function(){ console.log(this.dataset.js_param); };

@@ -5,8 +5,7 @@
  * @private
  * @method recalculateDeep
  * @memberof Component
- * @param {Number} shift
- *  - see [`add`](#componentadd)
+ * @param {Number} shift see {@link Component.add}
  */
 function recalculateDeep(shift){
     if(!shift) deep.push(all_els_counter);

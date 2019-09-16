@@ -13,9 +13,7 @@
  * @memberof Component
  * @public
  * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
- * @param {Object} attrs
- * <br/>- `null|undefined` is also supported (`null` is probably recommendet for better readability)
- * <br/>- The second argument for [`$dom.assign`](#domassign)
+ * @param {DomAssignObject} attrs Internally uses {@link $dom.assign}, `null|undefined` is also supported (`null` is probably recommendet for better readability)
  * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
  * @returns {Component__Add}
  * @example
@@ -68,7 +66,7 @@ function add(el_name, attrs, shift= 0){
          * @method onupdate
          * @memberof Component__Add
          * @param {Object} data This allows register listener for given keys of Object `data`
-         * @param {Function} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
+         * @param {onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
          * @returns {Component}
          * @example
          *      const c= $dom.component("DIV", null);
@@ -76,6 +74,11 @@ function add(el_name, attrs, shift= 0){
          *      c.add("P", null).onupdate({ key: "This is init value" }, ({ key })=> ({ textContent: key }));//=> <p>This is init value</p>
          *      …
          *      c.update({ key: "Value changed" });//=> <p>Value changed</p>
+         */
+        /**
+         * @callback onUpdateFunction
+         * @param {Object} data Includes all subsribed keys from `data` see {@link Component__Add.onupdate}
+         * @returns {*|DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when {@link Component.update} is called.
          */
         onupdate: function(data, onUpdateFunction){
             if(!data) return component_out;

@@ -12,10 +12,8 @@
  * @method addText
  * @memberof Component
  * @public
- * @param {String} text
- *  - Argument for `document.createTextNode`
- * @param {Number} shift
- *  - see [`add`](#componentadd)
+ * @param {String} text Argument for `document.createTextNode`
+ * @param {Number} shift see {@link Component.add}
  * @returns {Component__AddText}
  * @example
  *      function testTextLi({ href= "https://www.seznam.cz" }= {}){

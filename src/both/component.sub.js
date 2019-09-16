@@ -8,8 +8,7 @@
  * @memberof Component
  * @public
  * @param {ComponentShare} share
- * @param {Number} shift
- *  - see [`add`](#methods_add)
+ * @param {Number} shift see {@link Component.add}
  * @return {Component}
  */
 function component({ mount, update, isStatic }, shift= 0){

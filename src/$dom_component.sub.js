@@ -7,16 +7,11 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
  * @method gulp_place("'component'+(app.standalone==='cordova' ? '_cordova' : '')", "eval")
  * @memberof $dom
  * @version gulp_place("app.version", "eval")
- * @param {String} el_name
- *  - Name of element (for example `LI`, `P`, `A`, …).
- *  - This is parent element of component.
- * @param {Object} attrs
- *  - The second argument for [`$dom.assign`](#domassign)
+ * @param {String} el_name Name of element (for example `LI`, `P`, `A`, …). This is parent element of component.
+ * @param {DomAssignObject} attrs The second argument for [`$dom.assign`](#domassign)
  * @param {Object} params
- * @param {Function|Boolean} params.mapUpdate
- *  - `[params.mapUpdate=undefined]`
- *  - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [`add`](#componentadd)
- * @return {Component}
+ * @param {Function|Boolean} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see {@link Component.add}
+ * @return {Component__Add}
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -37,16 +32,14 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, addText, component, setShift, mount, update, share };
     /**
-     * Is key `share` in [`Component`](#component). Its purpose is to make easy transfering methods somewhere else (like for using in another component, see [`component`](#componentcomponent) method).
+     * Is key `share` in {@link Component}. Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link Component.component} method).
      * 
-     * In additional, it includes `mount`, `update` from [`Component`](#component).
+     * In additional, it includes `mount`, `update` from {@link Component}.
      * @typedef ComponentShare
      * @type {Object}
      */
     /**
-     * This is output of "functional class" [$dom.component](#domcomponent).
-     * 
-     * Some methods can add another methods! For example, for `$dom.component` it also includes methods from [Component.add](#componentadd).
+     * This is minimal export of "functional class" {@link $dom.component} and its methods (if they are chainable).
      * @typedef Component
      * @type {Object}
      * @property {ComponentShare} share

@@ -5,8 +5,7 @@
  * @method setShift
  * @memberof Component
  * @public
- * @param {Number} shift
- *  - see [`add`](#componentadd)
+ * @param {Number} shift see {@link Component.add}
  * @example
  *      function testNesting(){
  *          const { add, setShift, share }= $dom.component("DIV", null);

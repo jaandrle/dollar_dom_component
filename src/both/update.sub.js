@@ -6,9 +6,9 @@
  * @memberof Component
  * @public
  * @param {Object|Function} new_data
- *  - When `$dom.component` is initialized, it is possible to register `mapUpdate`
- *  - **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**
- *  - It is also possible to register function to detect changes itself see examples
+ * <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate`
+ * <br/>- **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**
+ * <br/>- It is also possible to register function to detect changes itself see examples
  * @example
  *      // SIMPLE example
  *      const data_A= { a: "A" };

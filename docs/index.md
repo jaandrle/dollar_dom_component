@@ -10,18 +10,29 @@
 
 <dl>
 <dt><a href="#ComponentShare">ComponentShare</a> : <code>Object</code></dt>
-<dd><p>Is key <code>share</code> in <a href="#component"><code>Component</code></a>. Its purpose is to make easy transfering methods somewhere else (like for using in another component, see <a href="#componentcomponent"><code>component</code></a> method).</p>
-<p>In additional, it includes <code>mount</code>, <code>update</code> from <a href="#component"><code>Component</code></a>.</p>
+<dd><p>Is key <code>share</code> in <a href="#Component">Component</a>. Its purpose is to make easy transfering methods somewhere else (like for using in another component, see <a href="#Component.component">component</a> method).</p>
+<p>In additional, it includes <code>mount</code>, <code>update</code> from <a href="#Component">Component</a>.</p>
 </dd>
 <dt><a href="#Component">Component</a> : <code>Object</code></dt>
-<dd><p>This is output of &quot;functional class&quot; <a href="#domcomponent">$dom.component</a>.</p>
-<p>Some methods can add another methods! For example, for <code>$dom.component</code> it also includes methods from <a href="#componentadd">Component.add</a>.</p>
+<dd><p>This is minimal export of &quot;functional class&quot; <a href="#$dom.component">component</a> and its methods (if they are chainable).</p>
 </dd>
 <dt><a href="#Component__Add">Component__Add</a> : <code><a href="#Component">Component</a></code></dt>
 <dd><p>This is <code>Component</code> with aditional methods</p>
 </dd>
+<dt><a href="#onUpdateFunction">onUpdateFunction</a> ⇒ <code>*</code> | <code><a href="#DomAssignObject">DomAssignObject</a></code></dt>
+<dd></dd>
 <dt><a href="#Component__AddText">Component__AddText</a> : <code><a href="#Component">Component</a></code></dt>
 <dd><p>This is <code>Component</code> with aditional methods</p>
+</dd>
+<dt><a href="#DomAssignObject">DomAssignObject</a> : <code>Object</code></dt>
+<dd><p>Object shall holds <strong>NodeElement</strong> properties like <code>className</code>, <code>textContent</code>, …. This is primary argument for <a href="#$dom.assign">assign</a>. There are some notes and changes:</p>
+<ul>
+<li>For <code>dataset</code> can be used also <code>Object</code> notation: <code>$dom.assign(document.getElementById(&quot;ID&quot;), { dataset: { test: &quot;TEST&quot; } }); //&lt;p id=&quot;ID&quot; data-test=&quot;TEST&quot;&gt;&lt;/p&gt;</code>.</li>
+<li>The same notation can be used for <strong>CSS variables</strong> (the key is called <code>style_vars</code>).</li>
+<li><strong>IMPORTANT CHANGE</strong>: Key <code>style</code> also supports <strong>text</strong>, so <code>$dom.assign(el, { style: &quot;color: red;&quot; });</code> and <code>$dom.assign(el, { style: { color: &quot;red&quot; } })</code> is equivalent to <code>el.setAttribute(&quot;style&quot;, &quot;color: red;&quot;);</code></li>
+<li><strong>IMPORTANT DIFFERENCE</strong>: <code>classList</code> accepts <em>Object</em> in the form of <code>class_name: -1|0|1</code> where &#39;-1&#39; means <code>el.classList(class_name)</code> others <code>el.classList(class_name, Booleans(...))</code></li>
+<li><em>Speed optimalization</em>: It is recommended to use <code>textContent</code> (instead of <code>innerText</code>) and <code>$dom.add</code> or <code>$dom.component</code> (instead of <code>innerHTML</code>).</li>
+</ul>
 </dd>
 </dl>
 
@@ -36,7 +47,7 @@ This NAMESPACE provides features for DOM elemnts.
     * [.empty(container)](#$dom.empty)
     * [.insertAfter(new_element, reference)](#$dom.insertAfter)
     * [.replace(el_old, el_new)](#$dom.replace)
-    * [.component(el_name, attrs, params)](#$dom.component) ⇒ [<code>Component</code>](#Component)
+    * [.component(el_name, attrs, params)](#$dom.component) ⇒ [<code>Component\_\_Add</code>](#Component__Add)
     * [.assign(element, ...object_attributes)](#$dom.assign)
 
 <a name="$dom.empty"></a>
@@ -76,7 +87,7 @@ Procedure replaces `el_old` element by new one (`new_el`)
 
 <a name="$dom.component"></a>
 
-### $dom.component(el_name, attrs, params) ⇒ [<code>Component</code>](#Component)
+### $dom.component(el_name, attrs, params) ⇒ [<code>Component\_\_Add</code>](#Component__Add)
 This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
 
 **Kind**: static method of [<code>$dom</code>](#$dom)  
@@ -84,10 +95,10 @@ This 'functional class' is syntax sugar around [`DocumentFragment`](https://deve
 
 | Param | Type | Description |
 | --- | --- | --- |
-| el_name | <code>String</code> | - Name of element (for example `LI`, `P`, `A`, …).  - This is parent element of component. |
-| attrs | <code>Object</code> | - The second argument for [`$dom.assign`](./$dom.{namespace}.html#methods_assign) |
+| el_name | <code>String</code> | Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. |
+| attrs | [<code>DomAssignObject</code>](#DomAssignObject) | The second argument for [`$dom.assign`](#domassign) |
 | params | <code>Object</code> |  |
-| params.mapUpdate | <code>function</code> \| <code>Boolean</code> | - `[params.mapUpdate=undefined]`  - This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [`add`](#methods_add) |
+| [params.mapUpdate] | <code>function</code> \| <code>Boolean</code> | This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see [add](#Component.add) |
 
 <a name="$dom.assign"></a>
 
@@ -98,10 +109,10 @@ It is not deep copy in general, but it supports `style`, `style_vars` and `datas
 
 **Kind**: static method of [<code>$dom</code>](#$dom)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| element | <code>NodeElement</code> |  |
-| ...object_attributes | <code>Object</code> | <br/>- Object shall holds **NodeElement** properties like `className`, `textContent`, ...  <br/>- For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.  <br/>- The same notation can be used for **CSS variables** (the key is called `style_vars`).  <br/>- **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`  <br/>- **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`  <br/>- *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`). |
+| Param | Type |
+| --- | --- |
+| element | <code>NodeElement</code> | 
+| ...object_attributes | [<code>DomAssignObject</code>](#DomAssignObject) | 
 
 **Example**  
 ```js
@@ -121,9 +132,9 @@ const el= document.body;
 <a name="ComponentShare"></a>
 
 ## ComponentShare : <code>Object</code>
-Is key `share` in [`Component`](#component). Its purpose is to make easy transfering methods somewhere else (like for using in another component, see [`component`](#componentcomponent) method).
+Is key `share` in [Component](#Component). Its purpose is to make easy transfering methods somewhere else (like for using in another component, see [component](#Component.component) method).
 
-In additional, it includes `mount`, `update` from [`Component`](#component).
+In additional, it includes `mount`, `update` from [Component](#Component).
 
 **Kind**: global typedef  
 
@@ -155,9 +166,7 @@ Methods returns if it was `onupdate` used
 <a name="Component"></a>
 
 ## Component : <code>Object</code>
-This is output of "functional class" [$dom.component](#domcomponent).
-
-Some methods can add another methods! For example, for `$dom.component` it also includes methods from [Component.add](#componentadd).
+This is minimal export of "functional class" [component](#$dom.component) and its methods (if they are chainable).
 
 **Kind**: global typedef  
 **Properties**
@@ -186,7 +195,7 @@ This add element to component
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | el_name | <code>String</code> |  | Name of element (for example `LI`, `P`, `A`, ...). |
-| attrs | <code>Object</code> |  | <br/>- `null|undefined` is also supported (`null` is probably recommendet for better readability) <br/>- The second argument for [`$dom.assign`](#domassign) |
+| attrs | [<code>DomAssignObject</code>](#DomAssignObject) |  | Internally uses [assign](#$dom.assign), `null|undefined` is also supported (`null` is probably recommendet for better readability) |
 | [shift] | <code>Number</code> | <code>0</code> | Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example. |
 
 **Example**  
@@ -220,8 +229,8 @@ This add element to component
 
 | Param | Type | Description |
 | --- | --- | --- |
-| text | <code>String</code> | - Argument for `document.createTextNode` |
-| shift | <code>Number</code> | - see [`add`](#componentadd) |
+| text | <code>String</code> | Argument for `document.createTextNode` |
+| shift | <code>Number</code> | see [add](#Component.add) |
 
 **Example**  
 ```js
@@ -247,8 +256,8 @@ Method for including another component by usint its `share` key.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| share | <code>Object</code> |  |
-| shift | <code>Number</code> | - see [`add`](#methods_add) |
+| share | [<code>ComponentShare</code>](#ComponentShare) |  |
+| shift | <code>Number</code> | see [add](#Component.add) |
 
 <a name="Component.mount"></a>
 
@@ -274,7 +283,7 @@ Method provide way to change nesting behaviour. It can be helpful for loops
 
 | Param | Type | Description |
 | --- | --- | --- |
-| shift | <code>Number</code> | - see [`add`](#methods_add) |
+| shift | <code>Number</code> | see [add](#Component.add) |
 
 **Example**  
 ```js
@@ -297,7 +306,7 @@ Method updates all registered varibles by keys `onupdates` and calls follower fu
 
 | Param | Type | Description |
 | --- | --- | --- |
-| new_data | <code>Object</code> \| <code>function</code> | - When `$dom.component` is initialized, it is possible to register `mapUpdate`  - **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**  - It is also possible to register function to detect changes itself see examples |
+| new_data | <code>Object</code> \| <code>function</code> | <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate` <br/>- **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!** <br/>- It is also possible to register function to detect changes itself see examples |
 
 **Example**  
 ```js
@@ -360,7 +369,7 @@ This procedure allows to call given function `fn` during registering element.
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>Object</code> | This allows register listener for given keys of Object `data` |
-| onUpdateFunction | <code>function</code> | This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element. |
+| onUpdateFunction | [<code>onUpdateFunction</code>](#onUpdateFunction) | This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element. |
 
 **Example**  
 ```js
@@ -368,8 +377,18 @@ const c= $dom.component("DIV", null);
      …
      c.add("P", null).onupdate({ key: "This is init value" }, ({ key })=> ({ textContent: key }));//=> <p>This is init value</p>
      …
-     c.update({ key: "Value changed" });//=> <p>Value changed<p>
+     c.update({ key: "Value changed" });//=> <p>Value changed</p>
 ```
+<a name="onUpdateFunction"></a>
+
+## onUpdateFunction ⇒ <code>\*</code> \| [<code>DomAssignObject</code>](#DomAssignObject)
+**Kind**: global typedef  
+**Returns**: <code>\*</code> \| [<code>DomAssignObject</code>](#DomAssignObject) - Primary should use `DomAssignObject`, but in generall this can do anything what make sence when [update](#Component.update) is called.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | Includes all subsribed keys from `data` see [onupdate](#Component__Add.onupdate) |
+
 <a name="Component__AddText"></a>
 
 ## Component\_\_AddText : [<code>Component</code>](#Component)
@@ -387,3 +406,14 @@ This procedure allows to call given function `fn` during registering element.
 | --- | --- |
 | fn | <code>function</code> | 
 
+<a name="DomAssignObject"></a>
+
+## DomAssignObject : <code>Object</code>
+Object shall holds **NodeElement** properties like `className`, `textContent`, …. This is primary argument for [assign](#$dom.assign). There are some notes and changes:
+ - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
+ - The same notation can be used for **CSS variables** (the key is called `style_vars`).
+ - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
+ - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList(class_name)` others `el.classList(class_name, Booleans(...))`
+ - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
+
+**Kind**: global typedef  

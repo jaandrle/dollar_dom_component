@@ -22,6 +22,8 @@ This NAMESPACE provides features for DOM elemnts.
             * [.share](#$dom.types.Component.share) : <code>Object</code>
                 * [.destroy()](#$dom.types.Component.share.destroy) ⇒ <code>Null</code>
                 * [.isStatic()](#$dom.types.Component.share.isStatic) ⇒ <code>Boolean</code>
+                * [.mount(element, [type])](#$dom.types.Component.share.mount) ⇒ <code>NodeElement</code>
+                * [.update(new_data)](#$dom.types.Component.share.update)
         * [.Component__Add](#$dom.types.Component__Add) : [<code>Component</code>](#$dom.types.Component)
             * [.getReference()](#$dom.types.Component__Add.getReference) ⇒ <code>NodeElement</code>
             * [.oninit(fn)](#$dom.types.Component__Add.oninit) ⇒ [<code>Component</code>](#$dom.types.Component)
@@ -60,6 +62,8 @@ Just virtual key!!! This is overwiev of all internal types for better descriptio
         * [.share](#$dom.types.Component.share) : <code>Object</code>
             * [.destroy()](#$dom.types.Component.share.destroy) ⇒ <code>Null</code>
             * [.isStatic()](#$dom.types.Component.share.isStatic) ⇒ <code>Boolean</code>
+            * [.mount(element, [type])](#$dom.types.Component.share.mount) ⇒ <code>NodeElement</code>
+            * [.update(new_data)](#$dom.types.Component.share.update)
     * [.Component__Add](#$dom.types.Component__Add) : [<code>Component</code>](#$dom.types.Component)
         * [.getReference()](#$dom.types.Component__Add.getReference) ⇒ <code>NodeElement</code>
         * [.oninit(fn)](#$dom.types.Component__Add.oninit) ⇒ [<code>Component</code>](#$dom.types.Component)
@@ -101,6 +105,8 @@ This is minimal export of "functional class" [component](#$dom.component) and it
     * [.share](#$dom.types.Component.share) : <code>Object</code>
         * [.destroy()](#$dom.types.Component.share.destroy) ⇒ <code>Null</code>
         * [.isStatic()](#$dom.types.Component.share.isStatic) ⇒ <code>Boolean</code>
+        * [.mount(element, [type])](#$dom.types.Component.share.mount) ⇒ <code>NodeElement</code>
+        * [.update(new_data)](#$dom.types.Component.share.update)
 
 <a name="$dom.types.Component.add"></a>
 
@@ -324,17 +330,12 @@ c.update(({ a })=> { a: ++a });
 Its purpose is to make easy transfering methods somewhere else (like for using in another component, see [component](#$dom.types.Component.component) method).
 
 **Kind**: static typedef of [<code>Component</code>](#$dom.types.Component)  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| mount | <code>function</code> | [mount](#$dom.types.Component.mount) |
-| update | <code>function</code> | [update](#$dom.types.Component.update) |
-
 
 * [.share](#$dom.types.Component.share) : <code>Object</code>
     * [.destroy()](#$dom.types.Component.share.destroy) ⇒ <code>Null</code>
     * [.isStatic()](#$dom.types.Component.share.isStatic) ⇒ <code>Boolean</code>
+    * [.mount(element, [type])](#$dom.types.Component.share.mount) ⇒ <code>NodeElement</code>
+    * [.update(new_data)](#$dom.types.Component.share.update)
 
 <a name="$dom.types.Component.share.destroy"></a>
 
@@ -358,6 +359,63 @@ Methods returns if it was `onupdate` used
 **Kind**: static method of [<code>share</code>](#$dom.types.Component.share)  
 **Returns**: <code>Boolean</code> - If there is some listeners `onupdate`  
 **Access**: public  
+<a name="$dom.types.Component.share.mount"></a>
+
+###### share.mount(element, [type]) ⇒ <code>NodeElement</code>
+Add element to live DOM
+
+**Kind**: static method of [<code>share</code>](#$dom.types.Component.share)  
+**Returns**: <code>NodeElement</code> - `container`  
+**Access**: public  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| element | <code>NodeElement</code> |  | Element where to places this component |
+| [type] | <code>String</code> | <code>&quot;childLast&quot;</code> | <br/>- Change type of mounting  <br/>- `childLast` places component as last child  <br/>- `childFirst` places component as first child  <br/>- `replaceContent` removes content of `element` and places component as child (uses `$dom.empty`)  <br/>- `replace` replaces `element` by component  <br/>- `before` places component before `element`  <br/>- `after` places component after `element` (uses `$dom.insertAfter`) |
+
+<a name="$dom.types.Component.share.update"></a>
+
+###### share.update(new_data)
+Method updates all registered varibles by keys `onupdates` and calls follower functions
+
+**Kind**: static method of [<code>share</code>](#$dom.types.Component.share)  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| new_data | <code>Object</code> \| <code>function</code> | <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate` <br/>- **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!** <br/>- It is also possible to register function to detect changes itself see examples |
+
+**Example**  
+```js
+// SIMPLE example
+const data_A= { a: "A" };
+const data_A_update= { a: "AAA" };
+const c= $dom.component("UL", null);
+    c.add("LI", null)
+         .onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
+c.mount(document.body);
+c.update(data_A_update);
+```
+**Example**  
+```js
+// EXAMPLE WITH `mapUpdate`
+const data_B= { a: { b: "A" }};
+const data_B_update= { a: { b: "AAA" }};
+const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+    c.add("LI", null)
+         .onupdate(data_B, ({ a })=>({ textContent: a }));
+c.mount(document.body);
+c.update(data_B_update);
+```
+**Example**  
+```js
+// EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
+const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+    c.add("LI", null)
+         .onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
+c.mount(document.body);
+c.update(({ a })=> { a: ++a });
+```
 <a name="$dom.types.Component__Add"></a>
 
 #### types.Component\_\_Add : [<code>Component</code>](#$dom.types.Component)

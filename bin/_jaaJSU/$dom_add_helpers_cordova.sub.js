@@ -85,9 +85,9 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link $dom.types.Component.component} method).
      * @typedef share
      * @memberof $dom.types.Component
+     * @borrows $dom.types.Component.mount as mount
+     * @borrows $dom.types.Component.update as update
      * @type {Object}
-     * @property {Function} mount {@link $dom.types.Component.mount}
-     * @property {Function} update {@link $dom.types.Component.update}
      */
     /**
      * This is minimal export of "functional class" {@link $dom.component} and its methods (if they are chainable).

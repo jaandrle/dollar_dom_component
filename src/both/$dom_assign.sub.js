@@ -16,7 +16,7 @@
  * Procedure for merging object into the element properties.
  * Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
  * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
- * @method gulp_place("'assign'+(app.standalone==='cordova' ? ' [cordova]' : '')", "eval")
+ * @method gulp_place("'assign'+(app.standalone==='cordova' ? '_cordova' : '')", "eval")
  * @memberof $dom
  * @param {NodeElement} element
  * @param {...$dom.types.DomAssignObject} object_attributes

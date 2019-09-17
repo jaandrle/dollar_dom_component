@@ -360,7 +360,7 @@ function init(global){
          * @example
          * let c= $dom.component("DIV", null);
          * c.mount(document.body, "replaceContent");
-         * c= c.destroy();
+         * c= c.share.destroy();
          * //=> c===null AND <body></body>
          */
         function destroy(){

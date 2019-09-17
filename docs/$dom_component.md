@@ -3,7 +3,7 @@
 ## $dom : <code>object</code>
 This NAMESPACE provides features for DOM elemnts.
 
-**Kind**: global namespace <a name="$dom" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L5" title="$dom_component.js:5"><small>(defined@5)</small></a>  
+**Kind**: global namespace <a name="$dom" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L5" title="$dom_component.js:5"><small>(defined@5)</small></a>  
 
 * [$dom](#$dom) : <code>object</code>
     * [.types](#$dom.types) : <code>object</code> ℗
@@ -46,7 +46,7 @@ This NAMESPACE provides features for DOM elemnts.
 ### $dom.types : <code>object</code> ℗
 Just virtual key!!! This is overwiev of all internal types for better description.
 
-**Kind**: static namespace of [<code>$dom</code>](#$dom) <a name="$dom.types" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L89" title="$dom_component.js:89"><small>(defined@89)</small></a>  
+**Kind**: static namespace of [<code>$dom</code>](#$dom) <a name="$dom.types" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L89" title="$dom_component.js:89"><small>(defined@89)</small></a>  
 **Access**: private  
 
 * [.types](#$dom.types) : <code>object</code> ℗
@@ -84,7 +84,7 @@ Just virtual key!!! This is overwiev of all internal types for better descriptio
 #### types.ComponentEmpty : [<code>Component</code>](#$dom.types.Component)
 In generall, all methods from [Component](#$dom.types.Component) don't do anything. Also during "mounting" there are some changes see method [mount](#$dom.types.ComponentEmpty.mount).
 
-**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.ComponentEmpty" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L45" title="$dom_component.js:45"><small>(defined@45)</small></a>  
+**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.ComponentEmpty" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L45" title="$dom_component.js:45"><small>(defined@45)</small></a>  
 
 * * *
 
@@ -93,7 +93,7 @@ In generall, all methods from [Component](#$dom.types.Component) don't do anythi
 ##### ComponentEmpty.mount()
 The same syntax as [mount](#$dom.types.Component.mount). But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
 
-**Kind**: static method of [<code>ComponentEmpty</code>](#$dom.types.ComponentEmpty) <a name="$dom.types.ComponentEmpty.mount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L55" title="$dom_component.js:55"><small>(defined@55)</small></a>  
+**Kind**: static method of [<code>ComponentEmpty</code>](#$dom.types.ComponentEmpty) <a name="$dom.types.ComponentEmpty.mount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L55" title="$dom_component.js:55"><small>(defined@55)</small></a>  
 
 * * *
 
@@ -102,7 +102,7 @@ The same syntax as [mount](#$dom.types.Component.mount). But only "replace"/"rep
 #### types.Component : <code>Object</code>
 This is minimal export of "functional class" [component](#$dom.component) and its methods (if they are chainable).
 
-**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.Component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L132" title="$dom_component.js:132"><small>(defined@132)</small></a>  
+**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.Component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L132" title="$dom_component.js:132"><small>(defined@132)</small></a>  
 
 * [.Component](#$dom.types.Component) : <code>Object</code>
     * [.add(el_name, attrs, [shift])](#$dom.types.Component.add) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
@@ -128,7 +128,7 @@ This is minimal export of "functional class" [component](#$dom.component) and it
 ##### Component.add(el_name, attrs, [shift]) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add)
 This add element to component
 
-**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.add" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L145" title="$dom_component.js:145"><small>(defined@145)</small></a>  
+**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.add" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L145" title="$dom_component.js:145"><small>(defined@145)</small></a>  
 **Chainable**  
 **Access**: public  
 
@@ -167,7 +167,7 @@ add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2
 ##### Component.addText(text, [shift]) ⇒ [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText)
 This add element to component
 
-**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.addText" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L241" title="$dom_component.js:241"><small>(defined@241)</small></a>  
+**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.addText" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L241" title="$dom_component.js:241"><small>(defined@241)</small></a>  
 **Chainable**  
 **Access**: public  
 
@@ -205,7 +205,7 @@ function testTextLi({ href= "https://www.seznam.cz" }= {}){
 ##### Component.component(share, [shift]) ⇒ [<code>Component</code>](#$dom.types.Component)
 Method for including another component by usint its `share` key.
 
-**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L285" title="$dom_component.js:285"><small>(defined@285)</small></a>  
+**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L285" title="$dom_component.js:285"><small>(defined@285)</small></a>  
 **Chainable**  
 **Access**: public  
 
@@ -233,7 +233,7 @@ c.mount(document.body, "replaceContent");
 ##### Component.mount(element, [type]) ⇒ <code>NodeElement</code>
 Add element to live DOM
 
-**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.mount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L315" title="$dom_component.js:315"><small>(defined@315)</small></a>  
+**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.mount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L315" title="$dom_component.js:315"><small>(defined@315)</small></a>  
 **Returns**: <code>NodeElement</code> - `container`  
 **Access**: public  
 
@@ -250,7 +250,7 @@ Add element to live DOM
 ##### Component.recalculateDeep(shift) ℗
 Updates `deep`
 
-**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.recalculateDeep" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L371" title="$dom_component.js:371"><small>(defined@371)</small></a>  
+**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.recalculateDeep" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L371" title="$dom_component.js:371"><small>(defined@371)</small></a>  
 **Access**: private  
 
 | Param | Type | Description |
@@ -265,7 +265,7 @@ Updates `deep`
 ##### Component.getParentElement() ⇒ <code>NodeElement</code> ℗
 Returns parent element (or "fragment pseudo element")
 
-**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.getParentElement" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L383" title="$dom_component.js:383"><small>(defined@383)</small></a>  
+**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.getParentElement" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L383" title="$dom_component.js:383"><small>(defined@383)</small></a>  
 **Returns**: <code>NodeElement</code> - Returns parent element (i. e. `DocumenFragment` if component is empty)  
 **Access**: private  
 
@@ -276,7 +276,7 @@ Returns parent element (or "fragment pseudo element")
 ##### Component.setShift([shift]) ⇒ [<code>Component</code>](#$dom.types.Component)
 Method provide way to change nesting behaviour. It can be helpful for loops
 
-**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.setShift" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L394" title="$dom_component.js:394"><small>(defined@394)</small></a>  
+**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.setShift" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L394" title="$dom_component.js:394"><small>(defined@394)</small></a>  
 **Chainable**  
 **Access**: public  
 
@@ -318,7 +318,7 @@ function testNesting(){
 ##### Component.initStorage() ⇒ <code>Object</code> ℗
 Initialize internal storage
 
-**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.initStorage" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L432" title="$dom_component.js:432"><small>(defined@432)</small></a>  
+**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.initStorage" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L432" title="$dom_component.js:432"><small>(defined@432)</small></a>  
 **Returns**: <code>Object</code> - `{ register, registerComponent, update, unregister}`  
 **Access**: private  
 
@@ -329,7 +329,7 @@ Initialize internal storage
 ##### Component.update(new_data) ⇒ <code>Boolean</code>
 Method updates all registered varibles by keys `onupdates` and calls follower functions
 
-**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.update" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L510" title="$dom_component.js:510"><small>(defined@510)</small></a>  
+**Kind**: static method of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.update" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L510" title="$dom_component.js:510"><small>(defined@510)</small></a>  
 **Returns**: <code>Boolean</code> - If success `1`, else `0`.  
 **Access**: public  
 
@@ -376,7 +376,7 @@ c.update(({ a })=> { a: ++a });
 ##### Component.share : <code>Object</code>
 Its purpose is to make easy transfering methods somewhere else (like for using in another component, see [component](#$dom.types.Component.component) method).
 
-**Kind**: static typedef of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.share" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L124" title="$dom_component.js:124"><small>(defined@124)</small></a>  
+**Kind**: static typedef of [<code>Component</code>](#$dom.types.Component) <a name="$dom.types.Component.share" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L124" title="$dom_component.js:124"><small>(defined@124)</small></a>  
 
 * [.share](#$dom.types.Component.share) : <code>Object</code>
     * [.destroy()](#$dom.types.Component.share.destroy) ⇒ <code>Null</code>
@@ -392,7 +392,7 @@ Its purpose is to make easy transfering methods somewhere else (like for using i
 ###### share.destroy() ⇒ <code>Null</code>
 Method remove element form live DOM and returns null
 
-**Kind**: static method of [<code>share</code>](#$dom.types.Component.share) <a name="$dom.types.Component.share.destroy" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L354" title="$dom_component.js:354"><small>(defined@354)</small></a>  
+**Kind**: static method of [<code>share</code>](#$dom.types.Component.share) <a name="$dom.types.Component.share.destroy" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L354" title="$dom_component.js:354"><small>(defined@354)</small></a>  
 **Access**: public  
 **Example**  
 ```js
@@ -409,7 +409,7 @@ c= c.destroy();
 ###### share.isStatic() ⇒ <code>Boolean</code>
 Methods returns if it was `onupdate` used
 
-**Kind**: static method of [<code>share</code>](#$dom.types.Component.share) <a name="$dom.types.Component.share.isStatic" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L551" title="$dom_component.js:551"><small>(defined@551)</small></a>  
+**Kind**: static method of [<code>share</code>](#$dom.types.Component.share) <a name="$dom.types.Component.share.isStatic" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L551" title="$dom_component.js:551"><small>(defined@551)</small></a>  
 **Returns**: <code>Boolean</code> - If there is some listeners `onupdate`  
 **Access**: public  
 
@@ -420,7 +420,7 @@ Methods returns if it was `onupdate` used
 ###### share.mount(element, [type]) ⇒ <code>NodeElement</code>
 Add element to live DOM
 
-**Kind**: static method of [<code>share</code>](#$dom.types.Component.share) <a name="$dom.types.Component.share.mount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L315" title="$dom_component.js:315"><small>(defined@315)</small></a>  
+**Kind**: static method of [<code>share</code>](#$dom.types.Component.share) <a name="$dom.types.Component.share.mount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L315" title="$dom_component.js:315"><small>(defined@315)</small></a>  
 **Returns**: <code>NodeElement</code> - `container`  
 **Access**: public  
 
@@ -437,7 +437,7 @@ Add element to live DOM
 ###### share.update(new_data) ⇒ <code>Boolean</code>
 Method updates all registered varibles by keys `onupdates` and calls follower functions
 
-**Kind**: static method of [<code>share</code>](#$dom.types.Component.share) <a name="$dom.types.Component.share.update" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L510" title="$dom_component.js:510"><small>(defined@510)</small></a>  
+**Kind**: static method of [<code>share</code>](#$dom.types.Component.share) <a name="$dom.types.Component.share.update" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L510" title="$dom_component.js:510"><small>(defined@510)</small></a>  
 **Returns**: <code>Boolean</code> - If success `1`, else `0`.  
 **Access**: public  
 
@@ -484,7 +484,7 @@ c.update(({ a })=> { a: ++a });
 #### types.Component\_\_Add : [<code>Component</code>](#$dom.types.Component)
 This is `Component` with aditional methods
 
-**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.Component__Add" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L139" title="$dom_component.js:139"><small>(defined@139)</small></a>  
+**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.Component__Add" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L139" title="$dom_component.js:139"><small>(defined@139)</small></a>  
 
 * [.Component__Add](#$dom.types.Component__Add) : [<code>Component</code>](#$dom.types.Component)
     * [.getReference()](#$dom.types.Component__Add.getReference) ⇒ <code>NodeElement</code>
@@ -499,7 +499,7 @@ This is `Component` with aditional methods
 ##### Component__Add.getReference() ⇒ <code>NodeElement</code>
 Returns reference of currently added element
 
-**Kind**: static method of [<code>Component\_\_Add</code>](#$dom.types.Component__Add) <a name="$dom.types.Component__Add.getReference" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L185" title="$dom_component.js:185"><small>(defined@185)</small></a>  
+**Kind**: static method of [<code>Component\_\_Add</code>](#$dom.types.Component__Add) <a name="$dom.types.Component__Add.getReference" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L185" title="$dom_component.js:185"><small>(defined@185)</small></a>  
 
 * * *
 
@@ -508,7 +508,7 @@ Returns reference of currently added element
 ##### Component__Add.oninit(fn) ⇒ [<code>Component</code>](#$dom.types.Component)
 This procedure allows to call given function `fn` during registering element.
 
-**Kind**: static method of [<code>Component\_\_Add</code>](#$dom.types.Component__Add) <a name="$dom.types.Component__Add.oninit" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L192" title="$dom_component.js:192"><small>(defined@192)</small></a>  
+**Kind**: static method of [<code>Component\_\_Add</code>](#$dom.types.Component__Add) <a name="$dom.types.Component__Add.oninit" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L192" title="$dom_component.js:192"><small>(defined@192)</small></a>  
 
 | Param | Type |
 | --- | --- |
@@ -522,7 +522,7 @@ This procedure allows to call given function `fn` during registering element.
 ##### Component__Add.onupdate(data, onUpdateFunction) ⇒ [<code>Component</code>](#$dom.types.Component)
 This method allows to register function ([onUpdateFunction](#$dom.types.onUpdateFunction)) which shoul be invoke when given **keys** in `data` will be changed (see [update](#$dom.types.Component.update)).
 
-**Kind**: static method of [<code>Component\_\_Add</code>](#$dom.types.Component__Add) <a name="$dom.types.Component__Add.onupdate" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L200" title="$dom_component.js:200"><small>(defined@200)</small></a>  
+**Kind**: static method of [<code>Component\_\_Add</code>](#$dom.types.Component__Add) <a name="$dom.types.Component__Add.onupdate" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L200" title="$dom_component.js:200"><small>(defined@200)</small></a>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -551,7 +551,7 @@ c.update({ B: "B" });//=> <p>AB</p>
 <a name="$dom.types.onUpdateFunction"></a>
 
 #### types.onUpdateFunction ⇒ <code>\*</code> \| [<code>DomAssignObject</code>](#$dom.types.DomAssignObject)
-**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.onUpdateFunction" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L220" title="$dom_component.js:220"><small>(defined@220)</small></a>  
+**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.onUpdateFunction" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L220" title="$dom_component.js:220"><small>(defined@220)</small></a>  
 **Returns**: <code>\*</code> \| [<code>DomAssignObject</code>](#$dom.types.DomAssignObject) - Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method [update](#$dom.types.Component.update) is called. This callback can be registered when element is created (see method [add](#$dom.types.Component.add)) see [Component__Add](#$dom.types.Component__Add).  
 
 | Param | Type | Description |
@@ -566,7 +566,7 @@ c.update({ B: "B" });//=> <p>AB</p>
 #### types.Component\_\_AddText : <code>Component</code>
 This is `Component` with aditional methods
 
-**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.Component__AddText" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L235" title="$dom_component.js:235"><small>(defined@235)</small></a>  
+**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.Component__AddText" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L235" title="$dom_component.js:235"><small>(defined@235)</small></a>  
 
 * * *
 
@@ -575,7 +575,7 @@ This is `Component` with aditional methods
 ##### Component__AddText.oninit(fn) ⇒ [<code>Component</code>](#$dom.types.Component)
 This procedure allows to call given function `fn` during registering element.
 
-**Kind**: static method of [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText) <a name="$dom.types.Component__AddText.oninit" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L274" title="$dom_component.js:274"><small>(defined@274)</small></a>  
+**Kind**: static method of [<code>Component\_\_AddText</code>](#$dom.types.Component__AddText) <a name="$dom.types.Component__AddText.oninit" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L274" title="$dom_component.js:274"><small>(defined@274)</small></a>  
 
 | Param | Type |
 | --- | --- |
@@ -595,7 +595,7 @@ Object shall holds **NodeElement** properties like `className`, `textContent`, �
  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
 
-**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.DomAssignObject" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L563" title="$dom_component.js:563"><small>(defined@563)</small></a>  
+**Kind**: static typedef of [<code>types</code>](#$dom.types) <a name="$dom.types.DomAssignObject" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L563" title="$dom_component.js:563"><small>(defined@563)</small></a>  
 
 * * *
 
@@ -604,7 +604,7 @@ Object shall holds **NodeElement** properties like `className`, `textContent`, �
 ### $dom.empty(container)
 Procedure removes all children of `container`
 
-**Kind**: static method of [<code>$dom</code>](#$dom) <a name="$dom.empty" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L10" title="$dom_component.js:10"><small>(defined@10)</small></a>  
+**Kind**: static method of [<code>$dom</code>](#$dom) <a name="$dom.empty" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L10" title="$dom_component.js:10"><small>(defined@10)</small></a>  
 
 | Param | Type |
 | --- | --- |
@@ -618,7 +618,7 @@ Procedure removes all children of `container`
 ### $dom.insertAfter(new_element, reference)
 Procedure places `new_element` after `reference` elements
 
-**Kind**: static method of [<code>$dom</code>](#$dom) <a name="$dom.insertAfter" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L20" title="$dom_component.js:20"><small>(defined@20)</small></a>  
+**Kind**: static method of [<code>$dom</code>](#$dom) <a name="$dom.insertAfter" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L20" title="$dom_component.js:20"><small>(defined@20)</small></a>  
 
 | Param | Type |
 | --- | --- |
@@ -633,7 +633,7 @@ Procedure places `new_element` after `reference` elements
 ### $dom.replace(el_old, el_new)
 Procedure replaces `el_old` element by new one (`new_el`)
 
-**Kind**: static method of [<code>$dom</code>](#$dom) <a name="$dom.replace" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L32" title="$dom_component.js:32"><small>(defined@32)</small></a>  
+**Kind**: static method of [<code>$dom</code>](#$dom) <a name="$dom.replace" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L32" title="$dom_component.js:32"><small>(defined@32)</small></a>  
 
 | Param | Type |
 | --- | --- |
@@ -648,7 +648,7 @@ Procedure replaces `el_old` element by new one (`new_el`)
 ### $dom.component([el_name], attrs, [params]) ⇒ [<code>Component\_\_Add</code>](#$dom.types.Component__Add) \| [<code>ComponentEmpty</code>](#$dom.types.ComponentEmpty)
 This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
 
-**Kind**: static method of [<code>$dom</code>](#$dom) <a name="$dom.component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L95" title="$dom_component.js:95"><small>(defined@95)</small></a>  
+**Kind**: static method of [<code>$dom</code>](#$dom) <a name="$dom.component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L95" title="$dom_component.js:95"><small>(defined@95)</small></a>  
 **Returns**: [<code>Component\_\_Add</code>](#$dom.types.Component__Add) \| [<code>ComponentEmpty</code>](#$dom.types.ComponentEmpty) - Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!  
 **Version**: 1.0.0  
 
@@ -669,7 +669,7 @@ Procedure for merging object into the element properties.
 Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
 It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
 
-**Kind**: static method of [<code>$dom</code>](#$dom) <a name="$dom.assign" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin$dom_component.js#L575" title="$dom_component.js:575"><small>(defined@575)</small></a>  
+**Kind**: static method of [<code>$dom</code>](#$dom) <a name="$dom.assign" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L575" title="$dom_component.js:575"><small>(defined@575)</small></a>  
 
 | Param | Type |
 | --- | --- |

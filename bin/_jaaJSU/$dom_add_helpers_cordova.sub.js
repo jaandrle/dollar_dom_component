@@ -107,6 +107,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @method add
      * @memberof $dom.types.Component
      * @public
+     * @chainable
      * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
      * @param {$dom.types.DomAssignObject} attrs Internally uses {@link $dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
      * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
@@ -202,6 +203,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @method addText
      * @memberof $dom.types.Component
      * @public
+     * @chainable
      * @param {String} text Argument for `document.createTextNode`
      * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
      * @returns {$dom.types.Component__AddText}
@@ -245,6 +247,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @method component
      * @memberof $dom.types.Component
      * @public
+     * @chainable
      * @param {$dom.types.Component.share} share
      * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
      * @return {$dom.types.Component}
@@ -358,7 +361,9 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @method setShift
      * @memberof $dom.types.Component
      * @public
+     * @chainable
      * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
+     * @returns {$dom.types.Component}
      * @example
      * function testNesting(){
      *     const c= $dom.component("DIV", null);
@@ -386,6 +391,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
         let last;
         if(!shift){ last= deep.pop(); deep.push(last, last); }
         else deep.splice(deep.length+1+shift);
+        return component_out;
     }
     
     /**
@@ -475,6 +481,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate`
      * <br/>- **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**
      * <br/>- It is also possible to register function to detect changes itself see examples
+     * @returns {Boolean} If success `1`, else `0`.
      * @example
      * // SIMPLE example
      * const data_A= { a: "A" };

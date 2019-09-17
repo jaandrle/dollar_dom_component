@@ -13,6 +13,7 @@
  * @method add
  * @memberof $dom.types.Component
  * @public
+ * @chainable
  * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
  * @param {$dom.types.DomAssignObject} attrs Internally uses {@link $dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
  * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.

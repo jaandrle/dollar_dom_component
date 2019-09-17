@@ -9,6 +9,7 @@
  * <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate`
  * <br/>- **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**
  * <br/>- It is also possible to register function to detect changes itself see examples
+ * @returns {Boolean} If success `1`, else `0`.
  * @example
  * // SIMPLE example
  * const data_A= { a: "A" };

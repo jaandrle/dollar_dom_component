@@ -13,6 +13,7 @@
  * @method addText
  * @memberof $dom.types.Component
  * @public
+ * @chainable
  * @param {String} text Argument for `document.createTextNode`
  * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
  * @returns {$dom.types.Component__AddText}

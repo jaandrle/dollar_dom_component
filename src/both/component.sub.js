@@ -7,6 +7,7 @@
  * @method component
  * @memberof $dom.types.Component
  * @public
+ * @chainable
  * @param {$dom.types.Component.share} share
  * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
  * @return {$dom.types.Component}

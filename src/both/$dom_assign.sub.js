@@ -10,7 +10,8 @@
  *  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
  * @typedef DomAssignObject
  * @memberof module:jaaJSU~$dom
- * @category virtual
+ * @category types descriptions
+ * @inner
  * @type {Object}
  */
 /**
@@ -20,7 +21,7 @@
  * @method assign
  * @memberof module:jaaJSU~$dom
  * @param {NodeElement} element
- * @param {...module:jaaJSU~$dom.DomAssignObject} object_attributes
+ * @param {...module:jaaJSU~$dom~DomAssignObject} object_attributes
  * @example <caption>#1: All together</caption>
  * const el= document.body;
  * const onclick= function(){ console.log(this.dataset.js_param); };

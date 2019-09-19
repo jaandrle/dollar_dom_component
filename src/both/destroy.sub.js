@@ -3,7 +3,7 @@
 /**
  * Method remove element form live DOM and returns null
  * @method destroy
- * @memberof module:jaaJSU~$dom.instance_component.share
+ * @memberof module:jaaJSU~$dom~instance_component.share
  * @public
  * @returns {Null}
  * @example

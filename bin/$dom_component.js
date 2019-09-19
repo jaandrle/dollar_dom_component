@@ -52,20 +52,21 @@ function init(global){
      */
     /* standalone= "standalone"; */
     /**
-     * In generall, all methods from {@link module:jaaJSU~$dom.instance_component} don't do anything. Also during "mounting" there are some changes see method {@link module:jaaJSU~$dom.instance_componentEmpty.mount}.
+     * In generall, all methods from {@link module:jaaJSU~$dom~instance_component} don't do anything. Also during "mounting" there are some changes see method {@link module:jaaJSU~$dom~instance_componentEmpty.mount}.
      * @typedef instance_componentEmpty
      * @memberof module:jaaJSU~$dom
-     * @category virtual
-     * @type {module:jaaJSU~$dom.instance_component}
+     * @category types descriptions
+     * @inner
+     * @type {module:jaaJSU~$dom~instance_component}
      */
     const $dom_emptyPseudoComponent= (function(){
         const share= { mount, update, destroy, isStatic };
         const component_out= { add, component, mount, update, share };
         return component_out;
         /**
-         * The same syntax as {@link module:jaaJSU~$dom.instance_component.mount}. But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
+         * The same syntax as {@link module:jaaJSU~$dom~instance_component.mount}. But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
          * @method mount
-         * @memberof module:jaaJSU~$dom.instance_componentEmpty
+         * @memberof module:jaaJSU~$dom~instance_componentEmpty
          */
         function mount(element, type= "childLast"){
             // let temp_el;
@@ -103,10 +104,10 @@ function init(global){
      * @version 1.0.0
      * @see {@link https://github.com/jaandrle/dollar_dom_component}
      * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
-     * @param {module:jaaJSU~$dom.DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
+     * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
      * @param {Object} [params= {}] Parameters
-     * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom.instance_component.add}
-     * @return {module:jaaJSU~$dom.instance_componentAdd|module:jaaJSU~$dom.instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
+     * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}
+     * @return {module:jaaJSU~$dom~instance_componentAdd|module:jaaJSU~$dom~instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
      */
     $dom.component= function(el_name, attrs, { mapUpdate }={}){
         if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -127,18 +128,19 @@ function init(global){
         const share= { mount, update, destroy, isStatic };
         const component_out= { add, addText, component, setShift, mount, update, share };
         /**
-         * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom.instance_component.component} method).
+         * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom~instance_component.component} method).
          * @typedef share
-         * @memberof module:jaaJSU~$dom.instance_component
-         * @borrows module:jaaJSU~$dom.instance_component.mount as mount
-         * @borrows module:jaaJSU~$dom.instance_component.update as update
+         * @memberof module:jaaJSU~$dom~instance_component
+         * @borrows module:jaaJSU~$dom~instance_component.mount as mount
+         * @borrows module:jaaJSU~$dom~instance_component.update as update
          * @type {Object}
          */
         /**
          * This is minimal export of "functional class" {@link module:jaaJSU~$dom.component} and its methods (if they are chainable).
          * @typedef instance_component
          * @memberof module:jaaJSU~$dom
-         * @category virtual
+         * @category types descriptions
+         * @inner
          * @type {Object}
          */
         return add(el_name, attrs);
@@ -146,19 +148,20 @@ function init(global){
          * This is `Component` with aditional methods
          * @typedef instance_componentAdd
          * @memberof module:jaaJSU~$dom
-         * @category virtual
-         * @type module:jaaJSU~$dom.instance_component
+         * @category types descriptions
+         * @inner
+         * @type module:jaaJSU~$dom~instance_component
          */
         /**
          * This add element to component
          * @method add
-         * @memberof module:jaaJSU~$dom.instance_component
+         * @memberof module:jaaJSU~$dom~instance_component
          * @public
          * @chainable
          * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
-         * @param {module:jaaJSU~$dom.DomAssignObject} attrs Internally uses {@link module:jaaJSU~$dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
+         * @param {module:jaaJSU~$dom~DomAssignObject} attrs Internally uses {@link module:jaaJSU~$dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
          * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
-         * @returns {module:jaaJSU~$dom.instance_componentAdd}
+         * @returns {module:jaaJSU~$dom~instance_componentAdd}
          * @example
          * const UL= document.getElementById('SOME UL');
          * const { add }= $dom.component("LI", { className: "list_item" });
@@ -192,25 +195,25 @@ function init(global){
                 /**
                  * Returns reference of currently added element
                  * @method getReference
-                 * @memberof module:jaaJSU~$dom.instance_componentAdd
+                 * @memberof module:jaaJSU~$dom~instance_componentAdd
                  * @returns {NodeElement}
                  */
                 getReference: ()=> el,
                 /**
                  * This procedure allows to call given function `fn` during registering element.
                  * @method oninit
-                 * @memberof module:jaaJSU~$dom.instance_componentAdd
+                 * @memberof module:jaaJSU~$dom~instance_componentAdd
                  * @param {Function} fn
-                 * @returns {module:jaaJSU~$dom.instance_component}
+                 * @returns {module:jaaJSU~$dom~instance_component}
                  */
                 oninit: function(fn){ fn(el); return component_out; },
                 /**
-                 * This method allows to register function ({@link module:jaaJSU~$dom.onUpdateFunction}) which shoul be invoke when given **keys** in `data` will be changed (see {@link module:jaaJSU~$dom.instance_component.update}).
+                 * This method allows to register function ({@link module:jaaJSU~$dom.onUpdateFunction}) which shoul be invoke when given **keys** in `data` will be changed (see {@link module:jaaJSU~$dom~instance_component.update}).
                  * @method onupdate
-                 * @memberof module:jaaJSU~$dom.instance_componentAdd
+                 * @memberof module:jaaJSU~$dom~instance_componentAdd
                  * @param {Object} data This allows register listener for given **keys** of Object `data`. For `data= { a: "A", b: "B" }` it means that when `a` or `b` will be changed the `onUpdateFunction` is called.
-                 * @param {module:jaaJSU~$dom.onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
-                 * @returns {module:jaaJSU~$dom.instance_component}
+                 * @param {module:jaaJSU~$dom~onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
+                 * @returns {module:jaaJSU~$dom~instance_component}
                  * @example
                  * const c= $dom.component("DIV", null);
                  * …
@@ -227,9 +230,10 @@ function init(global){
                 /**
                  * @callback onUpdateFunction
                  * @memberof module:jaaJSU~$dom
-                 * @category virtual
-                 * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom.instance_componentAdd.onupdate}
-                 * @returns {*|module:jaaJSU~$dom.DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link module:jaaJSU~$dom.instance_component.update} is called. This callback can be registered when element is created (see method {@link module:jaaJSU~$dom.instance_component.add}) see {@link module:jaaJSU~$dom.instance_componentAdd}.
+                 * @category types descriptions
+                 * @inner
+                 * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom~instance_componentAdd.onupdate}
+                 * @returns {*|module:jaaJSU~$dom~DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link module:jaaJSU~$dom~instance_component.update} is called. This callback can be registered when element is created (see method {@link module:jaaJSU~$dom~instance_component.add}) see {@link module:jaaJSU~$dom~instance_componentAdd}.
                  */
                 onupdate: function(data, onUpdateFunction){
                     if(!data) return component_out;
@@ -244,18 +248,19 @@ function init(global){
          * This is `Component` with aditional methods
          * @typedef instance_componentAddText
          * @memberof module:jaaJSU~$dom
-         * @category virtual
-         * @type {Component}
+         * @category types descriptions
+         * @inner
+         * @type {module:jaaJSU~$dom~instance_component}
          */
         /**
          * This add element to component
          * @method addText
-         * @memberof module:jaaJSU~$dom.instance_component
+         * @memberof module:jaaJSU~$dom~instance_component
          * @public
          * @chainable
          * @param {String} text Argument for `document.createTextNode`
-         * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom.instance_component.add}
-         * @returns {module:jaaJSU~$dom.instance_componentAddText}
+         * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
+         * @returns {module:jaaJSU~$dom~instance_componentAddText}
          * @example
          * const c1= $dom.component("P", { textContent: "TEXT" });
          * const c2= $dom.component("P", null);
@@ -283,9 +288,9 @@ function init(global){
                 /**
                  * This procedure allows to call given function `fn` during registering element.
                  * @method oninit
-                 * @memberof module:jaaJSU~$dom.instance_componentAddText
+                 * @memberof module:jaaJSU~$dom~instance_componentAddText
                  * @param {Function} fn
-                 * @returns {module:jaaJSU~$dom.instance_component}
+                 * @returns {module:jaaJSU~$dom~instance_component}
                  */
                 oninit: function(fn){ fn(el); return component_out; }
             }, component_out);
@@ -294,12 +299,12 @@ function init(global){
         /**
          * Method for including another component by usint its `share` key.
          * @method component
-         * @memberof module:jaaJSU~$dom.instance_component
+         * @memberof module:jaaJSU~$dom~instance_component
          * @public
          * @chainable
-         * @param {module:jaaJSU~$dom.instance_component.share} share
-         * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom.instance_component.add}
-         * @return {module:jaaJSU~$dom.instance_component}
+         * @param {module:jaaJSU~$dom~instance_component.share} share
+         * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
+         * @return {module:jaaJSU~$dom~instance_component}
          * @example
          * function p({ textContent }){
          *      const cP= $dom.component("P", { textContent });
@@ -324,7 +329,7 @@ function init(global){
         /**
          * Add element to live DOM
          * @method mount
-         * @memberof module:jaaJSU~$dom.instance_component
+         * @memberof module:jaaJSU~$dom~instance_component
          * @public
          * @param {NodeElement} element Element where to places this component
          * @param {String} [type= "childLast"]
@@ -363,7 +368,7 @@ function init(global){
         /**
          * Method remove element form live DOM and returns null
          * @method destroy
-         * @memberof module:jaaJSU~$dom.instance_component.share
+         * @memberof module:jaaJSU~$dom~instance_component.share
          * @public
          * @returns {Null}
          * @example
@@ -381,8 +386,8 @@ function init(global){
          * Updates `deep`
          * @private
          * @method recalculateDeep
-         * @memberof module:jaaJSU~$dom.instance_component
-         * @param {Number} shift see {@link module:jaaJSU~$dom.instance_component.add}
+         * @memberof module:jaaJSU~$dom~instance_component
+         * @param {Number} shift see {@link module:jaaJSU~$dom~instance_component.add}
          */
         function recalculateDeep(shift){
             if(!shift) deep.push(all_els_counter);
@@ -392,7 +397,7 @@ function init(global){
         /**
          * Returns parent element (or "fragment pseudo element")
          * @method getParentElement
-         * @memberof module:jaaJSU~$dom.instance_component
+         * @memberof module:jaaJSU~$dom~instance_component
          * @private
          * @returns {NodeElement} Returns parent element (i. e. `DocumenFragment` if component is empty)
          */
@@ -403,11 +408,11 @@ function init(global){
         /**
          * Method provide way to change nesting behaviour. It can be helpful for loops
          * @method setShift
-         * @memberof module:jaaJSU~$dom.instance_component
+         * @memberof module:jaaJSU~$dom~instance_component
          * @public
          * @chainable
-         * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom.instance_component.add}
-         * @returns {module:jaaJSU~$dom.instance_component}
+         * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
+         * @returns {module:jaaJSU~$dom~instance_component}
          * @example
          * function testNesting(){
          *     const c= $dom.component("DIV", null);
@@ -441,7 +446,7 @@ function init(global){
         /**
          * Initialize internal storage
          * @method initStorage
-         * @memberof module:jaaJSU~$dom.instance_component
+         * @memberof module:jaaJSU~$dom~instance_component
          * @private
          * @returns {Object} `{ register, registerComponent, update, unregister}`
          */
@@ -519,7 +524,7 @@ function init(global){
         /**
          * Method updates all registered varibles by keys `onupdates` and calls follower functions
          * @method update
-         * @memberof module:jaaJSU~$dom.instance_component
+         * @memberof module:jaaJSU~$dom~instance_component
          * @public
          * @param {Object|Function} new_data
          * <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate`
@@ -560,7 +565,7 @@ function init(global){
         /**
          * Methods returns if it was `onupdate` used
          * @method isStatic
-         * @memberof module:jaaJSU~$dom.instance_component.share
+         * @memberof module:jaaJSU~$dom~instance_component.share
          * @public
          * @return {Boolean} If there is some listeners `onupdate`
          */
@@ -579,7 +584,8 @@ function init(global){
      *  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
      * @typedef DomAssignObject
      * @memberof module:jaaJSU~$dom
-     * @category virtual
+     * @category types descriptions
+     * @inner
      * @type {Object}
      */
     /**
@@ -589,7 +595,7 @@ function init(global){
      * @method assign
      * @memberof module:jaaJSU~$dom
      * @param {NodeElement} element
-     * @param {...module:jaaJSU~$dom.DomAssignObject} object_attributes
+     * @param {...module:jaaJSU~$dom~DomAssignObject} object_attributes
      * @example <caption>#1: All together</caption>
      * const el= document.body;
      * const onclick= function(){ console.log(this.dataset.js_param); };

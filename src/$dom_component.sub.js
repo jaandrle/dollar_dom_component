@@ -9,10 +9,10 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
  * @version gulp_place("app.version", "eval_out")
  * @see {@link gulp_place("app.homepage", "eval_out")}
  * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
- * @param {module:jaaJSU~$dom.DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
+ * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters
- * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom.instance_component.add}
- * @return {module:jaaJSU~$dom.instance_componentAdd|module:jaaJSU~$dom.instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
+ * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}
+ * @return {module:jaaJSU~$dom~instance_componentAdd|module:jaaJSU~$dom~instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -33,18 +33,19 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, addText, component, setShift, mount, update, share };
     /**
-     * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom.instance_component.component} method).
+     * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom~instance_component.component} method).
      * @typedef share
-     * @memberof module:jaaJSU~$dom.instance_component
-     * @borrows module:jaaJSU~$dom.instance_component.mount as mount
-     * @borrows module:jaaJSU~$dom.instance_component.update as update
+     * @memberof module:jaaJSU~$dom~instance_component
+     * @borrows module:jaaJSU~$dom~instance_component.mount as mount
+     * @borrows module:jaaJSU~$dom~instance_component.update as update
      * @type {Object}
      */
     /**
      * This is minimal export of "functional class" {@link module:jaaJSU~$dom.component} and its methods (if they are chainable).
      * @typedef instance_component
      * @memberof module:jaaJSU~$dom
-     * @category virtual
+     * @category types descriptions
+     * @inner
      * @type {Object}
      */
     return add(el_name, attrs);

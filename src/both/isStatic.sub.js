@@ -3,7 +3,7 @@
 /**
  * Methods returns if it was `onupdate` used
  * @method isStatic
- * @memberof module:jaaJSU~$dom.instance_component.share
+ * @memberof module:jaaJSU~$dom~instance_component.share
  * @public
  * @return {Boolean} If there is some listeners `onupdate`
  */

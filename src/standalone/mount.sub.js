@@ -3,7 +3,7 @@
 /**
  * Add element to live DOM
  * @method mount
- * @memberof module:jaaJSU~$dom.instance_component
+ * @memberof module:jaaJSU~$dom~instance_component
  * @public
  * @param {NodeElement} element Element where to places this component
  * @param {String} [type= "childLast"]

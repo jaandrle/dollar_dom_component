@@ -5,12 +5,12 @@
 /**
  * Method for including another component by usint its `share` key.
  * @method component
- * @memberof module:jaaJSU~$dom.instance_component
+ * @memberof module:jaaJSU~$dom~instance_component
  * @public
  * @chainable
- * @param {module:jaaJSU~$dom.instance_component.share} share
- * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom.instance_component.add}
- * @return {module:jaaJSU~$dom.instance_component}
+ * @param {module:jaaJSU~$dom~instance_component.share} share
+ * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
+ * @return {module:jaaJSU~$dom~instance_component}
  * @example
  * function p({ textContent }){
  *      const cP= $dom.component("P", { textContent });

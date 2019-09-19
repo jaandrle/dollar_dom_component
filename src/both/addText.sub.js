@@ -6,18 +6,19 @@
  * This is `Component` with aditional methods
  * @typedef instance_componentAddText
  * @memberof module:jaaJSU~$dom
- * @category virtual
- * @type {Component}
+ * @category types descriptions
+ * @inner
+ * @type {module:jaaJSU~$dom~instance_component}
  */
 /**
  * This add element to component
  * @method addText
- * @memberof module:jaaJSU~$dom.instance_component
+ * @memberof module:jaaJSU~$dom~instance_component
  * @public
  * @chainable
  * @param {String} text Argument for `document.createTextNode`
- * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom.instance_component.add}
- * @returns {module:jaaJSU~$dom.instance_componentAddText}
+ * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
+ * @returns {module:jaaJSU~$dom~instance_componentAddText}
  * @example
  * const c1= $dom.component("P", { textContent: "TEXT" });
  * const c2= $dom.component("P", null);
@@ -45,9 +46,9 @@ function addText(text, shift= 0){
         /**
          * This procedure allows to call given function `fn` during registering element.
          * @method oninit
-         * @memberof module:jaaJSU~$dom.instance_componentAddText
+         * @memberof module:jaaJSU~$dom~instance_componentAddText
          * @param {Function} fn
-         * @returns {module:jaaJSU~$dom.instance_component}
+         * @returns {module:jaaJSU~$dom~instance_component}
          */
         oninit: function(fn){ fn(el); return component_out; }
     }, component_out);

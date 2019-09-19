@@ -2,7 +2,7 @@
 /* global $dom, parseHTML, c_CMD*/
 /**
  * See {@link module:jaaJSU~$dom.add}
- * @method add_cordova
+ * @method add
  * @memberof module:jaaJSU~$dom
  * @deprecated
  * @param {NodeElement} parent

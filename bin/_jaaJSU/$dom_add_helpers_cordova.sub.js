@@ -49,7 +49,7 @@ const $dom_emptyPseudoComponent= (function(){
 })();
 /**
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
- * @method component_cordova
+ * @method component
  * @memberof module:jaaJSU~$dom
  * @version 1.0.0
  * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
@@ -613,7 +613,7 @@ $dom.assign= function(element, ...objects_attributes){
 
 /**
  * See {@link module:jaaJSU~$dom.add}
- * @method add_cordova
+ * @method add
  * @memberof module:jaaJSU~$dom
  * @deprecated
  * @param {NodeElement} parent

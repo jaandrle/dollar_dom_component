@@ -520,7 +520,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     
 };
 /**
- * Object shall holds **NodeElement** properties like `className`, `textContent`, …. This is primary argument for {@link $dom.assign}. There are some notes and changes:
+ * Object shall holds **NodeElement** properties like `className`, `textContent`, …. This is primary argument for {@link module:jaaJSU~$dom.assign}. There are some notes and changes:
  *  - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
  *  - The same notation can be used for **CSS variables** (the key is called `style_vars`).
  *  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`

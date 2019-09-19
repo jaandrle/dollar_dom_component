@@ -21,7 +21,7 @@
  * @memberof module:jaaJSU~$dom
  * @param {NodeElement} element
  * @param {...module:jaaJSU~$dom.DomAssignObject} object_attributes
- * @example
+ * @example <caption>#1: All together</caption>
  * const el= document.body;
  * const onclick= function(){ console.log(this.dataset.js_param); };
  * $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
@@ -30,20 +30,19 @@
  * $dom.assign(el, { style: { color: "green" } });
  * //result HTML: <body style="color: green;" data-js_param="CLICKED">BODY</body>
  * //console output on click: "CLICKED"
- * @example
+ * @example <caption>#2 **\*.classList.toggle**</caption>
  * const el= document.body;
  * $dom.assign(el, { classList: { testClass: -1 } });
  * //result HTML: <body class="testClass">…</body>
  * $dom.assign(el, { classList: { testClass: -1 } });
  * //result HTML: <body class="">…</body>
- * @example
- * const el= document.body;
+ * 
  * $dom.assign(el, { classList: { testClass: true } });//or 1
  * //result HTML: <body class="testClass">…</body>
  * $dom.assign(el, { classList: { testClass: false } });//or 0
  * //result HTML: <body class="">…</body>
  * //...
- * @example
+ * @example <caption>#3 Links and images</caption>
  * $dom.assign(A_ELEMENT, { href: "www.google.com" });//=> <a href="www.google.com" …
  * $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
  */

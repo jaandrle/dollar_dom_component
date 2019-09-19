@@ -3,7 +3,7 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
     const /* params */
         docs_folder= "docs/",
         docs_modifications= docs_folder+"modifications/",
-        global_options= { private: true, separators: true, partial: docs_modifications+"scope.hbs", helper: docs_modifications+"helpers.js" };
+        global_options= { private: true, separators: true, partial: docs_modifications+"*.hbs", helper: docs_modifications+"helpers.js" };
     const /* documentation functions */
         jsdoc2md= require('jsdoc-to-markdown'),
         generateDoc= files=> jsdoc2md.render(Object.assign({ files }, global_options)),

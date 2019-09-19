@@ -3,7 +3,7 @@
 /**
  * Method updates all registered varibles by keys `onupdates` and calls follower functions
  * @method update
- * @memberof module:jaaJSU~$dom.Component
+ * @memberof module:jaaJSU~$dom.instance_component
  * @public
  * @param {Object|Function} new_data
  * <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate`

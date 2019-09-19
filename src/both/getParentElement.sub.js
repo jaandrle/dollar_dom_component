@@ -3,7 +3,7 @@
 /**
  * Returns parent element (or "fragment pseudo element")
  * @method getParentElement
- * @memberof module:jaaJSU~$dom.Component
+ * @memberof module:jaaJSU~$dom.instance_component
  * @private
  * @returns {NodeElement} Returns parent element (i. e. `DocumenFragment` if component is empty)
  */

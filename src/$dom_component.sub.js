@@ -10,8 +10,8 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
  * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
  * @param {module:jaaJSU~$dom.DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters
- * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom.Component.add}
- * @return {module:jaaJSU~$dom.Component__Add|module:jaaJSU~$dom.ComponentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
+ * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom.instance_component.add}
+ * @return {module:jaaJSU~$dom.instance_componentAdd|module:jaaJSU~$dom.instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -32,11 +32,11 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, addText, component, setShift, mount, update, share };
     /**
-     * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom.Component.component} method).
+     * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom.instance_component.component} method).
      * @typedef share
-     * @memberof module:jaaJSU~$dom.Component
-     * @borrows module:jaaJSU~$dom.Component.mount as mount
-     * @borrows module:jaaJSU~$dom.Component.update as update
+     * @memberof module:jaaJSU~$dom.instance_component
+     * @borrows module:jaaJSU~$dom.instance_component.mount as mount
+     * @borrows module:jaaJSU~$dom.instance_component.update as update
      * @type {Object}
      */
     /**

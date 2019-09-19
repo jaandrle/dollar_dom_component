@@ -3,21 +3,15 @@
 gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
 /* global $dom_emptyPseudoComponent */
 /**
- * Just virtual key!!! This is overwiev of all internal types for better description.
- * @namespace types
- * @private
- * @memberof $dom
- */
-/**
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
  * @method gulp_place("'component'+(app.standalone==='cordova' ? '_cordova' : '')", "eval")
- * @memberof $dom
+ * @memberof module:jaaJSU~$dom
  * @version gulp_place("app.version", "eval")
  * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
- * @param {$dom.types.DomAssignObject} attrs The second argument for {@link $dom.assign}
+ * @param {module:jaaJSU~$dom.DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters
- * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link $dom.types.Component.add}
- * @return {$dom.types.Component__Add|$dom.types.ComponentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
+ * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom.Component.add}
+ * @return {module:jaaJSU~$dom.Component__Add|module:jaaJSU~$dom.ComponentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -38,17 +32,18 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, addText, component, setShift, mount, update, share };
     /**
-     * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link $dom.types.Component.component} method).
+     * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom.Component.component} method).
      * @typedef share
-     * @memberof $dom.types.Component
-     * @borrows $dom.types.Component.mount as mount
-     * @borrows $dom.types.Component.update as update
+     * @memberof module:jaaJSU~$dom.Component
+     * @borrows module:jaaJSU~$dom.Component.mount as mount
+     * @borrows module:jaaJSU~$dom.Component.update as update
      * @type {Object}
      */
     /**
-     * This is minimal export of "functional class" {@link $dom.component} and its methods (if they are chainable).
+     * This is minimal export of "functional class" {@link module:jaaJSU~$dom.component} and its methods (if they are chainable).
      * @typedef Component
-     * @memberof $dom.types
+     * @memberof module:jaaJSU~$dom
+     * @category virtual
      * @type {Object}
      */
     return add(el_name, attrs);

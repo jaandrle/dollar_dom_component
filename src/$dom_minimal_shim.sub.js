@@ -1,13 +1,16 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
 /**
- * This NAMESPACE provides features for DOM elemnts.
+ * @module jaaJSU
+ */
+/**
+ * This NAMESPACE provides features for DOM elements.
  * @namespace $dom
  */
 const $dom= {
     /**
      * Procedure removes all children of `container`
      * @method empty
-     * @memberof $dom
+     * @memberof module:jaaJSU~$dom
      * @param {NodeElement} container
      */
     empty: function(container){
@@ -17,7 +20,7 @@ const $dom= {
     /**
      * Procedure places `new_element` after `reference` elements
      * @method insertAfter
-     * @memberof $dom
+     * @memberof module:jaaJSU~$dom
      * @param {NodeElement} new_element
      * @param {NodeElement} reference
      */
@@ -29,7 +32,7 @@ const $dom= {
     /**
      * Procedure replaces `el_old` element by new one (`new_el`)
      * @method replace
-     * @memberof $dom
+     * @memberof module:jaaJSU~$dom
      * @param {NodeElement} el_old
      * @param {NodeElement} el_new
      */

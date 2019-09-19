@@ -3,11 +3,11 @@
 /**
  * Method provide way to change nesting behaviour. It can be helpful for loops
  * @method setShift
- * @memberof $dom.types.Component
+ * @memberof module:jaaJSU~$dom.Component
  * @public
  * @chainable
- * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
- * @returns {$dom.types.Component}
+ * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom.Component.add}
+ * @returns {module:jaaJSU~$dom.Component}
  * @example
  * function testNesting(){
  *     const c= $dom.component("DIV", null);

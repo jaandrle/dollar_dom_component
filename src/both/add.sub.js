@@ -5,19 +5,20 @@
 /**
  * This is `Component` with aditional methods
  * @typedef Component__Add
- * @memberof $dom.types
- * @type $dom.types.Component
+ * @memberof module:jaaJSU~$dom
+ * @category virtual
+ * @type module:jaaJSU~$dom.Component
  */
 /**
  * This add element to component
  * @method add
- * @memberof $dom.types.Component
+ * @memberof module:jaaJSU~$dom.Component
  * @public
  * @chainable
  * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
- * @param {$dom.types.DomAssignObject} attrs Internally uses {@link $dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
+ * @param {module:jaaJSU~$dom.DomAssignObject} attrs Internally uses {@link module:jaaJSU~$dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
  * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
- * @returns {$dom.types.Component__Add}
+ * @returns {module:jaaJSU~$dom.Component__Add}
  * @example
  * const UL= document.getElementById('SOME UL');
  * const { add }= $dom.component("LI", { className: "list_item" });
@@ -51,25 +52,25 @@ function add(el_name, attrs, shift= 0){
         /**
          * Returns reference of currently added element
          * @method getReference
-         * @memberof $dom.types.Component__Add
+         * @memberof module:jaaJSU~$dom.Component__Add
          * @returns {NodeElement}
          */
         getReference: ()=> el,
         /**
          * This procedure allows to call given function `fn` during registering element.
          * @method oninit
-         * @memberof $dom.types.Component__Add
+         * @memberof module:jaaJSU~$dom.Component__Add
          * @param {Function} fn
-         * @returns {$dom.types.Component}
+         * @returns {module:jaaJSU~$dom.Component}
          */
         oninit: function(fn){ fn(el); return component_out; },
         /**
-         * This method allows to register function ({@link $dom.types.onUpdateFunction}) which shoul be invoke when given **keys** in `data` will be changed (see {@link $dom.types.Component.update}).
+         * This method allows to register function ({@link module:jaaJSU~$dom.onUpdateFunction}) which shoul be invoke when given **keys** in `data` will be changed (see {@link module:jaaJSU~$dom.Component.update}).
          * @method onupdate
-         * @memberof $dom.types.Component__Add
+         * @memberof module:jaaJSU~$dom.Component__Add
          * @param {Object} data This allows register listener for given **keys** of Object `data`. For `data= { a: "A", b: "B" }` it means that when `a` or `b` will be changed the `onUpdateFunction` is called.
-         * @param {$dom.types.onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
-         * @returns {$dom.types.Component}
+         * @param {module:jaaJSU~$dom.onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
+         * @returns {module:jaaJSU~$dom.Component}
          * @example
          * const c= $dom.component("DIV", null);
          * …
@@ -85,9 +86,10 @@ function add(el_name, attrs, shift= 0){
          */
         /**
          * @callback onUpdateFunction
-         * @memberof $dom.types
-         * @param {Object} data Includes all subsribed keys from `data` see method {@link $dom.types.Component__Add.onupdate}
-         * @returns {*|$dom.types.DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link $dom.types.Component.update} is called. This callback can be registered when element is created (see method {@link $dom.types.Component.add}) see {@link $dom.types.Component__Add}.
+         * @memberof module:jaaJSU~$dom
+         * @category virtual
+         * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom.Component__Add.onupdate}
+         * @returns {*|module:jaaJSU~$dom.DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link module:jaaJSU~$dom.Component.update} is called. This callback can be registered when element is created (see method {@link module:jaaJSU~$dom.Component.add}) see {@link module:jaaJSU~$dom.Component__Add}.
          */
         onupdate: function(data, onUpdateFunction){
             if(!data) return component_out;

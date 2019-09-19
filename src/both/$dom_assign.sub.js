@@ -9,7 +9,8 @@
  *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
  *  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
  * @typedef DomAssignObject
- * @memberof $dom.types
+ * @memberof module:jaaJSU~$dom
+ * @category virtual
  * @type {Object}
  */
 /**
@@ -17,9 +18,9 @@
  * Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
  * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
  * @method gulp_place("'assign'+(app.standalone==='cordova' ? '_cordova' : '')", "eval")
- * @memberof $dom
+ * @memberof module:jaaJSU~$dom
  * @param {NodeElement} element
- * @param {...$dom.types.DomAssignObject} object_attributes
+ * @param {...module:jaaJSU~$dom.DomAssignObject} object_attributes
  * @example
  * const el= document.body;
  * const onclick= function(){ console.log(this.dataset.js_param); };

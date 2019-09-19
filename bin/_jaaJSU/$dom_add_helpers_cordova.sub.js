@@ -3,19 +3,20 @@
 /* $dom *//* global $dom */
 /* standalone= "cordova"; */
 /**
- * In generall, all methods from {@link $dom.types.Component} don't do anything. Also during "mounting" there are some changes see method {@link $dom.types.ComponentEmpty.mount}.
+ * In generall, all methods from {@link module:jaaJSU~$dom.Component} don't do anything. Also during "mounting" there are some changes see method {@link module:jaaJSU~$dom.ComponentEmpty.mount}.
  * @typedef ComponentEmpty
- * @memberof $dom.types
- * @type {$dom.types.Component}
+ * @memberof module:jaaJSU~$dom
+ * @category virtual
+ * @type {module:jaaJSU~$dom.Component}
  */
 const $dom_emptyPseudoComponent= (function(){
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, component, mount, update, share };
     return component_out;
     /**
-     * The same syntax as {@link $dom.types.Component.mount}. But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
+     * The same syntax as {@link module:jaaJSU~$dom.Component.mount}. But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
      * @method mount
-     * @memberof $dom.types.ComponentEmpty
+     * @memberof module:jaaJSU~$dom.ComponentEmpty
      */
     function mount(element, call_parseHTML, type= "childLast"){
         // let temp_el;
@@ -47,21 +48,15 @@ const $dom_emptyPseudoComponent= (function(){
     function destroy(){ return null; }
 })();
 /**
- * Just virtual key!!! This is overwiev of all internal types for better description.
- * @namespace types
- * @private
- * @memberof $dom
- */
-/**
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
  * @method component_cordova
- * @memberof $dom
+ * @memberof module:jaaJSU~$dom
  * @version 1.0.0
  * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
- * @param {$dom.types.DomAssignObject} attrs The second argument for {@link $dom.assign}
+ * @param {module:jaaJSU~$dom.DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters
- * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link $dom.types.Component.add}
- * @return {$dom.types.Component__Add|$dom.types.ComponentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
+ * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom.Component.add}
+ * @return {module:jaaJSU~$dom.Component__Add|module:jaaJSU~$dom.ComponentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
@@ -82,36 +77,38 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, addText, component, setShift, mount, update, share };
     /**
-     * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link $dom.types.Component.component} method).
+     * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom.Component.component} method).
      * @typedef share
-     * @memberof $dom.types.Component
-     * @borrows $dom.types.Component.mount as mount
-     * @borrows $dom.types.Component.update as update
+     * @memberof module:jaaJSU~$dom.Component
+     * @borrows module:jaaJSU~$dom.Component.mount as mount
+     * @borrows module:jaaJSU~$dom.Component.update as update
      * @type {Object}
      */
     /**
-     * This is minimal export of "functional class" {@link $dom.component} and its methods (if they are chainable).
+     * This is minimal export of "functional class" {@link module:jaaJSU~$dom.component} and its methods (if they are chainable).
      * @typedef Component
-     * @memberof $dom.types
+     * @memberof module:jaaJSU~$dom
+     * @category virtual
      * @type {Object}
      */
     return add(el_name, attrs);
     /**
      * This is `Component` with aditional methods
      * @typedef Component__Add
-     * @memberof $dom.types
-     * @type $dom.types.Component
+     * @memberof module:jaaJSU~$dom
+     * @category virtual
+     * @type module:jaaJSU~$dom.Component
      */
     /**
      * This add element to component
      * @method add
-     * @memberof $dom.types.Component
+     * @memberof module:jaaJSU~$dom.Component
      * @public
      * @chainable
      * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
-     * @param {$dom.types.DomAssignObject} attrs Internally uses {@link $dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
+     * @param {module:jaaJSU~$dom.DomAssignObject} attrs Internally uses {@link module:jaaJSU~$dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
      * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
-     * @returns {$dom.types.Component__Add}
+     * @returns {module:jaaJSU~$dom.Component__Add}
      * @example
      * const UL= document.getElementById('SOME UL');
      * const { add }= $dom.component("LI", { className: "list_item" });
@@ -145,25 +142,25 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             /**
              * Returns reference of currently added element
              * @method getReference
-             * @memberof $dom.types.Component__Add
+             * @memberof module:jaaJSU~$dom.Component__Add
              * @returns {NodeElement}
              */
             getReference: ()=> el,
             /**
              * This procedure allows to call given function `fn` during registering element.
              * @method oninit
-             * @memberof $dom.types.Component__Add
+             * @memberof module:jaaJSU~$dom.Component__Add
              * @param {Function} fn
-             * @returns {$dom.types.Component}
+             * @returns {module:jaaJSU~$dom.Component}
              */
             oninit: function(fn){ fn(el); return component_out; },
             /**
-             * This method allows to register function ({@link $dom.types.onUpdateFunction}) which shoul be invoke when given **keys** in `data` will be changed (see {@link $dom.types.Component.update}).
+             * This method allows to register function ({@link module:jaaJSU~$dom.onUpdateFunction}) which shoul be invoke when given **keys** in `data` will be changed (see {@link module:jaaJSU~$dom.Component.update}).
              * @method onupdate
-             * @memberof $dom.types.Component__Add
+             * @memberof module:jaaJSU~$dom.Component__Add
              * @param {Object} data This allows register listener for given **keys** of Object `data`. For `data= { a: "A", b: "B" }` it means that when `a` or `b` will be changed the `onUpdateFunction` is called.
-             * @param {$dom.types.onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
-             * @returns {$dom.types.Component}
+             * @param {module:jaaJSU~$dom.onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
+             * @returns {module:jaaJSU~$dom.Component}
              * @example
              * const c= $dom.component("DIV", null);
              * …
@@ -179,9 +176,10 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
              */
             /**
              * @callback onUpdateFunction
-             * @memberof $dom.types
-             * @param {Object} data Includes all subsribed keys from `data` see method {@link $dom.types.Component__Add.onupdate}
-             * @returns {*|$dom.types.DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link $dom.types.Component.update} is called. This callback can be registered when element is created (see method {@link $dom.types.Component.add}) see {@link $dom.types.Component__Add}.
+             * @memberof module:jaaJSU~$dom
+             * @category virtual
+             * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom.Component__Add.onupdate}
+             * @returns {*|module:jaaJSU~$dom.DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link module:jaaJSU~$dom.Component.update} is called. This callback can be registered when element is created (see method {@link module:jaaJSU~$dom.Component.add}) see {@link module:jaaJSU~$dom.Component__Add}.
              */
             onupdate: function(data, onUpdateFunction){
                 if(!data) return component_out;
@@ -195,18 +193,19 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /**
      * This is `Component` with aditional methods
      * @typedef Component__AddText
-     * @memberof $dom.types
+     * @memberof module:jaaJSU~$dom
+     * @category virtual
      * @type {Component}
      */
     /**
      * This add element to component
      * @method addText
-     * @memberof $dom.types.Component
+     * @memberof module:jaaJSU~$dom.Component
      * @public
      * @chainable
      * @param {String} text Argument for `document.createTextNode`
-     * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
-     * @returns {$dom.types.Component__AddText}
+     * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom.Component.add}
+     * @returns {module:jaaJSU~$dom.Component__AddText}
      * @example
      * const c1= $dom.component("P", { textContent: "TEXT" });
      * const c2= $dom.component("P", null);
@@ -234,9 +233,9 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             /**
              * This procedure allows to call given function `fn` during registering element.
              * @method oninit
-             * @memberof $dom.types.Component__AddText
+             * @memberof module:jaaJSU~$dom.Component__AddText
              * @param {Function} fn
-             * @returns {$dom.types.Component}
+             * @returns {module:jaaJSU~$dom.Component}
              */
             oninit: function(fn){ fn(el); return component_out; }
         }, component_out);
@@ -245,12 +244,12 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /**
      * Method for including another component by usint its `share` key.
      * @method component
-     * @memberof $dom.types.Component
+     * @memberof module:jaaJSU~$dom.Component
      * @public
      * @chainable
-     * @param {$dom.types.Component.share} share
-     * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
-     * @return {$dom.types.Component}
+     * @param {module:jaaJSU~$dom.Component.share} share
+     * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom.Component.add}
+     * @return {module:jaaJSU~$dom.Component}
      * @example
      * function p({ textContent }){
      *      const cP= $dom.component("P", { textContent });
@@ -275,7 +274,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /**
      * Add element to live DOM
      * @method mount
-     * @memberof $dom.types.Component
+     * @memberof module:jaaJSU~$dom.Component
      * @public
      * @param {NodeElement} element Element where to places this component
      * @param {Boolean} call_parseHTML If call parseHTML
@@ -319,7 +318,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /**
      * Method remove element form live DOM and returns null
      * @method destroy
-     * @memberof $dom.types.Component.share
+     * @memberof module:jaaJSU~$dom.Component.share
      * @public
      * @returns {Null}
      * @example
@@ -337,8 +336,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * Updates `deep`
      * @private
      * @method recalculateDeep
-     * @memberof $dom.types.Component
-     * @param {Number} shift see {@link $dom.types.Component.add}
+     * @memberof module:jaaJSU~$dom.Component
+     * @param {Number} shift see {@link module:jaaJSU~$dom.Component.add}
      */
     function recalculateDeep(shift){
         if(!shift) deep.push(all_els_counter);
@@ -348,7 +347,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /**
      * Returns parent element (or "fragment pseudo element")
      * @method getParentElement
-     * @memberof $dom.types.Component
+     * @memberof module:jaaJSU~$dom.Component
      * @private
      * @returns {NodeElement} Returns parent element (i. e. `DocumenFragment` if component is empty)
      */
@@ -359,11 +358,11 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /**
      * Method provide way to change nesting behaviour. It can be helpful for loops
      * @method setShift
-     * @memberof $dom.types.Component
+     * @memberof module:jaaJSU~$dom.Component
      * @public
      * @chainable
-     * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
-     * @returns {$dom.types.Component}
+     * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom.Component.add}
+     * @returns {module:jaaJSU~$dom.Component}
      * @example
      * function testNesting(){
      *     const c= $dom.component("DIV", null);
@@ -397,7 +396,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /**
      * Initialize internal storage
      * @method initStorage
-     * @memberof $dom.types.Component
+     * @memberof module:jaaJSU~$dom.Component
      * @private
      * @returns {Object} `{ register, registerComponent, update, unregister}`
      */
@@ -475,7 +474,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /**
      * Method updates all registered varibles by keys `onupdates` and calls follower functions
      * @method update
-     * @memberof $dom.types.Component
+     * @memberof module:jaaJSU~$dom.Component
      * @public
      * @param {Object|Function} new_data
      * <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate`
@@ -516,7 +515,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /**
      * Methods returns if it was `onupdate` used
      * @method isStatic
-     * @memberof $dom.types.Component.share
+     * @memberof module:jaaJSU~$dom.Component.share
      * @public
      * @return {Boolean} If there is some listeners `onupdate`
      */
@@ -534,7 +533,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
  *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
  *  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
  * @typedef DomAssignObject
- * @memberof $dom.types
+ * @memberof module:jaaJSU~$dom
+ * @category virtual
  * @type {Object}
  */
 /**
@@ -542,9 +542,9 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
  * Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
  * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
  * @method assign_cordova
- * @memberof $dom
+ * @memberof module:jaaJSU~$dom
  * @param {NodeElement} element
- * @param {...$dom.types.DomAssignObject} object_attributes
+ * @param {...module:jaaJSU~$dom.DomAssignObject} object_attributes
  * @example
  * const el= document.body;
  * const onclick= function(){ console.log(this.dataset.js_param); };
@@ -612,9 +612,9 @@ $dom.assign= function(element, ...objects_attributes){
 };
 
 /**
- * See {@link $dom.add}
+ * See {@link module:jaaJSU~$dom.add}
  * @method add_cordova
- * @memberof $dom
+ * @memberof module:jaaJSU~$dom
  * @deprecated
  * @param {NodeElement} parent
  * @param {...Array} $$$ Works also with "jsif_var" and/or "data-cmd='condition-changeval'" see [$dom.assign \[cordova\]](#methods_$dom.assign [cordova])

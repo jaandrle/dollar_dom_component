@@ -5,18 +5,19 @@
 /**
  * This is `Component` with aditional methods
  * @typedef Component__AddText
- * @memberof $dom.types
+ * @memberof module:jaaJSU~$dom
+ * @category virtual
  * @type {Component}
  */
 /**
  * This add element to component
  * @method addText
- * @memberof $dom.types.Component
+ * @memberof module:jaaJSU~$dom.Component
  * @public
  * @chainable
  * @param {String} text Argument for `document.createTextNode`
- * @param {Number} [shift= 0] see {@link $dom.types.Component.add}
- * @returns {$dom.types.Component__AddText}
+ * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom.Component.add}
+ * @returns {module:jaaJSU~$dom.Component__AddText}
  * @example
  * const c1= $dom.component("P", { textContent: "TEXT" });
  * const c2= $dom.component("P", null);
@@ -44,9 +45,9 @@ function addText(text, shift= 0){
         /**
          * This procedure allows to call given function `fn` during registering element.
          * @method oninit
-         * @memberof $dom.types.Component__AddText
+         * @memberof module:jaaJSU~$dom.Component__AddText
          * @param {Function} fn
-         * @returns {$dom.types.Component}
+         * @returns {module:jaaJSU~$dom.Component}
          */
         oninit: function(fn){ fn(el); return component_out; }
     }, component_out);

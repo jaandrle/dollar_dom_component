@@ -4,8 +4,8 @@
  * Updates `deep`
  * @private
  * @method recalculateDeep
- * @memberof $dom.types.Component
- * @param {Number} shift see {@link $dom.types.Component.add}
+ * @memberof module:jaaJSU~$dom.Component
+ * @param {Number} shift see {@link module:jaaJSU~$dom.Component.add}
  */
 function recalculateDeep(shift){
     if(!shift) deep.push(all_els_counter);

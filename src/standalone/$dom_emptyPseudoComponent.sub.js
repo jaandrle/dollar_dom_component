@@ -1,19 +1,20 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
 /* global $dom */
 /**
- * In generall, all methods from {@link $dom.types.Component} don't do anything. Also during "mounting" there are some changes see method {@link $dom.types.ComponentEmpty.mount}.
+ * In generall, all methods from {@link module:jaaJSU~$dom.Component} don't do anything. Also during "mounting" there are some changes see method {@link module:jaaJSU~$dom.ComponentEmpty.mount}.
  * @typedef ComponentEmpty
- * @memberof $dom.types
- * @type {$dom.types.Component}
+ * @memberof module:jaaJSU~$dom
+ * @category virtual
+ * @type {module:jaaJSU~$dom.Component}
  */
 const $dom_emptyPseudoComponent= (function(){
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, component, mount, update, share };
     return component_out;
     /**
-     * The same syntax as {@link $dom.types.Component.mount}. But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
+     * The same syntax as {@link module:jaaJSU~$dom.Component.mount}. But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
      * @method mount
-     * @memberof $dom.types.ComponentEmpty
+     * @memberof module:jaaJSU~$dom.ComponentEmpty
      */
     function mount(element, type= "childLast"){
         // let temp_el;

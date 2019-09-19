@@ -1,9 +1,9 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
 /* global $dom, parseHTML, c_CMD*/
 /**
- * See {@link $dom.add}
+ * See {@link module:jaaJSU~$dom.add}
  * @method add_cordova
- * @memberof $dom
+ * @memberof module:jaaJSU~$dom
  * @deprecated
  * @param {NodeElement} parent
  * @param {...Array} $$$ Works also with "jsif_var" and/or "data-cmd='condition-changeval'" see [$dom.assign \[cordova\]](#methods_$dom.assign [cordova])

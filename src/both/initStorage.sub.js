@@ -3,7 +3,7 @@
 /**
  * Initialize internal storage
  * @method initStorage
- * @memberof $dom.types.Component
+ * @memberof module:jaaJSU~$dom.Component
  * @private
  * @returns {Object} `{ register, registerComponent, update, unregister}`
  */

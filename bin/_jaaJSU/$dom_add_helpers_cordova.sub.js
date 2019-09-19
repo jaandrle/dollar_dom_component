@@ -4,7 +4,7 @@
 /* standalone= "cordova"; */
 /**
  * In generall, all methods from {@link module:jaaJSU~$dom.instance_component} don't do anything. Also during "mounting" there are some changes see method {@link module:jaaJSU~$dom.instance_componentEmpty.mount}.
- * @typedef ComponentEmpty
+ * @typedef instance_componentEmpty
  * @memberof module:jaaJSU~$dom
  * @category virtual
  * @type {module:jaaJSU~$dom.instance_component}
@@ -86,7 +86,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      */
     /**
      * This is minimal export of "functional class" {@link module:jaaJSU~$dom.component} and its methods (if they are chainable).
-     * @typedef Component
+     * @typedef instance_component
      * @memberof module:jaaJSU~$dom
      * @category virtual
      * @type {Object}

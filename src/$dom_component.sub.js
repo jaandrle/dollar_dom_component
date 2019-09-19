@@ -41,7 +41,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      */
     /**
      * This is minimal export of "functional class" {@link module:jaaJSU~$dom.component} and its methods (if they are chainable).
-     * @typedef Component
+     * @typedef instance_component
      * @memberof module:jaaJSU~$dom
      * @category virtual
      * @type {Object}

@@ -51,6 +51,7 @@ const $dom_emptyPseudoComponent= (function(){
  * @method component
  * @memberof module:jaaJSU~$dom
  * @version 1.0.0
+ * @see {@link https://github.com/jaandrle/dollar_dom_component}
  * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
  * @param {module:jaaJSU~$dom.DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters

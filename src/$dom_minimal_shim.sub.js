@@ -5,6 +5,7 @@
 /**
  * This NAMESPACE provides features for DOM elements.
  * @namespace $dom
+ * @category namespaces
  */
 const $dom= {
     /**
@@ -41,3 +42,8 @@ const $dom= {
         el_old.remove();
     }
 };
+/**
+ * Exported name of {@link module:jaaJSU~$dom} namespace.
+ * @namespace $dom
+ * @global
+ */

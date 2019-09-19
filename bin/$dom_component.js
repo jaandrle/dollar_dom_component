@@ -8,6 +8,7 @@ function init(global){
     /**
      * This NAMESPACE provides features for DOM elements.
      * @namespace $dom
+     * @category namespaces
      */
     const $dom= {
         /**
@@ -44,6 +45,11 @@ function init(global){
             el_old.remove();
         }
     };
+    /**
+     * Exported name of {@link module:jaaJSU~$dom} namespace.
+     * @namespace $dom
+     * @global
+     */
     /* standalone= "standalone"; */
     /**
      * In generall, all methods from {@link module:jaaJSU~$dom.instance_component} don't do anything. Also during "mounting" there are some changes see method {@link module:jaaJSU~$dom.instance_componentEmpty.mount}.
@@ -95,6 +101,7 @@ function init(global){
      * @method component
      * @memberof module:jaaJSU~$dom
      * @version 1.0.0
+     * @see {@link https://github.com/jaandrle/dollar_dom_component}
      * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
      * @param {module:jaaJSU~$dom.DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
      * @param {Object} [params= {}] Parameters

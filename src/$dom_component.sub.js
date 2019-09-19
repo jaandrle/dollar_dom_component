@@ -6,7 +6,8 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
  * @method component
  * @memberof module:jaaJSU~$dom
- * @version gulp_place("app.version", "eval")
+ * @version gulp_place("app.version", "eval_out")
+ * @see {@link gulp_place("app.homepage", "eval_out")}
  * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
  * @param {module:jaaJSU~$dom.DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters

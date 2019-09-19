@@ -541,7 +541,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
  * Procedure for merging object into the element properties.
  * Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
  * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
- * @method assign_cordova
+ * @method assign
  * @memberof module:jaaJSU~$dom
  * @param {NodeElement} element
  * @param {...module:jaaJSU~$dom.DomAssignObject} object_attributes

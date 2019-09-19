@@ -4,7 +4,7 @@
  * See {@link module:jaaJSU~$dom.add}
  * @method add
  * @memberof module:jaaJSU~$dom
- * @deprecated
+ * @deprecated Please use {@link module:jaaJSU~$dom.component}
  * @param {NodeElement} parent
  * @param {...Array} $$$ Works also with "jsif_var" and/or "data-cmd='condition-changeval'" see [$dom.assign \[cordova\]](#methods_$dom.assign [cordova])
  * @param {Boolean} [call_parseHTML=undefined] If **true** calls `parseHTML(parent.querySelectorAll(c_CMD))`

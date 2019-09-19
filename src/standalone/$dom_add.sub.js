@@ -4,7 +4,7 @@
  * Procedure for adding elements into the `parent` (in background use `createDocumentFragment`, `createElement`, `appendChild`)
  * @method add
  * @memberof module:jaaJSU~$dom
- * @deprecated
+ * @deprecated Please use {@link module:jaaJSU~$dom.component}
  * @param {NodeElement} parent Wrapper (for example `<ul>`) where to cerate children elements (for example `<li>`)
  * @param $$$ {...Array}
  *  <br/>* `[ [ __NAME__, __PARAMS__ ], [ __NAME__, __PARAMS__ ], ..., [ __NAME__, __PARAMS__ ] ]`

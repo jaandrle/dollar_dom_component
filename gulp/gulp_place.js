@@ -6,7 +6,7 @@
         'gulp-replace'
         'fs'
     @version
-        1.0.0
+        1.1.0
     @examples
         gulp_place("file_path") === gulp_place("file_path", "file"): replaced by "file_path" content
         gulp_place("file_path${some_var_inside_gulp}") === gulp_place("file_path${some_var_inside_gulp}", "file"): replaced by '"file_path"+some_var_inside_gulp' content
@@ -33,21 +33,25 @@ module.exports= function({ gulp_replace= false, fs= false, variable_eval= false,
     if(!fs) throw Error("Missing 'fs' object!");
     if(!variable_eval) throw Error("Missing 'variable_eval' function!");
     const files_added= new Set();
+    
     return function gulp_place({folder= "js/", string_wrapper= '"'}= {}){
-        const gulp_place_regex= /( *)gulp_place\(\s*(?:\"|\')([^\"]+)(?:\"|\')(?:\s*,\s*(?:\"|\')([^\"]+)(?:\"|\'))?\s*\)(;?)([^\r\n]*\/\*[^\*]*\*\/)?/g;
+        const gulp_place_regex= /( *)gulp_place\(\s*(?:\"|\')([^\"\']+)(?:\"|\')(?:\s*,\s*(?:\"|\')([^\"\']+)(?:\"|\'))?\s*\)(;?)([^\r\n]*\/\*[^\*]*\*\/)?/g;
         return gulp_replace(gulp_place_regex,function(full_match, spaces= "", name= false, type="file", semicol= "", jshint_global= ""){
             return parseFileHandler({name, full_match, type, spaces, string_wrapper, semicol, jshint_global});
 
             function parseFileHandler({name, full_match, type, spaces, string_wrapper, semicol, jshint_global}){
                 if(!name) return full_match;
+                name= name.replace(/&prime;/g, "'").replace(/&Prime;/g, "\"").replace(/`/g, "'");
                 switch (type){
                     case "files":
-                    case "glob":            return filesCleaner(parseFile(parseGlob(folder, [name, name.lastIndexOf("/")+1], spaces)));
+                    case "glob":            return filesCleaner(parseFile(parseGlob(false, folder, ((name)=>[name, name.lastIndexOf("/")+1])(fileNameVarHandler(name)), spaces)));
+                    case "files_once":
+                    case "glob_once":       return filesCleaner(parseFile(parseGlob(true, folder, ((name)=>[name, name.lastIndexOf("/")+1])(fileNameVarHandler(name)), spaces)));
                     case "file":            return fileHandler(false, true, folder, fileNameVarHandler(name), spaces);
                     case "file_if_exists":  return fileHandler(false, false, folder, fileNameVarHandler(name), spaces);
                     case "file_once":       return fileHandler(true, true, folder, fileNameVarHandler(name), spaces);
                     case "variable":        return spaces+string_wrapper+variable_eval(name)+string_wrapper+semicol+jshint_global;
-                    case "eval":            return (variable_eval(name), spaces+semicol+jshint_global);
+                    case "eval":            return (variable_eval(name), spaces+jshint_global);
                     case "eval_out":        return spaces+variable_eval(name)+semicol+jshint_global;
                 }
             }
@@ -63,7 +67,7 @@ module.exports= function({ gulp_replace= false, fs= false, variable_eval= false,
             }
         });
     };
-    function parseGlob(main_folder, match, spaces){
+    function parseGlob(once, main_folder, match, spaces){
         const folder_glob_reg= /\*\/$/g;
         const [ name, last_slash ] = match;
         let [ sub_folder, files ] = [ name.substr(0, last_slash), name.substr(last_slash) ];
@@ -81,7 +85,7 @@ module.exports= function({ gulp_replace= false, fs= false, variable_eval= false,
 
         function parseFolder(folder){
             return spaces+fs.readdirSync(folder)
-                    .filter(file_candidate=> files.test(file_candidate))
+                    .filter(file_candidate=> files.test(file_candidate)&&(!once||!files_added.has(sub_folder+file_candidate)))
                     .map(file_name => { files_added.add(sub_folder+file_name); return file_name;})
                     .map(file_name=> catFile(folder+file_name).replace(/\r?\n/gm, "\n"+spaces))
                     .join("\n");
@@ -92,7 +96,7 @@ module.exports= function({ gulp_replace= false, fs= false, variable_eval= false,
         }
     }
     function fileNameVarHandler(str){
-        if(typeof str !== "string") throw Error("Type of 'str' is not string!");
+        if(typeof str !== "string") throw Error(`Type of '${str}' is not string!`);
         const reg= /\$\{([\s]*[^;\s\{]+[\s]*)\}/g;
         return str.replace(reg, replaceHandler);
         function replaceHandler(_, match){return variable_eval(match);}

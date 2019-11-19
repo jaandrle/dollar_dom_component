@@ -6,7 +6,7 @@
         'gulp-replace'
         'fs'
     @version
-        1.1.0
+        1.5.0
     @examples
         gulp_place("file_path") === gulp_place("file_path", "file"): replaced by "file_path" content
         gulp_place("file_path${some_var_inside_gulp}") === gulp_place("file_path${some_var_inside_gulp}", "file"): replaced by '"file_path"+some_var_inside_gulp' content
@@ -32,10 +32,14 @@ module.exports= function({ gulp_replace= false, fs= false, variable_eval= false,
     if(!gulp_replace) throw Error("Missing 'gulp-replace' function!");
     if(!fs) throw Error("Missing 'fs' object!");
     if(!variable_eval) throw Error("Missing 'variable_eval' function!");
-    const files_added= new Set();
+    let /* shared vars */
+        files_added= new Set();
+    const /* shared consts */
+        gulp_place_regex= /( *)gulp_place\(\s*(?:\"|\')([^\"\']+)(?:\"|\')(?:\s*,\s*(?:\"|\')([^\"\']+)(?:\"|\'))?\s*\)(;?)([^\r\n]*\/\*[^\*]*\*\/)?/g,
+        folder_glob_reg= /\*\*\/$/g,
+        folder_deep_glob_reg= /\*\*\/\*\*\/$/g;
     
     return function gulp_place({folder= "js/", string_wrapper= '"'}= {}){
-        const gulp_place_regex= /( *)gulp_place\(\s*(?:\"|\')([^\"\']+)(?:\"|\')(?:\s*,\s*(?:\"|\')([^\"\']+)(?:\"|\'))?\s*\)(;?)([^\r\n]*\/\*[^\*]*\*\/)?/g;
         return gulp_replace(gulp_place_regex,function(full_match, spaces= "", name= false, type="file", semicol= "", jshint_global= ""){
             return parseFileHandler({name, full_match, type, spaces, string_wrapper, semicol, jshint_global});
 
@@ -43,6 +47,7 @@ module.exports= function({ gulp_replace= false, fs= false, variable_eval= false,
                 if(!name) return full_match;
                 name= name.replace(/&prime;/g, "'").replace(/&Prime;/g, "\"").replace(/`/g, "'");
                 switch (type){
+                    case "clean":           return (files_added= new Set(), spaces+jshint_global);
                     case "files":
                     case "glob":            return filesCleaner(parseFile(parseGlob(false, folder, ((name)=>[name, name.lastIndexOf("/")+1])(fileNameVarHandler(name)), spaces)));
                     case "files_once":
@@ -68,7 +73,6 @@ module.exports= function({ gulp_replace= false, fs= false, variable_eval= false,
         });
     };
     function parseGlob(once, main_folder, match, spaces){
-        const folder_glob_reg= /\*\/$/g;
         const [ name, last_slash ] = match;
         let [ sub_folder, files ] = [ name.substr(0, last_slash), name.substr(last_slash) ];
         if(!last_slash) return "";
@@ -76,9 +80,8 @@ module.exports= function({ gulp_replace= false, fs= false, variable_eval= false,
             .replace(/[\.\(\)]/g, m=> "\\"+m)
             .replace(/\*/g, ".*")
         );
-        let folders= [];
-        if(folder_glob_reg.test(sub_folder)) folders= getFolders(main_folder+sub_folder);
-        else folders[0]= main_folder+sub_folder;
+        let folders= [ main_folder+sub_folder.replace(/\*\*\//g, "") ];
+        if(folder_glob_reg.test(sub_folder)) folders= folders.concat(getFolders(main_folder+sub_folder));
         
         const out= folders.reduce((acc, folder)=> acc+(acc?"\n":"")+parseFolder(folder), "");
         return out;
@@ -91,8 +94,11 @@ module.exports= function({ gulp_replace= false, fs= false, variable_eval= false,
                     .join("\n");
         }
         function getFolders(folders_pattern){
-            const parent_folder= folders_pattern.replace(folder_glob_reg, "");
-            return fs.readdirSync(parent_folder).filter(item=> fs.statSync(parent_folder+item).isDirectory()).map(folder_name=> parent_folder+folder_name+"/");
+            const parent_folder= folders_pattern.replace(/\*\*\//g, "");
+            const first_deep= fs.readdirSync(parent_folder).filter(item=> fs.statSync(parent_folder+item).isDirectory()).map(folder_name=> parent_folder+folder_name+"/");
+            if(!folder_deep_glob_reg.test(folders_pattern)) return first_deep;
+            const subFoldersPattern= folder=> folder+"**/".repeat(folders_pattern.match(/\*\*\//g).length);
+            return first_deep.concat(first_deep.reduce((acc, folder)=> acc.concat(getFolders(subFoldersPattern(folder))), []));
         }
     }
     function fileNameVarHandler(str){

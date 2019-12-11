@@ -189,7 +189,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
                 if(!data) return component_out;
                 if(!internal_storage) internal_storage= initStorage();
                 $dom.assign(el, internal_storage.register(el, data, onUpdateFunction));
-                return component_out;
+                return this;
             }
         }, component_out);
     }
@@ -312,6 +312,12 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
                 else element.appendChild(fragment);
                 break;
         }
+        const observer= new MutationObserver(mutations=> mutations.forEach(function(record){
+            if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, container)===-1) return false;
+            destroy();
+            observer.disconnect();
+        }));
+        observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
         return container;
     }
     
@@ -328,7 +334,9 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * //=> c===null AND <body></body>
      */
     function destroy(){
-        container.remove();
+        if(container) container.remove();
+        if(internal_storage) internal_storage= null;
+        if(component_out) component_out= null;
         return null;
     }
     
@@ -407,24 +415,24 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             functions= new Map(),
             listeners= new Map();
         let 
-            els_counter= 0;
+            counter= 0;
         return {
             register: function(el, init_data, fun){
                 Object.assign(data, init_data);
-                const el_id= els_counter++; els.set(el_id,el);
+                const ids= registerToMap(els, el)+"_"+registerToMap(functions, fun);
                 const init_data_keys= Object.keys(init_data);
                 for(let i=0, i_key, i_length= init_data_keys.length; i<i_length; i++){
                     i_key= init_data_keys[i];
-                    if(!listeners.has(i_key)) listeners.set(i_key, [ el_id ]);
-                    else listeners.set(i_key, [ ...listeners.get(i_key), el_id ]);
+                    if(!listeners.has(i_key)) listeners.set(i_key, [ ids ]);
+                    else listeners.get(i_key).push(ids);
                 }
-                functions.set(el_id, fun);
                 return fun.call(el, init_data) || {};
             },
             registerComponent: function(update){
                 if(components.indexOf(update)===-1) components.push(update);
             },
             update: function(new_data_input){
+                console.log({els, functions, listeners}); /* jshint devel: true *///gulp.keep.line
                 const new_data= typeof mapUpdate==="function" ? mapUpdate(new_data_input) : new_data_input;
                 let out= false;
                 for(let i=0, i_length= components.length; i<i_length; i++){ if(components[i](new_data)&&!out){out=true;} }
@@ -446,11 +454,12 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
                 for(let i=0, i_length= els_for_redraw.length; i<i_length; i++){ processChanges(els_for_redraw[i]); }
                 return true;
                 
-                function processChanges(el_id){
-                    const new_attrs= functions.get(el_id).call(els.get(el_id), data) || {};
+                function processChanges(ids){
+                    const [ el_id, fun_id ]= ids.split("_").map(Number);
                     const el= els.get(el_id);
-                    if(el.parentNode===null) return unregister(el_id, new_data_keys);
-                    else $dom.assign(el, new_attrs);
+                    const new_data= functions.get(fun_id).call(el, data) || {};
+                    if(el.parentNode===null) return unregister(el_id, fun_id, new_data_keys);
+                    $dom.assign(el, new_data);
                 }
             },
             getData: function(){
@@ -458,16 +467,25 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             },
             unregister
         };
-        function unregister(el_id, data_keys){
-            functions.delete(el_id);
+        function unregister(el_id, fun_id, data_keys){
+            let funcs_counter= 0;
             els.delete(el_id);
-            for(let i=0, i_key, listener, i_length= data_keys.length; i<i_length; i++){
-                i_key= data_keys[i];
-                listener= listeners.get(i_key);
-                if(listener.length===1) listeners.delete(i_key);
-                else listeners.set(i_key, listener.filter(el_idFilter));
-            }
-            function el_idFilter(v){ return v!==el_id; }
+            listeners.forEach(function(listeners_arr, i_key){
+                if(data_keys.indexOf(i_key)===-1) return listeners_arr.forEach(function(ids){ if(Number(ids.split("_")[1])===fun_id){ funcs_counter+= 1; } });
+                
+                if(listeners_arr.length===1) listeners.delete(i_key);
+                else listeners.set(i_key, listeners_arr.filter(el_idFilter));
+            });
+            if(!funcs_counter) functions.delete(fun_id);
+            function el_idFilter(ids){ return Number(ids.split("_")[0])!==el_id; }
+        }
+        function registerToMap(store, current){
+            let current_index= -1;
+            store.forEach(function(v, i){ if(current_index===-1&&v===current) current_index= i; });
+            if(current_index!==-1) return current_index;
+            current_index= counter++;
+            store.set(current_index, current);
+            return current_index;
         }
     }
     

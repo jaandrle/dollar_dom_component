@@ -11,6 +11,22 @@ for(let i=0, test_update; i<1; i++){
 }
 console.timeEnd();
 
+const test_remove_el= document.getElementById('test_remove');
+const test_info_el= Info({ textContent: "example 01" });
+const test_info_el_ref= test_info_el.mount(test_remove_el);
+//test_info_el_ref.remove(); //test if memory cleaned
+
+function Info({ textContent }){
+    const textContent_= ({ textContent, textContent_ })=> textContent_ ? ({ textContent: "__"+textContent_+"__ ("+textContent+")" }) : null;
+    const { add, share }= $dom.component("P");
+        add("STRONG", { textContent: "This is test named: " })
+            .onupdate({ textContent_: "" }, textContent_);
+        add("I", null, -1)
+            .onupdate({ textContent }, ({ textContent })=> ({ textContent }))
+            .onupdate({ textContent, textContent_: "" }, textContent_);
+    return share;
+}
+
 function li({ nth, first, last }){
     const counter= 0; /* init value */
     const { add, component, update, share }= $dom.component("LI", null)

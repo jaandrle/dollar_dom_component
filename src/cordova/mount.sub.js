@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
-/* global $dom, fragment, parseHTML, c_CMD, container */
+/* global $dom, fragment, parseHTML, c_CMD, container, destroy */
 /**
  * Add element to live DOM
  * @method mount
@@ -41,5 +41,11 @@ function mount(element, call_parseHTML, type= "childLast"){
             if(call_parseHTML) parseHTML(element.querySelectorAll(c_CMD));
             break;
     }
+    const observer= new MutationObserver(mutations=> mutations.forEach(function(record){
+        if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, container)===-1) return false;
+        destroy();
+        observer.disconnect();
+    }));
+    observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
     return container;
 }

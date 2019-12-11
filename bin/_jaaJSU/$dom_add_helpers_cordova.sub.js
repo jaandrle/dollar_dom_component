@@ -75,7 +75,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             - add(...);add(...,-1);add(...) = final deep=[1,2]; (by steps: [0], [0,1], [1,2])
             - see `shift` in `add`
         */
-        deep= [];
+        deep= [],
+        on_mount_funs= null;
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, addText, component, setShift, mount, update, share };
     /**
@@ -155,16 +156,46 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
              * @method oninit
              * @memberof module:jaaJSU~$dom~instance_componentAdd
              * @param {Function} fn
-             * @returns {module:jaaJSU~$dom~instance_component}
+             * @returns {module:jaaJSU~$dom~instance_componentAdd}
              */
-            oninit: function(fn){ fn(el); return component_out; },
+            oninit: function(fn){ fn(el); return this; },
+            /**
+             * This procedure allows to call given function `onMountFunction` during mounting component.
+             * 
+             * It can for example solve problem setting default value for `select` (`option`s elements not exist when the `select` itself is declared!).
+             * 
+             * As alternative for some cases, you can use `active` label for `option`s instead.
+             * @method onmount
+             * @memberof module:jaaJSU~$dom~instance_componentAdd
+             * @param {Function} onMountFunction
+             * @returns {module:jaaJSU~$dom~instance_componentAdd}
+             * @example
+             * const select_component= select({ value: "default" });
+             * select_component.mount(parent);
+             * // default ⇣
+             * 
+             * function select(init){
+             *     const c= $dom.component("SELECT", null)
+             *      .onmount(()=> init);
+             *         c.add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
+             *         c.add("OPTION", { value: "no_default_2", textContent: "no_default_2" }, -1);
+             *         c.add("OPTION", { value: "no_default_3", textContent: "no_default_3" }, -1);
+             *         c.add("OPTION", { value: "default", textContent: "default" }, -1);
+             *     return c.share;
+             * }
+             */
+            onmount: function(onMountFunction){
+                if(!on_mount_funs) on_mount_funs= new Map();
+                on_mount_funs.set(el, onMountFunction);
+                return this;
+            },
             /**
              * This method allows to register function ({@link module:jaaJSU~$dom.onUpdateFunction}) which shoul be invoke when given **keys** in `data` will be changed (see {@link module:jaaJSU~$dom~instance_component.update}).
              * @method onupdate
              * @memberof module:jaaJSU~$dom~instance_componentAdd
              * @param {Object} data This allows register listener for given **keys** of Object `data`. For `data= { a: "A", b: "B" }` it means that when `a` or `b` will be changed the `onUpdateFunction` is called.
              * @param {module:jaaJSU~$dom~onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
-             * @returns {module:jaaJSU~$dom~instance_component}
+             * @returns {module:jaaJSU~$dom~instance_componentAdd}
              * @example
              * const c= $dom.component("DIV", null);
              * …
@@ -324,6 +355,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             observer.disconnect();
         }));
         observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
+        if(on_mount_funs) on_mount_funs.forEach((onMountFunction, el)=> $dom.assign(el, onMountFunction.call(el, element, call_parseHTML, type)));
         return container;
     }
     
@@ -343,6 +375,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
         if(container) container.remove();
         if(internal_storage) internal_storage= null;
         if(component_out) component_out= null;
+        if(on_mount_funs) on_mount_funs= null;
         return null;
     }
     
@@ -438,7 +471,6 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
                 if(components.indexOf(update)===-1) components.push(update);
             },
             update: function(new_data_input){
-                console.log({els, functions, listeners}); /* jshint devel: true *///gulp.keep.line
                 const new_data= typeof mapUpdate==="function" ? mapUpdate(new_data_input) : new_data_input;
                 let out= false;
                 for(let i=0, i_length= components.length; i<i_length; i++){ if(components[i](new_data)&&!out){out=true;} }

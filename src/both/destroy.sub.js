@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
-/* global container, internal_storage: true, component_out: true */
+/* global container, internal_storage: true, component_out: true, on_mount_funs: true */
 /**
  * Method remove element form live DOM and returns null
  * @method destroy
@@ -16,5 +16,6 @@ function destroy(){
     if(container) container.remove();
     if(internal_storage) internal_storage= null;
     if(component_out) component_out= null;
+    if(on_mount_funs) on_mount_funs= null;
     return null;
 }

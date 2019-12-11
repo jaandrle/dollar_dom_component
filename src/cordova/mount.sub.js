@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
-/* global $dom, fragment, parseHTML, c_CMD, container, destroy */
+/* global $dom, fragment, parseHTML, c_CMD, container, destroy, on_mount_funs */
 /**
  * Add element to live DOM
  * @method mount
@@ -47,5 +47,6 @@ function mount(element, call_parseHTML, type= "childLast"){
         observer.disconnect();
     }));
     observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
+    if(on_mount_funs) on_mount_funs.forEach((onMountFunction, el)=> $dom.assign(el, onMountFunction.call(el, element, call_parseHTML, type)));
     return container;
 }

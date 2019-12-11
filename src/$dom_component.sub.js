@@ -29,7 +29,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             - add(...);add(...,-1);add(...) = final deep=[1,2]; (by steps: [0], [0,1], [1,2])
             - see `shift` in `add`
         */
-        deep= [];
+        deep= [],
+        on_mount_funs= null;
     const share= { mount, update, destroy, isStatic };
     const component_out= { add, addText, component, setShift, mount, update, share };
     /**

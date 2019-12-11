@@ -27,6 +27,34 @@ function Info({ textContent }){
     return share;
 }
 
+const test_select_el= document.getElementById('test_select');
+const select_no_onmount_= select_no_onmount();
+select_no_onmount_.mount(test_select_el);
+select_no_onmount_.update({ value: "default" });
+
+const select_= select();
+select_.mount(test_select_el);
+//select_.update({ value: "no_default_3" });
+
+function select_no_onmount(){
+    const { add, share }= $dom.component("SELECT", null).onupdate({ value: "" }, ({ value })=> ({ value }));
+        add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
+        add("OPTION", { value: "no_default_2", textContent: "no_default_2" }, -1);
+        add("OPTION", { value: "no_default_3", textContent: "no_default_3" }, -1);
+        add("OPTION", { value: "default", textContent: "default" }, -1);
+    return share;
+}
+function select(init= { value: "default" }){
+    const { add, share }= $dom.component("SELECT", null).onmount(()=> init).onupdate(init, ({ value })=> ({ value }));
+        add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
+        add("OPTION", { value: "no_default_2", textContent: "no_default_2" }, -1);
+        add("OPTION", { value: "no_default_3", textContent: "no_default_3" }, -1);
+        add("OPTION", { value: "default", textContent: "default" }, -1);
+    return share;
+}
+
+/* ~ ~ ~ Ϟ ~ ~ ~ */
+
 function li({ nth, first, last }){
     const counter= 0; /* init value */
     const { add, component, update, share }= $dom.component("LI", null)

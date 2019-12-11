@@ -1,6 +1,6 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
 /* internal methods *//* global recalculateDeep, getParentElement, initStorage */
-/* internal vars *//* global all_els_counter: true, container: true, internal_storage: true */
+/* internal vars *//* global all_els_counter: true, container: true, internal_storage: true, on_mount_funs: true */
 /* out *//* global $dom, els, fragment, component_out */
 /**
  * This is `Component` with aditional methods
@@ -62,16 +62,46 @@ function add(el_name, attrs, shift= 0){
          * @method oninit
          * @memberof module:jaaJSU~$dom~instance_componentAdd
          * @param {Function} fn
-         * @returns {module:jaaJSU~$dom~instance_component}
+         * @returns {module:jaaJSU~$dom~instance_componentAdd}
          */
-        oninit: function(fn){ fn(el); return component_out; },
+        oninit: function(fn){ fn(el); return this; },
+        /**
+         * This procedure allows to call given function `onMountFunction` during mounting component.
+         * 
+         * It can for example solve problem setting default value for `select` (`option`s elements not exist when the `select` itself is declared!).
+         * 
+         * As alternative for some cases, you can use `active` label for `option`s instead.
+         * @method onmount
+         * @memberof module:jaaJSU~$dom~instance_componentAdd
+         * @param {Function} onMountFunction
+         * @returns {module:jaaJSU~$dom~instance_componentAdd}
+         * @example
+         * const select_component= select({ value: "default" });
+         * select_component.mount(parent);
+         * // default ⇣
+         * 
+         * function select(init){
+         *     const c= $dom.component("SELECT", null)
+         *      .onmount(()=> init);
+         *         c.add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
+         *         c.add("OPTION", { value: "no_default_2", textContent: "no_default_2" }, -1);
+         *         c.add("OPTION", { value: "no_default_3", textContent: "no_default_3" }, -1);
+         *         c.add("OPTION", { value: "default", textContent: "default" }, -1);
+         *     return c.share;
+         * }
+         */
+        onmount: function(onMountFunction){
+            if(!on_mount_funs) on_mount_funs= new Map();
+            on_mount_funs.set(el, onMountFunction);
+            return this;
+        },
         /**
          * This method allows to register function ({@link module:jaaJSU~$dom.onUpdateFunction}) which shoul be invoke when given **keys** in `data` will be changed (see {@link module:jaaJSU~$dom~instance_component.update}).
          * @method onupdate
          * @memberof module:jaaJSU~$dom~instance_componentAdd
          * @param {Object} data This allows register listener for given **keys** of Object `data`. For `data= { a: "A", b: "B" }` it means that when `a` or `b` will be changed the `onUpdateFunction` is called.
          * @param {module:jaaJSU~$dom~onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
-         * @returns {module:jaaJSU~$dom~instance_component}
+         * @returns {module:jaaJSU~$dom~instance_componentAdd}
          * @example
          * const c= $dom.component("DIV", null);
          * …
@@ -91,7 +121,7 @@ function add(el_name, attrs, shift= 0){
          * @category types descriptions
          * @inner
          * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom~instance_componentAdd.onupdate}
-         * @returns {*|module:jaaJSU~$dom~instance_componentAdd} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link module:jaaJSU~$dom~instance_component.update} is called. This callback can be registered when element is created (see method {@link module:jaaJSU~$dom~instance_component.add}) see {@link module:jaaJSU~$dom~instance_componentAdd}.
+         * @returns {*|module:jaaJSU~$dom~DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link module:jaaJSU~$dom~instance_component.update} is called. This callback can be registered when element is created (see method {@link module:jaaJSU~$dom~instance_component.add}) see {@link module:jaaJSU~$dom~instance_componentAdd}.
          */
         onupdate: function(data, onUpdateFunction){
             if(!data) return component_out;

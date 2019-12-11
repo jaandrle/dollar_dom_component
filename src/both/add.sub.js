@@ -91,13 +91,13 @@ function add(el_name, attrs, shift= 0){
          * @category types descriptions
          * @inner
          * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom~instance_componentAdd.onupdate}
-         * @returns {*|module:jaaJSU~$dom~DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link module:jaaJSU~$dom~instance_component.update} is called. This callback can be registered when element is created (see method {@link module:jaaJSU~$dom~instance_component.add}) see {@link module:jaaJSU~$dom~instance_componentAdd}.
+         * @returns {*|module:jaaJSU~$dom~instance_componentAdd} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link module:jaaJSU~$dom~instance_component.update} is called. This callback can be registered when element is created (see method {@link module:jaaJSU~$dom~instance_component.add}) see {@link module:jaaJSU~$dom~instance_componentAdd}.
          */
         onupdate: function(data, onUpdateFunction){
             if(!data) return component_out;
             if(!internal_storage) internal_storage= initStorage();
             $dom.assign(el, internal_storage.register(el, data, onUpdateFunction));
-            return component_out;
+            return this;
         }
     }, component_out);
 }

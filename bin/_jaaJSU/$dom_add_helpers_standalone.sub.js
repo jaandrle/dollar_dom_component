@@ -635,6 +635,7 @@ $dom.componentListener= function(event_name, ...args){
 };
 /**
  * Object shall holds **NodeElement** properties like `className`, `textContent`, …. This is primary argument for {@link module:jaaJSU~$dom.assign}. There are some notes and changes:
+ *  - In most cases, you can use native propertie such as [MDN WEB/API/Element](https://developer.mozilla.org/en-US/docs/Web/API/Element).
  *  - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
  *  - The same notation can be used for **CSS variables** (the key is called `style_vars`).
  *  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`

@@ -208,18 +208,24 @@
         $dom.component("BR").mount(e_012);
         e_012_counter({ textContent: "Your salary ($): ", step: 1000 }).mount(e_012);
         $dom.component("BR").mount(e_012);
-        e_012_counter({ textContent: "No. yours sucks: " }).mount(e_012);
+        e_012_counter({ textContent: "Number of yours sucks: " }).mount(e_012);
 
         function e_012_counter({ textContent, step= 1 }){
+            let sum= 0;
             const { add, share, update }= $dom.component("DIV", null);
                 add("BUTTON", { textContent: "+", value: step, onclick });
                 add("BUTTON", { textContent: "-", value: -step, onclick }, -1);
                 add("BR", null, -1);
                 add("P", { textContent }, -1);
-                    add("STRONG", null).onupdate({ value: 0 }, ({ value })=> ({ textContent: value }));
+                    add("STRONG", null).onupdate({ value: sum }, ({ value })=> ({ textContent: value }));
             return share;
 
-            function onclick(){ update(({ value })=> ({ value: value+Number(this.value) })); }
+            function onclick(){
+                const curr= Number(this.value);
+                sum+= curr;
+                update(({ value })=> ({ value: toOdd(sum) }));
+            }
+            function toOdd(number){ return 2*number+1; }
         }
     </script>
 

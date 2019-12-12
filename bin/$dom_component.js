@@ -137,6 +137,33 @@ function init(global){
              */
             getReference: function(add_out, el){ return el; },
             /**
+             * Method for batch registering `on*` methods for current element.
+             * @method on
+             * @memberof module:jaaJSU~$dom~instance_componentAdd
+             * @param  {...module:jaaJSU~$dom~component_listener} listeners
+             * @returns {module:jaaJSU~$dom~instance_componentAdd}
+             * @example
+             * const select_component= select();
+             * select_component.mount(parent);
+             * // default ⇣
+             * select_component.update({ value: "no_default_1" });
+             * // no_default_1 ⇣
+             * 
+             * function select(init= { value: "default" }){
+             *     const default_value= $dom.componentListener("mount", ()=> init);
+             *     const update_value= $dom.componentListener("update", init, ({ value })=> ({ value }));
+             *     
+             *     const c= $dom.component("SELECT", null).on( default_value, update_value );
+             *         c.add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
+             *         c.add("OPTION", { value: "default", textContent: "default" }, -1);
+             *     return share;
+             * }
+             */
+            on: function(add_out, el, ...listeners){
+                listeners.forEach(([ event_name, args ])=> add_out[event_name].apply(this, args));
+                return add_out;
+            },
+            /**
              * This procedure allows to call given function `fn` during registering element.
              * @method oninit
              * @memberof module:jaaJSU~$dom~instance_componentAdd
@@ -276,6 +303,7 @@ function init(global){
             const add_out= Object.assign({}, component_out);
             
             add_out.getReference= add_out_methods.getReference.bind(null, add_out, el);
+            add_out.on= add_out_methods.on.bind(null, add_out, el);
             add_out.oninit= add_out_methods.oninit.bind(null, add_out, el);
             add_out.onmount= add_out_methods.onmount.bind(null, add_out, el);
             add_out.onupdate= add_out_methods.onupdate.bind(null, add_out, el);
@@ -631,6 +659,29 @@ function init(global){
             return !internal_storage;
         }
         
+    };
+    /**
+     * This is in fact argument for {@link module:jaaJSU~$dom~instance_componentAdd.on}.
+     * @typedef component_listener
+     * @memberof module:jaaJSU~$dom
+     * @type {Array}
+     * @param {String} 0 Name of method in {@link module:jaaJSU~$dom~instance_componentAdd}.
+     * @param {Array} 1 In fact arguments for `on*` methods in {@link module:jaaJSU~$dom~instance_componentAdd}.
+     * @inner
+     */
+    /**
+     * This provide more DRY way to register events listeners for {@link module:jaaJSU~$dom.component} such as `onupdate`, `oninit`, ….
+     * @method componentListener
+     * @memberof module:jaaJSU~$dom
+     * @param {String} event_name Name of event (prefered way is to use without `on*` like native `addEventListener`)
+     * @param {...Mixed} args See {@link module:jaaJSU~$dom~component_listener}[1].
+     * @returns {module:jaaJSU~$dom~component_listener}
+     */
+    $dom.componentListener= function(event_name, ...args){
+        const supported= [ "oninit", "onmount", "onupdate" ];
+        const event_name_id= supported.indexOf((/^on/g.test(event_name) ? "" : "on")+event_name);
+        if(event_name_id===-1) throw new Error(`Unsupported event name '${event_name}'!`);
+        return Object.freeze([ supported[event_name_id], args ]);
     };
     /**
      * Object shall holds **NodeElement** properties like `className`, `textContent`, …. This is primary argument for {@link module:jaaJSU~$dom.assign}. There are some notes and changes:

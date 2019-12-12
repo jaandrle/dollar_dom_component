@@ -11,6 +11,33 @@ let add_out_methods= {
      */
     getReference: function(add_out, el){ return el; },
     /**
+     * Method for batch registering `on*` methods for current element.
+     * @method on
+     * @memberof module:jaaJSU~$dom~instance_componentAdd
+     * @param  {...module:jaaJSU~$dom~component_listener} listeners
+     * @returns {module:jaaJSU~$dom~instance_componentAdd}
+     * @example
+     * const select_component= select();
+     * select_component.mount(parent);
+     * // default ⇣
+     * select_component.update({ value: "no_default_1" });
+     * // no_default_1 ⇣
+     * 
+     * function select(init= { value: "default" }){
+     *     const default_value= $dom.componentListener("mount", ()=> init);
+     *     const update_value= $dom.componentListener("update", init, ({ value })=> ({ value }));
+     *     
+     *     const c= $dom.component("SELECT", null).on( default_value, update_value );
+     *         c.add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
+     *         c.add("OPTION", { value: "default", textContent: "default" }, -1);
+     *     return share;
+     * }
+     */
+    on: function(add_out, el, ...listeners){
+        listeners.forEach(([ event_name, args ])=> add_out[event_name].apply(this, args));
+        return add_out;
+    },
+    /**
      * This procedure allows to call given function `fn` during registering element.
      * @method oninit
      * @memberof module:jaaJSU~$dom~instance_componentAdd

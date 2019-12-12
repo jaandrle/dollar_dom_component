@@ -74,5 +74,6 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     gulp_place("both/isStatic.sub.js", "file");
     /* global isStatic */
 };
+gulp_place("both/$dom_componentListener.sub.js", "file");
 gulp_place("both/$dom_assign.sub.js", "file");
 /* global $dom_assign */

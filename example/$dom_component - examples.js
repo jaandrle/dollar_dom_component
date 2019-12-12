@@ -45,7 +45,10 @@ function select_no_onmount(){
     return share;
 }
 function select(init= { value: "default" }){
-    const { add, share }= $dom.component("SELECT", null).onmount(()=> init).onupdate(init, ({ value })=> ({ value }));
+    const default_value= $dom.componentListener("mount", ()=> init);
+    const update_value= $dom.componentListener("update", init, ({ value })=> ({ value }));
+    
+    const { add, share }= $dom.component("SELECT", null).on( default_value, update_value );
         add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
         add("OPTION", { value: "no_default_2", textContent: "no_default_2" }, -1);
         add("OPTION", { value: "no_default_3", textContent: "no_default_3" }, -1);

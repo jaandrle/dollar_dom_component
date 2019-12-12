@@ -17,7 +17,8 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
     let /* holds `initStorage()` if `onupdate` was registered */
-        internal_storage= null;
+        internal_storage= null,
+        on_mount_funs= null;
     const /* 'drawer' (container) for component elements */
         fragment= document.createDocumentFragment();
     let /* main parent (wrapper), container for children elements */
@@ -29,10 +30,10 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             - add(...);add(...,-1);add(...) = final deep=[1,2]; (by steps: [0], [0,1], [1,2])
             - see `shift` in `add`
         */
-        deep= [],
-        on_mount_funs= null;
+        deep= [];
     const share= { mount, update, destroy, isStatic };
-    const component_out= { add, addText, component, setShift, mount, update, share };
+    let component_out= { add, addText, component, setShift, mount, update, share };
+    gulp_place("both/add_out_methods.sub.js", "file");
     /**
      * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom~instance_component.component} method).
      * @typedef share

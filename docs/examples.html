@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>$dom_component</title>
+    <script src="../bin/$dom_component.js"></script>
+    <style>
+        [contenteditable=""]{
+            display: block;
+            font-family: monoscape;
+            white-space: break-spaces;
+            padding: 1rem;
+            margin: -.25em 5% 0 5%;
+            border: .25em dotted green;
+        }
+        [contenteditable=""]:before{
+            content: "Input (editable):";
+            padding-bottom: 1em;
+            color: green;
+            font-weight: bold;
+            display: block;
+        }
+        .output{
+            padding: 1rem;
+            margin: 0 5%;
+            border: .25em dotted navy;
+        }
+        .output:before{
+            content: "Output:";
+            color: navy;
+            font-weight: bold;
+            display: block;
+        }
+        .example_red_color{ color: red; }
+        .example_blue_color{ color: blue; }
+    </style>
+</head>
+<body>
+    <h1>$dom_component — Examples</h1>
+    <h2 id="heading_content">Content</h2>
+    <ul class="content"></ul>
+    <script>
+        function onKeyup(script, id){
+            const el= document.getElementById(id);
+            $dom.empty(el);
+            eval(script.innerHTML);
+        }
+    </script>
+
+    <h2>Basic examples</h2>
+    <p>Creating element with only Vanilla JavaScript:</p>
+    <div class="output" id="e_001"></div>
+    <script onkeyup="onKeyup(this, 'e_001')" contenteditable="">
+        const p_vanilla= document.createElement("P");
+        p_vanilla.textContent= "Simple paragraph";
+        p_vanilla.className= "example_red_color";
+        document.getElementById('e_001').appendChild(p_vanilla);
+    </script>
+
+    <p>Creating element with only Vanilla JavaScript and <a href="../docs/$dom_component.md#module_jaaJSU..$dom.assign">$dom.assign</a>:</p>
+    <div class="output" id="e_002"></div>
+    <script onkeyup="onKeyup(this, 'e_002')" contenteditable="">
+        const p_dom_assign= document.createElement("P");
+        $dom.assign(p_dom_assign, { textContent: "Simple paragraph", className: "example_red_color" })
+        document.getElementById('e_002').appendChild(p_dom_assign);
+    </script>
+
+    <p>Now, we use <a href="../docs/$dom_component.md#module_jaaJSU..$dom.component">$dom.component</a>:</p>
+    <div class="output" id="e_003"></div>
+    <script onkeyup="onKeyup(this, 'e_003')" contenteditable="">
+        $dom.component("P", { textContent: "Simple paragraph", className: "example_red_color" })
+        .mount(document.getElementById('e_003'));
+    </script>
+
+    <h2>Basic components</h2>
+    <p>The real benefit of <a href="../docs/$dom_component.md#module_jaaJSU..$dom.component">$dom.component</a> is to creating reusable components. It can be created by function scope, for expose internal API use <a href="#module_jaaJSU..$dom..instance_component.share"><code>.share</code></a> namespace.</p>
+    <div class="output" id="e_004"></div>
+    <script onkeyup="onKeyup(this, 'e_004')" contenteditable="">
+        const e_004= document.getElementById('e_004');
+        e_004_p("red").mount(e_004);
+        e_004_p("blue").mount(e_004);
+
+        function e_004_p(color){
+            return $dom.component("P", { textContent: "Simple paragraph", className: `example_${color}_color` })
+            .share;
+        }
+    </script>
+    <p><a href="../docs/$dom_component.md#module_jaaJSU..$dom.component">$dom.component</a> returns/provide methods such as <code>.add</code> for adding child element:</p>
+    <div class="output" id="e_005"></div>
+    <script onkeyup="onKeyup(this, 'e_005')" contenteditable="">
+        const e_005= document.getElementById('e_005');
+        e_005_p("red").mount(e_005);
+        e_005_p("blue").mount(e_005);
+
+        function e_005_p(color){
+            const c= $dom.component("P", { textContent: "Simple paragraph with child: " });
+                c.add("STRONG", { textContent: "this is child", className: `example_${color}_color` });
+            return c.share;
+        }
+    </script>
+    <p>Default behaviour is, that all <code>.add(…)</code> are childs the previusly created element:</p>
+    <div class="output" id="e_006"></div>
+    <script onkeyup="onKeyup(this, 'e_006')" contenteditable="">
+        const e_006= document.getElementById('e_006');
+        e_006_p("red").mount(e_006);
+        e_006_p("blue").mount(e_006);
+
+        function e_006_p(color){
+            const c= $dom.component("P", { textContent: "Simple paragraph with child: " });
+                c.add("SPAN", { textContent: "this is child", className: `example_${color}_color` });
+                    c.add("STRONG", { textContent: " (another child)", style: "font-weight: bold;" });
+            return c.share;
+        }
+    </script>
+    <p>For changin this nesting behaviour, you can use last argument:</p>
+    <div class="output" id="e_007"></div>
+    <script onkeyup="onKeyup(this, 'e_007')" contenteditable="">
+        const e_007= document.getElementById('e_007');
+        e_007_ul("red").mount(e_007);
+        e_007_ul("blue").mount(e_007);
+
+        function e_007_ul(color){
+            const c= $dom.component("UL", { textContent: "PARENT_1" });
+                c.add("LI", { textContent: "Child of PARENT_1", className: `example_${color}_color` });
+                //we need shift one level up=> -1
+                c.add("LI", { textContent: "PARENT_2: Also child of PARENT_1" }, -1);
+                    c.add("STRONG", { textContent: " // Child of PARENT_2", style: "font-weight: bold;" });
+                //we need shift two levels up=> -2
+                c.add("LI", { textContent: "Also child of PARENT_1" }, -1);
+            return c.share;
+        }
+    </script>
+    <p>All togeder:</p>
+    <div class="output" id="e_008"></div>
+    <script onkeyup="onKeyup(this, 'e_008')" contenteditable="">
+        const e_008= document.getElementById('e_008');
+        e_008_ul("red").mount(e_008);
+        e_008_ul("blue").mount(e_008);
+
+        function e_008_ul(color){
+            const c= $dom.component("UL", null);
+                c.add("LI", { textContent: "First list item with another list:", className: `example_${color}_color` });
+                    c.add("UL", null);
+                        c.add("LI", { textContent: "Item 1.1" });
+                        c.add("LI", { textContent: "Item 1.2" }, -1);
+                //we need shift one level up=> -1
+                c.add("LI", { textContent: "Item 2: " }, -3);
+                    c.add("STRONG", { textContent: "bold part", style: "font-weight: bold;" });
+                    c.addText(".", -1);
+                //we need shift two levels up=> -2
+                c.add("LI", { textContent: "Item 3" }, -2);
+            return c.share;
+        }
+    </script>
+    <h2>Syntax tips</h2>
+    <p>You can use JavaScript desctruturing syntax:</p>
+    <div class="output" id="e_009"></div>
+    <script onkeyup="onKeyup(this, 'e_009')" contenteditable="">
+        const e_009= document.getElementById('e_009');
+        e_009_p({ textContent: "first", className: "example_red_color"}).mount(e_009);
+        e_009_p({ textContent: "second", className: "example_blue_color" }).mount(e_009);
+
+        function e_009_p({ textContent, className }){
+            const { add, share }= $dom.component("P", { textContent: "Test e_009: ", className });
+                add("STRONG", { textContent });
+            return share;
+        }
+    </script>
+    <p>You can change mount destination (see <a href="#module_jaaJSU..$dom..instance_component.share.mount">.mount</a>):</p>
+    <div class="output" id="e_010"></div>
+    <script onkeyup="onKeyup(this, 'e_010')" contenteditable="">
+        const e_010= e_010_p({ textContent: "first", className: "example_red_color"}).mount(document.getElementById('e_010'));
+        e_010_p({ textContent: "second", className: "example_blue_color" }).mount(e_010, "before");
+
+        function e_010_p({ textContent, className }){
+            const { add, share }= $dom.component("P", { textContent: "Test e_009: ", className });
+                add("STRONG", { textContent });
+            return share;
+        }
+    </script>
+    <h2>Reactivity</h2>
+    <p>You can define reactive behaviour:</p>
+    <div class="output" id="e_011"></div>
+    <script onkeyup="onKeyup(this, 'e_011')" contenteditable="">
+        const e_011= document.getElementById('e_011');
+        $dom.component("BR").mount(e_011);
+        e_011_form({ textContent: "Your name is: " }).mount(e_011);
+        $dom.component("BR").mount(e_011);
+        e_011_form({ textContent: "Your surname is: " }).mount(e_011);
+
+        function e_011_form({ textContent }){
+            const name= textContent.replace(/[^\w]/g, "").toLowerCase();
+            const { add, share, update }= $dom.component("DIV", null);
+                add("INPUT", { type: "text", name: name, onkeyup: onkeyupHandler });
+                add("BR", null, -1);
+                add("LABEL", { htmlFor: name, textContent }, -1);
+                    add("STRONG", null).onupdate({ textContent: " - " }, ({ textContent })=> ({ textContent }));
+            return share;
+
+            function onkeyupHandler(){ update({ textContent: this.value }); }
+        }
+    </script>
+    <p>Counter:</p>
+    <div class="output" id="e_012"></div>
+    <script onkeyup="onKeyup(this, 'e_012')" contenteditable="">
+        const e_012= document.getElementById('e_012');
+        $dom.component("BR").mount(e_012);
+        e_012_counter({ textContent: "Your salary ($): ", step: 1000 }).mount(e_012);
+        $dom.component("BR").mount(e_012);
+        e_012_counter({ textContent: "No. yours sucks: " }).mount(e_012);
+
+        function e_012_counter({ textContent, step= 1 }){
+            const { add, share, update }= $dom.component("DIV", null);
+                add("BUTTON", { textContent: "+", value: step, onclick });
+                add("BUTTON", { textContent: "-", value: -step, onclick }, -1);
+                add("BR", null, -1);
+                add("P", { textContent }, -1);
+                    add("STRONG", null).onupdate({ value: 0 }, ({ value })=> ({ textContent: value }));
+            return share;
+
+            function onclick(){ update(({ value })=> ({ value: value+Number(this.value) })); }
+        }
+    </script>
+
+
+
+
+    <script>
+        let h2_counter= 0;
+        const content_ul= document.getElementsByClassName('content')[0];
+        [ ...document.getElementsByTagName('h2') ].forEach(function(el){
+            const textContent= el.textContent;
+            if(textContent==="Content") return false;
+            const id= "heading_"+h2_counter++;
+            contentH2({ textContent, id }).mount(el, "replace");
+            contentLI({ textContent, id }).mount(content_ul);
+        });
+        function contentLI({ textContent, id }){
+            const href= "#"+id;
+            const { add, share }= $dom.component("LI", null);
+                add("A", { textContent, href });
+            return share;
+        }
+        function contentH2({ textContent, id }){
+            const { add, share }= $dom.component("H2", { id });
+                add("A", { textContent: "⇡", href: "#heading_content" });
+                add("SPAN", { textContent: " "+textContent }, -1);
+            return share;
+        }
+    </script>
+</body>
+</html>

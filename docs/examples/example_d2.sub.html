@@ -6,8 +6,7 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
 (function(element_id){
     //EXAMPLE START
 
-    const p= document.createElement("P");
-    $dom.assign(p, { textContent: "Simple paragraph", className: "example_red_color" })
+    const p= $dom.assign(document.createElement("P"), { textContent: "Simple paragraph", className: "example_red_color" });
     document.getElementById(element_id).appendChild(p);
 
     //EXAMPLE END

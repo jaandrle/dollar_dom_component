@@ -197,7 +197,7 @@ Very simple example: `$dom.assign(document.body, { className: "test" });` is equ
 It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
 
 **Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.assign" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L701" title="$dom_component.js:701"><small>(defined@701)</small></a>  
-**Returns**: <code>NodeElement</code> - element  
+**Returns**: <code>NodeElement</code> - Givven `element` (follows similar behaviour in `Object.assign`)  
 
 | Param | Type |
 | --- | --- |

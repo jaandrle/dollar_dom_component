@@ -662,7 +662,7 @@ $dom.componentListener= function(event_name, ...args){
  * @memberof module:jaaJSU~$dom
  * @param {NodeElement} element
  * @param {...module:jaaJSU~$dom~DomAssignObject} object_attributes
- * @returns {NodeElement} element
+ * @returns {NodeElement} Givven `element` (follows similar behaviour in `Object.assign`)
  * @example <caption>#1: All together</caption>
  * const el= document.body;
  * const onclick= function(){ console.log(this.dataset.js_param); };

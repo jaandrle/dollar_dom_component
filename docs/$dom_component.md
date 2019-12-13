@@ -25,7 +25,7 @@
             * [.replace(el_old, el_new)](#module_jaaJSU..$dom.replace)
             * [.component([el_name], attrs, [params])](#module_jaaJSU..$dom.component) ⇒ [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) \| [<code>instance\_componentEmpty</code>](#module_jaaJSU..$dom..instance_componentEmpty)
             * [.componentListener(event_name, ...args)](#module_jaaJSU..$dom.componentListener) ⇒ [<code>component\_listener</code>](#module_jaaJSU..$dom..component_listener)
-            * [.assign(element, ...object_attributes)](#module_jaaJSU..$dom.assign)
+            * [.assign(element, ...object_attributes)](#module_jaaJSU..$dom.assign) ⇒ <code>NodeElement</code>
         * _inner_
             * [~component_listener](#module_jaaJSU..$dom..component_listener) : <code>Array</code>
             * _types descriptions_
@@ -75,7 +75,7 @@
         * [.replace(el_old, el_new)](#module_jaaJSU..$dom.replace)
         * [.component([el_name], attrs, [params])](#module_jaaJSU..$dom.component) ⇒ [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) \| [<code>instance\_componentEmpty</code>](#module_jaaJSU..$dom..instance_componentEmpty)
         * [.componentListener(event_name, ...args)](#module_jaaJSU..$dom.componentListener) ⇒ [<code>component\_listener</code>](#module_jaaJSU..$dom..component_listener)
-        * [.assign(element, ...object_attributes)](#module_jaaJSU..$dom.assign)
+        * [.assign(element, ...object_attributes)](#module_jaaJSU..$dom.assign) ⇒ <code>NodeElement</code>
     * _inner_
         * [~component_listener](#module_jaaJSU..$dom..component_listener) : <code>Array</code>
         * _types descriptions_
@@ -162,7 +162,7 @@
 **Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L100" title="$dom_component.js:100"><small>(defined@100)</small></a>  
 **Returns**: [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) \| [<code>instance\_componentEmpty</code>](#module_jaaJSU..$dom..instance_componentEmpty) - Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!  
 **See**: [https://github.com/jaandrle/dollar_dom_component](https://github.com/jaandrle/dollar_dom_component)  
-**Version**: 1.0.0  
+**Version**: 1.0.1  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -191,12 +191,13 @@
 
 <a name="module_jaaJSU..$dom.assign"></a>
 
-#### $dom.assign(element, ...object_attributes)
+#### $dom.assign(element, ...object_attributes) ⇒ <code>NodeElement</code>
 >Procedure for merging object into the element properties.
 Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
 It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
 
 **Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.assign" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L701" title="$dom_component.js:701"><small>(defined@701)</small></a>  
+**Returns**: <code>NodeElement</code> - element  
 
 | Param | Type |
 | --- | --- |

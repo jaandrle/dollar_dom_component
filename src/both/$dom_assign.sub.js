@@ -23,6 +23,7 @@
  * @memberof module:jaaJSU~$dom
  * @param {NodeElement} element
  * @param {...module:jaaJSU~$dom~DomAssignObject} object_attributes
+ * @returns {NodeElement} element
  * @example <caption>#1: All together</caption>
  * const el= document.body;
  * const onclick= function(){ console.log(this.dataset.js_param); };
@@ -82,4 +83,5 @@ $dom.assign= function(element, ...objects_attributes){
                 break;
         }
     }
+    return element;
 };

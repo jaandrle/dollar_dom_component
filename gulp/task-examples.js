@@ -14,7 +14,11 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
             .pipe(gulp_place({ folder: from_folder, string_wrapper: '' }))
             .pipe($g.replace(/(\/\/EXAMPLE START|<!-- example source links -->)/g, addSourceLink))
             .pipe(gulp.dest(to_folder))
-            .on('end', cb);
+            .on('end', function(){
+                gulp.src([app.bin_folder+"$dom_component-min.js"])
+                .pipe(gulp.dest(to_folder))
+                .on('end', cb);
+            });
     };
     function addSourceLink(match, type, chars, file_text){
         if(type==="<!-- example source links -->"){

@@ -571,7 +571,7 @@
                         add("P", null);
                             add("SPAN", null).onupdate({ sum_main: 0 }, ({ sum_main })=> ({ textContent: ` Last given number: ${sum_main}` }))
                             addText(" (", -1);
-                            add("A", { textContent: "reset", onclick }, -1);
+                            add("A", { textContent: "reset", style: "cursor: pointer;", onclick }, -1);
                             addText(").", -1);
                     return share;
                     //of course, in real life we nead mor info

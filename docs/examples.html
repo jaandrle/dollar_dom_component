@@ -369,10 +369,11 @@
             
                 function inputs({ textContent }){
                     const default_listener_value= { listen_variable_name: " - " };
-                    const name= element_id+"_"+textContent.replace(/[^\w]/g, "").toLowerCase();
+                    const id= element_id+"_"+textContent.replace(/[^\w]/g, "").toLowerCase();
                     const c= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
-                        c.add("INPUT", { type: "text", name: name, onkeyup: onkeyupHandler });
-                        c.add("LABEL", { htmlFor: name, textContent }, -1);
+                        c.add("INPUT", { type: "text", id: id, onkeyup: onkeyupHandler });
+                        c.add("BR", null, -1);
+                        c.add("LABEL", { htmlFor: id, textContent }, -1);
                             c.add("STRONG", null).onupdate(default_listener_value, onUpdateHandler);
                     return c.share;
             
@@ -398,10 +399,11 @@
                 inputs({ textContent: "Your surname is: " }).mount(container);
             
                 function inputs({ textContent }){
-                    const name= element_id+"_"+textContent.replace(/[^\w]/g, "").toLowerCase();
+                    const id= element_id+"_"+textContent.replace(/[^\w]/g, "").toLowerCase();
                     const { add, share, update }= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
-                        add("INPUT", { type: "text", name, onkeyup });
-                        add("LABEL", { htmlFor: name, textContent }, -1);
+                        add("INPUT", { type: "text", id, onkeyup });
+                        add("BR", null, -1);
+                        add("LABEL", { htmlFor: id, textContent }, -1);
                             add("STRONG", null).onupdate({ textContent: " - " }, ({ textContent })=> ({ textContent }));
                     return share;
             
@@ -411,7 +413,7 @@
                 //EXAMPLE END
             })("example_element_012");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L393" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L394" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Counter:</p>
@@ -444,7 +446,7 @@
                 //EXAMPLE END
             })("example_element_013");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L421" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L423" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Method <code>.update</code> also accepts function returning object (it will be combinet with internal data with <code>Object.assign</code>):</p>
@@ -471,7 +473,7 @@
                 //EXAMPLE END
             })("example_element_014");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L454" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L456" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Method <code>.update</code> is also avilable outside function scope (is included in <code>.share</code> namespace):</p>
@@ -502,7 +504,7 @@
                 //EXAMPLE END
             })("example_element_015");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L481" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L483" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>Some additionals / advanced examples</h2>
@@ -542,7 +544,7 @@
                 //EXAMPLE END
             })("example_element_016");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L521" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L523" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>You can use another component inside current one (see <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom..instance_component.component"><code>.component</code></a>):</p>
@@ -608,7 +610,7 @@
                 //EXAMPLE END
             })("example_element_017");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L552" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L554" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
 

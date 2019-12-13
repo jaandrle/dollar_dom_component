@@ -97,7 +97,7 @@
             function onKeyup(script, id){
                 const el= document.getElementById(id);
                 $dom.empty(el);
-                eval(script.innerHTML);
+                eval(script.textContent);
             }
         </script>
         

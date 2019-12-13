@@ -1,5 +1,5 @@
 # $dom_component
-Subrepository for [jaandrle/jaaJSU ($dom namespace)](../jaaJSU).
+Subrepository for [jaandrle/jaaJSU ($dom namespace)](https://github.com/jaandrle/jaaJSU).
 
 ## Overview
 This library provide ability to write HTML/DOM components without using _OPP/class_ syntax and _jsx_.

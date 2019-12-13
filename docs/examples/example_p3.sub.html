@@ -16,7 +16,6 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
         const { add, share, update }= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
             add("BUTTON", { textContent: "+", value: step, onclick });
             add("BUTTON", { textContent: "–", value: -step, onclick }, -1);
-            add("BR", null, -1);
             add("P", { textContent }, -1);
                 add("STRONG", null).onupdate({ value: sum }, ({ value })=> ({ textContent: value }));
         return share;

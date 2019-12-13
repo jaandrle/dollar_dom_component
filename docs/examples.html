@@ -372,7 +372,6 @@
                     const name= element_id+"_"+textContent.replace(/[^\w]/g, "").toLowerCase();
                     const c= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
                         c.add("INPUT", { type: "text", name: name, onkeyup: onkeyupHandler });
-                        c.add("BR", null, -1);
                         c.add("LABEL", { htmlFor: name, textContent }, -1);
                             c.add("STRONG", null).onupdate(default_listener_value, onUpdateHandler);
                     return c.share;
@@ -402,7 +401,6 @@
                     const name= element_id+"_"+textContent.replace(/[^\w]/g, "").toLowerCase();
                     const { add, share, update }= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
                         add("INPUT", { type: "text", name, onkeyup });
-                        add("BR", null, -1);
                         add("LABEL", { htmlFor: name, textContent }, -1);
                             add("STRONG", null).onupdate({ textContent: " - " }, ({ textContent })=> ({ textContent }));
                     return share;
@@ -413,7 +411,7 @@
                 //EXAMPLE END
             })("example_element_012");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L394" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L393" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Counter:</p>
@@ -432,7 +430,6 @@
                     const { add, share, update }= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
                         add("BUTTON", { textContent: "+", value: step, onclick });
                         add("BUTTON", { textContent: "–", value: -step, onclick }, -1);
-                        add("BR", null, -1);
                         add("P", { textContent }, -1);
                             add("STRONG", null).onupdate({ value: sum }, ({ value })=> ({ textContent: value }));
                     return share;
@@ -447,7 +444,7 @@
                 //EXAMPLE END
             })("example_element_013");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L423" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L421" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Method <code>.update</code> also accepts function returning object (it will be combinet with internal data with <code>Object.assign</code>):</p>
@@ -464,7 +461,6 @@
                 function counterComponent({ textContent }){
                     const { add, share, update }= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
                         add("BUTTON", { textContent: "+", onclick });
-                        add("BR", null, -1);
                         add("P", { textContent }, -1);
                             add("STRONG", null).onupdate({ value: 0 }, ({ value })=> ({ textContent: value }));
                     return share;
@@ -475,7 +471,7 @@
                 //EXAMPLE END
             })("example_element_014");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L457" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L454" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Method <code>.update</code> is also avilable outside function scope (is included in <code>.share</code> namespace):</p>
@@ -506,10 +502,10 @@
                 //EXAMPLE END
             })("example_element_015");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L485" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L481" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
-        <h2>Some additionals</h2>
+        <h2>Some additionals / advanced examples</h2>
         <details open="">
         <summary>Notes</summary>
             <p>This section shows some new ways how to write (reacive) components.</p>
@@ -535,7 +531,6 @@
                         add("BUTTON", { textContent: "+", onclick: addOne });
                         add("BUTTON", { textContent: "red", onclick: setColor }, -1);
                         add("BUTTON", { textContent: "blue", onclick: setColor }, -1);
-                        add("BR", null, -1);
                         add("P", { textContent }, -1);
                             add("STRONG", null).on(sum_updated, color_updated);
                     return share;
@@ -547,7 +542,73 @@
                 //EXAMPLE END
             })("example_element_016");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L525" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L521" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>You can use another component inside current one (see <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom..instance_component.component"><code>.component</code></a>):</p>
+            <div class="output" id="example_element_017"></div>
+            <script onkeyup="onKeyup(this, 'example_element_017')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const container= document.getElementById(element_id);
+                const sum_updated= $dom.componentListener("update", { sum: 0 }, ({ sum })=> ({ value: sum }));
+            
+                pseudoFormComponent({ user_name: "Adam", stuff_arr: [ "socks", "legs" ], color: "red" }).mount(container);
+                pseudoFormComponent({ user_name: "Eva", stuff_arr: [ "socks", "hands" ] }).mount(container);
+            
+                function pseudoFormComponent({ user_name, stuff_arr= [ "socks" ], color }= {}){
+                    user_name= user_name ? user_name+"’s" : "yours";
+                    const colorSetup= !color ? null : { className: `example_${color}_color` };
+                    const { add, addText, component, update, setShift, share }=
+                    $dom.component("DIV", Object.assign({ textContent: "Form:" }, colorSetup));
+            
+                    for(let i=0, i_length= stuff_arr.length; i<i_length; i++){
+                        component(counterComponent({ textContent: `Number of ${user_name} ${stuff_arr[i]}: `, onchange }));
+                        //we want in the next loop mount `counterComponent` on the same level (not as child)
+                        setShift(-1);
+                    }
+                        add("P", null);
+                            add("SPAN", null).onupdate({ sum_main: 0 }, ({ sum_main })=> ({ textContent: ` Last given number: ${sum_main}` }))
+                            addText(" (", -1);
+                            add("A", { textContent: "reset", onclick }, -1);
+                            addText(").", -1);
+                    return share;
+                    //of course, in real life we nead mor info
+                    function onchange(sum_main){ update({ sum_main }); }
+                    //!!! see, `sum` event name is shared with sub-components
+                    function onclick(){ update({ sum: 0, sum_main: 0 }); }
+                }
+            
+                function counterComponent({ textContent, onchange: onchangeCallback }){
+                    const { add, addText, share, update }= $dom.component("P", null);
+                        add("LABEL", { textContent });
+                            add("INPUT", { type: "number", onchange }, -1).on(sum_updated);
+                            add("BUTTON", { textContent: "+", value: 1, onclick }, -1);
+                            addText(" ", -1);
+                            //of course, instead of `style` you schould use `className` in production code!
+                            add("BUTTON", { textContent: "–", value: -1, onclick, style: "padding: .25em .575em;" }, -1);
+                    return share;
+            
+                    function onclick(){
+                        let sum= Number(this.value);
+                        update(function({ sum: old_sum }){
+                            sum+= old_sum;
+                            onchangeCallback(sum);
+                            return { sum };
+                        });
+                    }
+                    function onchange(){
+                        const sum= Number(this.value);
+                        onchangeCallback(sum);
+                        update({ sum });
+                    }
+                }
+                
+                //EXAMPLE END
+            })("example_element_017");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L552" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
 

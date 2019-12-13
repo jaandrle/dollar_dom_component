@@ -22,5 +22,5 @@ The main reasons for another library like [React](https://reactjs.org/) are
 1) basics and playgrounds can be found in [Examples](https://jaandrle.github.io/dollar_dom_component/examples.html)
 
 ## Resources
-- [Examples](https://jaandrle.github.io/dollar_dom_component/examples.html)
-- [Documentation](docs/$dom_component.md)
+- __[Examples](https://jaandrle.github.io/dollar_dom_component/examples.html)__
+- __[Documentation](docs/$dom_component.md)__

@@ -12,9 +12,10 @@ The main reasons for another library like [React](https://reactjs.org/) are
 1. You don't need virtual DOM: this is solved for example by [Svelte](https://svelte.dev/).
 
     a) In some user cases, it can be quicker to complementy remove component with old state and create it again instead of updating some properties.
+
     a) You know changes because of another part of you app (e. g. API) are able to provide only changes.
 1. You prefer functional way of programming: this is solved for example by [h0](https://github.com/jxnblk/h0), [rdom](https://github.com/buzzdecafe/rdom), [fp-dom](https://github.com/fp-dom/fp-dom).
-1. __Previus point(s) + you would like avoid recurion call: this is solved by this lib__
+1. __Previous point(s) + you would like avoid recurion call: this is solved by this lib__
 
 ## How to start
 1) library files: [$dom_component.js](bin/$dom_component.js) and [$dom_component-min.js](bin/$dom_component-min.js).

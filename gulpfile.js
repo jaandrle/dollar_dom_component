@@ -13,7 +13,7 @@ const config= (function(){
 /* /CONFIG/ */
 /* \Tasks\ */
 var c_output= "", if_error= 0;
-const tasks= ['default', 'doc', 'javascript'], tasks_length= tasks.length;
+const tasks= ['default', 'doc', 'javascript', 'examples'], tasks_length= tasks.length;
 for(let i=0, task; i<tasks_length; i++){ task= tasks[i]; config.gulp.task(task, require(config.$gulp_folder+'task-'+task)(config)); }
 /* /Tasks/ */
 /* \Global functions\ */

@@ -1,0 +1,32 @@
+gulp_place("app._BUILD_.example_el= toELID(app._BUILD_.example_el_id++)", "eval");
+gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval");
+<p>You can define listener outside function scope (see <a href="./$dom_component.md#module_jaaJSU..$dom.componentListener"><code>$dom.componentListener</code></a>):</p>
+<div class="output" id="gulp_place('app._BUILD_.example_el', 'variable')"></div>
+<script onkeyup="gulp_place('app._BUILD_.example_onkeyup', 'variable')" contenteditable="">
+(function(element_id){
+    //EXAMPLE START
+
+    const container= document.getElementById(element_id);
+    const sum_updated= $dom.componentListener("update", { sum: 0 }, ({ sum })=> ({ textContent: sum }));
+    const color_updated= $dom.componentListener("update", { color: 0 }, ({ color })=> ({ className: `example_${color}_color` }));
+
+    counterComponent({ textContent: "Number of yours socks: " }).mount(container);
+
+    function counterComponent({ textContent }){
+        const { add, share, update }= $dom.component("DIV", null);
+            add("BUTTON", { textContent: "+", onclick: addOne });
+            add("BUTTON", { textContent: "red", onclick: setColor }, -1);
+            add("BUTTON", { textContent: "blue", onclick: setColor }, -1);
+            add("BR", null, -1);
+            add("P", { textContent }, -1);
+                add("STRONG", null).on(sum_updated, color_updated);
+        return share;
+
+        function addOne(){ update(({ sum })=> ({ sum: sum+1 })); }
+        function setColor(color){ update({ color: this.textContent }); }
+    }
+    
+    //EXAMPLE END
+})("gulp_place('app._BUILD_.example_el', 'variable')");
+</script>
+<!-- example source links -->

@@ -2,258 +2,579 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>$dom_component</title>
+    <title>$dom.component — Examples</title>
     <script type="text/javascript" src="$dom_component-min.js"></script>
     <style>
+        body{
+            color: #eeeeee;
+            background: #2b2b2b;
+            padding: 0 0 1em 0;
+        }
+        a{
+            color: #b8b8ff;
+        }
+        a:hover{
+            color: white;
+        }
+        summary {
+            cursor: pointer;
+        }
+        article{
+            width: 80%;
+            min-width: 75em;
+            max-width: 85em;
+            margin: auto;
+        }
+        h1, h2 {
+            background: #222;
+            border: 1px solid #222;
+            padding: .5em;
+            margin-left: -.5em;
+        }
+        h2:target {
+            border-color: currentColor;
+        }
+        p{
+            font-size: 1.1em;
+        }
+        .notes{
+            margin-top: .25em;
+            font-size: .75em;
+        }
+        input, button {
+            background: rgba(0,0,0,1);
+            border: 1px solid #97f497;
+            color: #ffffff;
+            padding: .25em .5em;
+            margin: 0 0 .25em 0;
+        }
+        input:hover, button:hover, input:focus, button:focus {
+            border-color: currentColor;
+        }
         [contenteditable=""]{
             display: block;
-            font-family: monoscape;
+            font-family: "Lucida Console", Monaco, monospace;
+            font-size: .75em;
+            line-height: 1.5em;
+            font-weight: bold;
             white-space: break-spaces;
             padding: 1rem;
-            margin: -.25em 5% 0 5%;
-            border: .25em dotted green;
+            margin-top: -.25rem;
+            border: .25rem dotted #97f497;
+            background: #222;
         }
         [contenteditable=""]:before{
             content: "Input (editable):";
             padding-bottom: 1em;
-            color: green;
+            color: #97f497;
             font-weight: bold;
             display: block;
+            font-size: .8rem;
         }
         .output{
             padding: 1rem;
-            margin: 0 5%;
-            border: .25em dotted navy;
+            margin: 0;
+            border: .25rem dotted #f0e09a;
         }
         .output:before{
             content: "Output:";
-            color: navy;
+            color: #f0e09a;
             font-weight: bold;
             display: block;
+            padding-bottom: 1.5rem;
         }
-        .example_red_color{ color: red; }
-        .example_blue_color{ color: blue; }
+        .example_red_color{ color: #ff9b9b; }
+        .example_blue_color{ color: #36c7ff; }
     </style>
 </head>
 <body>
-    <h1>$dom_component — Examples</h1>
-    <a href="https://github.com/jaandrle/dollar_dom_component">Go back to GitHub repository.</a>
-    <h2 id="heading_content">Content</h2>
-    <ul class="content"></ul>
-    <script>
-        function onKeyup(script, id){
-            const el= document.getElementById(id);
-            $dom.empty(el);
-            eval(script.innerHTML);
-        }
-    </script>
-
-    <h2>Basic examples</h2>
-    <p>Creating element with only Vanilla JavaScript:</p>
-    <div class="output" id="e_001"></div>
-    <script onkeyup="onKeyup(this, 'e_001')" contenteditable="">
-        const p_vanilla= document.createElement("P");
-        p_vanilla.textContent= "Simple paragraph";
-        p_vanilla.className= "example_red_color";
-        document.getElementById('e_001').appendChild(p_vanilla);
-    </script>
-
-    <p>Creating element with only Vanilla JavaScript and <a href="../docs/$dom_component.md#module_jaaJSU..$dom.assign">$dom.assign</a>:</p>
-    <div class="output" id="e_002"></div>
-    <script onkeyup="onKeyup(this, 'e_002')" contenteditable="">
-        const p_dom_assign= document.createElement("P");
-        $dom.assign(p_dom_assign, { textContent: "Simple paragraph", className: "example_red_color" })
-        document.getElementById('e_002').appendChild(p_dom_assign);
-    </script>
-
-    <p>Now, we use <a href="../docs/$dom_component.md#module_jaaJSU..$dom.component">$dom.component</a>:</p>
-    <div class="output" id="e_003"></div>
-    <script onkeyup="onKeyup(this, 'e_003')" contenteditable="">
-        $dom.component("P", { textContent: "Simple paragraph", className: "example_red_color" })
-        .mount(document.getElementById('e_003'));
-    </script>
-
-    <h2>Basic components</h2>
-    <p>The real benefit of <a href="../docs/$dom_component.md#module_jaaJSU..$dom.component">$dom.component</a> is to creating reusable components. It can be created by function scope, for expose internal API use <a href="#module_jaaJSU..$dom..instance_component.share"><code>.share</code></a> namespace.</p>
-    <div class="output" id="e_004"></div>
-    <script onkeyup="onKeyup(this, 'e_004')" contenteditable="">
-        const e_004= document.getElementById('e_004');
-        e_004_p("red").mount(e_004);
-        e_004_p("blue").mount(e_004);
-
-        function e_004_p(color){
-            return $dom.component("P", { textContent: "Simple paragraph", className: `example_${color}_color` })
-            .share;
-        }
-    </script>
-    <p><a href="../docs/$dom_component.md#module_jaaJSU..$dom.component">$dom.component</a> returns/provide methods such as <code>.add</code> for adding child element:</p>
-    <div class="output" id="e_005"></div>
-    <script onkeyup="onKeyup(this, 'e_005')" contenteditable="">
-        const e_005= document.getElementById('e_005');
-        e_005_p("red").mount(e_005);
-        e_005_p("blue").mount(e_005);
-
-        function e_005_p(color){
-            const c= $dom.component("P", { textContent: "Simple paragraph with child: " });
-                c.add("STRONG", { textContent: "this is child", className: `example_${color}_color` });
-            return c.share;
-        }
-    </script>
-    <p>Default behaviour is, that all <code>.add(…)</code> are childs the previusly created element:</p>
-    <div class="output" id="e_006"></div>
-    <script onkeyup="onKeyup(this, 'e_006')" contenteditable="">
-        const e_006= document.getElementById('e_006');
-        e_006_p("red").mount(e_006);
-        e_006_p("blue").mount(e_006);
-
-        function e_006_p(color){
-            const c= $dom.component("P", { textContent: "Simple paragraph with child: " });
-                c.add("SPAN", { textContent: "this is child", className: `example_${color}_color` });
-                    c.add("STRONG", { textContent: " (another child)", style: "font-weight: bold;" });
-            return c.share;
-        }
-    </script>
-    <p>For changin this nesting behaviour, you can use last argument:</p>
-    <div class="output" id="e_007"></div>
-    <script onkeyup="onKeyup(this, 'e_007')" contenteditable="">
-        const e_007= document.getElementById('e_007');
-        e_007_ul("red").mount(e_007);
-        e_007_ul("blue").mount(e_007);
-
-        function e_007_ul(color){
-            const c= $dom.component("UL", { textContent: "PARENT_1" });
-                c.add("LI", { textContent: "Child of PARENT_1", className: `example_${color}_color` });
-                //we need shift one level up=> -1
-                c.add("LI", { textContent: "PARENT_2: Also child of PARENT_1" }, -1);
-                    c.add("STRONG", { textContent: " // Child of PARENT_2", style: "font-weight: bold;" });
-                //we need shift two levels up=> -2
-                c.add("LI", { textContent: "Also child of PARENT_1" }, -1);
-            return c.share;
-        }
-    </script>
-    <p>All togeder:</p>
-    <div class="output" id="e_008"></div>
-    <script onkeyup="onKeyup(this, 'e_008')" contenteditable="">
-        const e_008= document.getElementById('e_008');
-        e_008_ul("red").mount(e_008);
-        e_008_ul("blue").mount(e_008);
-
-        function e_008_ul(color){
-            const c= $dom.component("UL", null);
-                c.add("LI", { textContent: "First list item with another list:", className: `example_${color}_color` });
-                    c.add("UL", null);
-                        c.add("LI", { textContent: "Item 1.1" });
-                        c.add("LI", { textContent: "Item 1.2" }, -1);
-                //we need shift one level up=> -1
-                c.add("LI", { textContent: "Item 2: " }, -3);
-                    c.add("STRONG", { textContent: "bold part", style: "font-weight: bold;" });
-                    c.addText(".", -1);
-                //we need shift two levels up=> -2
-                c.add("LI", { textContent: "Item 3" }, -2);
-            return c.share;
-        }
-    </script>
-    <h2>Syntax tips</h2>
-    <p>You can use JavaScript desctruturing syntax:</p>
-    <div class="output" id="e_009"></div>
-    <script onkeyup="onKeyup(this, 'e_009')" contenteditable="">
-        const e_009= document.getElementById('e_009');
-        e_009_p({ textContent: "first", className: "example_red_color"}).mount(e_009);
-        e_009_p({ textContent: "second", className: "example_blue_color" }).mount(e_009);
-
-        function e_009_p({ textContent, className }){
-            const { add, share }= $dom.component("P", { textContent: "Test e_009: ", className });
-                add("STRONG", { textContent });
-            return share;
-        }
-    </script>
-    <p>You can change mount destination (see <a href="#module_jaaJSU..$dom..instance_component.share.mount">.mount</a>):</p>
-    <div class="output" id="e_010"></div>
-    <script onkeyup="onKeyup(this, 'e_010')" contenteditable="">
-        const e_010= e_010_p({ textContent: "first", className: "example_red_color"}).mount(document.getElementById('e_010'));
-        e_010_p({ textContent: "second", className: "example_blue_color" }).mount(e_010, "before");
-
-        function e_010_p({ textContent, className }){
-            const { add, share }= $dom.component("P", { textContent: "Test e_009: ", className });
-                add("STRONG", { textContent });
-            return share;
-        }
-    </script>
-    <h2>Reactivity</h2>
-    <p>You can define reactive behaviour:</p>
-    <div class="output" id="e_011"></div>
-    <script onkeyup="onKeyup(this, 'e_011')" contenteditable="">
-        const e_011= document.getElementById('e_011');
-        $dom.component("BR").mount(e_011);
-        e_011_form({ textContent: "Your name is: " }).mount(e_011);
-        $dom.component("BR").mount(e_011);
-        e_011_form({ textContent: "Your surname is: " }).mount(e_011);
-
-        function e_011_form({ textContent }){
-            const name= textContent.replace(/[^\w]/g, "").toLowerCase();
-            const { add, share, update }= $dom.component("DIV", null);
-                add("INPUT", { type: "text", name: name, onkeyup: onkeyupHandler });
-                add("BR", null, -1);
-                add("LABEL", { htmlFor: name, textContent }, -1);
-                    add("STRONG", null).onupdate({ textContent: " - " }, ({ textContent })=> ({ textContent }));
-            return share;
-
-            function onkeyupHandler(){ update({ textContent: this.value }); }
-        }
-    </script>
-    <p>Counter:</p>
-    <div class="output" id="e_012"></div>
-    <script onkeyup="onKeyup(this, 'e_012')" contenteditable="">
-        const e_012= document.getElementById('e_012');
-        $dom.component("BR").mount(e_012);
-        e_012_counter({ textContent: "Your salary ($): ", step: 1000 }).mount(e_012);
-        $dom.component("BR").mount(e_012);
-        e_012_counter({ textContent: "Number of yours sucks: " }).mount(e_012);
-
-        function e_012_counter({ textContent, step= 1 }){
-            let sum= 0;
-            const { add, share, update }= $dom.component("DIV", null);
-                add("BUTTON", { textContent: "+", value: step, onclick });
-                add("BUTTON", { textContent: "-", value: -step, onclick }, -1);
-                add("BR", null, -1);
-                add("P", { textContent }, -1);
-                    add("STRONG", null).onupdate({ value: sum }, ({ value })=> ({ textContent: value }));
-            return share;
-
-            function onclick(){
-                const curr= Number(this.value);
-                sum+= curr;
-                update(({ value })=> ({ value: toOdd(sum) }));
+    <article>
+        <h1>$dom.component — Examples</h1>
+        <a href="https://github.com/jaandrle/dollar_dom_component">⇠ Go back to GitHub repository</a>
+        <h2 id="heading_content">Content</h2>
+        <ul class="content"></ul>
+        <script>
+            function onKeyup(script, id){
+                const el= document.getElementById(id);
+                $dom.empty(el);
+                eval(script.innerHTML);
             }
-            function toOdd(number){ return 2*number+1; }
-        }
-    </script>
+        </script>
+        
+        
+        <h2>Basic examples</h2>
+        <details open="">
+        <summary>Notes</summary>
+            <p>This section shows some Javascripts basic, which are in fact used internally in this library.</p>
+            <p>The last example shows very basic usage of this library.</p>
+        </details>
+        <details>
+        <summary>Examples</summary>
+            
+            
+            <p>Creating element with only Vanilla JavaScript:</p>
+            <div class="output" id="example_element_001"></div>
+            <script onkeyup="onKeyup(this, 'example_element_001')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const p= document.createElement("P");
+                p.textContent= "Simple paragraph";
+                p.className= "example_red_color";
+                document.getElementById(element_id).appendChild(p);
+            
+                //EXAMPLE END
+            })("example_element_001");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L119" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>Creating element with only Vanilla JavaScript and <a href="../docs/$dom_component.md#module_jaaJSU..$dom.assign">$dom.assign</a>:</p>
+            <div class="output" id="example_element_002"></div>
+            <script onkeyup="onKeyup(this, 'example_element_002')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const p= document.createElement("P");
+                $dom.assign(p, { textContent: "Simple paragraph", className: "example_red_color" })
+                document.getElementById(element_id).appendChild(p);
+            
+                //EXAMPLE END
+            })("example_element_002");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L136" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>Now, we use <a href="../docs/$dom_component.md#module_jaaJSU..$dom.component">$dom.component</a>:</p>
+            <div class="output" id="example_element_003"></div>
+            <script onkeyup="onKeyup(this, 'example_element_003')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                $dom.component("P", { textContent: "Simple paragraph", className: "example_red_color" })
+                .mount(document.getElementById(element_id));
+            
+                //EXAMPLE END
+            })("example_element_003");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L152" target="_blank">View with highliting (link to source of this file)</a></p>
+        </details>
+
+        <h2>Basic components</h2>
+        <details open="">
+        <summary>Notes</summary>
+            <p>This section shows some simple components created by this library.</p>
+        </details>
+        <details>
+        <summary>Examples</summary>
+            
+            
+            <p>The real benefit of <a href="../docs/$dom_component.md#module_jaaJSU..$dom.component">$dom.component</a>
+                is to creating reusable components. It can be created by function scope, for expose internal
+                API use <a href="#module_jaaJSU..$dom..instance_component.share"><code>.share</code></a> namespace.
+            </p>
+            <div class="output" id="example_element_004"></div>
+            <script onkeyup="onKeyup(this, 'example_element_004')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const el= document.getElementById(element_id);
+                paragraph("red").mount(el);
+                paragraph("blue").mount(el);
+            
+                function paragraph(color){
+                    return $dom.component("P", { textContent: "Simple paragraph", className: `example_${color}_color` })
+                    .share;
+                }
+                
+                //EXAMPLE END
+            })("example_element_004");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L179" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p><a href="../docs/$dom_component.md#module_jaaJSU..$dom.component">$dom.component</a> returns/provide methods such as <code>.add</code> for adding child element:</p>
+            <div class="output" id="example_element_005"></div>
+            <script onkeyup="onKeyup(this, 'example_element_005')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const el= document.getElementById(element_id);
+                paragraph("red").mount(el);
+                paragraph("blue").mount(el);
+            
+                function paragraph(color){
+                    const c= $dom.component("P", { textContent: "Simple paragraph with child: " });
+                        c.add("STRONG", { textContent: "this is child", className: `example_${color}_color` });
+                    return c.share;
+                }
+            
+                //EXAMPLE END
+            })("example_element_005");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L200" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>Default behaviour is, that all <code>.add(…)</code> are childs the previusly created element:</p>
+            <div class="output" id="example_element_006"></div>
+            <script onkeyup="onKeyup(this, 'example_element_006')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const el= document.getElementById(element_id);
+                paragraph("red").mount(el);
+                paragraph("blue").mount(el);
+            
+                function paragraph(color){
+                    const c= $dom.component("P", { textContent: "Simple paragraph with child: " });
+                        c.add("SPAN", { textContent: "this is child", className: `example_${color}_color` });
+                            c.add("STRONG", { textContent: " (child of child)", style: "font-weight: bold;" });
+                    return c.share;
+                }
+            
+                //EXAMPLE END
+            })("example_element_006");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L222" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>For changin this nesting behaviour, you can use last argument:</p>
+            <div class="output" id="example_element_007"></div>
+            <script onkeyup="onKeyup(this, 'example_element_007')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const el= document.getElementById(element_id);
+                list("red").mount(el);
+                list("blue").mount(el);
+            
+                function list(color){
+                    const c= $dom.component("UL", { textContent: "PARENT_1" });
+                        c.add("LI", { textContent: "Child of PARENT_1", className: `example_${color}_color` });
+                        //we need shift one level up=> -1
+                        c.add("LI", { textContent: "PARENT_2: Also child of PARENT_1" }, -1);
+                            c.add("STRONG", { textContent: " // Child of PARENT_2", style: "font-weight: bold;" });
+                        //we need shift two levels up=> -2
+                        c.add("LI", { textContent: "Also child of PARENT_1" }, -2);
+                    return c.share;
+                }
+            
+                //EXAMPLE END
+            })("example_element_007");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L245" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>All togeder:</p>
+            <div class="output" id="example_element_008"></div>
+            <script onkeyup="onKeyup(this, 'example_element_008')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const el= document.getElementById(element_id);
+                list("red").mount(el);
+                list("blue").mount(el);
+            
+                function list(color){
+                    const c= $dom.component("UL", null);
+                        c.add("LI", { textContent: "First list item with another list:", className: `example_${color}_color` });
+                            c.add("UL", null);
+                                c.add("LI", { textContent: "Item 1.1" });
+                                c.add("LI", { textContent: "Item 1.2" }, -1);
+                        //we need shift one level up=> -1
+                        c.add("LI", { textContent: "Item 2: " }, -3);
+                            c.add("STRONG", { textContent: "bold part", style: "font-weight: bold;" });
+                            c.addText(".", -1);
+                        //we need shift two levels up=> -2
+                        c.add("LI", { textContent: "Item 3" }, -2);
+                    return c.share;
+                }
+            
+                //EXAMPLE END
+            })("example_element_008");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L272" target="_blank">View with highliting (link to source of this file)</a></p>
+        </details>
+
+        <h2>Syntax tips</h2>
+        <details open="">
+        <summary>Notes</summary>
+            <p>This section shows some ways how to write components.</p>
+        </details>
+        <details>
+        <summary>Examples</summary>
+            
+            
+            <p>You can use JavaScript desctruturing syntax:</p>
+            <div class="output" id="example_element_009"></div>
+            <script onkeyup="onKeyup(this, 'example_element_009')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const el= document.getElementById(element_id);
+                paragraph({ textContent: "first", className: "example_red_color"}).mount(el);
+                paragraph({ textContent: "second", className: "example_blue_color" }).mount(el);
+            
+                function paragraph({ textContent, className }){
+                    const { add, share }= $dom.component("P", { textContent: "Test el: ", className });
+                        add("STRONG", { textContent });
+                    return share;
+                }
+                
+                //EXAMPLE END
+            })("example_element_009");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L312" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>You can change mount destination (see <a href="#module_jaaJSU..$dom..instance_component.share.mount">.mount</a>):</p>
+            <div class="output" id="example_element_010"></div>
+            <script onkeyup="onKeyup(this, 'example_element_010')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const paragraph_el= paragraph({ textContent: "first", className: "example_red_color"}).mount(document.getElementById(element_id));
+                paragraph({ textContent: "second", className: "example_blue_color" }).mount(paragraph_el, "before");
+            
+                function paragraph({ textContent, className }){
+                    const { add, share }= $dom.component("P", { textContent: "Test e_009: ", className });
+                        add("STRONG", { textContent });
+                    return share;
+                }
+                
+                //EXAMPLE END
+            })("example_element_010");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L334" target="_blank">View with highliting (link to source of this file)</a></p>
+        </details>
+
+        <h2>Reactivity</h2>
+        <details open="">
+        <summary>Notes</summary>
+            <p>This section shows some ways how to write reacive components.</p>
+        </details>
+        <details>
+        <summary>Examples</summary>
+            
+            
+            <p>You can define reactive behaviour:</p>
+            <div class="output" id="example_element_011"></div>
+            <script onkeyup="onKeyup(this, 'example_element_011')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const container= document.getElementById(element_id);
+            
+                inputs({ textContent: "Your name is: " }).mount(container);
+                inputs({ textContent: "Your surname is: " }).mount(container);
+            
+                function inputs({ textContent }){
+                    const default_listener_value= { listen_variable_name: " - " };
+                    const name= element_id+"_"+textContent.replace(/[^\w]/g, "").toLowerCase();
+                    const c= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
+                        c.add("INPUT", { type: "text", name: name, onkeyup: onkeyupHandler });
+                        c.add("BR", null, -1);
+                        c.add("LABEL", { htmlFor: name, textContent }, -1);
+                            c.add("STRONG", null).onupdate(default_listener_value, onUpdateHandler);
+                    return c.share;
+            
+                    function onkeyupHandler(){ c.update({ listen_variable_name: this.value }); }
+                    function onUpdateHandler({ listen_variable_name }){ return { textContent: listen_variable_name }; }
+                }
+                
+                //EXAMPLE END
+            })("example_element_011");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L364" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>The same example with using JavaScript desctructuring syntax:</p>
+            <div class="output" id="example_element_012"></div>
+            <script onkeyup="onKeyup(this, 'example_element_012')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const container= document.getElementById(element_id);
+            
+                inputs({ textContent: "Your name is: " }).mount(container);
+                inputs({ textContent: "Your surname is: " }).mount(container);
+            
+                function inputs({ textContent }){
+                    const name= element_id+"_"+textContent.replace(/[^\w]/g, "").toLowerCase();
+                    const { add, share, update }= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
+                        add("INPUT", { type: "text", name: name, onkeyup: onkeyupHandler });
+                        add("BR", null, -1);
+                        add("LABEL", { htmlFor: name, textContent }, -1);
+                            add("STRONG", null).onupdate({ textContent: " - " }, ({ textContent })=> ({ textContent }));
+                    return share;
+            
+                    function onkeyupHandler(){ update({ textContent: this.value }); }
+                }
+                
+                //EXAMPLE END
+            })("example_element_012");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L395" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>Counter:</p>
+            <div class="output" id="example_element_013"></div>
+            <script onkeyup="onKeyup(this, 'example_element_013')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const container= document.getElementById(element_id);
+            
+                counterComponent({ textContent: "Your salary ($): ", step: 1000 }).mount(container);
+                counterComponent({ textContent: "Number of yours socks: " }).mount(container);
+            
+                function counterComponent({ textContent, step= 1 }){
+                    let sum= 0;
+                    const { add, share, update }= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
+                        add("BUTTON", { textContent: "+", value: step, onclick });
+                        add("BUTTON", { textContent: "–", value: -step, onclick }, -1);
+                        add("BR", null, -1);
+                        add("P", { textContent }, -1);
+                            add("STRONG", null).onupdate({ value: sum }, ({ value })=> ({ textContent: value }));
+                    return share;
+            
+                    function onclick(){
+                        sum+= Number(this.value);
+                        update({ value: toOdd(sum) });
+                    }
+                    function toOdd(number){ return 2*number+1; }
+                }
+                
+                //EXAMPLE END
+            })("example_element_013");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L424" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>Method <code>.update</code> also accepts function returning object (it will be combinet with internal data with <code>Object.assign</code>):</p>
+            <div class="output" id="example_element_014"></div>
+            <script onkeyup="onKeyup(this, 'example_element_014')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const container= document.getElementById(element_id);
+            
+                counterComponent({ textContent: "Your salary ($): " }).mount(container);
+                counterComponent({ textContent: "Number of yours socks: " }).mount(container);
+            
+                function counterComponent({ textContent }){
+                    const { add, share, update }= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
+                        add("BUTTON", { textContent: "+", onclick });
+                        add("BR", null, -1);
+                        add("P", { textContent }, -1);
+                            add("STRONG", null).onupdate({ value: 0 }, ({ value })=> ({ textContent: value }));
+                    return share;
+            
+                    function onclick(){ update(({ value })=> ({ value: value+1 })); }
+                }
+                
+                //EXAMPLE END
+            })("example_element_014");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L458" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>Method <code>.update</code> is also avilable outside function scope (is included in <code>.share</code> namespace):</p>
+            <div class="output" id="example_element_015"></div>
+            <script onkeyup="onKeyup(this, 'example_element_015')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const container= document.getElementById(element_id);
+                const counter_component= counterComponent({ textContent: "Current loop (every 10secs add one): " });
+                counter_component.mount(container);
+                setInterval(counter_component.update.bind(null, ({ value })=> ({ value: value+1 })), 10000);
+            
+                function counterComponent({ textContent }){
+                    const { add, share, update }= $dom.component("P", { textContent }, -1);
+                            add("STRONG", null).onupdate({ value: 0, animation: "" }, ({ value, animation })=> ({ textContent: value+" "+animation }));
+                    
+                    setInterval(update.bind(null, ({ animation })=> ({ animation: nextStep(animation) })), 500);
+                    return share;
+                    function nextStep(current){
+                        if(current==="") return ". ";
+                        if(current===". ") return ". . ";
+                        if(current===". . ") return ". . . ";
+                        if(current===". . . ") return "";
+                    }
+                }
+                
+                //EXAMPLE END
+            })("example_element_015");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L486" target="_blank">View with highliting (link to source of this file)</a></p>
+        </details>
+
+        <h2>Some additionals</h2>
+        <details open="">
+        <summary>Notes</summary>
+            <p>This section shows some new ways how to write (reacive) components.</p>
+        </details>
+        <details>
+        <summary>Examples</summary>
+            
+            
+            <p>You can define listener outside function scope (see <a href="./$dom_component.md#module_jaaJSU..$dom.componentListener"><code>$dom.componentListener</code></a>):</p>
+            <div class="output" id="example_element_016"></div>
+            <script onkeyup="onKeyup(this, 'example_element_016')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const container= document.getElementById(element_id);
+                const sum_updated= $dom.componentListener("update", { sum: 0 }, ({ sum })=> ({ textContent: sum }));
+                const color_updated= $dom.componentListener("update", { color: 0 }, ({ color })=> ({ className: `example_${color}_color` }));
+            
+                counterComponent({ textContent: "Number of yours socks: " }).mount(container);
+            
+                function counterComponent({ textContent }){
+                    const { add, share, update }= $dom.component("DIV", null);
+                        add("BUTTON", { textContent: "+", onclick: addOne });
+                        add("BUTTON", { textContent: "red", onclick: setColor }, -1);
+                        add("BUTTON", { textContent: "blue", onclick: setColor }, -1);
+                        add("BR", null, -1);
+                        add("P", { textContent }, -1);
+                            add("STRONG", null).on(sum_updated, color_updated);
+                    return share;
+            
+                    function addOne(){ update(({ sum })=> ({ sum: sum+1 })); }
+                    function setColor(color){ update({ color: this.textContent }); }
+                }
+                
+                //EXAMPLE END
+            })("example_element_016");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L526" target="_blank">View with highliting (link to source of this file)</a></p>
+        </details>
 
 
-
-
-    <script>
-        let h2_counter= 0;
-        const content_ul= document.getElementsByClassName('content')[0];
-        [ ...document.getElementsByTagName('h2') ].forEach(function(el){
-            const textContent= el.textContent;
-            if(textContent==="Content") return false;
-            const id= "heading_"+h2_counter++;
-            contentH2({ textContent, id }).mount(el, "replace");
-            contentLI({ textContent, id }).mount(content_ul);
-        });
-        function contentLI({ textContent, id }){
-            const href= "#"+id;
-            const { add, share }= $dom.component("LI", null);
-                add("A", { textContent, href });
-            return share;
-        }
-        function contentH2({ textContent, id }){
-            const { add, share }= $dom.component("H2", { id });
-                add("A", { textContent: "⇡", href: "#heading_content" });
-                add("SPAN", { textContent: " "+textContent }, -1);
-            return share;
-        }
-    </script>
+        <script>
+            let h2_counter= 0;
+            const content_ul= document.getElementsByClassName('content')[0];
+            [ ...document.getElementsByTagName('h2') ].forEach(function(el){
+                const textContent= el.textContent;
+                if(textContent==="Content") return false;
+                const id= "heading_"+h2_counter++;
+                contentH2({ textContent, id }).mount(el, "replace");
+                contentLI({ textContent, id }).mount(content_ul);
+            });
+            function contentLI({ textContent, id }){
+                const href= "#"+id;
+                const { add, share }= $dom.component("LI", null);
+                    add("A", { textContent, href });
+                return share;
+            }
+            function contentH2({ textContent, id }){
+                const { add, share }= $dom.component("H2", { id });
+                    add("A", { textContent: "⇡", href: "#heading_content" });
+                    add("SPAN", { textContent: " "+textContent }, -1);
+                return share;
+            }
+        </script>
+    </article>
 </body>
 </html>

@@ -1,0 +1,27 @@
+gulp_place("app._BUILD_.example_el= toELID(app._BUILD_.example_el_id++)", "eval");
+gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval");
+<p>For changin this nesting behaviour, you can use last argument:</p>
+<div class="output" id="gulp_place('app._BUILD_.example_el', 'variable')"></div>
+<script onkeyup="gulp_place('app._BUILD_.example_onkeyup', 'variable')" contenteditable="">
+(function(element_id){
+    //EXAMPLE START
+
+    const el= document.getElementById(element_id);
+    list("red").mount(el);
+    list("blue").mount(el);
+
+    function list(color){
+        const c= $dom.component("UL", { textContent: "PARENT_1" });
+            c.add("LI", { textContent: "Child of PARENT_1", className: `example_${color}_color` });
+            //we need shift one level up=> -1
+            c.add("LI", { textContent: "PARENT_2: Also child of PARENT_1" }, -1);
+                c.add("STRONG", { textContent: " // Child of PARENT_2", style: "font-weight: bold;" });
+            //we need shift two levels up=> -2
+            c.add("LI", { textContent: "Also child of PARENT_1" }, -2);
+        return c.share;
+    }
+
+    //EXAMPLE END
+})("gulp_place('app._BUILD_.example_el', 'variable')");
+</script>
+<!-- example source links -->

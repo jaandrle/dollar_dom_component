@@ -1,0 +1,31 @@
+gulp_place("app._BUILD_.example_el= toELID(app._BUILD_.example_el_id++)", "eval");
+gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval");
+<p>Method <code>.update</code> is also avilable outside function scope (is included in <code>.share</code> namespace):</p>
+<div class="output" id="gulp_place('app._BUILD_.example_el', 'variable')"></div>
+<script onkeyup="gulp_place('app._BUILD_.example_onkeyup', 'variable')" contenteditable="">
+(function(element_id){
+    //EXAMPLE START
+
+    const container= document.getElementById(element_id);
+    const counter_component= counterComponent({ textContent: "Current loop (every 10secs add one): " });
+    counter_component.mount(container);
+    setInterval(counter_component.update.bind(null, ({ value })=> ({ value: value+1 })), 10000);
+
+    function counterComponent({ textContent }){
+        const { add, share, update }= $dom.component("P", { textContent }, -1);
+                add("STRONG", null).onupdate({ value: 0, animation: "" }, ({ value, animation })=> ({ textContent: value+" "+animation }));
+        
+        setInterval(update.bind(null, ({ animation })=> ({ animation: nextStep(animation) })), 500);
+        return share;
+        function nextStep(current){
+            if(current==="") return ". ";
+            if(current===". ") return ". . ";
+            if(current===". . ") return ". . . ";
+            if(current===". . . ") return "";
+        }
+    }
+    
+    //EXAMPLE END
+})("gulp_place('app._BUILD_.example_el', 'variable')");
+</script>
+<!-- example source links -->

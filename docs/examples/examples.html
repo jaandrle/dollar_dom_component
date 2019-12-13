@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>gulp_place("app.name", "variable") — Examples</title>
+    <script type="text/javascript" src="$dom_component-min.js"></script>
+    <style>
+        body{
+            color: #eeeeee;
+            background: #2b2b2b;
+            padding: 0 0 1em 0;
+        }
+        a{
+            color: #b8b8ff;
+        }
+        a:hover{
+            color: white;
+        }
+        summary {
+            cursor: pointer;
+        }
+        article{
+            width: 80%;
+            min-width: 75em;
+            max-width: 85em;
+            margin: auto;
+        }
+        h1, h2 {
+            background: #222;
+            border: 1px solid #222;
+            padding: .5em;
+            margin-left: -.5em;
+        }
+        h2:target {
+            border-color: currentColor;
+        }
+        p{
+            font-size: 1.1em;
+        }
+        .notes{
+            margin-top: .25em;
+            font-size: .75em;
+        }
+        input, button {
+            background: rgba(0,0,0,1);
+            border: 1px solid #97f497;
+            color: #ffffff;
+            padding: .25em .5em;
+            margin: 0 0 .25em 0;
+        }
+        input:hover, button:hover, input:focus, button:focus {
+            border-color: currentColor;
+        }
+        [contenteditable=""]{
+            display: block;
+            font-family: "Lucida Console", Monaco, monospace;
+            font-size: .75em;
+            line-height: 1.5em;
+            font-weight: bold;
+            white-space: break-spaces;
+            padding: 1rem;
+            margin-top: -.25rem;
+            border: .25rem dotted #97f497;
+            background: #222;
+        }
+        [contenteditable=""]:before{
+            content: "Input (editable):";
+            padding-bottom: 1em;
+            color: #97f497;
+            font-weight: bold;
+            display: block;
+            font-size: .8rem;
+        }
+        .output{
+            padding: 1rem;
+            margin: 0;
+            border: .25rem dotted #f0e09a;
+        }
+        .output:before{
+            content: "Output:";
+            color: #f0e09a;
+            font-weight: bold;
+            display: block;
+            padding-bottom: 1.5rem;
+        }
+        .example_red_color{ color: #ff9b9b; }
+        .example_blue_color{ color: #36c7ff; }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>gulp_place("app.name", "variable") — Examples</h1>
+        <a href="https://github.com/jaandrle/dollar_dom_component">⇠ Go back to GitHub repository</a>
+        <h2 id="heading_content">Content</h2>
+        <ul class="content"></ul>
+        <script>
+            function onKeyup(script, id){
+                const el= document.getElementById(id);
+                $dom.empty(el);
+                eval(script.innerHTML);
+            }
+        </script>
+        gulp_place("app._BUILD_= { example_el_id: 1 }", "eval");
+        gulp_place("/example_\wh2.sub.html", "glob_once");
+
+
+        <script>
+            let h2_counter= 0;
+            const content_ul= document.getElementsByClassName('content')[0];
+            [ ...document.getElementsByTagName('h2') ].forEach(function(el){
+                const textContent= el.textContent;
+                if(textContent==="Content") return false;
+                const id= "heading_"+h2_counter++;
+                contentH2({ textContent, id }).mount(el, "replace");
+                contentLI({ textContent, id }).mount(content_ul);
+            });
+            function contentLI({ textContent, id }){
+                const href= "#"+id;
+                const { add, share }= $dom.component("LI", null);
+                    add("A", { textContent, href });
+                return share;
+            }
+            function contentH2({ textContent, id }){
+                const { add, share }= $dom.component("H2", { id });
+                    add("A", { textContent: "⇡", href: "#heading_content" });
+                    add("SPAN", { textContent: " "+textContent }, -1);
+                return share;
+            }
+        </script>
+    </article>
+</body>
+</html>

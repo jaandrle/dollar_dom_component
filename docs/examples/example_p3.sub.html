@@ -1,0 +1,34 @@
+gulp_place("app._BUILD_.example_el= toELID(app._BUILD_.example_el_id++)", "eval");
+gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval");
+<p>Counter:</p>
+<div class="output" id="gulp_place('app._BUILD_.example_el', 'variable')"></div>
+<script onkeyup="gulp_place('app._BUILD_.example_onkeyup', 'variable')" contenteditable="">
+(function(element_id){
+    //EXAMPLE START
+
+    const container= document.getElementById(element_id);
+
+    counterComponent({ textContent: "Your salary ($): ", step: 1000 }).mount(container);
+    counterComponent({ textContent: "Number of yours socks: " }).mount(container);
+
+    function counterComponent({ textContent, step= 1 }){
+        let sum= 0;
+        const { add, share, update }= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
+            add("BUTTON", { textContent: "+", value: step, onclick });
+            add("BUTTON", { textContent: "–", value: -step, onclick }, -1);
+            add("BR", null, -1);
+            add("P", { textContent }, -1);
+                add("STRONG", null).onupdate({ value: sum }, ({ value })=> ({ textContent: value }));
+        return share;
+
+        function onclick(){
+            sum+= Number(this.value);
+            update({ value: toOdd(sum) });
+        }
+        function toOdd(number){ return 2*number+1; }
+    }
+    
+    //EXAMPLE END
+})("gulp_place('app._BUILD_.example_el', 'variable')");
+</script>
+<!-- example source links -->

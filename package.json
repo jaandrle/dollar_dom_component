@@ -9,7 +9,8 @@
   "__Comment__sequence": "exclamation mark (!) on the start of task name means to escape it",
   "sequence": [
     "javascript",
-    "doc"
+    "doc",
+    "examples"
   ],
   "__SECTION_NPM": "",
   "name": "dollar_dom_component",

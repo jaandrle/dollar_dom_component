@@ -1,0 +1,31 @@
+gulp_place("app._BUILD_.example_el= toELID(app._BUILD_.example_el_id++)", "eval");
+gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval");
+<p>You can define reactive behaviour:</p>
+<div class="output" id="gulp_place('app._BUILD_.example_el', 'variable')"></div>
+<script onkeyup="gulp_place('app._BUILD_.example_onkeyup', 'variable')" contenteditable="">
+(function(element_id){
+    //EXAMPLE START
+
+    const container= document.getElementById(element_id);
+
+    inputs({ textContent: "Your name is: " }).mount(container);
+    inputs({ textContent: "Your surname is: " }).mount(container);
+
+    function inputs({ textContent }){
+        const default_listener_value= { listen_variable_name: " - " };
+        const name= element_id+"_"+textContent.replace(/[^\w]/g, "").toLowerCase();
+        const c= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
+            c.add("INPUT", { type: "text", name: name, onkeyup: onkeyupHandler });
+            c.add("BR", null, -1);
+            c.add("LABEL", { htmlFor: name, textContent }, -1);
+                c.add("STRONG", null).onupdate(default_listener_value, onUpdateHandler);
+        return c.share;
+
+        function onkeyupHandler(){ c.update({ listen_variable_name: this.value }); }
+        function onUpdateHandler({ listen_variable_name }){ return { textContent: listen_variable_name }; }
+    }
+    
+    //EXAMPLE END
+})("gulp_place('app._BUILD_.example_el', 'variable')");
+</script>
+<!-- example source links -->

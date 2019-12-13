@@ -1,0 +1,23 @@
+gulp_place("app._BUILD_.example_el= toELID(app._BUILD_.example_el_id++)", "eval");
+gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval");
+<p>Default behaviour is, that all <code>.add(…)</code> are childs the previusly created element:</p>
+<div class="output" id="gulp_place('app._BUILD_.example_el', 'variable')"></div>
+<script onkeyup="gulp_place('app._BUILD_.example_onkeyup', 'variable')" contenteditable="">
+(function(element_id){
+    //EXAMPLE START
+
+    const el= document.getElementById(element_id);
+    paragraph("red").mount(el);
+    paragraph("blue").mount(el);
+
+    function paragraph(color){
+        const c= $dom.component("P", { textContent: "Simple paragraph with child: " });
+            c.add("SPAN", { textContent: "this is child", className: `example_${color}_color` });
+                c.add("STRONG", { textContent: " (child of child)", style: "font-weight: bold;" });
+        return c.share;
+    }
+
+    //EXAMPLE END
+})("gulp_place('app._BUILD_.example_el', 'variable')");
+</script>
+<!-- example source links -->

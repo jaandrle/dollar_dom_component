@@ -105,6 +105,18 @@
 
 
         <script>
+            document.addEventListener("paste", function enableInScriptTags(ev){
+                ev.preventDefault();
+                document.execCommand('insertText', false, ev.clipboardData.getData('text/plain'));
+            });
+            document.addEventListener("keydown", function enableInScriptTags(ev){
+                if(ev.target.tagName!=="SCRIPT") return false;
+                const { keyCode }= ev;
+                if(keyCode!==9&&keyCode!==13) return false;
+
+                ev.preventDefault();
+                document.execCommand('insertText', false, keyCode===9 ? "    " : "\n                ");
+            });
             let h2_counter= 0;
             const content_ul= document.getElementsByClassName('content')[0];
             [ ...document.getElementsByTagName('h2') ].forEach(function(el){

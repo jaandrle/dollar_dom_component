@@ -2,7 +2,7 @@
 /* global gulp_place */
 module.exports= {
     pathHelper: function(path){
-        const folder_part= path.split(gulp_place("app.folderName", "variable")+"\\")[1];
-        return gulp_place("app.homepage", "variable")+"/blob/master/"+folder_part+"/";
+        const folder_part= path.split(/gulp_place("app.folderName", "variable")(?:\\|\/)/g)[1];
+        return "gulp_place('app.homepage', 'variable')"+"/blob/master/"+folder_part+"/";
     }
 };

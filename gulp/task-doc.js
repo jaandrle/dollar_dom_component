@@ -11,7 +11,7 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
     /* jshint -W061 */const gulp_place= require("./gulp_place.js")({gulp_replace: $g.replace, fs: $o.fs, variable_eval: (str)=> eval(str)});/* jshint +W061 */
     return function(cb){
         gulp.src([docs_modifications+"*_pre.js"])
-            .pipe(gulp_place({folder: docs_modifications, string_wrapper: '"'}))
+            .pipe(gulp_place({folder: docs_modifications, string_wrapper: ''}))
             .pipe($g.rename(function(p){
                 p.basename= p.basename.replace(/_pre/ig, "");
                 return p;

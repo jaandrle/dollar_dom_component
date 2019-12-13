@@ -1,6 +1,6 @@
 gulp_place("app._BUILD_.example_el= toELID(app._BUILD_.example_el_id++)", "eval");
 gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval");
-<p>You can define listener outside function scope (see <a href="./$dom_component.md#module_jaaJSU..$dom.componentListener"><code>$dom.componentListener</code></a>):</p>
+<p>You can define listener outside function scope (see <a href="https://github.com/jaandrle/dollar_dom_component/docs/$dom_component.md#module_jaaJSU..$dom.componentListener"><code>$dom.componentListener</code></a>):</p>
 <div class="output" id="gulp_place('app._BUILD_.example_el', 'variable')"></div>
 <script onkeyup="gulp_place('app._BUILD_.example_onkeyup', 'variable')" contenteditable="">
 (function(element_id){
@@ -8,7 +8,7 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
 
     const container= document.getElementById(element_id);
     const sum_updated= $dom.componentListener("update", { sum: 0 }, ({ sum })=> ({ textContent: sum }));
-    const color_updated= $dom.componentListener("update", { color: 0 }, ({ color })=> ({ className: `example_${color}_color` }));
+    const color_updated= $dom.componentListener("update", { color: "blue" }, ({ color })=> ({ className: `example_${color}_color` }));
 
     counterComponent({ textContent: "Number of yours socks: " }).mount(container);
 

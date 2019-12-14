@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>$dom.component — Examples</title>
     <script type="text/javascript" src="$dom_component-min.js"></script>
     <style>
@@ -71,6 +72,17 @@
             display: block;
             font-size: .8rem;
         }
+        @media screen and (max-width: 640px){
+            article{
+                width: 90%;
+                min-width: initial;
+            }
+            [contenteditable=""] {
+                white-space: pre;
+                overflow: scroll;
+                border-right-style: outset;
+            }
+        }
         .output{
             padding: 1rem;
             margin: 0;
@@ -126,7 +138,7 @@
                 //EXAMPLE END
             })("example_element_001");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L119" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L131" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Creating element with only Vanilla JavaScript and <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom.assign">$dom.assign</a>:</p>
@@ -141,7 +153,7 @@
                 //EXAMPLE END
             })("example_element_002");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L136" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L148" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Now, we use <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom.component">$dom.component</a>:</p>
@@ -156,7 +168,7 @@
                 //EXAMPLE END
             })("example_element_003");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L151" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L163" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>Basic components</h2>
@@ -189,7 +201,7 @@
                 //EXAMPLE END
             })("example_element_004");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L178" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L190" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom.component">$dom.component</a> returns/provide methods such as <code>.add</code> for adding child element:</p>
@@ -211,7 +223,7 @@
                 //EXAMPLE END
             })("example_element_005");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L199" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L211" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Default behaviour is, that all <code>.add(…)</code> are childs the previusly created element:</p>
@@ -234,7 +246,7 @@
                 //EXAMPLE END
             })("example_element_006");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L221" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L233" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>For changin this nesting behaviour, you can use last argument:</p>
@@ -261,7 +273,7 @@
                 //EXAMPLE END
             })("example_element_007");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L244" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L256" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>All togeder:</p>
@@ -292,7 +304,7 @@
                 //EXAMPLE END
             })("example_element_008");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L271" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L283" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>Syntax tips</h2>
@@ -323,7 +335,7 @@
                 //EXAMPLE END
             })("example_element_009");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L311" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L323" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>You can change mount destination (see <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom..instance_component.share.mount">.mount</a>):</p>
@@ -344,7 +356,7 @@
                 //EXAMPLE END
             })("example_element_010");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L333" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L345" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>Reactivity</h2>
@@ -384,7 +396,7 @@
                 //EXAMPLE END
             })("example_element_011");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L363" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L375" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>The same example with using JavaScript desctructuring syntax:</p>
@@ -413,7 +425,7 @@
                 //EXAMPLE END
             })("example_element_012");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L394" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L406" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Counter:</p>
@@ -446,7 +458,7 @@
                 //EXAMPLE END
             })("example_element_013");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L423" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L435" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Method <code>.update</code> also accepts function returning object (it will be combinet with internal data with <code>Object.assign</code>):</p>
@@ -473,7 +485,7 @@
                 //EXAMPLE END
             })("example_element_014");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L456" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L468" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Method <code>.update</code> is also avilable outside function scope (is included in <code>.share</code> namespace):</p>
@@ -504,7 +516,7 @@
                 //EXAMPLE END
             })("example_element_015");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L483" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L495" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>Some additionals / advanced examples</h2>
@@ -544,7 +556,7 @@
                 //EXAMPLE END
             })("example_element_016");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L523" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L535" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>You can use another component inside current one (see <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom..instance_component.component"><code>.component</code></a>):</p>
@@ -610,7 +622,7 @@
                 //EXAMPLE END
             })("example_element_017");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L554" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L566" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
 

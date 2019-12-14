@@ -1,6 +1,6 @@
 gulp_place("app._BUILD_.example_el= toELID(app._BUILD_.example_el_id++)", "eval");
 gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval");
-<p>You can use another component inside current one (see <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom..instance_component.component"><code>.component</code></a>):</p>
+<p>As previou with different usuage of <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L485"><code>setShift</code></a>:</p>
 <div class="output" id="gulp_place('app._BUILD_.example_el', 'variable')"></div>
 <script onkeyup="gulp_place('app._BUILD_.example_onkeyup', 'variable')" contenteditable="">
 (function(element_id){
@@ -18,11 +18,11 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
 
         const { add, addText, component, update, setShift, share }=
         $dom.component("DIV", Object.assign({ textContent: "Form:" }, color_setup));
-            setShift(0); //(*) you can imagine this as phantom element which is now child, so in loop ve add siblings=> -1
         for(let i=0, i_length= stuff_arr.length; i<i_length; i++){
-            component(counterComponent({ textContent: `Number of ${user_name} ${stuff_arr[i]}: `, onchange }), -1);
+            component(counterComponent({ textContent: `Number of ${user_name} ${stuff_arr[i]}: `, onchange })); //(*)
+        setShift(-2); //(*) we can add ne phantom parent and using=> 0 in last argument
         }
-            add("P", null, -1);
+            add("P", null); //(*)
                 add("SPAN", null).onupdate({ sum_main: 0 }, ({ sum_main })=> ({ textContent: ` Last given number: ${sum_main}` }))
                 addText(" (", -1);
                 add("A", { textContent: "reset", style: "cursor: pointer;", onclick }, -1);

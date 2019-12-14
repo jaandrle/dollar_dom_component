@@ -573,21 +573,21 @@
             
                 function pseudoFormComponent({ user_name, stuff_arr= [ "socks" ], color }= {}){
                     user_name= user_name ? user_name+"’s" : "yours";
-                    const colorSetup= !color ? null : { className: `example_${color}_color` };
-                    const { add, addText, component, update, setShift, share }=
-                    $dom.component("DIV", Object.assign({ textContent: "Form:" }, colorSetup));
+                    const color_setup= !color ? null : { className: `example_${color}_color` };
             
+                    const { add, addText, component, update, setShift, share }=
+                    $dom.component("DIV", Object.assign({ textContent: "Form:" }, color_setup));
+                        setShift(0); //(*) you can imagine this as phantom element which is now child, so in loop ve add siblings=> -1
                     for(let i=0, i_length= stuff_arr.length; i<i_length; i++){
-                        component(counterComponent({ textContent: `Number of ${user_name} ${stuff_arr[i]}: `, onchange }));
-                        //we want in the next loop mount `counterComponent` on the same level (not as child)
-                        setShift(-1);
+                        component(counterComponent({ textContent: `Number of ${user_name} ${stuff_arr[i]}: `, onchange }), -1);
                     }
-                        add("P", null);
+                        add("P", null, -1);
                             add("SPAN", null).onupdate({ sum_main: 0 }, ({ sum_main })=> ({ textContent: ` Last given number: ${sum_main}` }))
                             addText(" (", -1);
                             add("A", { textContent: "reset", style: "cursor: pointer;", onclick }, -1);
                             addText(").", -1);
                     return share;
+                    
                     //of course, in real life we nead mor info
                     function onchange(sum_main){ update({ sum_main }); }
                     //!!! see, `sum` event name is shared with sub-components
@@ -623,6 +623,72 @@
             })("example_element_017");
             </script>
             <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L566" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>As previou with different usuage of <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L485"><code>setShift</code></a>:</p>
+            <div class="output" id="example_element_018"></div>
+            <script onkeyup="onKeyup(this, 'example_element_018')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const container= document.getElementById(element_id);
+                const sum_updated= $dom.componentListener("update", { sum: 0 }, ({ sum })=> ({ value: sum }));
+            
+                pseudoFormComponent({ user_name: "Adam", stuff_arr: [ "socks", "legs" ], color: "red" }).mount(container);
+                pseudoFormComponent({ user_name: "Eva", stuff_arr: [ "socks", "hands" ] }).mount(container);
+            
+                function pseudoFormComponent({ user_name, stuff_arr= [ "socks" ], color }= {}){
+                    user_name= user_name ? user_name+"’s" : "yours";
+                    const color_setup= !color ? null : { className: `example_${color}_color` };
+            
+                    const { add, addText, component, update, setShift, share }=
+                    $dom.component("DIV", Object.assign({ textContent: "Form:" }, color_setup));
+                    for(let i=0, i_length= stuff_arr.length; i<i_length; i++){
+                        component(counterComponent({ textContent: `Number of ${user_name} ${stuff_arr[i]}: `, onchange })); //(*)
+                    setShift(-2); //(*) we can add ne phantom parent and using=> 0 in last argument
+                    }
+                        add("P", null); //(*)
+                            add("SPAN", null).onupdate({ sum_main: 0 }, ({ sum_main })=> ({ textContent: ` Last given number: ${sum_main}` }))
+                            addText(" (", -1);
+                            add("A", { textContent: "reset", style: "cursor: pointer;", onclick }, -1);
+                            addText(").", -1);
+                    return share;
+                    
+                    //of course, in real life we nead mor info
+                    function onchange(sum_main){ update({ sum_main }); }
+                    //!!! see, `sum` event name is shared with sub-components
+                    function onclick(){ update({ sum: 0, sum_main: 0 }); }
+                }
+            
+                function counterComponent({ textContent, onchange: onchangeCallback }){
+                    const { add, addText, share, update }= $dom.component("P", null);
+                        add("LABEL", { textContent });
+                            add("INPUT", { type: "number", onchange }, -1).on(sum_updated);
+                            add("BUTTON", { textContent: "+", value: 1, onclick }, -1);
+                            addText(" ", -1);
+                            //of course, instead of `style` you schould use `className` in production code!
+                            add("BUTTON", { textContent: "–", value: -1, onclick, style: "padding: .25em .575em;" }, -1);
+                    return share;
+            
+                    function onclick(){
+                        let sum= Number(this.value);
+                        update(function({ sum: old_sum }){
+                            sum+= old_sum;
+                            onchangeCallback(sum);
+                            return { sum };
+                        });
+                    }
+                    function onchange(){
+                        const sum= Number(this.value);
+                        onchangeCallback(sum);
+                        update({ sum });
+                    }
+                }
+                
+                //EXAMPLE END
+            })("example_element_018");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L632" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
 

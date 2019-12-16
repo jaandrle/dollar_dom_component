@@ -292,7 +292,7 @@
                             c.add("UL", null);
                                 c.add("LI", { textContent: "Item 1.1" });
                                 c.add("LI", { textContent: "Item 1.2" }, -1);
-                        //we need shift one level up=> -3
+                        //we need shift three levels up=> -3
                         c.add("LI", { textContent: "Item 2: " }, -3);
                             c.add("STRONG", { textContent: "bold part", style: "font-weight: bold;" });
                             c.addText(".", -1);
@@ -348,7 +348,7 @@
                 paragraph({ textContent: "second", className: "example_blue_color" }).mount(paragraph_el, "before");
             
                 function paragraph({ textContent, className }){
-                    const { add, share }= $dom.component("P", { textContent: "Test e_009: ", className });
+                    const { add, share }= $dom.component("P", { textContent: "This is paragraph number: ", className });
                         add("STRONG", { textContent });
                     return share;
                 }

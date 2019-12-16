@@ -10,7 +10,7 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
     paragraph({ textContent: "second", className: "example_blue_color" }).mount(paragraph_el, "before");
 
     function paragraph({ textContent, className }){
-        const { add, share }= $dom.component("P", { textContent: "Test e_009: ", className });
+        const { add, share }= $dom.component("P", { textContent: "This is paragraph number: ", className });
             add("STRONG", { textContent });
         return share;
     }

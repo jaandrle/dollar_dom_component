@@ -451,7 +451,11 @@ function init(global){
          * //=> c===null AND <body></body>
          */
         function destroy(){
-            if(container) container.remove();
+            if(container) {
+                container.remove();
+                container= null;
+                els= [];
+            }
             if(internal_storage) internal_storage= null;
             if(component_out) component_out= null;
             if(add_out_methods) add_out_methods= null;

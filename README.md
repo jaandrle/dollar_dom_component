@@ -23,6 +23,28 @@ Non-mentioned libs: [hybrids](https://github.com/hybridsjs/hybrids), [Switzerlan
 1) library files: [$dom_component.js](bin/$dom_component.js) and [$dom_component-min.js](bin/$dom_component-min.js).
 1) basics and playgrounds can be found in [Examples](https://jaandrle.github.io/dollar_dom_component/examples.html)
 
+## Usage / Philosophy overview
+```JavaScript
+textInputComponent({ label_type: "name", placeholder: "Peter" })
+.mount(document.body);
+/* result:
+<body>
+<div><label>Type your name: <input type="text" placeholder="Peter"></label><p>Your name is: <strong>Jan</strong></p></div>
+</body>
+*/
+
+function textInputComponent({ label_type= "name", placeholder }){
+    const { add, share, update }= $dom.component("DIV");
+        add("LABEL", { textContent: `Type your ${label_type}: ` });
+            add("INPUT", { type: "text", placeholder, onkeyup });
+        add("P", { textContent: `Your ${label_type} is: ` }, -2);
+            add("STRONG", null).onupdate({ textContent: " - " }, ({ textContent })=> ({ textContent }));
+    return share;
+
+    function onkeyup(){ update({ textContent: this.value }); }
+}
+```
+
 ## Resources
 - __[Examples](https://jaandrle.github.io/dollar_dom_component/examples.html)__
 - __[Documentation](docs/$dom_component.md)__

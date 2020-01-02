@@ -8,16 +8,16 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
 
     const container= document.getElementById(element_id);
 
-    inputs({ textContent: "Your name is: " }).mount(container);
-    inputs({ textContent: "Your surname is: " }).mount(container);
+    textInputComponent({ label_type: "name", placeholder: "Peter" }).mount(container);
+    textInputComponent({ label_type: "surname", placeholder: "Black" }).mount(container);
 
-    function inputs({ textContent }){
+    function textInputComponent(params){
+        const label_type= params.label_type || "name";
         const default_listener_value= { listen_variable_name: " - " };
-        const id= element_id+"_"+textContent.replace(/[^\w]/g, "").toLowerCase();
-        const c= $dom.component("DIV", { style: "padding-bottom: 1.5rem;" });
-            c.add("INPUT", { type: "text", id: id, onkeyup: onkeyupHandler });
-            c.add("BR", null, -1);
-            c.add("LABEL", { htmlFor: id, textContent }, -1);
+        const c= $dom.component("DIV");
+            c.add("LABEL", { textContent: `Type your ${label_type}: ` });
+                c.add("INPUT", { type: "text", placeholder: params.placeholder, onkeyup: onkeyupHandler });
+            c.add("P", { textContent: `Your ${label_type} is: ` }, -2);
                 c.add("STRONG", null).onupdate(default_listener_value, onUpdateHandler);
         return c.share;
 

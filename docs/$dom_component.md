@@ -27,7 +27,6 @@
             * [.componentListener(event_name, ...args)](#module_jaaJSU..$dom.componentListener) ⇒ [<code>component\_listener</code>](#module_jaaJSU..$dom..component_listener)
             * [.assign(element, ...object_attributes)](#module_jaaJSU..$dom.assign) ⇒ <code>NodeElement</code>
         * _inner_
-            * [~component_listener](#module_jaaJSU..$dom..component_listener) : <code>Array</code>
             * _types descriptions_
                 * [~instance_componentEmpty](#module_jaaJSU..$dom..instance_componentEmpty) : [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
                     * [.mount()](#module_jaaJSU..$dom..instance_componentEmpty.mount)
@@ -55,6 +54,7 @@
                     * [.onupdate(data, onUpdateFunction)](#module_jaaJSU..$dom..instance_componentAdd.onupdate) ⇒ [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd)
                 * [~instance_componentAddText](#module_jaaJSU..$dom..instance_componentAddText) : [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
                     * [.oninit(fn)](#module_jaaJSU..$dom..instance_componentAddText.oninit) ⇒ [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
+                * [~component_listener](#module_jaaJSU..$dom..component_listener) : <code>Array</code>
                 * [~DomAssignObject](#module_jaaJSU..$dom..DomAssignObject) : <code>Object</code>
 
 
@@ -77,7 +77,6 @@
         * [.componentListener(event_name, ...args)](#module_jaaJSU..$dom.componentListener) ⇒ [<code>component\_listener</code>](#module_jaaJSU..$dom..component_listener)
         * [.assign(element, ...object_attributes)](#module_jaaJSU..$dom.assign) ⇒ <code>NodeElement</code>
     * _inner_
-        * [~component_listener](#module_jaaJSU..$dom..component_listener) : <code>Array</code>
         * _types descriptions_
             * [~instance_componentEmpty](#module_jaaJSU..$dom..instance_componentEmpty) : [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
                 * [.mount()](#module_jaaJSU..$dom..instance_componentEmpty.mount)
@@ -105,6 +104,7 @@
                 * [.onupdate(data, onUpdateFunction)](#module_jaaJSU..$dom..instance_componentAdd.onupdate) ⇒ [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd)
             * [~instance_componentAddText](#module_jaaJSU..$dom..instance_componentAddText) : [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
                 * [.oninit(fn)](#module_jaaJSU..$dom..instance_componentAddText.oninit) ⇒ [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
+            * [~component_listener](#module_jaaJSU..$dom..component_listener) : <code>Array</code>
             * [~DomAssignObject](#module_jaaJSU..$dom..DomAssignObject) : <code>Object</code>
 
 
@@ -179,7 +179,7 @@
 #### $dom.componentListener(event_name, ...args) ⇒ [<code>component\_listener</code>](#module_jaaJSU..$dom..component_listener)
 >This provide more DRY way to register events listeners for [component](#module_jaaJSU..$dom.component) such as `onupdate`, `oninit`, ….
 
-**Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.componentListener" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L676" title="$dom_component.js:676"><small>(defined@676)</small></a>  
+**Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.componentListener" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L677" title="$dom_component.js:677"><small>(defined@677)</small></a>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -196,7 +196,7 @@
 Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
 It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
 
-**Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.assign" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L705" title="$dom_component.js:705"><small>(defined@705)</small></a>  
+**Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.assign" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L706" title="$dom_component.js:706"><small>(defined@706)</small></a>  
 **Returns**: <code>NodeElement</code> - Givven `element` (follows similar behaviour in `Object.assign`)  
 
 | Param | Type |
@@ -234,21 +234,6 @@ $dom.assign(el, { classList: { testClass: false } });//or 0
 $dom.assign(A_ELEMENT, { href: "www.google.com" });//=> <a href="www.google.com" …
 $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
 ```
-
-* * *
-
-<a name="module_jaaJSU..$dom..component_listener"></a>
-
-#### $dom~component\_listener : <code>Array</code>
->This is in fact argument for [on](#module_jaaJSU..$dom..instance_componentAdd.on).
-
-**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..component_listener" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L667" title="$dom_component.js:667"><small>(defined@667)</small></a>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| 0 | <code>String</code> | Name of method in [instance_componentAdd](#module_jaaJSU..$dom..instance_componentAdd). |
-| 1 | <code>Array</code> | In fact arguments for `on*` methods in [instance_componentAdd](#module_jaaJSU..$dom..instance_componentAdd). |
-
 
 * * *
 
@@ -830,6 +815,22 @@ c.update({ B: "B" });//=> <p>AB</p>
 
 * * *
 
+<a name="module_jaaJSU..$dom..component_listener"></a>
+
+#### $dom~component\_listener : <code>Array</code>
+>This is in fact argument for [on](#module_jaaJSU..$dom..instance_componentAdd.on).
+
+**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..component_listener" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L667" title="$dom_component.js:667"><small>(defined@667)</small></a>  
+**Category**: types descriptions  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| 0 | <code>String</code> | Name of method in [instance_componentAdd](#module_jaaJSU..$dom..instance_componentAdd). |
+| 1 | <code>Array</code> | In fact arguments for `on*` methods in [instance_componentAdd](#module_jaaJSU..$dom..instance_componentAdd). |
+
+
+* * *
+
 <a name="module_jaaJSU..$dom..DomAssignObject"></a>
 
 #### $dom~DomAssignObject : <code>Object</code>
@@ -842,7 +843,7 @@ c.update({ B: "B" });//=> <p>AB</p>
  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
 
-**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..DomAssignObject" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L690" title="$dom_component.js:690"><small>(defined@690)</small></a>  
+**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..DomAssignObject" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L691" title="$dom_component.js:691"><small>(defined@691)</small></a>  
 **Category**: types descriptions  
 
 * * *

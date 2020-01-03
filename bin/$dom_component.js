@@ -671,6 +671,7 @@ function init(global){
      * @type {Array}
      * @param {String} 0 Name of method in {@link module:jaaJSU~$dom~instance_componentAdd}.
      * @param {Array} 1 In fact arguments for `on*` methods in {@link module:jaaJSU~$dom~instance_componentAdd}.
+     * @category types descriptions
      * @inner
      */
     /**

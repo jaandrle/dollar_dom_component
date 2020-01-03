@@ -29,11 +29,15 @@ textInputComponent({ label_type: "name", placeholder: "Peter" })
 .mount(document.body);
 /* result:
 <body>
-<div><label>Type your name: <input type="text" placeholder="Peter"></label><p>Your name is: <strong>Jan</strong></p></div>
+    <div>
+        <label>
+            Type your name: <input type="text" placeholder="Peter">
+        </label>
+        <p>Your name is: <strong> - </strong></p>
+    </div>
 </body>
 */
-
-function textInputComponent({ label_type= "name", placeholder }){
+function textInputComponent({ label_type= "name", placeholder= "Type text" }){
     const { add, share, update }= $dom.component("DIV");
         add("LABEL", { textContent: `Type your ${label_type}: ` });
             add("INPUT", { type: "text", placeholder, onkeyup });

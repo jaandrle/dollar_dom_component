@@ -101,7 +101,7 @@ function init(global){
      * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
      * @method component
      * @memberof module:jaaJSU~$dom
-     * @version 1.0.1
+     * @version 1.0.3
      * @see {@link https://github.com/jaandrle/dollar_dom_component}
      * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
      * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
@@ -113,6 +113,8 @@ function init(global){
         if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
         let /* holds `initStorage()` if `onupdate` was registered */
             internal_storage= null,
+            on_destroy_funs= null,
+            /* on first mount */
             on_mount_funs= null;
         const /* 'drawer' (container) for component elements */
             fragment= document.createDocumentFragment();
@@ -126,8 +128,8 @@ function init(global){
                 - see `shift` in `add`
             */
             deep= [];
-        const share= { mount, update, destroy, isStatic };
-        let component_out= { add, addText, component, setShift, mount, update, share };
+        const share= { mount, update, destroy, ondestroy, isStatic };
+        let component_out= { add, addText, component, setShift, mount, update, ondestroy, share };
         let add_out_methods= {
             /**
              * Returns reference of currently added element
@@ -177,6 +179,8 @@ function init(global){
              * It can for example solve problem setting default value for `select` (`option`s elements not exist when the `select` itself is declared!).
              * 
              * As alternative for some cases, you can use `active` label for `option`s instead.
+             * 
+             * For now, only first mount!
              * @method onmount
              * @memberof module:jaaJSU~$dom~instance_componentAdd
              * @param {Function} onMountFunction
@@ -434,7 +438,10 @@ function init(global){
                 observer.disconnect();
             }));
             observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
-            if(on_mount_funs) on_mount_funs.forEach((onMountFunction, el)=> $dom.assign(el, onMountFunction.call(el, element, type)));
+            if(on_mount_funs){
+                on_mount_funs.forEach((onMountFunction, el)=> $dom.assign(el, onMountFunction.call(el, element, type)));
+                on_mount_funs= null;
+            }
             return container;
         }
         
@@ -451,6 +458,10 @@ function init(global){
          * //=> c===null AND <body></body>
          */
         function destroy(){
+            if(on_destroy_funs){
+                on_destroy_funs.forEach(onDestroyFunction=> onDestroyFunction.call(container));
+                on_destroy_funs= null;
+            }
             if(container) {
                 container.remove();
                 container= null;
@@ -459,8 +470,20 @@ function init(global){
             if(internal_storage) internal_storage= null;
             if(component_out) component_out= null;
             if(add_out_methods) add_out_methods= null;
-            if(on_mount_funs) on_mount_funs= null;
             return null;
+        }
+        
+        /**
+         * 
+         * @method ondestroy
+         * @memberof module:jaaJSU~$dom~instance_component
+         * @public
+         * @param {Function} fun Function will be called when the component will be destroyed.
+         */
+        function ondestroy(onDestroyFunction){
+            if(!on_destroy_funs) on_destroy_funs= new Set();
+            on_destroy_funs.add(onDestroyFunction);
+            return component_out;
         }
         
         /**

@@ -9,14 +9,22 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
     const container= document.getElementById(element_id);
     const counter_component= counterComponent({ textContent: "Current loop (every 10secs add one): " });
     counter_component.mount(container);
-    setInterval(counter_component.update.bind(null, ({ value })=> ({ value: value+1 })), 10000);
+    counter_component.ondestroy(timerEffect(counter_component.update, 10000));
 
     function counterComponent({ textContent }){
-        const { add, share, update }= $dom.component("P", { textContent }, -1);
+        const { add, share, ondestroy, update }= $dom.component("P", { textContent }, -1);
                 add("STRONG", null).onupdate({ value: 0, animation: "" }, ({ value, animation })=> ({ textContent: value+" "+animation }));
         
-        setInterval(update.bind(null, ({ animation })=> ({ animation: nextStep(animation) })), 500);
+        ondestroy(dotsAnimationEffect(update, 500));
         return share;
+    }
+
+    function timerEffect(update, interval){
+        return clearInterval.bind(null, setInterval(update.bind(null, ({ value })=> ({ value: value+1 })), interval));
+    }
+    function dotsAnimationEffect(update, interval){
+        return clearInterval.bind(null, setInterval(update.bind(null, ({ animation })=> ({ animation: nextStep(animation) })), interval));
+
         function nextStep(current){
             if(current==="") return ". ";
             if(current===". ") return ". . ";

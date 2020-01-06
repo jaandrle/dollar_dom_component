@@ -51,6 +51,8 @@ let add_out_methods= {
      * It can for example solve problem setting default value for `select` (`option`s elements not exist when the `select` itself is declared!).
      * 
      * As alternative for some cases, you can use `active` label for `option`s instead.
+     * 
+     * For now, only first mount!
      * @method onmount
      * @memberof module:jaaJSU~$dom~instance_componentAdd
      * @param {Function} onMountFunction

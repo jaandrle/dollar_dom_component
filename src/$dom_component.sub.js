@@ -18,6 +18,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
     let /* holds `initStorage()` if `onupdate` was registered */
         internal_storage= null,
+        on_destroy_funs= null,
+        /* on first mount */
         on_mount_funs= null;
     const /* 'drawer' (container) for component elements */
         fragment= document.createDocumentFragment();
@@ -31,8 +33,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             - see `shift` in `add`
         */
         deep= [];
-    const share= { mount, update, destroy, isStatic };
-    let component_out= { add, addText, component, setShift, mount, update, share };
+    const share= { mount, update, destroy, ondestroy, isStatic };
+    let component_out= { add, addText, component, setShift, mount, update, ondestroy, share };
     gulp_place("both/add_out_methods.sub.js", "file");
     /**
      * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom~instance_component.component} method).
@@ -61,6 +63,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /* global mount */
     gulp_place("both/destroy.sub.js", "file");
     /* global destroy */
+    gulp_place("both/ondestroy.sub.js", "file");
+    /* global ondestroy */
     gulp_place("both/recalculateDeep.sub.js", "file");
     /* global recalculateDeep */
     gulp_place("both/getParentElement.sub.js", "file");

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>$dom.component — Examples</title>
-    <script type="text/javascript" src="$dom_component-min.js"></script>
+    <script type="text/javascript" src="$dom_component-min.js?v=1.0.3"></script>
     <style>
         body{
             color: #eeeeee;
@@ -496,14 +496,22 @@
                 const container= document.getElementById(element_id);
                 const counter_component= counterComponent({ textContent: "Current loop (every 10secs add one): " });
                 counter_component.mount(container);
-                setInterval(counter_component.update.bind(null, ({ value })=> ({ value: value+1 })), 10000);
+                counter_component.ondestroy(timerEffect(counter_component.update, 10000));
             
                 function counterComponent({ textContent }){
-                    const { add, share, update }= $dom.component("P", { textContent }, -1);
+                    const { add, share, ondestroy, update }= $dom.component("P", { textContent }, -1);
                             add("STRONG", null).onupdate({ value: 0, animation: "" }, ({ value, animation })=> ({ textContent: value+" "+animation }));
                     
-                    setInterval(update.bind(null, ({ animation })=> ({ animation: nextStep(animation) })), 500);
+                    ondestroy(dotsAnimationEffect(update, 500));
                     return share;
+                }
+            
+                function timerEffect(update, interval){
+                    return clearInterval.bind(null, setInterval(update.bind(null, ({ value })=> ({ value: value+1 })), interval));
+                }
+                function dotsAnimationEffect(update, interval){
+                    return clearInterval.bind(null, setInterval(update.bind(null, ({ animation })=> ({ animation: nextStep(animation) })), interval));
+            
                     function nextStep(current){
                         if(current==="") return ". ";
                         if(current===". ") return ". . ";
@@ -555,7 +563,7 @@
                 //EXAMPLE END
             })("example_element_016");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L534" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L542" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>You can use another component inside current one (see <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom..instance_component.component"><code>.component</code></a>):</p>
@@ -621,7 +629,7 @@
                 //EXAMPLE END
             })("example_element_017");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L565" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L573" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>As previou with different usuage of <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L485"><code>setShift</code></a>:</p>
@@ -687,7 +695,7 @@
                 //EXAMPLE END
             })("example_element_018");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L631" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L639" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
 

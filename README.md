@@ -5,9 +5,7 @@ Subrepository for [jaandrle/jaaJSU ($dom namespace)](https://github.com/jaandrle
 This library provide ability to write HTML/DOM components without using _OOP/class_ syntax and _jsx_.
 
 The main reasons for another library like [React](https://reactjs.org/) are
-1. React is too complex for __some__ user cases: this is solved for example by [litedom](https://github.com/mardix/litedom).
-
-    - In some user cases, it is not neccessary to defined `onDidMount`, … events.
+1. React is too "complex" for __some__ user cases: this is solved for example by [litedom](https://github.com/mardix/litedom).
 1. You want using Vanilla JavaScript syntax as much as is possible: this is solved by JS itsel see [webcomponents](https://www.webcomponents.org).
 1. You don't need virtual DOM: this is solved for example by [Svelte](https://svelte.dev/).
 

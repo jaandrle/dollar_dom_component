@@ -424,11 +424,11 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     }
     
     /**
-     * 
+     * This provide ability to register function which should be called when the component will be destroyed.
      * @method ondestroy
      * @memberof module:jaaJSU~$dom~instance_component
      * @public
-     * @param {Function} fun Function will be called when the component will be destroyed.
+     * @param {Function} onDestroyFunction Function will be called when the component will be destroyed.
      */
     function ondestroy(onDestroyFunction){
         if(!on_destroy_funs) on_destroy_funs= new Set();

@@ -161,7 +161,7 @@
 #### $dom.component([el_name], attrs, [params]) ⇒ [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) \| [<code>instance\_componentEmpty</code>](#module_jaaJSU..$dom..instance_componentEmpty)
 >This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
 
-**Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L100" title="$dom_component.js:100"><small>(defined@100)</small></a>  
+**Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L101" title="$dom_component.js:101"><small>(defined@101)</small></a>  
 **Returns**: [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) \| [<code>instance\_componentEmpty</code>](#module_jaaJSU..$dom..instance_componentEmpty) - Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!  
 **See**: [https://github.com/jaandrle/dollar_dom_component](https://github.com/jaandrle/dollar_dom_component)  
 **Version**: 1.0.3  
@@ -181,7 +181,7 @@
 #### $dom.componentListener(event_name, ...args) ⇒ [<code>component\_listener</code>](#module_jaaJSU..$dom..component_listener)
 >This provide more DRY way to register events listeners for [component](#module_jaaJSU..$dom.component) such as `onupdate`, `oninit`, ….
 
-**Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.componentListener" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L700" title="$dom_component.js:700"><small>(defined@700)</small></a>  
+**Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.componentListener" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L701" title="$dom_component.js:701"><small>(defined@701)</small></a>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -198,7 +198,7 @@
 Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
 It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
 
-**Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.assign" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L729" title="$dom_component.js:729"><small>(defined@729)</small></a>  
+**Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.assign" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L730" title="$dom_component.js:730"><small>(defined@730)</small></a>  
 **Returns**: <code>NodeElement</code> - Givven `element` (follows similar behaviour in `Object.assign`)  
 
 | Param | Type |
@@ -261,7 +261,7 @@ $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
 <a name="module_jaaJSU..$dom..onUpdateFunction"></a>
 
 #### $dom~onUpdateFunction ⇒ <code>\*</code> \| [<code>DomAssignObject</code>](#module_jaaJSU..$dom..DomAssignObject)
-**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..onUpdateFunction" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L228" title="$dom_component.js:228"><small>(defined@228)</small></a>  
+**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..onUpdateFunction" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L229" title="$dom_component.js:229"><small>(defined@229)</small></a>  
 **Returns**: <code>\*</code> \| [<code>DomAssignObject</code>](#module_jaaJSU..$dom..DomAssignObject) - Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method [update](#module_jaaJSU..$dom..instance_component.update) is called. This callback can be registered when element is created (see method [add](#module_jaaJSU..$dom..instance_component.add)) see [instance_componentAdd](#module_jaaJSU..$dom..instance_componentAdd).  
 **Category**: types descriptions  
 
@@ -277,7 +277,7 @@ $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
 #### $dom~instance\_component : <code>Object</code>
 >This is minimal export of "functional class" [component](#module_jaaJSU..$dom.component) and its methods (if they are chainable).
 
-**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..instance_component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L251" title="$dom_component.js:251"><small>(defined@251)</small></a>  
+**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..instance_component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L252" title="$dom_component.js:252"><small>(defined@252)</small></a>  
 **Category**: types descriptions  
 
 * [~instance_component](#module_jaaJSU..$dom..instance_component) : <code>Object</code>
@@ -305,7 +305,7 @@ $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
 ##### instance_component.add(el_name, attrs, [shift]) ⇒ [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd)
 >This add element to component
 
-**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.add" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L268" title="$dom_component.js:268"><small>(defined@268)</small></a>  
+**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.add" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L269" title="$dom_component.js:269"><small>(defined@269)</small></a>  
 **Chainable**  
 **Access**: public  
 
@@ -344,7 +344,7 @@ add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2
 ##### instance_component.addText(text, [shift]) ⇒ [<code>instance\_componentAddText</code>](#module_jaaJSU..$dom..instance_componentAddText)
 >This add element to component
 
-**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.addText" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L325" title="$dom_component.js:325"><small>(defined@325)</small></a>  
+**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.addText" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L326" title="$dom_component.js:326"><small>(defined@326)</small></a>  
 **Chainable**  
 **Access**: public  
 
@@ -382,7 +382,7 @@ function testTextLi({ href= "https://www.seznam.cz" }= {}){
 ##### instance_component.component(share, [shift]) ⇒ [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
 >Method for including another component by usint its `share` key.
 
-**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L369" title="$dom_component.js:369"><small>(defined@369)</small></a>  
+**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.component" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L370" title="$dom_component.js:370"><small>(defined@370)</small></a>  
 **Chainable**  
 **Access**: public  
 
@@ -410,7 +410,7 @@ c.mount(document.body, "replaceContent");
 ##### instance_component.mount(element, [type]) ⇒ <code>NodeElement</code>
 >Add element to live DOM
 
-**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.mount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L399" title="$dom_component.js:399"><small>(defined@399)</small></a>  
+**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.mount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L400" title="$dom_component.js:400"><small>(defined@400)</small></a>  
 **Returns**: <code>NodeElement</code> - `container`  
 **Access**: public  
 
@@ -427,7 +427,7 @@ c.mount(document.body, "replaceContent");
 ##### instance_component.ondestroy(onDestroyFunction)
 >This provide ability to register function which should be called when the component will be destroyed.
 
-**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.ondestroy" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L476" title="$dom_component.js:476"><small>(defined@476)</small></a>  
+**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.ondestroy" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L477" title="$dom_component.js:477"><small>(defined@477)</small></a>  
 **Access**: public  
 
 | Param | Type | Description |
@@ -442,7 +442,7 @@ c.mount(document.body, "replaceContent");
 ##### instance_component.recalculateDeep(shift) ℗
 >Updates `deep`
 
-**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.recalculateDeep" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L489" title="$dom_component.js:489"><small>(defined@489)</small></a>  
+**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.recalculateDeep" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L490" title="$dom_component.js:490"><small>(defined@490)</small></a>  
 **Access**: private  
 
 | Param | Type | Description |
@@ -457,7 +457,7 @@ c.mount(document.body, "replaceContent");
 ##### instance_component.getParentElement() ⇒ <code>NodeElement</code> ℗
 >Returns parent element (or "fragment pseudo element")
 
-**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.getParentElement" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L501" title="$dom_component.js:501"><small>(defined@501)</small></a>  
+**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.getParentElement" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L502" title="$dom_component.js:502"><small>(defined@502)</small></a>  
 **Returns**: <code>NodeElement</code> - Returns parent element (i. e. `DocumenFragment` if component is empty)  
 **Access**: private  
 
@@ -468,7 +468,7 @@ c.mount(document.body, "replaceContent");
 ##### instance_component.setShift([shift]) ⇒ [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
 >Method provide way to change nesting behaviour. It can be helpful for loops
 
-**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.setShift" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L512" title="$dom_component.js:512"><small>(defined@512)</small></a>  
+**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.setShift" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L513" title="$dom_component.js:513"><small>(defined@513)</small></a>  
 **Chainable**  
 **Access**: public  
 
@@ -510,7 +510,7 @@ function testNesting(){
 ##### instance_component.initStorage() ⇒ <code>Object</code> ℗
 >Initialize internal storage
 
-**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.initStorage" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L550" title="$dom_component.js:550"><small>(defined@550)</small></a>  
+**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.initStorage" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L551" title="$dom_component.js:551"><small>(defined@551)</small></a>  
 **Returns**: <code>Object</code> - `{ register, registerComponent, update, unregister}`  
 **Access**: private  
 
@@ -521,7 +521,7 @@ function testNesting(){
 ##### instance_component.update(new_data) ⇒ <code>Boolean</code>
 >Method updates all registered varibles by keys `onupdates` and calls follower functions
 
-**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.update" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L637" title="$dom_component.js:637"><small>(defined@637)</small></a>  
+**Kind**: static method of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.update" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L638" title="$dom_component.js:638"><small>(defined@638)</small></a>  
 **Returns**: <code>Boolean</code> - If success `1`, else `0`.  
 **Access**: public  
 
@@ -568,7 +568,7 @@ c.update(({ a })=> { a: ++a });
 ##### instance_component.share : <code>Object</code>
 >Its purpose is to make easy transfering methods somewhere else (like for using in another component, see [component](#module_jaaJSU..$dom..instance_component.component) method).
 
-**Kind**: static typedef of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.share" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L243" title="$dom_component.js:243"><small>(defined@243)</small></a>  
+**Kind**: static typedef of [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component) <a name="module_jaaJSU..$dom..instance_component.share" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L244" title="$dom_component.js:244"><small>(defined@244)</small></a>  
 
 * [.share](#module_jaaJSU..$dom..instance_component.share) : <code>Object</code>
     * [.destroy()](#module_jaaJSU..$dom..instance_component.share.destroy) ⇒ <code>Null</code>
@@ -584,7 +584,7 @@ c.update(({ a })=> { a: ++a });
 ###### share.destroy() ⇒ <code>Null</code>
 >Method remove element form live DOM and returns null
 
-**Kind**: static method of [<code>share</code>](#module_jaaJSU..$dom..instance_component.share) <a name="module_jaaJSU..$dom..instance_component.share.destroy" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L448" title="$dom_component.js:448"><small>(defined@448)</small></a>  
+**Kind**: static method of [<code>share</code>](#module_jaaJSU..$dom..instance_component.share) <a name="module_jaaJSU..$dom..instance_component.share.destroy" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L449" title="$dom_component.js:449"><small>(defined@449)</small></a>  
 **Access**: public  
 **Example**  
 ```js
@@ -601,7 +601,7 @@ c= c.share.destroy();
 ###### share.isStatic() ⇒ <code>Boolean</code>
 >Methods returns if it was `onupdate` used
 
-**Kind**: static method of [<code>share</code>](#module_jaaJSU..$dom..instance_component.share) <a name="module_jaaJSU..$dom..instance_component.share.isStatic" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L678" title="$dom_component.js:678"><small>(defined@678)</small></a>  
+**Kind**: static method of [<code>share</code>](#module_jaaJSU..$dom..instance_component.share) <a name="module_jaaJSU..$dom..instance_component.share.isStatic" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L679" title="$dom_component.js:679"><small>(defined@679)</small></a>  
 **Returns**: <code>Boolean</code> - If there is some listeners `onupdate`  
 **Access**: public  
 
@@ -612,7 +612,7 @@ c= c.share.destroy();
 ###### share.mount(element, [type]) ⇒ <code>NodeElement</code>
 >Add element to live DOM
 
-**Kind**: static method of [<code>share</code>](#module_jaaJSU..$dom..instance_component.share) <a name="module_jaaJSU..$dom..instance_component.share.mount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L399" title="$dom_component.js:399"><small>(defined@399)</small></a>  
+**Kind**: static method of [<code>share</code>](#module_jaaJSU..$dom..instance_component.share) <a name="module_jaaJSU..$dom..instance_component.share.mount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L400" title="$dom_component.js:400"><small>(defined@400)</small></a>  
 **Returns**: <code>NodeElement</code> - `container`  
 **Access**: public  
 
@@ -629,7 +629,7 @@ c= c.share.destroy();
 ###### share.update(new_data) ⇒ <code>Boolean</code>
 >Method updates all registered varibles by keys `onupdates` and calls follower functions
 
-**Kind**: static method of [<code>share</code>](#module_jaaJSU..$dom..instance_component.share) <a name="module_jaaJSU..$dom..instance_component.share.update" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L637" title="$dom_component.js:637"><small>(defined@637)</small></a>  
+**Kind**: static method of [<code>share</code>](#module_jaaJSU..$dom..instance_component.share) <a name="module_jaaJSU..$dom..instance_component.share.update" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L638" title="$dom_component.js:638"><small>(defined@638)</small></a>  
 **Returns**: <code>Boolean</code> - If success `1`, else `0`.  
 **Access**: public  
 
@@ -676,7 +676,7 @@ c.update(({ a })=> { a: ++a });
 #### $dom~instance\_componentAdd : [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
 >This is `Component` with aditional methods
 
-**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..instance_componentAdd" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L260" title="$dom_component.js:260"><small>(defined@260)</small></a>  
+**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..instance_componentAdd" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L261" title="$dom_component.js:261"><small>(defined@261)</small></a>  
 **Category**: types descriptions  
 
 * [~instance_componentAdd](#module_jaaJSU..$dom..instance_componentAdd) : [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
@@ -694,7 +694,7 @@ c.update(({ a })=> { a: ++a });
 ##### instance_componentAdd.getReference() ⇒ <code>NodeElement</code>
 >Returns reference of currently added element
 
-**Kind**: static method of [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) <a name="module_jaaJSU..$dom..instance_componentAdd.getReference" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L134" title="$dom_component.js:134"><small>(defined@134)</small></a>  
+**Kind**: static method of [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) <a name="module_jaaJSU..$dom..instance_componentAdd.getReference" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L135" title="$dom_component.js:135"><small>(defined@135)</small></a>  
 
 * * *
 
@@ -703,7 +703,7 @@ c.update(({ a })=> { a: ++a });
 ##### instance_componentAdd.on(...listeners) ⇒ [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd)
 >Method for batch registering `on*` methods for current element.
 
-**Kind**: static method of [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) <a name="module_jaaJSU..$dom..instance_componentAdd.on" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L141" title="$dom_component.js:141"><small>(defined@141)</small></a>  
+**Kind**: static method of [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) <a name="module_jaaJSU..$dom..instance_componentAdd.on" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L142" title="$dom_component.js:142"><small>(defined@142)</small></a>  
 
 | Param | Type |
 | --- | --- |
@@ -735,7 +735,7 @@ function select(init= { value: "default" }){
 ##### instance_componentAdd.oninit(fn) ⇒ [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd)
 >This procedure allows to call given function `fn` during registering element.
 
-**Kind**: static method of [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) <a name="module_jaaJSU..$dom..instance_componentAdd.oninit" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L168" title="$dom_component.js:168"><small>(defined@168)</small></a>  
+**Kind**: static method of [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) <a name="module_jaaJSU..$dom..instance_componentAdd.oninit" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L169" title="$dom_component.js:169"><small>(defined@169)</small></a>  
 
 | Param | Type |
 | --- | --- |
@@ -755,7 +755,7 @@ As alternative for some cases, you can use `active` label for `option`s instead.
 
 For now, only first mount!
 
-**Kind**: static method of [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) <a name="module_jaaJSU..$dom..instance_componentAdd.onmount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L176" title="$dom_component.js:176"><small>(defined@176)</small></a>  
+**Kind**: static method of [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) <a name="module_jaaJSU..$dom..instance_componentAdd.onmount" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L177" title="$dom_component.js:177"><small>(defined@177)</small></a>  
 
 | Param | Type |
 | --- | --- |
@@ -785,7 +785,7 @@ function select(init){
 ##### instance_componentAdd.onupdate(data, onUpdateFunction) ⇒ [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd)
 >This method allows to register function ([module:jaaJSU~$dom.onUpdateFunction](module:jaaJSU~$dom.onUpdateFunction)) which shoul be invoke when given **keys** in `data` will be changed (see [update](#module_jaaJSU..$dom..instance_component.update)).
 
-**Kind**: static method of [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) <a name="module_jaaJSU..$dom..instance_componentAdd.onupdate" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L208" title="$dom_component.js:208"><small>(defined@208)</small></a>  
+**Kind**: static method of [<code>instance\_componentAdd</code>](#module_jaaJSU..$dom..instance_componentAdd) <a name="module_jaaJSU..$dom..instance_componentAdd.onupdate" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L209" title="$dom_component.js:209"><small>(defined@209)</small></a>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -816,7 +816,7 @@ c.update({ B: "B" });//=> <p>AB</p>
 #### $dom~instance\_componentAddText : [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
 >This is `Component` with aditional methods
 
-**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..instance_componentAddText" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L317" title="$dom_component.js:317"><small>(defined@317)</small></a>  
+**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..instance_componentAddText" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L318" title="$dom_component.js:318"><small>(defined@318)</small></a>  
 **Category**: types descriptions  
 
 * * *
@@ -826,7 +826,7 @@ c.update({ B: "B" });//=> <p>AB</p>
 ##### instance_componentAddText.oninit(fn) ⇒ [<code>instance\_component</code>](#module_jaaJSU..$dom..instance_component)
 >This procedure allows to call given function `fn` during registering element.
 
-**Kind**: static method of [<code>instance\_componentAddText</code>](#module_jaaJSU..$dom..instance_componentAddText) <a name="module_jaaJSU..$dom..instance_componentAddText.oninit" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L358" title="$dom_component.js:358"><small>(defined@358)</small></a>  
+**Kind**: static method of [<code>instance\_componentAddText</code>](#module_jaaJSU..$dom..instance_componentAddText) <a name="module_jaaJSU..$dom..instance_componentAddText.oninit" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L359" title="$dom_component.js:359"><small>(defined@359)</small></a>  
 
 | Param | Type |
 | --- | --- |
@@ -840,7 +840,7 @@ c.update({ B: "B" });//=> <p>AB</p>
 #### $dom~component\_listener : <code>Array</code>
 >This is in fact argument for [on](#module_jaaJSU..$dom..instance_componentAdd.on).
 
-**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..component_listener" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L690" title="$dom_component.js:690"><small>(defined@690)</small></a>  
+**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..component_listener" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L691" title="$dom_component.js:691"><small>(defined@691)</small></a>  
 **Category**: types descriptions  
 
 | Param | Type | Description |
@@ -863,7 +863,7 @@ c.update({ B: "B" });//=> <p>AB</p>
  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
 
-**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..DomAssignObject" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L714" title="$dom_component.js:714"><small>(defined@714)</small></a>  
+**Kind**: inner typedef of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom..DomAssignObject" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L715" title="$dom_component.js:715"><small>(defined@715)</small></a>  
 **Category**: types descriptions  
 
 * * *

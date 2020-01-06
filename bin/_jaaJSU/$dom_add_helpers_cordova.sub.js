@@ -11,8 +11,8 @@
  * @type {module:jaaJSU~$dom~instance_component}
  */
 const $dom_emptyPseudoComponent= (function(){
-    const share= { mount, update, destroy, isStatic };
-    const component_out= { add, component, mount, update, share };
+    const share= { mount, update, destroy, ondestroy, isStatic };
+    let component_out= { add, component, mount, update, ondestroy, share };
     return component_out;
     /**
      * The same syntax as {@link module:jaaJSU~$dom~instance_component.mount}. But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
@@ -46,7 +46,8 @@ const $dom_emptyPseudoComponent= (function(){
     function component(){ return component_out; }
     function update(){ return true; }
     function isStatic(){ return true; }
-    function destroy(){ return null; }
+    function ondestroy(){ return true; }
+    function destroy(){ component_out= null; return null; }
 })();
 /**
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.

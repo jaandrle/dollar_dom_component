@@ -417,16 +417,16 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     function destroy(){
         if(on_destroy_funs){
             on_destroy_funs.forEach(onDestroyFunction=> onDestroyFunction.call(container));
-            on_destroy_funs= null;
         }
         if(container) {
             container.remove();
-            container= null;
             els= [];
         }
-        if(internal_storage) internal_storage= null;
-        if(component_out) component_out= null;
-        if(add_out_methods) add_out_methods= null;
+        on_destroy_funs= undefined;
+        container= undefined;
+        internal_storage= undefined;
+        component_out= undefined;
+        add_out_methods= undefined;
         return null;
     }
     

@@ -16,11 +16,12 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
-    let /* holds `initStorage()` if `onupdate` was registered */
+    let /* holds `initStorage()` if `onupdate` was registered and other component related listeners */
         internal_storage= null,
         on_destroy_funs= null,
         /* on first mount */
-        on_mount_funs= null;
+        on_mount_funs= null,
+        observer= null;
     const /* 'drawer' (container) for component elements */
         fragment= document.createDocumentFragment();
     let /* main parent (wrapper), container for children elements */

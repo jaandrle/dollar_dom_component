@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
-/* global $dom, fragment, parseHTML, c_CMD, container, destroy, on_mount_funs: true */
+/* global $dom, fragment, parseHTML, c_CMD, container, destroy, on_mount_funs: true, observer: true */
 /**
  * Add element to live DOM
  * @method mount
@@ -17,6 +17,7 @@
  *  <br/>- `after` places component after `element` (uses `$dom.insertAfter`)
  */
 function mount(element, call_parseHTML, type= "childLast"){
+    if(observer) observer.disconnect();
     switch ( type ) {
         case "replace":
             $dom.replace(element, fragment);
@@ -41,15 +42,14 @@ function mount(element, call_parseHTML, type= "childLast"){
             if(call_parseHTML) parseHTML(element.querySelectorAll(c_CMD));
             break;
     }
-    const observer= new MutationObserver(mutations=> mutations.forEach(function(record){
+    observer= new MutationObserver(mutations=> mutations.forEach(function(record){
         if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, container)===-1) return false;
         destroy();
-        observer.disconnect();
     }));
     observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
     if(on_mount_funs){
         on_mount_funs.forEach((onMountFunction, el)=> $dom.assign(el, onMountFunction.call(el, element, call_parseHTML, type)));
-        on_mount_funs= null;
+        on_mount_funs= undefined;
     }
     return container;
 }

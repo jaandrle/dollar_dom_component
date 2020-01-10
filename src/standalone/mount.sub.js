@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
-/* global $dom, fragment, container, destroy, on_mount_funs: true */
+/* global $dom, fragment, container, destroy, on_mount_funs: true, observer: true */
 /**
  * Add element to live DOM
  * @method mount
@@ -17,6 +17,7 @@
  * @returns {NodeElement} `container`
  */
 function mount(element, type= "childLast"){
+    if(observer) observer.disconnect();
     switch ( type ) {
         case "replace":
             $dom.replace(element, fragment);
@@ -36,10 +37,9 @@ function mount(element, type= "childLast"){
             else element.appendChild(fragment);
             break;
     }
-    const observer= new MutationObserver(mutations=> mutations.forEach(function(record){
+    observer= new MutationObserver(mutations=> mutations.forEach(function(record){
         if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, container)===-1) return false;
         destroy();
-        observer.disconnect();
     }));
     observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
     if(on_mount_funs){

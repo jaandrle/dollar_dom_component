@@ -62,11 +62,12 @@ const $dom_emptyPseudoComponent= (function(){
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
-    let /* holds `initStorage()` if `onupdate` was registered */
+    let /* holds `initStorage()` if `onupdate` was registered and other component related listeners */
         internal_storage= null,
         on_destroy_funs= null,
         /* on first mount */
-        on_mount_funs= null;
+        on_mount_funs= null,
+        observer= null;
     const /* 'drawer' (container) for component elements */
         fragment= document.createDocumentFragment();
     let /* main parent (wrapper), container for children elements */
@@ -364,6 +365,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      * @returns {NodeElement} `container`
      */
     function mount(element, type= "childLast"){
+        if(observer) observer.disconnect();
         switch ( type ) {
             case "replace":
                 $dom.replace(element, fragment);
@@ -383,10 +385,9 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
                 else element.appendChild(fragment);
                 break;
         }
-        const observer= new MutationObserver(mutations=> mutations.forEach(function(record){
+        observer= new MutationObserver(mutations=> mutations.forEach(function(record){
             if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, container)===-1) return false;
             destroy();
-            observer.disconnect();
         }));
         observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
         if(on_mount_funs){
@@ -416,6 +417,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             container.remove();
             els= [];
         }
+        if(observer) observer.disconnect();
+        observer= undefined;
         on_destroy_funs= undefined;
         container= undefined;
         internal_storage= undefined;

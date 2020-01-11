@@ -367,27 +367,28 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      */
     function mount(element, call_parseHTML, type= "childLast"){
         if(observer) observer.disconnect();
+        const component_el= !fragment.firstChild&&container ? container : fragment;
         switch ( type ) {
             case "replace":
-                $dom.replace(element, fragment);
+                $dom.replace(element, component_el);
                 if(call_parseHTML) parseHTML(element.parentNode.querySelectorAll(c_CMD));
                 break;
             case "replaceContent":
                 $dom.empty(element);
-                element.appendChild(fragment);
+                element.appendChild(component_el);
                 if(call_parseHTML) parseHTML(element.querySelectorAll(c_CMD));
                 break;
             case "before":
-                element.parentNode.insertBefore(fragment, element);
+                element.parentNode.insertBefore(component_el, element);
                 if(call_parseHTML) parseHTML(element.parentNode.querySelectorAll(c_CMD));
                 break;
             case "after":
-                $dom.insertAfter(fragment, element);
+                $dom.insertAfter(component_el, element);
                 if(call_parseHTML) parseHTML(element.parentNode.querySelectorAll(c_CMD));
                 break;
             default:
-                if(type==="childFirst" && element.childNodes.length) element.insertBefore(fragment, element.childNodes[0]);
-                else element.appendChild(fragment);
+                if(type==="childFirst" && element.childNodes.length) element.insertBefore(component_el, element.childNodes[0]);
+                else element.appendChild(component_el);
                 if(call_parseHTML) parseHTML(element.querySelectorAll(c_CMD));
                 break;
         }

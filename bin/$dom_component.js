@@ -416,23 +416,24 @@ function init(global){
          */
         function mount(element, type= "childLast"){
             if(observer) observer.disconnect();
+            const component_el= !fragment.firstChild&&container ? container : fragment;
             switch ( type ) {
                 case "replace":
-                    $dom.replace(element, fragment);
+                    $dom.replace(element, component_el);
                     break;
                 case "replaceContent":
                     $dom.empty(element);
-                    element.appendChild(fragment);
+                    element.appendChild(component_el);
                     break;
                 case "before":
-                    element.parentNode.insertBefore(fragment, element);
+                    element.parentNode.insertBefore(component_el, element);
                     break;
                 case "after":
-                    $dom.insertAfter(fragment, element);
+                    $dom.insertAfter(component_el, element);
                     break;
                 default:
-                    if(type==="childFirst" && element.childNodes.length) element.insertBefore(fragment, element.childNodes[0]);
-                    else element.appendChild(fragment);
+                    if(type==="childFirst" && element.childNodes.length) element.insertBefore(component_el, element.childNodes[0]);
+                    else element.appendChild(component_el);
                     break;
             }
             observer= new MutationObserver(mutations=> mutations.forEach(function(record){

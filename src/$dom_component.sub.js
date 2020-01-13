@@ -35,7 +35,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
         */
         deep= [];
     const share= { mount, update, destroy, ondestroy, isStatic };
-    let component_out= { add, addText, component, setShift, mount, update, ondestroy, share };
+    let component_out= { add, addText, component, dynamicComponent, setShift, mount, update, ondestroy, share };
     gulp_place("both/add_out_methods.sub.js", "file");
     /**
      * Its purpose is to make easy transfering methods somewhere else (like for using in another component, see {@link module:jaaJSU~$dom~instance_component.component} method).
@@ -60,6 +60,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
     /* global addText */
     gulp_place("both/component.sub.js", "file");
     /* global component */
+    gulp_place("both/dynamicComponent.sub.js", "file");
+    /* global dynamicComponent */
     gulp_place("${app.standalone}/mount.sub.js", "file");
     /* global mount */
     gulp_place("both/destroy.sub.js", "file");

@@ -696,6 +696,49 @@
             })("example_element_018");
             </script>
             <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L639" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>As previou with different usuage of <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L485"><code>setShift</code></a>:</p>
+            <div class="output" id="example_element_019"></div>
+            <script onkeyup="onKeyup(this, 'example_element_019')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const container= document.getElementById(element_id);
+                mainComponent({ textContent: "`dynamicComponent` example: " }).mount(container);
+            
+                function mainComponent({ textContent }){
+                    const { add, addText, update, dynamicComponent, share }= $dom.component("DIV");
+                        add("P", { textContent });
+                            dynamicComponent({ text: "–" }, function(use, prev_component, { text: textContent }, shared_value){
+                                /* initial component */
+                                if(!prev_component){
+                                    use($dom.component("SPAN", { textContent }).share);
+                                    return 1;
+                                }
+                                /* dynamic part */
+                                if(shared_value===1) use(spec_text({ textContent }));
+                                else prev_component.update({ shared_text: `(ignored ${shared_value-1})` });
+            
+                                return ++shared_value;
+                            });
+                            addText(".", -1);
+                        add("BUTTON", { textContent: "text1", onclick }, -2);
+                        add("BUTTON", { textContent: "text2", onclick }, -1);
+                    return share;
+            
+                    function onclick(){ update({ text: this.textContent }); }
+                }
+                function spec_text({ textContent }){
+                    const { share }= $dom.component("STRONG")
+                        .onupdate({ shared_text: "" }, ({ shared_text })=> ({ textContent: textContent+(shared_text?" "+shared_text:shared_text) }));
+                    return share;
+                }
+                
+                //EXAMPLE END
+            })("example_element_019");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L705" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
 

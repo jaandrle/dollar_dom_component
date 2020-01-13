@@ -82,7 +82,7 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
         */
         deep= [];
     const share= { mount, update, destroy, ondestroy, isStatic };
-    let component_out= { add, addText, component, setShift, mount, update, ondestroy, share };
+    let component_out= { add, addText, component, dynamicComponent, setShift, mount, update, ondestroy, share };
     let add_out_methods= {
         /**
          * Returns reference of currently added element
@@ -347,6 +347,47 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
         }
         all_els_counter+= 1;
         return component_out;
+    }
+    
+    /**
+     * Method for including another component by using `generator` function, which can change final `component` based on updated data `data`.
+     * @method dynamicComponent
+     * @memberof module:jaaJSU~$dom~instance_component
+     * @public
+     * @chainable
+     * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom~instance_componentAdd.onupdate}
+     * @param {module:jaaJSU~$dom~componentGenerator} generator Function for registering components based on updates of `data`.
+     * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
+     * @return {module:jaaJSU~$dom~instance_component}
+     */
+    function dynamicComponent(data, generator, shift= 0){
+        recalculateDeep(shift);
+        const parent= getParentElement();
+        setShift(1);
+        let current_value= null, current_component= null, current_element= null;
+        function mount(component_share, call_parseHTML){
+            current_component= component_share;
+            if(current_element){
+                current_element= current_component.mount(current_element, call_parseHTML, "replace");
+            } else {
+                current_element= current_component.mount(parent, call_parseHTML);
+            }
+        }
+        return add_out_methods.onupdate(component_out, parent, data, function(data){
+            /**
+             * This is function for registering component for {@link module:jaaJSU~$dom~instance_component.dynamicComponent}.
+             * @callback componentGenerator
+             * @memberof module:jaaJSU~$dom
+             * @category types descriptions
+             * @inner
+             * @param {Function} mount Function which consumes {@link module:jaaJSU~$dom~instance_component.share}.
+             * @param {Null|module:jaaJSU~$dom~instance_component.share} current_component Previously registered component
+             * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom~instance_componentAdd.onupdate}
+             * @param {Null|Mixed} current_value Shared value across multiple calling
+             * @returns {Mixed} current_value 
+             */
+            current_value= generator.call(parent, mount, current_component, data, current_value);
+        });
     }
     
     /**

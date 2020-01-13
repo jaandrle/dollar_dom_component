@@ -370,8 +370,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
         let parent_node;
         switch ( type ) {
             case "replace":
-                $dom.replace(element, component_el);
                 parent_node= element.parentNode;
+                $dom.replace(element, component_el);
                 break;
             case "replaceContent":
                 $dom.empty(element);
@@ -379,8 +379,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
                 parent_node= element;
                 break;
             case "before":
-                element.parentNode.insertBefore(component_el, element);
                 parent_node= element.parentNode;
+                parent_node.insertBefore(component_el, element);
                 break;
             case "after":
                 $dom.insertAfter(component_el, element);

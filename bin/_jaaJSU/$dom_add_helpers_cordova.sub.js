@@ -53,7 +53,7 @@ const $dom_emptyPseudoComponent= (function(){
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
  * @method component
  * @memberof module:jaaJSU~$dom
- * @version 1.0.3
+ * @version 1.0.4
  * @see {@link https://github.com/jaandrle/dollar_dom_component}
  * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
  * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
@@ -63,11 +63,12 @@ const $dom_emptyPseudoComponent= (function(){
  */
 $dom.component= function(el_name, attrs, { mapUpdate }={}){
     if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
-    let /* holds `initStorage()` if `onupdate` was registered */
+    let /* holds `initStorage()` if `onupdate` was registered and other component related listeners */
         internal_storage= null,
         on_destroy_funs= null,
         /* on first mount */
-        on_mount_funs= null;
+        on_mount_funs= null,
+        observer= null;
     const /* 'drawer' (container) for component elements */
         fragment= document.createDocumentFragment();
     let /* main parent (wrapper), container for children elements */
@@ -365,41 +366,45 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
      *  <br/>- `after` places component after `element` (uses `$dom.insertAfter`)
      */
     function mount(element, call_parseHTML, type= "childLast"){
+        if(observer) observer.disconnect();
+        const component_el= !fragment.firstChild&&container ? container : fragment;
+        let parent_node;
         switch ( type ) {
             case "replace":
-                $dom.replace(element, fragment);
-                if(call_parseHTML) parseHTML(element.parentNode.querySelectorAll(c_CMD));
+                $dom.replace(element, component_el);
+                parent_node= element.parentNode;
                 break;
             case "replaceContent":
                 $dom.empty(element);
-                element.appendChild(fragment);
-                if(call_parseHTML) parseHTML(element.querySelectorAll(c_CMD));
+                element.appendChild(component_el);
+                parent_node= element;
                 break;
             case "before":
-                element.parentNode.insertBefore(fragment, element);
-                if(call_parseHTML) parseHTML(element.parentNode.querySelectorAll(c_CMD));
+                element.parentNode.insertBefore(component_el, element);
+                parent_node= element.parentNode;
                 break;
             case "after":
-                $dom.insertAfter(fragment, element);
-                if(call_parseHTML) parseHTML(element.parentNode.querySelectorAll(c_CMD));
+                $dom.insertAfter(component_el, element);
+                parent_node= element.parentNode;
                 break;
             default:
-                if(type==="childFirst" && element.childNodes.length) element.insertBefore(fragment, element.childNodes[0]);
-                else element.appendChild(fragment);
-                if(call_parseHTML) parseHTML(element.querySelectorAll(c_CMD));
+                if(type==="childFirst" && element.childNodes.length) element.insertBefore(component_el, element.childNodes[0]);
+                else element.appendChild(component_el);
+                parent_node= element;
                 break;
         }
-        const observer= new MutationObserver(mutations=> mutations.forEach(function(record){
+        observer= new MutationObserver(mutations=> mutations.forEach(function(record){
             if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, container)===-1) return false;
             destroy();
-            observer.disconnect();
         }));
-        observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
+        observer.observe(parent_node, { childList: true, subtree: true, attributes: false, characterData: false });
         if(on_mount_funs){
-            on_mount_funs.forEach((onMountFunction, el)=> $dom.assign(el, onMountFunction.call(el, element, call_parseHTML, type)));
-            on_mount_funs= null;
+            on_mount_funs.forEach(onMountFunctionCall);
+            on_mount_funs= undefined;
         }
+        if(call_parseHTML) parseHTML(parent_node.querySelectorAll(c_CMD));
         return container;
+        function onMountFunctionCall(onMountFunction, el){ return $dom.assign(el, onMountFunction.call(el, element, call_parseHTML, type)); }
     }
     
     /**
@@ -422,6 +427,8 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
             container.remove();
             els= [];
         }
+        if(observer) observer.disconnect();
+        observer= undefined;
         on_destroy_funs= undefined;
         container= undefined;
         internal_storage= undefined;

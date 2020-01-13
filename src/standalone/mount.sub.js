@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
-/* global $dom, fragment, container, destroy, on_mount_funs: true */
+/* global container, $dom */
 /**
  * Add element to live DOM
  * @method mount
@@ -17,34 +17,7 @@
  * @returns {NodeElement} `container`
  */
 function mount(element, type= "childLast"){
-    switch ( type ) {
-        case "replace":
-            $dom.replace(element, fragment);
-            break;
-        case "replaceContent":
-            $dom.empty(element);
-            element.appendChild(fragment);
-            break;
-        case "before":
-            element.parentNode.insertBefore(fragment, element);
-            break;
-        case "after":
-            $dom.insertAfter(fragment, element);
-            break;
-        default:
-            if(type==="childFirst" && element.childNodes.length) element.insertBefore(fragment, element.childNodes[0]);
-            else element.appendChild(fragment);
-            break;
-    }
-    const observer= new MutationObserver(mutations=> mutations.forEach(function(record){
-        if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, container)===-1) return false;
-        destroy();
-        observer.disconnect();
-    }));
-    observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
-    if(on_mount_funs){
-        on_mount_funs.forEach((onMountFunction, el)=> $dom.assign(el, onMountFunction.call(el, element, type)));
-        on_mount_funs= null;
-    }
+    gulp_place("both/mount_inside.sub.js", "file");/* global gulp_place */
     return container;
+    function onMountFunctionCall(onMountFunction, el){ return $dom.assign(el, onMountFunction.call(el, element, type)); }
 }

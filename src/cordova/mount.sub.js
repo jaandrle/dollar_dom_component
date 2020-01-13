@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
-/* global $dom, fragment, parseHTML, c_CMD, container, destroy, on_mount_funs: true */
+/* global container, $dom, parseHTML, c_CMD */
 /**
  * Add element to live DOM
  * @method mount
@@ -17,39 +17,8 @@
  *  <br/>- `after` places component after `element` (uses `$dom.insertAfter`)
  */
 function mount(element, call_parseHTML, type= "childLast"){
-    switch ( type ) {
-        case "replace":
-            $dom.replace(element, fragment);
-            if(call_parseHTML) parseHTML(element.parentNode.querySelectorAll(c_CMD));
-            break;
-        case "replaceContent":
-            $dom.empty(element);
-            element.appendChild(fragment);
-            if(call_parseHTML) parseHTML(element.querySelectorAll(c_CMD));
-            break;
-        case "before":
-            element.parentNode.insertBefore(fragment, element);
-            if(call_parseHTML) parseHTML(element.parentNode.querySelectorAll(c_CMD));
-            break;
-        case "after":
-            $dom.insertAfter(fragment, element);
-            if(call_parseHTML) parseHTML(element.parentNode.querySelectorAll(c_CMD));
-            break;
-        default:
-            if(type==="childFirst" && element.childNodes.length) element.insertBefore(fragment, element.childNodes[0]);
-            else element.appendChild(fragment);
-            if(call_parseHTML) parseHTML(element.querySelectorAll(c_CMD));
-            break;
-    }
-    const observer= new MutationObserver(mutations=> mutations.forEach(function(record){
-        if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, container)===-1) return false;
-        destroy();
-        observer.disconnect();
-    }));
-    observer.observe(container.parentNode, { childList: true, subtree: true, attributes: false, characterData: false });
-    if(on_mount_funs){
-        on_mount_funs.forEach((onMountFunction, el)=> $dom.assign(el, onMountFunction.call(el, element, call_parseHTML, type)));
-        on_mount_funs= null;
-    }
+    gulp_place("both/mount_inside.sub.js", "file");/* global gulp_place, parent_node */
+    if(call_parseHTML) parseHTML(parent_node.querySelectorAll(c_CMD));
     return container;
+    function onMountFunctionCall(onMountFunction, el){ return $dom.assign(el, onMountFunction.call(el, element, call_parseHTML, type)); }
 }

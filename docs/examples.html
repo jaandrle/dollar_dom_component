@@ -711,6 +711,7 @@
                     const { add, addText, update, dynamicComponent, share }= $dom.component("DIV");
                         add("P", { textContent });
                             dynamicComponent({ text: "–" }, function(use, prev_component, { text: textContent }, shared_value){
+                                /* use: component mounter, prev_component: previously mounted component, data (see onupdate), shared_value: value setted by return of this function */
                                 /* initial component */
                                 if(!prev_component){
                                     use($dom.component("SPAN", { textContent }).share);
@@ -718,7 +719,7 @@
                                 }
                                 /* dynamic part */
                                 if(shared_value===1) use(spec_text({ textContent }));
-                                else prev_component.update({ shared_text: `(ignored ${shared_value-1})` });
+                                else prev_component.update({ shared_text: `(update only – ${shared_value-1}×)` });
             
                                 return ++shared_value;
                             });

@@ -448,10 +448,11 @@ function init(global){
             }));
             observer.observe(parent_node, { childList: true, subtree: true, attributes: false, characterData: false });
             if(on_mount_funs){
-                on_mount_funs.forEach((onMountFunction, el)=> $dom.assign(el, onMountFunction.call(el, element, type)));
+                on_mount_funs.forEach(onMountFunctionCall);
                 on_mount_funs= undefined;
             }
             return container;
+            function onMountFunctionCall(onMountFunction, el){ return $dom.assign(el, onMountFunction.call(el, element, type)); }
         }
         
         /**

@@ -399,11 +399,12 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
         }));
         observer.observe(parent_node, { childList: true, subtree: true, attributes: false, characterData: false });
         if(on_mount_funs){
-            on_mount_funs.forEach((onMountFunction, el)=> $dom.assign(el, onMountFunction.call(el, element, call_parseHTML, type)));
+            on_mount_funs.forEach(onMountFunctionCall);
             on_mount_funs= undefined;
         }
         if(call_parseHTML) parseHTML(parent_node.querySelectorAll(c_CMD));
         return container;
+        function onMountFunctionCall(onMountFunction, el){ return $dom.assign(el, onMountFunction.call(el, element, call_parseHTML, type)); }
     }
     
     /**

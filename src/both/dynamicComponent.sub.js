@@ -15,7 +15,6 @@
 function dynamicComponent(data, generator, shift= 0){
     recalculateDeep(shift);
     const parent= getParentElement();
-    setShift(1);
     let current_value= null, current_component= null, current_element= null;
     gulp_place("${app.standalone}/dynamicComponent_mount.sub.js", "file");/* global gulp_place, mount */
     return add_out_methods.onupdate(component_out, parent, data, function(data){

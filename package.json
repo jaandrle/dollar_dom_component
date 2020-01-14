@@ -1,7 +1,7 @@
 {
   "__SECTION_GULP": "",
   "fullName": "$dom.component",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "build": "0001",
   "src_folder": "src/",
   "bin_folder": "bin/",
@@ -36,9 +36,7 @@
     "url": "https://github.com/jaandrle/dollar_dom_component/issues"
   },
   "homepage": "https://github.com/jaandrle/dollar_dom_component",
-  "__Comment__dependencies": "Security updates: [cryptiles: >=4.1.2], [hawk: >=3.1.3], [hoek: >=4.2.1]",
   "dependencies": {
-    "cryptiles": ">=4.1.2",
     "gulp": ">3.9.1",
     "gulp-concat": "2.6.1",
     "gulp-javascript-obfuscator": "1.1.5",
@@ -47,8 +45,6 @@
     "gulp-replace": "1.0.0",
     "gulp-sourcemaps": "2.6.4",
     "gulp-util": "3.0.8",
-    "hawk": ">=3.1.3",
-    "hoek": ">=4.2.1",
     "jshint": "~2.9.6"
   },
   "__SECTION__JSHINT": "",

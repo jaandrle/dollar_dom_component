@@ -102,7 +102,7 @@ function init(global){
      * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
      * @method component
      * @memberof module:jaaJSU~$dom
-     * @version 1.0.4
+     * @version 1.0.5
      * @see {@link https://github.com/jaandrle/dollar_dom_component}
      * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
      * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
@@ -412,7 +412,6 @@ function init(global){
         function dynamicComponent(data, generator, shift= 0){
             recalculateDeep(shift);
             const parent= getParentElement();
-            setShift(1);
             let current_value= null, current_component= null, current_element= null;
             function mount(component_share){
                 current_component= component_share;

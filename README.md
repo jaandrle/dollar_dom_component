@@ -4,13 +4,13 @@ Subrepository for [jaandrle/jaaJSU ($dom namespace)](https://github.com/jaandrle
 ## Overview
 This library provide ability to write HTML/DOM components without using _OOP/class_ syntax and _jsx_.
 
-1. Why not use framework such as [React](https://reactjs.org/), [Angular](https://github.com/angular/angular), [MithrilJS](https://github.com/MithrilJS/mithril.js), [vue](https://github.com/vuejs/vue), …?
+1. Why not use framework such as [React](https://reactjs.org/), [Angular](https://github.com/angular/angular), [MithrilJS](https://github.com/MithrilJS/mithril.js), [vue](https://github.com/vuejs/vue), [Stimulus](https://github.com/stimulusjs/stimulus)…?
     1. It has some pros and __cons__, see [Why You Shouldn't Use A Web Framework](https://dev.to/gypsydave5/why-you-shouldnt-use-a-web-framework-3g24)
     1. They are too "complex" for __some__ user cases.
     1. It can be overkill for small projects.
     1. __Ofcourse:__ They have also lots of pros, so if it's OK for you, you don't need this library.
     1. [Do we still need JavaScript frameworks?](https://www.freecodecamp.org/news/do-we-still-need-javascript-frameworks-42576735949b/)
-1. OK, why do not use some small library such as [litedom](https://github.com/mardix/litedom) or native [webcomponents](https://www.webcomponents.org)?
+1. OK, why do not use some small library such as [RE:DOM](https://github.com/redom/redom/), [litedom](https://github.com/mardix/litedom) or native [webcomponents](https://www.webcomponents.org)?
     1. Still, it can be better to use combinations of libraries instead of full predefined solution
 1. OK, why do not use existing libraries such as [h0](https://github.com/jxnblk/h0), [rdom](https://github.com/buzzdecafe/rdom), [fp-dom](https://github.com/fp-dom/fp-dom), [domchanger](https://github.com/creationix/domchanger), [Domcom](https://github.com/taijiweb/domcom), [domc](https://github.com/Freak613/domc), [hybrids](https://github.com/hybridsjs/hybrids), [Switzerland](https://github.com/Wildhoney/Switzerland), [fun-component](https://github.com/tornqvist/fun-component), [sigil](https://github.com/sigiljs/sigil), [dom-fn](https://github.com/raphaelfaria/dom-fn), …?
     1. You don't need virtual DOM: this is solved for example by [Svelte](https://svelte.dev/).
@@ -57,3 +57,7 @@ function textInputComponent({ label_type= "name", placeholder= "Type text" }){
 ## Resources
 - __[Examples](https://jaandrle.github.io/dollar_dom_component/examples.html)__
 - __[Documentation](docs/$dom_component.md)__
+
+## Contribute
+- [Contributor Covenant Code of Conduc](./CODE_OF_CONDUCT.md)
+- [How to contribute](./CONTRIBUTING.md)

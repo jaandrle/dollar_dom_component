@@ -12,7 +12,7 @@ The proper way to report Bug/Feature is to use corresponding issue template.
 
 The maintenance team will read all created issues and …:
 
-1. … assign them to proper [projects](../../dollar_dom_component/projects/)
+1. … assign them to proper [projects](../../projects/)
 based on targerted library version. Also, each issue schould have chooosed
 priority (__low__/__high__) by using specific column i project
 (__To Do – Low priority__/__To Do – High priority__).

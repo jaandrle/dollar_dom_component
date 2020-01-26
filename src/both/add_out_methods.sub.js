@@ -1,4 +1,4 @@
-/* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
+/* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxparams: 4 */
 /* internal methods *//* global initStorage */
 /* internal vars *//* global on_mount_funs: true, internal_storage: true */
 /* out *//* global $dom */

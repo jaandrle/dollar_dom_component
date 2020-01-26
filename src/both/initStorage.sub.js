@@ -1,4 +1,4 @@
-/* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
+/* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxdepth: 3 */
 /* global $dom, mapUpdate */
 /**
  * Initialize internal storage

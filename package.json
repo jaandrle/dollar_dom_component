@@ -51,7 +51,11 @@
   "jshintConfig": {
     "esversion": 6,
     "browser": "true",
-    "undef": "true"
+    "undef": "true",
+    "latedef": "true",
+    "maxparams": 3,
+    "maxdepth": 2,
+    "maxcomplexity": 10
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^5.0.1"

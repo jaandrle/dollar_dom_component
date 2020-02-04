@@ -9,28 +9,54 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
     const container= document.getElementById(element_id);
     simpleSVG({ dataX: [ 1, 2, 3, 4 ], dataY: [ 8, 15, 1, 30 ] }).mount(container);
     
-    function simpleSVG({ height= 300, width= 700, dataX, dataY }){
+    function simpleSVG({ svgHeight= 300, svgWidth= 700, moveZero= [ 20, 15 ], dataX, dataY }){
+        const /* chart dimensions (smaller than svg) */
+            [ leftPad, bottomPad ]= moveZero,
+            height= svgHeight - 2*bottomPad,
+            width= svgWidth - 2*leftPad;
         const /* recalculate to svg size (get x/y steps) */
             { max }= Math,
             dX= width/max(...dataX),
             dY= height/max(...dataY);
-        const { add, component, share }= $dom.component("SVG", { height, width });
-            component(getAxis({ height, width, dX, dY }));
+        const { add, component, share }= $dom.component("SVG", { height: svgHeight, width: svgWidth });
+            component(svgAddAxeX({ height, width, leftPad, bottomPad, delta: dX, color: "white" }));
+            component(svgAddAxeY({ height, width, leftPad, bottomPad, delta: dY, step: 4, color: "white" }), -1);
             add("G", null, -1);
-                add("PATH", { d: dataX.map(dataToLines).join(" "), style: "stroke: white; fill: none;" })
+                add("POLYLINE", { points: dataX.map(dataToPoints).join(" "), stroke: "white", fill: "none" })
         return share;
 
-        function dataToLines(x, i){
-            let out= i ? "" : "M ";
-            out+= x*dX+" "+dataY[i]*dY;
-            if(!i) out+= " L";
-            return out;
+        function dataToPoints(x, i){
+            return (x*dX+leftPad)+","+(height-dataY[i]*dY);
         }
     }
-    function getAxis({ height= 300, width= 700, dX= 1, dY= 1 }){
-        const { add, share }= $dom.component("G", { className: "C__chartAxis", style: "stroke: white;" }, { namespace_group: "SVG" });
-            add("LINE", { y1: height, y2: height, x1: 0, x2: width });
-            add("LINE", { x1: 0, x2: 0, y1: 0, y2: height }, -1);
+    function svgAddAxeX({ height= 300, width= 700, leftPad= 15, bottomPad= 15, delta= 1, step= 1, labels= true, ticks= true, color= "black" }){
+        const fontSize= bottomPad*0.75;
+        const dX= delta*step, max= width+dX;
+        const { add, addText, setShift, share }= $dom.component("G", { className: "C__chartAxe", "font-size": fontSize, fill: color, style: `stroke: ${color};` }, { namespace_group: "SVG" });
+            add("LINE", { y1: height, y2: height, x1: leftPad, x2: width+leftPad });
+        if(labels){
+        const y= height+bottomPad;
+        setShift(0);
+        for(let i=0, x=leftPad-3; x<max; x+=dX, i++){
+            add("TEXT", { y, x }, -2);
+                addText(i*step);
+        }
+        }
+        return share;
+    }
+    function svgAddAxeY({ height= 300, width= 700, leftPad= 15, bottomPad= 15, delta= 1, step= 1, labels= true, ticks= true, color= "black" }){
+        const fontSize= bottomPad*0.75;
+        const dY= delta*step;
+        const { add, addText, setShift, share }= $dom.component("G", { className: "C__chartAxe", "font-size": fontSize, fill: color, style: `stroke: ${color};` }, { namespace_group: "SVG" });
+            add("LINE", { x1: leftPad, x2: leftPad, y1: 0, y2: height });
+        if(labels){
+        const x= 0;
+        setShift(0);
+        for(let i=0, y=height+bottomPad/2; y>-bottomPad; y-=dY, i++){
+            add("TEXT", { x, y }, -2);
+                addText(i*step);
+        }
+        }
         return share;
     }
     //EXAMPLE END

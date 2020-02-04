@@ -1,7 +1,7 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
-/* internal methods *//* global recalculateDeep, getParentElement */
+/* internal methods *//* global recalculateDeep, getParentElement, assign, createElement */
 /* internal vars *//* global all_els_counter: true, container: true, add_out_methods */
-/* out *//* global $dom, els, fragment, component_out */
+/* out *//* global els, fragment, component_out */
 /**
  * This is `Component` with aditional methods
  * @typedef instance_componentAdd
@@ -43,12 +43,12 @@
 function add(el_name, attrs, shift= 0){
     recalculateDeep(shift);
     attrs= attrs || {};
-    const prepare_el= document.createElement(el_name);
+    const prepare_el= createElement(el_name.toLowerCase());
     if(!all_els_counter) container= els[0]= fragment.appendChild(prepare_el);
     else els[all_els_counter]= getParentElement().appendChild(prepare_el);
     let el= els[all_els_counter];
     all_els_counter+= 1;
-    $dom.assign(el, attrs);
+    assign(el, attrs);
     const add_out= Object.assign({}, component_out);
     
     add_out.getReference= add_out_methods.getReference.bind(null, add_out, el);

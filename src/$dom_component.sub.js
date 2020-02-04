@@ -8,14 +8,25 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
  * @memberof module:jaaJSU~$dom
  * @version gulp_place("app.version", "eval_out")
  * @see {@link gulp_place("app.homepage", "eval_out")}
- * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
+ * @param {string} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
  * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters
- * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}
+ * @param {Function} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}
+ * @param {string|undefined} [params.namespace_group=undefined] This parameter provides ability to defined elements for diferent [`namespaceURI`s](https://developer.mozilla.org/en-US/docs/Web/API/Element/namespaceURI). Use "__SVG__" for "http://www.w3.org/2000/svg" (full list [Important Namespace URIs](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElementNS#Important_Namespace_URIs)).
  * @return {module:jaaJSU~$dom~instance_componentAdd|module:jaaJSU~$dom~instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
  */
-$dom.component= function(el_name, attrs, { mapUpdate }={}){
-    if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
+$dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
+    el_name= el_name ? el_name.toUpperCase() : "EMPTY";
+    if(el_name==="EMPTY") return $dom_emptyPseudoComponent;
+    if(el_name==="SVG") namespace_group= "SVG";
+    let assign, createElement;
+    if(namespace_group==="SVG"){
+        assign= $dom.assignNS.bind(null, "SVG");
+        createElement= document.createElementNS.bind(document, "http://www.w3.org/2000/svg");
+    } else {
+        assign= $dom.assign;
+        createElement= document.createElement.bind(document);
+    }
     let /* holds `initStorage()` if `onupdate` was registered and other component related listeners */
         internal_storage= null,
         on_destroy_funs= null,
@@ -83,4 +94,5 @@ $dom.component= function(el_name, attrs, { mapUpdate }={}){
 };
 gulp_place("both/$dom_componentListener.sub.js", "file");
 gulp_place("both/$dom_assign.sub.js", "file");
+gulp_place("both/$dom_assignNS.sub.js", "file");
 /* global $dom_assign */

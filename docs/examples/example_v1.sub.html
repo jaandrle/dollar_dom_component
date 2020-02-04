@@ -1,0 +1,39 @@
+gulp_place("app._BUILD_.example_el= toELID(app._BUILD_.example_el_id++)", "eval");
+gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval");
+<p>TEST</p>
+<div class="output" id="gulp_place('app._BUILD_.example_el', 'variable')"></div>
+<script onkeyup="gulp_place('app._BUILD_.example_onkeyup', 'variable')" contenteditable="">
+(function(element_id){
+    //EXAMPLE START
+
+    const container= document.getElementById(element_id);
+    simpleSVG({ dataX: [ 1, 2, 3, 4 ], dataY: [ 8, 15, 1, 30 ] }).mount(container);
+    
+    function simpleSVG({ height= 300, width= 700, dataX, dataY }){
+        const /* recalculate to svg size (get x/y steps) */
+            { max }= Math,
+            dX= width/max(...dataX),
+            dY= height/max(...dataY);
+        const { add, component, share }= $dom.component("SVG", { height, width });
+            component(getAxis({ height, width, dX, dY }));
+            add("G", null, -1);
+                add("PATH", { d: dataX.map(dataToLines).join(" "), style: "stroke: white; fill: none;" })
+        return share;
+
+        function dataToLines(x, i){
+            let out= i ? "" : "M ";
+            out+= x*dX+" "+dataY[i]*dY;
+            if(!i) out+= " L";
+            return out;
+        }
+    }
+    function getAxis({ height= 300, width= 700, dX= 1, dY= 1 }){
+        const { add, share }= $dom.component("G", { className: "C__chartAxis", style: "stroke: white;" }, { namespace_group: "SVG" });
+            add("LINE", { y1: height, y2: height, x1: 0, x2: width });
+            add("LINE", { x1: 0, x2: 0, y1: 0, y2: height }, -1);
+        return share;
+    }
+    //EXAMPLE END
+})("gulp_place('app._BUILD_.example_el', 'variable')");
+</script>
+<!-- example source links -->

@@ -23,6 +23,8 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
     if(namespace_group==="SVG"){
         assign= $dom.assignNS.bind(null, "SVG");
         createElement= document.createElementNS.bind(document, "http://www.w3.org/2000/svg");
+        if(!attrs) attrs= {};
+        attrs.xmlns= "http://www.w3.org/2000/svg";
     } else {
         assign= $dom.assign;
         createElement= document.createElement.bind(document);

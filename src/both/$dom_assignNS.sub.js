@@ -32,6 +32,9 @@ $dom.assignNS= function(namespace, element, ...objects_attributes){
                     else element.classList.toggle(k_key, Boolean(k_attr));
                 }
                 break;
+            case "xlink:href":
+                element.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", attr);
+                break;
             default:
                 element.setAttributeNS(null, key, attr);
                 break;

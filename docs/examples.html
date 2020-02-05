@@ -816,7 +816,7 @@
                 function chartAddAxeXLabelsComponent({ delta_step, step, y, width, minimum }){
                     const { add, addText, setShift, share }= $dom.component("G", null, { namespace_group: "SVG" });
                     for(let i=minimum, x=0; x<=width; x+=delta_step, i++){
-                        add("TEXT", { y, x, "text-anchor": "middle" }, -2);
+                        add("TEXT", { y, x, "text-anchor": "middle" });
                             addText(i*step);
                         setShift(-3);
                     }

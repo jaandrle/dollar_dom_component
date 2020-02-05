@@ -5,21 +5,24 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
 <script>
 $dom_svg= (function(){
     return {
-        chartAddAxeWrapper: function({ transform, className= "C__chartAxe", style: { fontSize, color= "black" }= {} }){
+        chartAddAxeWrapper: function({ X, Y, className= "C__chartAxe", style: { fontSize, color= "black" }= {} }){
             return $dom.component("G", {
-                "stroke-width": 0,
-                transform,
                 className,
+                "stroke-width": 0,
+                transform: `translate(${X} ${Y})`,
                 "font-size": fontSize,
                 fill: color,
                 style: `stroke: ${color};`
             }, { namespace_group: "SVG" })
             .share;
         },
-        chartAddCanvasWrapper: function({ transform, className= "C__chartCanvas", style: { strokeWidth= 1 }= {} }){
-            return $dom.component("G", {
+        chartAddCanvasWrapper: function({ X, Y, width, height, className= "C__chartCanvas", style: { strokeWidth= 1 }= {} }){
+            return $dom.component("SVG", {
+                viewBox: `0 ${-height} ${width} ${height}`,
+                width, height, 
                 "stroke-width": strokeWidth,
-                transform,
+                overflow: "visible",
+                transform: `translate(${X} ${Y})`,
                 className,
             }, { namespace_group: "SVG" })
             .share;
@@ -57,8 +60,8 @@ $dom_svg= (function(){
             }
             return share;
         },
-        chartHelperDataToPolylinePoints: function({ dataX, dataY, chart_height, dX, dY }){
-            return dataX.map((x, i)=> (x*dX)+","+(chart_height-dataY[i]*dY)).join(" ");
+        chartHelperDataToPolylinePoints: function({ dataX, dataY, dX, dY }){
+            return dataX.map((x, i)=> (x*dX)+","+(dataY[i]*dY)).join(" ");
         }
     };
 
@@ -83,7 +86,7 @@ $dom_svg= (function(){
 
     function chartAddAxeYLabelsComponent({ delta_step, step, dy, x, height, minimum }){
         const { add, addText, setShift, share }= $dom.component("G", null, { namespace_group: "SVG" });
-        for(let i=minimum, y=height; y>=0; y-=delta_step, i++){
+        for(let i=minimum, y=height; y>=0; y+=delta_step, i++){
             add("TEXT", { x, y, dy, "text-anchor": "end" });
                 addText(i*step);
             setShift(-3);
@@ -93,7 +96,7 @@ $dom_svg= (function(){
     function chartAddAxeYTicksComponent({ delta_step, width, height }){
         const rx= 2;
         const { add, addText, setShift, share }= $dom.component("G", { "stroke-width": 1 }, { namespace_group: "SVG" });
-        for(let i=0, y=height; y>=0; y-=delta_step, i++){
+        for(let i=0, y=height; y>=0; y+=delta_step, i++){
             add("LINE", { x1: width-rx, y1: y, x2: width+rx, y2: y });
             setShift(-2);
         }
@@ -117,19 +120,19 @@ $dom_svg= (function(){
             chart_height= height - 2*bottom_pad,
             chart_width= width - 2*left_pad;
         const /* recalculate to svg size (get x/y steps) */
-            { max, min }= Math,
+            { max }= Math,
             dX= chart_width/max(...dataX),
-            dY= chart_height/max(...dataY);
+            dY= -chart_height/max(...dataY);
         const style= { fontSize, strokeWidth: 1, color: "white" };
         const { add, component, share }= $dom.component("SVG", { viewBox: `0 0 ${width} ${height}` });
-            component($dom_svg.chartAddAxeWrapper({ transform: `translate(${left_pad} ${chart_height+bottom_pad})`, style }));
+            component($dom_svg.chartAddAxeWrapper({ X: left_pad, Y: chart_height+bottom_pad, style }));
                 component($dom_svg.chartAddAxeLine({ width: chart_width, height: bottom_pad, style }));
                 component($dom_svg.chartAddLabelsTicksForAxeX({ width: chart_width, height: bottom_pad, delta: dX, style }), -1);
-            component($dom_svg.chartAddAxeWrapper({ transform: `translate(0 ${bottom_pad})`, style }), -2);
+            component($dom_svg.chartAddAxeWrapper({ X: 0, Y: bottom_pad, style }), -2);
                 component($dom_svg.chartAddAxeLine({ width: left_pad, height: chart_height, style }));
                 component($dom_svg.chartAddLabelsTicksForAxeY({ width: left_pad, height: chart_height, delta: dY, step: 4, style }), -1);
-            component($dom_svg.chartAddCanvasWrapper({ transform: `translate(${left_pad} ${bottom_pad})` }), -2);
-                add("POLYLINE", { points: $dom_svg.chartHelperDataToPolylinePoints({ dX, dY, dataX, dataY, chart_height }), stroke: "white", fill: "none" })
+            component($dom_svg.chartAddCanvasWrapper({ X: left_pad, Y: bottom_pad, width: chart_width, height: chart_height }), -2);
+                add("POLYLINE", { points: $dom_svg.chartHelperDataToPolylinePoints({ dX, dY, dataX, dataY }), stroke: "white", fill: "none" })
         return share;
     }
     //EXAMPLE END

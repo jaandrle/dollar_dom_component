@@ -57,6 +57,7 @@ function textInputComponent({ label_type= "name", placeholder= "Type text" }){
 ## Resources
 - __[Examples](https://jaandrle.github.io/dollar_dom_component/examples.html)__
 - __[Documentation](docs/$dom_component.md)__
+- You can also create SVG elements (e.g. charts), see [$dom_svg](https://github.com/jaandrle/dollar_dom_svg).
 
 ## Contribute
 - [Contributor Covenant Code of Conduc](./CODE_OF_CONDUCT.md)

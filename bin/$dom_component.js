@@ -878,12 +878,18 @@ function init(global){
             attr= object_attributes[key];
             if(typeof attr==="undefined"){ if(element.hasAttributeNS(null, key)){ element.removeAttributeNS(null, key); } continue; }
             switch(key){
+                case "textContent" || "innerText":
+                    element.appendChild(document.createTextNode(attr));
+                    break;
                 case "style":
                     if(typeof attr==="string") element.setAttributeNS(null, "style", attr);
                     else for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.style.setProperty(k_key, attr[k_key]); }
                     break;
                 case "style_vars":
                     for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.style.setProperty(k_key, attr[k_key]); }
+                    break;
+                case "className":
+                    element.setAttributeNS(null, "class", attr);
                     break;
                 case "classList":
                     if(!element[key].toggle) break;

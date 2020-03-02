@@ -8,7 +8,7 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
  * @memberof module:jaaJSU~$dom
  * @version gulp_place("app.version", "eval_out")
  * @see {@link gulp_place("app.homepage", "eval_out")}
- * @param {string} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
+ * @param {string} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See {@link module:jaaJSU~$dom~instance_component.add}.
  * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters
  * @param {Function} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}

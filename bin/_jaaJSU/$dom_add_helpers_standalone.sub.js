@@ -54,7 +54,7 @@ const $dom_emptyPseudoComponent= (function(){
  * @memberof module:jaaJSU~$dom
  * @version 1.0.5
  * @see {@link https://github.com/jaandrle/dollar_dom_component}
- * @param {string} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
+ * @param {string} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See {@link module:jaaJSU~$dom~instance_component.add}.
  * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters
  * @param {Function} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}
@@ -233,7 +233,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
      * @memberof module:jaaJSU~$dom~instance_component
      * @public
      * @chainable
-     * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
+     * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...). For [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) you can use lowercase/uppercase convention (e. g. 'p', 'P', 'div', 'DIV'), for [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Element) use exact form (e. g. 'svg', 'polyline', 'clipPath')!
      * @param {module:jaaJSU~$dom~DomAssignObject} attrs Internally uses {@link module:jaaJSU~$dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
      * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
      * @returns {module:jaaJSU~$dom~instance_componentAdd}

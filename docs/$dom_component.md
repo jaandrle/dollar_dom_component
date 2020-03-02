@@ -174,7 +174,7 @@
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [el_name] | <code>string</code> | <code>&quot;\&quot;EMPTY\&quot;&quot;</code> | Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. |
+| [el_name] | <code>string</code> | <code>&quot;\&quot;EMPTY\&quot;&quot;</code> | Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See [add](#module_jaaJSU..$dom..instance_component.add). |
 | attrs | [<code>DomAssignObject</code>](#module_jaaJSU..$dom..DomAssignObject) |  | The second argument for [assign](#module_jaaJSU..$dom.assign) |
 | [params] | <code>Object</code> | <code>{}</code> | Parameters |
 | [params.mapUpdate] | <code>function</code> |  | This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method [add](#module_jaaJSU..$dom..instance_component.add) |
@@ -336,7 +336,7 @@ $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| el_name | <code>String</code> |  | Name of element (for example `LI`, `P`, `A`, ...). |
+| el_name | <code>String</code> |  | Name of element (for example `LI`, `P`, `A`, ...). For [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) you can use lowercase/uppercase convention (e. g. 'p', 'P', 'div', 'DIV'), for [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Element) use exact form (e. g. 'svg', 'polyline', 'clipPath')! |
 | attrs | [<code>DomAssignObject</code>](#module_jaaJSU..$dom..DomAssignObject) |  | Internally uses [assign](#module_jaaJSU..$dom.assign), `null`\|`undefined` is also supported (`null` is probably better for readability). |
 | [shift] | <code>Number</code> | <code>0</code> | Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example. |
 

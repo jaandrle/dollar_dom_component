@@ -43,7 +43,7 @@
 function add(el_name, attrs, shift= 0){
     recalculateDeep(shift);
     attrs= attrs || {};
-    const prepare_el= createElement(el_name.toLowerCase());
+    const prepare_el= createElement(el_name);
     if(!all_els_counter) container= els[0]= fragment.appendChild(prepare_el);
     else els[all_els_counter]= getParentElement().appendChild(prepare_el);
     let el= els[all_els_counter];

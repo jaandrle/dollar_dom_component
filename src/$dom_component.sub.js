@@ -16,9 +16,8 @@ gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file");
  * @return {module:jaaJSU~$dom~instance_componentAdd|module:jaaJSU~$dom~instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
  */
 $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
-    el_name= el_name ? el_name.toUpperCase() : "EMPTY";
-    if(el_name==="EMPTY") return $dom_emptyPseudoComponent;
-    if(el_name==="SVG") namespace_group= "SVG";
+    if(!el_name||el_name==="EMPTY"||el_name==="empty") return $dom_emptyPseudoComponent;
+    if(el_name==="svg") namespace_group= "SVG";
     let assign, createElement;
     if(namespace_group==="SVG"){
         assign= $dom.assignNS.bind(null, "SVG");

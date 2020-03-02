@@ -65,12 +65,15 @@
             background: #222;
         }
         [contenteditable=""]:before{
-            content: "Input (editable):";
+            content: "JavaScript (editable):";
             padding-bottom: 1em;
             color: #97f497;
             font-weight: bold;
             display: block;
             font-size: .8rem;
+        }
+        style[contenteditable=""]:before{
+            content: "CSS (editable)";
         }
         @media screen and (max-width: 640px){
             article{
@@ -138,7 +141,7 @@
                 //EXAMPLE END
             })("example_element_001");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L131" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L134" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Creating element with only Vanilla JavaScript and <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom.assign">$dom.assign</a>:</p>
@@ -153,7 +156,7 @@
                 //EXAMPLE END
             })("example_element_002");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L148" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L151" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Now, we use <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom.component">$dom.component</a>:</p>
@@ -168,7 +171,7 @@
                 //EXAMPLE END
             })("example_element_003");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L163" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L166" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>Basic components</h2>
@@ -201,7 +204,7 @@
                 //EXAMPLE END
             })("example_element_004");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L190" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L193" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom.component">$dom.component</a> returns/provide methods such as <code>.add</code> for adding child element:</p>
@@ -223,7 +226,7 @@
                 //EXAMPLE END
             })("example_element_005");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L211" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L214" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Default behaviour is, that all <code>.add(…)</code> are childs the previusly created element:</p>
@@ -246,7 +249,7 @@
                 //EXAMPLE END
             })("example_element_006");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L233" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L236" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>For changin this nesting behaviour, you can use last argument:</p>
@@ -273,7 +276,7 @@
                 //EXAMPLE END
             })("example_element_007");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L256" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L259" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>All togeder:</p>
@@ -304,7 +307,7 @@
                 //EXAMPLE END
             })("example_element_008");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L283" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L286" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>Syntax tips</h2>
@@ -335,7 +338,7 @@
                 //EXAMPLE END
             })("example_element_009");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L323" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L326" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>You can change mount destination (see <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom..instance_component.share.mount">.mount</a>):</p>
@@ -356,7 +359,7 @@
                 //EXAMPLE END
             })("example_element_010");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L345" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L348" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>Reactivity</h2>
@@ -396,7 +399,7 @@
                 //EXAMPLE END
             })("example_element_011");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L375" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L378" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>The same example with using JavaScript desctructuring syntax:</p>
@@ -424,7 +427,7 @@
                 //EXAMPLE END
             })("example_element_012");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L406" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L409" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Counter:</p>
@@ -457,7 +460,7 @@
                 //EXAMPLE END
             })("example_element_013");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L434" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L437" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Method <code>.update</code> also accepts function returning object (it will be combinet with internal data with <code>Object.assign</code>):</p>
@@ -484,7 +487,7 @@
                 //EXAMPLE END
             })("example_element_014");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L467" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L470" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>Method <code>.update</code> is also avilable outside function scope (is included in <code>.share</code> namespace):</p>
@@ -523,7 +526,7 @@
                 //EXAMPLE END
             })("example_element_015");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L494" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L497" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>Some additionals / advanced examples</h2>
@@ -563,7 +566,7 @@
                 //EXAMPLE END
             })("example_element_016");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L542" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L545" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>You can use another component inside current one (see <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom..instance_component.component"><code>.component</code></a>):</p>
@@ -629,7 +632,7 @@
                 //EXAMPLE END
             })("example_element_017");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L573" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L576" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>As previou with different usuage of <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L485"><code>setShift</code></a>:</p>
@@ -695,7 +698,7 @@
                 //EXAMPLE END
             })("example_element_018");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L639" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L642" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>As previou with different usuage of <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L485"><code>setShift</code></a>:</p>
@@ -739,7 +742,7 @@
                 //EXAMPLE END
             })("example_element_019");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L705" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L708" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>SVG</h2>
@@ -757,7 +760,7 @@
             $dom_svg= (function(){
                 return {
                     chartAddAxeWrapper: function({ X, Y, className= "C__chartAxe", style: { fontSize, color= "black" }= {} }){
-                        return $dom.component("G", {
+                        return $dom.component("g", {
                             className,
                             transform: `translate(${X} ${Y})`,
                             "font-size": fontSize,
@@ -768,7 +771,7 @@
                         .share;
                     },
                     chartAddCanvasWrapper: function({ X, Y, width, height, className= "C__chartCanvas", style: { strokeWidth= 1 }= {} }){
-                        return $dom.component("SVG", {
+                        return $dom.component("svg", {
                             viewBox: `0 ${-height} ${width} ${height}`,
                             width, height, 
                             "stroke-width": strokeWidth,
@@ -779,14 +782,14 @@
                         .share;
                     },
                     chartAddAxeLine: function({ width, height, style: { strokeWidth= 1 }= {} }){
-                        if(width>height) return $dom.component("LINE", { y1: 0, y2: 0, x1: 0, x2: width, "stroke-width": strokeWidth }, { namespace_group: "SVG" }).share;
-                        return $dom.component("LINE", { x1: width, x2: width, y1: 0, y2: height, "stroke-width": strokeWidth }, { namespace_group: "SVG" }).share;
+                        if(width>height) return $dom.component("line", { y1: 0, y2: 0, x1: 0, x2: width, "stroke-width": strokeWidth }, { namespace_group: "SVG" }).share;
+                        return $dom.component("line", { x1: width, x2: width, y1: 0, y2: height, "stroke-width": strokeWidth }, { namespace_group: "SVG" }).share;
                     },
                     chartAddLabelsTicksForAxeX: function({ width= 233.33, height= 10, style: { fontSize, strokeWidth= 1 }= {}, delta= 1, step= 1, minimum= 0, labels= true, ticks= true }){
                         const
                             delta_step= delta*step,
                             y= height-fontSize;
-                        const { component, setShift, share }= $dom.component("G", null, { namespace_group: "SVG" });
+                        const { component, setShift, share }= $dom.component("g", null, { namespace_group: "SVG" });
                         setShift(0);
                         if(labels){
                             component(chartAddAxeXLabelsComponent({ delta_step, step, y, width, minimum }), -1);
@@ -801,7 +804,7 @@
                             delta_step= delta*step,
                             dy= fontSize/3,
                             x= width*0.75;
-                        const { component, setShift, share }= $dom.component("G", null, { namespace_group: "SVG" });
+                        const { component, setShift, share }= $dom.component("g", null, { namespace_group: "SVG" });
                         setShift(0);
                         if(labels){
                             component(chartAddAxeYLabelsComponent({ delta_step, step, dy, x, height, minimum }), -1);
@@ -817,9 +820,9 @@
                 };
             
                 function chartAddAxeXLabelsComponent({ delta_step, step, y, width, minimum }){
-                    const { add, addText, setShift, share }= $dom.component("G", null, { namespace_group: "SVG" });
+                    const { add, addText, setShift, share }= $dom.component("g", null, { namespace_group: "SVG" });
                     for(let i=minimum, x=0; x<=width; x+=delta_step, i++){
-                        add("TEXT", { y, x, "text-anchor": "middle" });
+                        add("text", { y, x, "text-anchor": "middle" });
                             addText(i*step);
                         setShift(-3);
                     }
@@ -827,18 +830,18 @@
                 }
                 function chartAddAxeXTicksComponent({ delta_step, width, strokeWidth }){
                     const rx= 1.5*strokeWidth;
-                    const { add, addText, setShift, share }= $dom.component("G", { "stroke-width": 1 }, { namespace_group: "SVG" });
+                    const { add, addText, setShift, share }= $dom.component("g", { "stroke-width": 1 }, { namespace_group: "SVG" });
                     for(let i=0, x=0; x<=width; x+=delta_step, i++){
-                        add("LINE", { x1: x, y1: -rx, x2: x, y2: rx });
+                        add("line", { x1: x, y1: -rx, x2: x, y2: rx });
                         setShift(-2);
                     }
                     return share;
                 }
             
                 function chartAddAxeYLabelsComponent({ delta_step, step, dy, x, height, minimum }){
-                    const { add, addText, setShift, share }= $dom.component("G", null, { namespace_group: "SVG" });
+                    const { add, addText, setShift, share }= $dom.component("g", null, { namespace_group: "SVG" });
                     for(let i=minimum, y=height; y>=0; y+=delta_step, i++){
-                        add("TEXT", { x, y, dy, "text-anchor": "end" });
+                        add("text", { x, y, dy, "text-anchor": "end" });
                             addText(i*step);
                         setShift(-3);
                     }
@@ -846,9 +849,9 @@
                 }
                 function chartAddAxeYTicksComponent({ delta_step, width, height, strokeWidth }){
                     const rx= 1.5*strokeWidth;
-                    const { add, addText, setShift, share }= $dom.component("G", { "stroke-width": 1 }, { namespace_group: "SVG" });
+                    const { add, addText, setShift, share }= $dom.component("g", { "stroke-width": 1 }, { namespace_group: "SVG" });
                     for(let i=0, y=height; y>=0; y+=delta_step, i++){
-                        add("LINE", { x1: width-rx, y1: y, x2: width+rx, y2: y });
+                        add("line", { x1: width-rx, y1: y, x2: width+rx, y2: y });
                         setShift(-2);
                     }
                     return share;
@@ -875,7 +878,7 @@
                         dX= chart_width/max(...dataX),
                         dY= -chart_height/max(...dataY);
                     const style= { fontSize, strokeWidth: 0.75, color: "white" };
-                    const { add, component, share }= $dom.component("SVG", { viewBox: `0 0 ${width} ${height}` });
+                    const { add, component, share }= $dom.component("svg", { viewBox: `0 0 ${width} ${height}` });
                         component($dom_svg.chartAddAxeWrapper({ X: left_pad, Y: chart_height+bottom_pad, style }));
                             component($dom_svg.chartAddAxeLine({ width: chart_width, height: bottom_pad, style }));
                             component($dom_svg.chartAddLabelsTicksForAxeX({ width: chart_width, height: bottom_pad, delta: dX, style }), -1);
@@ -883,13 +886,107 @@
                             component($dom_svg.chartAddAxeLine({ width: left_pad, height: chart_height, style }));
                             component($dom_svg.chartAddLabelsTicksForAxeY({ width: left_pad, height: chart_height, delta: dY, step: 5, style }), -1);
                         component($dom_svg.chartAddCanvasWrapper({ X: left_pad, Y: bottom_pad, width: chart_width, height: chart_height }), -2);
-                            add("POLYLINE", { points: $dom_svg.chartHelperDataToPolylinePoints({ dX, dY, dataX, dataY }), stroke: "white", fill: "none" })
+                            add("polyline", { points: $dom_svg.chartHelperDataToPolylinePoints({ dX, dY, dataX, dataY }), stroke: "white", fill: "none" })
                     return share;
                 }
                 //EXAMPLE END
             })("example_element_020");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L860" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L863" target="_blank">View with highliting (link to source of this file)</a></p>
+
+            
+            <p>TEST</p>
+            <style style="margin-bottom: -.25rem;" contenteditable="">
+                #example_element_021 svg{
+                    width: 15rem;
+                }
+            </style>
+            <div class="output" id="example_element_021"></div>
+            <script onkeyup="onKeyup(this, 'example_element_021')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const thermometer= (function(){
+                    const range= [ 5, 25 ];
+                    const { min, max }= Math;
+                    const /* idcka pro definice */
+                        gradient_id= "thermometer_gradient", 
+                        mask_preid= "thermometer_mask_";
+                    let /* uz generovane definice */
+                        gradient= false
+                        masks= [];
+                    let defs_el;
+                    return Object.freeze({
+                        svgComponent: function({ temperature= 25 }){
+                            temperature= max(range[0], min(temperature, range[1]));
+                            const /* create SVG defs */
+                                mask_id= this.defineMask(temperature),
+                                gradient_id= this.defineLinearGradient();
+                            const { add, component, share }= $dom.component("svg", { viewBox: `0 0 20 40`, fill: "none" });
+                                component(border());
+                                add("path", { 
+                                    fill: `url(#${gradient_id})`, mask: `url(#${mask_id})`,
+                                    d: "M3 30.9724C3 29.0972 3.86664 27.3558 5.33336 26.2173L6.33336 25.4136V5.67891C6.33336 4.20552 7.53336 3 9 3C10.4666 3 11.6666 4.20552 11.6666 5.67891V25.4137L12.6666 26.2174C14.1333 27.3559 15 29.0972 15 30.9725C15 34.3211 12.3334 37 9 37C5.66664 37 3 34.3211 3 30.9724Z"
+                                }, -1);
+                            return share;
+            
+                            function border(color= "#A9A9A9"){
+                                return $dom.component("path", {
+                                    fill: color,
+                                    'fill-rule': "evenodd",
+                                    'clip-rule': "evenodd",
+                                    d: "M0 30.6666C0 35.8 4.04999 40 9 40C13.95 40 18 35.8 18 30.6667C18 27.8667 16.8429 25.3334 14.7857 23.5334V6C14.7857 2.66664 12.2143 0 9 0C5.7857 0 3.2143 2.66664 3.2143 6V23.5333C1.15714 25.3333 0 27.8666 0 30.6666ZM4.50004 6C4.50004 3.4 6.49286 1.33336 9 1.33336C11.5071 1.33336 13.5 3.4 13.5001 6V23.8666C13.5001 24.0666 13.6286 24.2666 13.7572 24.4C15.6215 25.9333 16.7143 28.2 16.7143 30.6666C16.7143 35.0666 13.2429 38.6666 9.00008 38.6666C4.75723 38.6666 1.28581 35.0666 1.28581 30.6666C1.28581 28.2 2.37861 25.9334 4.24292 24.4C4.43578 24.2666 4.50004 24.0666 4.50004 23.8666V6Z"
+                                }, { namespace_group: "SVG" }).share;
+                            }
+                        },
+                        defsComponent: function(){
+                                const { add, share }= $dom.component("svg", { style: "position:fixed;top:-100vh;left:-100vw;" });
+                                add("defs").oninit(el=> defs_el= el);
+                            return share;
+                        },
+                        defineLinearGradient: function(){
+                            if(gradient) return gradient_id;
+                            if(!defs_el) this.defsComponent().mount(document.body);
+                            defineLinearGradient().mount(defs_el);
+                            gradient= true;
+                            return gradient_id;
+                        },
+                        defineMask: function(size){
+                            if(masks.indexOf(size)!==-1) return mask_preid+size;
+                            if(!defs_el) this.defsComponent().mount(document.body);
+                            defineMask({ size }).mount(defs_el);
+                            masks.push(size);
+                            return mask_preid+size;
+                        }
+                    });
+                    function defineLinearGradient(){
+                        const { add, share }= $dom.component("linearGradient", { id: gradient_id, x1: 3, y1: 3, x2: 3, y2: 37, gradientUnits: "userSpaceOnUse" }, { namespace_group: "SVG" });
+                            add("stop", { 'stop-color': "#D01F29" });
+                            add("stop", { 'stop-color': "#B2B2B2", offset: "0.507707" }, -1);
+                            add("stop", { 'stop-color': "#046FBC", offset: "1" }, -1);
+                        return share;
+                    }
+                    function defineMask({ size= 25, fill= "white" }){
+                        const { add, share }= $dom.component("mask", {
+                            id: mask_preid+size,
+                            'mask-type': "alpha", maskUnits: "userSpaceOnUse",
+                            x: 0, y: -1.65*size+43.25, /* linearni regrese */
+                            width: 20, height: 1.65*size-6.25 /* linearni regrese */
+                        }, { namespace_group: "SVG" });
+                            add("rect", { height: "100%", width: "100%", fill });
+                        return share
+                    }
+                })();
+            
+                const container= document.getElementById(element_id);
+                thermometer.defsComponent().mount(container);
+                thermometer.svgComponent({ temperature: 25 }).mount(container);
+                thermometer.svgComponent({ temperature: 5 }).mount(container);
+            
+                //EXAMPLE END
+            })("example_element_021");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L907" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
 
@@ -899,7 +996,7 @@
                 document.execCommand('insertText', false, ev.clipboardData.getData('text/plain'));
             });
             document.addEventListener("keydown", function enableInScriptTags(ev){
-                if(ev.target.tagName!=="SCRIPT") return false;
+                if(ev.target.tagName!=="SCRIPT"&&ev.target.tagName!=="STYLE") return false;
                 const { keyCode }= ev;
                 if(keyCode!==9&&keyCode!==13) return false;
 

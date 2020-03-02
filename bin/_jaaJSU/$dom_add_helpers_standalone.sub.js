@@ -62,9 +62,8 @@ const $dom_emptyPseudoComponent= (function(){
  * @return {module:jaaJSU~$dom~instance_componentAdd|module:jaaJSU~$dom~instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
  */
 $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
-    el_name= el_name ? el_name.toUpperCase() : "EMPTY";
-    if(el_name==="EMPTY") return $dom_emptyPseudoComponent;
-    if(el_name==="SVG") namespace_group= "SVG";
+    if(!el_name||el_name==="EMPTY"||el_name==="empty") return $dom_emptyPseudoComponent;
+    if(el_name==="svg") namespace_group= "SVG";
     let assign, createElement;
     if(namespace_group==="SVG"){
         assign= $dom.assignNS.bind(null, "SVG");
@@ -261,7 +260,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
     function add(el_name, attrs, shift= 0){
         recalculateDeep(shift);
         attrs= attrs || {};
-        const prepare_el= createElement(el_name.toLowerCase());
+        const prepare_el= createElement(el_name);
         if(!all_els_counter) container= els[0]= fragment.appendChild(prepare_el);
         else els[all_els_counter]= getParentElement().appendChild(prepare_el);
         let el= els[all_els_counter];

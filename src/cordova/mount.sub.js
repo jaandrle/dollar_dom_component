@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
-/* global container, $dom, parseHTML, c_CMD */
+/* global container, assign, parseHTML, c_CMD */
 /**
  * Add element to live DOM
  * @method mount
@@ -20,5 +20,5 @@ function mount(element, call_parseHTML, type= "childLast"){
     gulp_place("both/mount_inside.sub.js", "file");/* global gulp_place, parent_node */
     if(call_parseHTML) parseHTML(parent_node.querySelectorAll(c_CMD));
     return container;
-    function onMountFunctionCall(onMountFunction, el){ return $dom.assign(el, onMountFunction.call(el, element, call_parseHTML, type)); }
+    function onMountFunctionCall(onMountFunction, el){ return assign(el, onMountFunction.call(el, element, call_parseHTML, type)); }
 }

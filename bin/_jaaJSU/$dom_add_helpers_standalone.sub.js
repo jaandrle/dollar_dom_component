@@ -452,7 +452,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
             on_mount_funs= undefined;
         }
         return container;
-        function onMountFunctionCall(onMountFunction, el){ return $dom.assign(el, onMountFunction.call(el, element, type)); }
+        function onMountFunctionCall(onMountFunction, el){ return assign(el, onMountFunction.call(el, element, type)); }
     }
     
     /**
@@ -618,7 +618,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
                     const el= els.get(el_id);
                     const new_data= functions.get(fun_id).call(el, data) || {};
                     if(el.parentNode===null) return unregister(el_id, fun_id, new_data_keys);
-                    $dom.assign(el, new_data);
+                    assign(el, new_data);
                 }
             },
             getData: function(){

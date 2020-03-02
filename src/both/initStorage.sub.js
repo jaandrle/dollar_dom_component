@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxdepth: 3 */
-/* global $dom, mapUpdate */
+/* global assign, mapUpdate */
 /**
  * Initialize internal storage
  * @method initStorage
@@ -57,7 +57,7 @@ function initStorage(){
                 const el= els.get(el_id);
                 const new_data= functions.get(fun_id).call(el, data) || {};
                 if(el.parentNode===null) return unregister(el_id, fun_id, new_data_keys);
-                $dom.assign(el, new_data);
+                assign(el, new_data);
             }
         },
         getData: function(){

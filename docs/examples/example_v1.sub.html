@@ -6,7 +6,7 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
 $dom_svg= (function(){
     return {
         chartAddAxeWrapper: function({ X, Y, className= "C__chartAxe", style: { fontSize, color= "black" }= {} }){
-            return $dom.component("G", {
+            return $dom.component("g", {
                 className,
                 transform: `translate(${X} ${Y})`,
                 "font-size": fontSize,
@@ -17,7 +17,7 @@ $dom_svg= (function(){
             .share;
         },
         chartAddCanvasWrapper: function({ X, Y, width, height, className= "C__chartCanvas", style: { strokeWidth= 1 }= {} }){
-            return $dom.component("SVG", {
+            return $dom.component("svg", {
                 viewBox: `0 ${-height} ${width} ${height}`,
                 width, height, 
                 "stroke-width": strokeWidth,
@@ -28,14 +28,14 @@ $dom_svg= (function(){
             .share;
         },
         chartAddAxeLine: function({ width, height, style: { strokeWidth= 1 }= {} }){
-            if(width>height) return $dom.component("LINE", { y1: 0, y2: 0, x1: 0, x2: width, "stroke-width": strokeWidth }, { namespace_group: "SVG" }).share;
-            return $dom.component("LINE", { x1: width, x2: width, y1: 0, y2: height, "stroke-width": strokeWidth }, { namespace_group: "SVG" }).share;
+            if(width>height) return $dom.component("line", { y1: 0, y2: 0, x1: 0, x2: width, "stroke-width": strokeWidth }, { namespace_group: "SVG" }).share;
+            return $dom.component("line", { x1: width, x2: width, y1: 0, y2: height, "stroke-width": strokeWidth }, { namespace_group: "SVG" }).share;
         },
         chartAddLabelsTicksForAxeX: function({ width= 233.33, height= 10, style: { fontSize, strokeWidth= 1 }= {}, delta= 1, step= 1, minimum= 0, labels= true, ticks= true }){
             const
                 delta_step= delta*step,
                 y= height-fontSize;
-            const { component, setShift, share }= $dom.component("G", null, { namespace_group: "SVG" });
+            const { component, setShift, share }= $dom.component("g", null, { namespace_group: "SVG" });
             setShift(0);
             if(labels){
                 component(chartAddAxeXLabelsComponent({ delta_step, step, y, width, minimum }), -1);
@@ -50,7 +50,7 @@ $dom_svg= (function(){
                 delta_step= delta*step,
                 dy= fontSize/3,
                 x= width*0.75;
-            const { component, setShift, share }= $dom.component("G", null, { namespace_group: "SVG" });
+            const { component, setShift, share }= $dom.component("g", null, { namespace_group: "SVG" });
             setShift(0);
             if(labels){
                 component(chartAddAxeYLabelsComponent({ delta_step, step, dy, x, height, minimum }), -1);
@@ -66,9 +66,9 @@ $dom_svg= (function(){
     };
 
     function chartAddAxeXLabelsComponent({ delta_step, step, y, width, minimum }){
-        const { add, addText, setShift, share }= $dom.component("G", null, { namespace_group: "SVG" });
+        const { add, addText, setShift, share }= $dom.component("g", null, { namespace_group: "SVG" });
         for(let i=minimum, x=0; x<=width; x+=delta_step, i++){
-            add("TEXT", { y, x, "text-anchor": "middle" });
+            add("text", { y, x, "text-anchor": "middle" });
                 addText(i*step);
             setShift(-3);
         }
@@ -76,18 +76,18 @@ $dom_svg= (function(){
     }
     function chartAddAxeXTicksComponent({ delta_step, width, strokeWidth }){
         const rx= 1.5*strokeWidth;
-        const { add, addText, setShift, share }= $dom.component("G", { "stroke-width": 1 }, { namespace_group: "SVG" });
+        const { add, addText, setShift, share }= $dom.component("g", { "stroke-width": 1 }, { namespace_group: "SVG" });
         for(let i=0, x=0; x<=width; x+=delta_step, i++){
-            add("LINE", { x1: x, y1: -rx, x2: x, y2: rx });
+            add("line", { x1: x, y1: -rx, x2: x, y2: rx });
             setShift(-2);
         }
         return share;
     }
 
     function chartAddAxeYLabelsComponent({ delta_step, step, dy, x, height, minimum }){
-        const { add, addText, setShift, share }= $dom.component("G", null, { namespace_group: "SVG" });
+        const { add, addText, setShift, share }= $dom.component("g", null, { namespace_group: "SVG" });
         for(let i=minimum, y=height; y>=0; y+=delta_step, i++){
-            add("TEXT", { x, y, dy, "text-anchor": "end" });
+            add("text", { x, y, dy, "text-anchor": "end" });
                 addText(i*step);
             setShift(-3);
         }
@@ -95,9 +95,9 @@ $dom_svg= (function(){
     }
     function chartAddAxeYTicksComponent({ delta_step, width, height, strokeWidth }){
         const rx= 1.5*strokeWidth;
-        const { add, addText, setShift, share }= $dom.component("G", { "stroke-width": 1 }, { namespace_group: "SVG" });
+        const { add, addText, setShift, share }= $dom.component("g", { "stroke-width": 1 }, { namespace_group: "SVG" });
         for(let i=0, y=height; y>=0; y+=delta_step, i++){
-            add("LINE", { x1: width-rx, y1: y, x2: width+rx, y2: y });
+            add("line", { x1: width-rx, y1: y, x2: width+rx, y2: y });
             setShift(-2);
         }
         return share;
@@ -124,7 +124,7 @@ $dom_svg= (function(){
             dX= chart_width/max(...dataX),
             dY= -chart_height/max(...dataY);
         const style= { fontSize, strokeWidth: 0.75, color: "white" };
-        const { add, component, share }= $dom.component("SVG", { viewBox: `0 0 ${width} ${height}` });
+        const { add, component, share }= $dom.component("svg", { viewBox: `0 0 ${width} ${height}` });
             component($dom_svg.chartAddAxeWrapper({ X: left_pad, Y: chart_height+bottom_pad, style }));
                 component($dom_svg.chartAddAxeLine({ width: chart_width, height: bottom_pad, style }));
                 component($dom_svg.chartAddLabelsTicksForAxeX({ width: chart_width, height: bottom_pad, delta: dX, style }), -1);
@@ -132,7 +132,7 @@ $dom_svg= (function(){
                 component($dom_svg.chartAddAxeLine({ width: left_pad, height: chart_height, style }));
                 component($dom_svg.chartAddLabelsTicksForAxeY({ width: left_pad, height: chart_height, delta: dY, step: 5, style }), -1);
             component($dom_svg.chartAddCanvasWrapper({ X: left_pad, Y: bottom_pad, width: chart_width, height: chart_height }), -2);
-                add("POLYLINE", { points: $dom_svg.chartHelperDataToPolylinePoints({ dX, dY, dataX, dataY }), stroke: "white", fill: "none" })
+                add("polyline", { points: $dom_svg.chartHelperDataToPolylinePoints({ dX, dY, dataX, dataY }), stroke: "white", fill: "none" })
         return share;
     }
     //EXAMPLE END

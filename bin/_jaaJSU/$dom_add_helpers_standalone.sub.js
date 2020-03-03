@@ -820,6 +820,7 @@ $dom.assign= function(element, ...objects_attributes){
  * @returns {NodeElement} Givven `element` (follows similar behaviour in `Object.assign`)
  */
 $dom.assignNS= function(namespace, element, ...objects_attributes){
+    const on_keys_regexp= /^on[a-z]+/;
     const object_attributes= Object.assign({}, ...objects_attributes);
     const object_attributes_keys= Object.keys(object_attributes);
     for(let i=0, key, attr, i_length= object_attributes_keys.length; i<i_length; i++){
@@ -852,7 +853,8 @@ $dom.assignNS= function(namespace, element, ...objects_attributes){
                 element.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", attr);
                 break;
             default:
-                element.setAttributeNS(null, key, attr);
+                if(on_keys_regexp.test(key)) element[key]= attr;
+                else element.setAttributeNS(null, key, attr);
                 break;
         }
     }

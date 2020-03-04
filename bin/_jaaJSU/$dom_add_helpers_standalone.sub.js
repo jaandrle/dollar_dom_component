@@ -1,4 +1,4 @@
-/* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
+/* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxcomplexity: 19, maxparams: 4, maxdepth: 3 */
 /* $dom *//* global $dom */
 /* standalone= "standalone"; */
 /**

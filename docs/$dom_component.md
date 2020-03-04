@@ -174,7 +174,7 @@
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [el_name] | <code>string</code> | <code>&quot;\&quot;EMPTY\&quot;&quot;</code> | Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See [add](#module_jaaJSU..$dom..instance_component.add). |
+| [el_name] | <code>string</code> | <code>&quot;EMPTY&quot;</code> | Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See [add](#module_jaaJSU..$dom..instance_component.add). |
 | attrs | [<code>DomAssignObject</code>](#module_jaaJSU..$dom..DomAssignObject) |  | The second argument for [assign](#module_jaaJSU..$dom.assign) |
 | [params] | <code>Object</code> | <code>{}</code> | Parameters |
 | [params.mapUpdate] | <code>function</code> |  | This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method [add](#module_jaaJSU..$dom..instance_component.add) |
@@ -249,7 +249,7 @@ $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
 <a name="module_jaaJSU..$dom.assignNS"></a>
 
 #### $dom.assignNS(namespace_group, element, ...object_attributes) ⇒ <code>NodeElement</code>
->Procedure for merging object into the element properties (see `html` version [module:jaaJSU~assign](module:jaaJSU~assign)).
+>Procedure for merging object into the element properties (see `html` version [assign](#module_jaaJSU..$dom.assign)).
 
 **Kind**: static method of [<code>$dom</code>](#module_jaaJSU..$dom) <a name="module_jaaJSU..$dom.assignNS" href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L863" title="$dom_component.js:863"><small>(defined@863)</small></a>  
 **Returns**: <code>NodeElement</code> - Givven `element` (follows similar behaviour in `Object.assign`)  

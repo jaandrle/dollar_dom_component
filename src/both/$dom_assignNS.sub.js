@@ -1,7 +1,7 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxcomplexity: 20, maxdepth: 3 */
 /* global $dom */
 /**
- * Procedure for merging object into the element properties (see `html` version {@link module:jaaJSU~assign}).
+ * Procedure for merging object into the element properties (see `html` version {@link module:jaaJSU~$dom.assign}).
  * @method assignNS
  * @memberof module:jaaJSU~$dom
  * @param {string} namespace_group Group representation of [`namespace`](https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttributeNS), use "__SVG__" for setting attributes for `svg`s.

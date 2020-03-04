@@ -55,7 +55,7 @@ const $dom_emptyPseudoComponent= (function(){
  * @memberof module:jaaJSU~$dom
  * @version 1.0.5
  * @see {@link https://github.com/jaandrle/dollar_dom_component}
- * @param {string} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See {@link module:jaaJSU~$dom~instance_component.add}.
+ * @param {string} [el_name= EMPTY] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See {@link module:jaaJSU~$dom~instance_component.add}.
  * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters
  * @param {Function} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}
@@ -817,7 +817,7 @@ $dom.assign= function(element, ...objects_attributes){
     return element;
 };
 /**
- * Procedure for merging object into the element properties (see `html` version {@link module:jaaJSU~assign}).
+ * Procedure for merging object into the element properties (see `html` version {@link module:jaaJSU~$dom.assign}).
  * @method assignNS
  * @memberof module:jaaJSU~$dom
  * @param {string} namespace_group Group representation of [`namespace`](https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttributeNS), use "__SVG__" for setting attributes for `svg`s.

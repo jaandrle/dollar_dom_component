@@ -1,7 +1,6 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxparams: 4 */
-/* internal methods *//* global initStorage */
+/* internal methods *//* global initStorage, assign */
 /* internal vars *//* global on_mount_funs: true, internal_storage: true */
-/* out *//* global $dom */
 let add_out_methods= {
     /**
      * Returns reference of currently added element
@@ -108,7 +107,7 @@ let add_out_methods= {
     onupdate: function(add_out, el, data, onUpdateFunction){
         if(!data) return add_out;
         if(!internal_storage) internal_storage= initStorage();
-        $dom.assign(el, internal_storage.register(el, data, onUpdateFunction));
+        assign(el, internal_storage.register(el, data, onUpdateFunction));
         return add_out;
     }
 };

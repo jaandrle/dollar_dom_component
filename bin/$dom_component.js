@@ -104,14 +104,24 @@ function init(global){
      * @memberof module:jaaJSU~$dom
      * @version 1.0.5
      * @see {@link https://github.com/jaandrle/dollar_dom_component}
-     * @param {String} [el_name="EMPTY"] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated.
+     * @param {string} [el_name= EMPTY] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See {@link module:jaaJSU~$dom~instance_component.add}.
      * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
      * @param {Object} [params= {}] Parameters
-     * @param {Function|Undefined} [params.mapUpdate=Undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}
+     * @param {Function} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}
+     * @param {string|undefined} [params.namespace_group=undefined] This parameter provides ability to defined elements for diferent [`namespaceURI`s](https://developer.mozilla.org/en-US/docs/Web/API/Element/namespaceURI). Use "__SVG__" for "http://www.w3.org/2000/svg" (full list [Important Namespace URIs](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElementNS#Important_Namespace_URIs)).
      * @return {module:jaaJSU~$dom~instance_componentAdd|module:jaaJSU~$dom~instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
      */
-    $dom.component= function(el_name, attrs, { mapUpdate }={}){
-        if(typeof el_name==="undefined" || el_name.toUpperCase()==="EMPTY") return $dom_emptyPseudoComponent;
+    $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
+        if(!el_name||el_name==="EMPTY"||el_name==="empty") return $dom_emptyPseudoComponent;
+        if(el_name==="svg") namespace_group= "SVG";
+        let assign, createElement;
+        if(namespace_group==="SVG"){
+            assign= $dom.assignNS.bind(null, "SVG");
+            createElement= document.createElementNS.bind(document, "http://www.w3.org/2000/svg");
+        } else {
+            assign= $dom.assign;
+            createElement= document.createElement.bind(document);
+        }
         let /* holds `initStorage()` if `onupdate` was registered and other component related listeners */
             internal_storage= null,
             on_destroy_funs= null,
@@ -238,7 +248,7 @@ function init(global){
             onupdate: function(add_out, el, data, onUpdateFunction){
                 if(!data) return add_out;
                 if(!internal_storage) internal_storage= initStorage();
-                $dom.assign(el, internal_storage.register(el, data, onUpdateFunction));
+                assign(el, internal_storage.register(el, data, onUpdateFunction));
                 return add_out;
             }
         };
@@ -273,7 +283,7 @@ function init(global){
          * @memberof module:jaaJSU~$dom~instance_component
          * @public
          * @chainable
-         * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...).
+         * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...). For [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) you can use lowercase/uppercase convention (e. g. 'p', 'P', 'div', 'DIV'), for [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Element) use exact form (e. g. 'svg', 'polyline', 'clipPath')!
          * @param {module:jaaJSU~$dom~DomAssignObject} attrs Internally uses {@link module:jaaJSU~$dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
          * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
          * @returns {module:jaaJSU~$dom~instance_componentAdd}
@@ -300,12 +310,12 @@ function init(global){
         function add(el_name, attrs, shift= 0){
             recalculateDeep(shift);
             attrs= attrs || {};
-            const prepare_el= document.createElement(el_name);
+            const prepare_el= createElement(el_name);
             if(!all_els_counter) container= els[0]= fragment.appendChild(prepare_el);
             else els[all_els_counter]= getParentElement().appendChild(prepare_el);
             let el= els[all_els_counter];
             all_els_counter+= 1;
-            $dom.assign(el, attrs);
+            assign(el, attrs);
             const add_out= Object.assign({}, component_out);
             
             add_out.getReference= add_out_methods.getReference.bind(null, add_out, el);
@@ -492,7 +502,7 @@ function init(global){
                 on_mount_funs= undefined;
             }
             return container;
-            function onMountFunctionCall(onMountFunction, el){ return $dom.assign(el, onMountFunction.call(el, element, type)); }
+            function onMountFunctionCall(onMountFunction, el){ return assign(el, onMountFunction.call(el, element, type)); }
         }
         
         /**
@@ -518,6 +528,8 @@ function init(global){
             if(observer) observer.disconnect();
             observer= undefined;
             on_destroy_funs= undefined;
+            assign= undefined;
+            createElement= undefined;
             container= undefined;
             internal_storage= undefined;
             component_out= undefined;
@@ -656,7 +668,7 @@ function init(global){
                         const el= els.get(el_id);
                         const new_data= functions.get(fun_id).call(el, data) || {};
                         if(el.parentNode===null) return unregister(el_id, fun_id, new_data_keys);
-                        $dom.assign(el, new_data);
+                        assign(el, new_data);
                     }
                 },
                 getData: function(){
@@ -843,6 +855,56 @@ function init(global){
                     break;
                 default:
                     element[key]= attr;
+                    break;
+            }
+        }
+        return element;
+    };
+    /**
+     * Procedure for merging object into the element properties (see `html` version {@link module:jaaJSU~$dom.assign}).
+     * @method assignNS
+     * @memberof module:jaaJSU~$dom
+     * @param {string} namespace_group Group representation of [`namespace`](https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttributeNS), use "__SVG__" for setting attributes for `svg`s.
+     * @param {NodeElement} element
+     * @param {...module:jaaJSU~$dom~DomAssignObject} object_attributes
+     * @returns {NodeElement} Givven `element` (follows similar behaviour in `Object.assign`)
+     */
+    $dom.assignNS= function(namespace, element, ...objects_attributes){
+        const on_keys_regexp= /^on[a-z]+/;
+        const object_attributes= Object.assign({}, ...objects_attributes);
+        const object_attributes_keys= Object.keys(object_attributes);
+        for(let i=0, key, attr, i_length= object_attributes_keys.length; i<i_length; i++){
+            key= object_attributes_keys[i];
+            attr= object_attributes[key];
+            if(typeof attr==="undefined"){ if(element.hasAttributeNS(null, key)){ element.removeAttributeNS(null, key); } continue; }
+            switch(key){
+                case "textContent" || "innerText":
+                    element.appendChild(document.createTextNode(attr));
+                    break;
+                case "style":
+                    if(typeof attr==="string") element.setAttributeNS(null, "style", attr);
+                    else for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.style.setProperty(k_key, attr[k_key]); }
+                    break;
+                case "style_vars":
+                    for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.style.setProperty(k_key, attr[k_key]); }
+                    break;
+                case "className":
+                    element.setAttributeNS(null, "class", attr);
+                    break;
+                case "classList":
+                    if(!element[key].toggle) break;
+                    for(let k=0, k_key, k_attr, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){
+                        k_key= k_keys[k]; k_attr= attr[k_key];
+                        if(k_attr===-1) element.classList.toggle(k_key);
+                        else element.classList.toggle(k_key, Boolean(k_attr));
+                    }
+                    break;
+                case "xlink:href":
+                    element.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", attr);
+                    break;
+                default:
+                    if(on_keys_regexp.test(key)) element[key]= attr;
+                    else element.setAttributeNS(null, key, attr);
                     break;
             }
         }

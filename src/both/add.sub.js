@@ -49,7 +49,7 @@ function add(el_name, attrs, shift= 0){
     let el= els[all_els_counter];
     all_els_counter+= 1;
     assign(el, attrs);
-    const add_out= Object.assign({}, component_out);
+    const add_out= Object.create(component_out);
     
     add_out.getReference= add_out_methods.getReference.bind(null, add_out, el);
     add_out.on= add_out_methods.on.bind(null, add_out, el);

@@ -42,7 +42,7 @@ function addText(text, shift= 0){
     const text_node= document.createTextNode(text);
     let el= els[all_els_counter]= getParentElement().appendChild(text_node);
     all_els_counter+= 1;
-    return Object.assign({
+    return Object.assign(Object.create(component_out), {
         /**
          * This procedure allows to call given function `fn` during registering element.
          * @method oninit
@@ -51,5 +51,5 @@ function addText(text, shift= 0){
          * @returns {module:jaaJSU~$dom~instance_component}
          */
         oninit: function(fn){ fn(el); return component_out; }
-    }, component_out);
+    });
 }

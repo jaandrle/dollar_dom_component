@@ -40,10 +40,10 @@ let add_out_methods= {
      * This procedure allows to call given function `fn` during registering element.
      * @method oninit
      * @memberof module:jaaJSU~$dom~instance_componentAdd
-     * @param {...Function} fns
+     * @param {Function} fn
      * @returns {module:jaaJSU~$dom~instance_componentAdd}
      */
-    oninit: function(add_out, el, ...fns){ fns.forEach(fn=> fn.call(add_out, el)); return add_out; },
+    oninit: function(add_out, el, fn){ fn.call(add_out, el); return add_out; },
     /**
      * This procedure allows to call given function `onMountFunction` during mounting component.
      * 

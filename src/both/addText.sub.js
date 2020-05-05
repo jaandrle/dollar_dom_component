@@ -50,6 +50,6 @@ function addText(text, shift= 0){
          * @param {Function} fn
          * @returns {module:jaaJSU~$dom~instance_component}
          */
-        oninit: function(fn){ fn(el); return component_out; }
+        oninit: function(fn){ fn.call(this, el); return component_out; }
     });
 }

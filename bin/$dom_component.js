@@ -102,7 +102,7 @@ function init(global){
      * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
      * @method component
      * @memberof module:jaaJSU~$dom
-     * @version 1.1.0
+     * @version 1.1.1
      * @see {@link https://github.com/jaandrle/dollar_dom_component}
      * @param {string} [el_name= EMPTY] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See {@link module:jaaJSU~$dom~instance_component.add}.
      * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
@@ -181,10 +181,10 @@ function init(global){
              * This procedure allows to call given function `fn` during registering element.
              * @method oninit
              * @memberof module:jaaJSU~$dom~instance_componentAdd
-             * @param {...Function} fns
+             * @param {Function} fn
              * @returns {module:jaaJSU~$dom~instance_componentAdd}
              */
-            oninit: function(add_out, el, ...fns){ fns.forEach(fn=> fn.call(add_out, el)); return add_out; },
+            oninit: function(add_out, el, fn){ fn.call(add_out, el); return add_out; },
             /**
              * This procedure allows to call given function `onMountFunction` during mounting component.
              * 
@@ -374,7 +374,7 @@ function init(global){
                  * @param {Function} fn
                  * @returns {module:jaaJSU~$dom~instance_component}
                  */
-                oninit: function(fn){ fn(el); return component_out; }
+                oninit: function(fn){ fn.call(this, el); return component_out; }
             });
         }
         

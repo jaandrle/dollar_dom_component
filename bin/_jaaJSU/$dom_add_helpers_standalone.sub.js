@@ -277,14 +277,6 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
     }
     
     /**
-     * This is `Component` with aditional methods
-     * @typedef instance_componentAddText
-     * @memberof module:jaaJSU~$dom
-     * @category types descriptions
-     * @inner
-     * @type {module:jaaJSU~$dom~instance_component}
-     */
-    /**
      * This add element to component
      * @method addText
      * @memberof module:jaaJSU~$dom~instance_component
@@ -292,7 +284,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
      * @chainable
      * @param {String} text Argument for `document.createTextNode`
      * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
-     * @returns {module:jaaJSU~$dom~instance_componentAddText}
+     * @returns {module:jaaJSU~$dom~instance_componentAdd}
      * @example
      * const c1= $dom.component("P", { textContent: "TEXT" });
      * const c2= $dom.component("P", null);
@@ -311,21 +303,19 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
      * }
      * //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
      */
-    function addText(text, shift= 0){
+    function addText(text= "", shift= 0){
         recalculateDeep(shift);
         const text_node= document.createTextNode(text);
         let el= els[all_els_counter]= getParentElement().appendChild(text_node);
         all_els_counter+= 1;
-        return Object.assign(Object.create(component_out), {
-            /**
-             * This procedure allows to call given function `fn` during registering element.
-             * @method oninit
-             * @memberof module:jaaJSU~$dom~instance_componentAddText
-             * @param {Function} fn
-             * @returns {module:jaaJSU~$dom~instance_component}
-             */
-            oninit: function(fn){ fn.call(this, el); return component_out; }
-        });
+        const add_out= Object.create(component_out);
+        
+        add_out.getReference= add_out_methods.getReference.bind(null, add_out, el);
+        add_out.on= add_out_methods.on.bind(null, add_out, el);
+        add_out.oninit= add_out_methods.oninit.bind(null, add_out, el);
+        add_out.onmount= add_out_methods.onmount.bind(null, add_out, el);
+        add_out.onupdate= add_out_methods.onupdate.bind(null, add_out, el);
+        return add_out;
     }
     
     /**

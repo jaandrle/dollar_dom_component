@@ -3,14 +3,6 @@
 /* internal vars *//* global all_els_counter: true */
 /* global component_out, els */
 /**
- * This is `Component` with aditional methods
- * @typedef instance_componentAddText
- * @memberof module:jaaJSU~$dom
- * @category types descriptions
- * @inner
- * @type {module:jaaJSU~$dom~instance_component}
- */
-/**
  * This add element to component
  * @method addText
  * @memberof module:jaaJSU~$dom~instance_component
@@ -18,7 +10,7 @@
  * @chainable
  * @param {String} text Argument for `document.createTextNode`
  * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
- * @returns {module:jaaJSU~$dom~instance_componentAddText}
+ * @returns {module:jaaJSU~$dom~instance_componentAdd}
  * @example
  * const c1= $dom.component("P", { textContent: "TEXT" });
  * const c2= $dom.component("P", null);
@@ -37,19 +29,12 @@
  * }
  * //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
  */
-function addText(text, shift= 0){
+function addText(text= "", shift= 0){
     recalculateDeep(shift);
     const text_node= document.createTextNode(text);
     let el= els[all_els_counter]= getParentElement().appendChild(text_node);
     all_els_counter+= 1;
-    return Object.assign(Object.create(component_out), {
-        /**
-         * This procedure allows to call given function `fn` during registering element.
-         * @method oninit
-         * @memberof module:jaaJSU~$dom~instance_componentAddText
-         * @param {Function} fn
-         * @returns {module:jaaJSU~$dom~instance_component}
-         */
-        oninit: function(fn){ fn.call(this, el); return component_out; }
-    });
+    const add_out= Object.create(component_out);
+    gulp_place("both/add_out_methods_registration.sub.js");/* global gulp_place */
+    return add_out;
 }

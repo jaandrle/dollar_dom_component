@@ -50,11 +50,6 @@ function add(el_name, attrs, shift= 0){
     all_els_counter+= 1;
     assign(el, attrs);
     const add_out= Object.create(component_out);
-    
-    add_out.getReference= add_out_methods.getReference.bind(null, add_out, el);
-    add_out.on= add_out_methods.on.bind(null, add_out, el);
-    add_out.oninit= add_out_methods.oninit.bind(null, add_out, el);
-    add_out.onmount= add_out_methods.onmount.bind(null, add_out, el);
-    add_out.onupdate= add_out_methods.onupdate.bind(null, add_out, el);
+    gulp_place("both/add_out_methods_registration.sub.js");/* global gulp_place */
     return add_out;
 }

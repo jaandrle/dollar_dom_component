@@ -6,7 +6,7 @@ let add_out_methods= {
      * Returns reference of currently added element
      * @method getReference
      * @memberof module:jaaJSU~$dom~instance_componentAdd
-     * @returns {NodeElement}
+     * @returns {Element|Text} See [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node).
      */
     getReference: function(add_out, el){ return el; },
     /**

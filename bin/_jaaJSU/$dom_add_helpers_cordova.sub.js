@@ -98,7 +98,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
          * Returns reference of currently added element
          * @method getReference
          * @memberof module:jaaJSU~$dom~instance_componentAdd
-         * @returns {NodeElement}
+         * @returns {Element|Text} See [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node).
          */
         getReference: function(add_out, el){ return el; },
         /**
@@ -745,6 +745,7 @@ $dom.componentListener= (function(){
  *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList.toggle(class_name)` others `el.classList.toggle(class_name, Booleans(...))`
  *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
  *  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
+ *  - **IMPORTANT!**: There is difference between [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element) and [`Text`](https://developer.mozilla.org/en-US/docs/Web/API/Text), ….
  * @typedef DomAssignObject
  * @memberof module:jaaJSU~$dom
  * @category types descriptions
@@ -757,7 +758,7 @@ $dom.componentListener= (function(){
  * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
  * @method assign
  * @memberof module:jaaJSU~$dom
- * @param {NodeElement} element
+ * @param {Element|Text} element See [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node).
  * @param {...module:jaaJSU~$dom~DomAssignObject} object_attributes
  * @returns {NodeElement} Givven `element` (follows similar behaviour in `Object.assign`)
  * @example <caption>#1: All together</caption>

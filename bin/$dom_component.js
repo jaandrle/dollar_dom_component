@@ -782,7 +782,6 @@ function init(global){
                 this.api= { getReference: api.getReference, update: api.update, removeEventListener: this.removeEventListener.bind(this) };
                 this.event_name= event_name;
                 this.event_function= event_function;
-                console.log(event_options); /* jshint devel: true *///gulp.keep.line
                 target_element.addEventListener(event_name, this, event_options);
             },
             removeEventListener: function(){ this.api.getReference().removeEventListener(this.event_name, this); },

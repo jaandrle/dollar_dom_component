@@ -24,12 +24,10 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
     }
     function dotsAnimationEffect(update, interval){
         return clearInterval.bind(null, setInterval(update.bind(null, ({ animation })=> ({ animation: nextStep(animation) })), interval));
-
+        
         function nextStep(current){
-            if(current==="") return ". ";
-            if(current===". ") return ". . ";
-            if(current===". . ") return ". . . ";
             if(current===". . . ") return "";
+            return current+". ";
         }
     }
     

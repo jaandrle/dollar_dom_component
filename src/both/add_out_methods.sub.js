@@ -6,7 +6,7 @@ let add_out_methods= {
      * Returns reference of currently added element
      * @method getReference
      * @memberof module:jaaJSU~$dom~instance_componentAdd
-     * @returns {NodeElement}
+     * @returns {Element|Text} See [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node).
      */
     getReference: function(add_out, el){ return el; },
     /**
@@ -43,7 +43,7 @@ let add_out_methods= {
      * @param {Function} fn
      * @returns {module:jaaJSU~$dom~instance_componentAdd}
      */
-    oninit: function(add_out, el, fn){ fn(el); return add_out; },
+    oninit: function(add_out, el, fn){ fn.call(add_out, el); return add_out; },
     /**
      * This procedure allows to call given function `onMountFunction` during mounting component.
      * 

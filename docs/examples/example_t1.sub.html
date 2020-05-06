@@ -7,21 +7,22 @@ gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval
     //EXAMPLE START
 
     const container= document.getElementById(element_id);
-    const sum_updated= $dom.componentListener("update", { sum: 0 }, ({ sum })=> ({ textContent: sum }));
-    const color_updated= $dom.componentListener("update", { color: "blue" }, ({ color })=> ({ className: `example_${color}_color` }));
+    const update_ChangeSum= $dom.componentListener("update", { sum: 0 }, ({ sum })=> ({ textContent: sum }));
+    const update_ChangeColor= $dom.componentListener("update", { color: "blue" }, ({ color })=> ({ className: `example_${color}_color` }));
 
     counterComponent({ textContent: "Number of yours socks: " }).mount(container);
 
     function counterComponent({ textContent }){
+        const click_addOne= $dom.componentListener("click", function(){ this.update(({ sum })=> ({ sum: sum+1 })) });
+        
         const { add, share, update }= $dom.component("DIV", null);
-            add("BUTTON", { textContent: "+", onclick: addOne });
+            add("BUTTON", { textContent: "+" }).on(click_addOne);
             add("BUTTON", { textContent: "red", onclick: setColor }, -1);
             add("BUTTON", { textContent: "blue", onclick: setColor }, -1);
             add("P", { textContent }, -1);
-                add("STRONG", null).on(sum_updated, color_updated);
+                add("STRONG", null).on(update_ChangeSum, update_ChangeColor);
         return share;
 
-        function addOne(){ update(({ sum })=> ({ sum: sum+1 })); }
         function setColor(){ update({ color: this.textContent }); }
     }
     

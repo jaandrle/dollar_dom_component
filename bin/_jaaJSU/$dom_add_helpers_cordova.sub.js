@@ -53,7 +53,7 @@ const $dom_emptyPseudoComponent= (function(){
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
  * @method component
  * @memberof module:jaaJSU~$dom
- * @version 1.1.0
+ * @version 1.1.1
  * @see {@link https://github.com/jaandrle/dollar_dom_component}
  * @param {string} [el_name= EMPTY] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See {@link module:jaaJSU~$dom~instance_component.add}.
  * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
@@ -98,7 +98,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
          * Returns reference of currently added element
          * @method getReference
          * @memberof module:jaaJSU~$dom~instance_componentAdd
-         * @returns {NodeElement}
+         * @returns {Element|Text} See [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node).
          */
         getReference: function(add_out, el){ return el; },
         /**
@@ -135,7 +135,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
          * @param {Function} fn
          * @returns {module:jaaJSU~$dom~instance_componentAdd}
          */
-        oninit: function(add_out, el, fn){ fn(el); return add_out; },
+        oninit: function(add_out, el, fn){ fn.call(add_out, el); return add_out; },
         /**
          * This procedure allows to call given function `onMountFunction` during mounting component.
          * 
@@ -267,7 +267,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
         let el= els[all_els_counter];
         all_els_counter+= 1;
         assign(el, attrs);
-        const add_out= Object.assign({}, component_out);
+        const add_out= Object.create(component_out);
         
         add_out.getReference= add_out_methods.getReference.bind(null, add_out, el);
         add_out.on= add_out_methods.on.bind(null, add_out, el);
@@ -278,14 +278,6 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
     }
     
     /**
-     * This is `Component` with aditional methods
-     * @typedef instance_componentAddText
-     * @memberof module:jaaJSU~$dom
-     * @category types descriptions
-     * @inner
-     * @type {module:jaaJSU~$dom~instance_component}
-     */
-    /**
      * This add element to component
      * @method addText
      * @memberof module:jaaJSU~$dom~instance_component
@@ -293,7 +285,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
      * @chainable
      * @param {String} text Argument for `document.createTextNode`
      * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
-     * @returns {module:jaaJSU~$dom~instance_componentAddText}
+     * @returns {module:jaaJSU~$dom~instance_componentAdd}
      * @example
      * const c1= $dom.component("P", { textContent: "TEXT" });
      * const c2= $dom.component("P", null);
@@ -312,21 +304,19 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
      * }
      * //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
      */
-    function addText(text, shift= 0){
+    function addText(text= "", shift= 0){
         recalculateDeep(shift);
         const text_node= document.createTextNode(text);
         let el= els[all_els_counter]= getParentElement().appendChild(text_node);
         all_els_counter+= 1;
-        return Object.assign({
-            /**
-             * This procedure allows to call given function `fn` during registering element.
-             * @method oninit
-             * @memberof module:jaaJSU~$dom~instance_componentAddText
-             * @param {Function} fn
-             * @returns {module:jaaJSU~$dom~instance_component}
-             */
-            oninit: function(fn){ fn(el); return component_out; }
-        }, component_out);
+        const add_out= Object.create(component_out);
+        
+        add_out.getReference= add_out_methods.getReference.bind(null, add_out, el);
+        add_out.on= add_out_methods.on.bind(null, add_out, el);
+        add_out.oninit= add_out_methods.oninit.bind(null, add_out, el);
+        add_out.onmount= add_out_methods.onmount.bind(null, add_out, el);
+        add_out.onupdate= add_out_methods.onupdate.bind(null, add_out, el);
+        return add_out;
     }
     
     /**
@@ -705,11 +695,13 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
 };
 /**
  * This is in fact argument for {@link module:jaaJSU~$dom~instance_componentAdd.on}.
+ * 
+ * In case of native events (e.g. "click"), is used `passive=true` and `this` refers to `{ update, getReference, removeEventListener }`.
  * @typedef component_listener
  * @memberof module:jaaJSU~$dom
  * @type {Array}
  * @param {String} 0 Name of method in {@link module:jaaJSU~$dom~instance_componentAdd}.
- * @param {Array} 1 In fact arguments for `on*` methods in {@link module:jaaJSU~$dom~instance_componentAdd}.
+ * @param {Array} 1 In fact arguments for `on*` methods in {@link module:jaaJSU~$dom~instance_componentAdd} or arguments for [EventTarget.addEventListener()](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
  * @category types descriptions
  * @inner
  */
@@ -717,16 +709,33 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
  * This provide more DRY way to register events listeners for {@link module:jaaJSU~$dom.component} such as `onupdate`, `oninit`, ….
  * @method componentListener
  * @memberof module:jaaJSU~$dom
- * @param {String} event_name Name of event (prefered way is to use without `on*` like native `addEventListener`)
+ * @param {String} event_name Name of component event (prefered way is to use without `on*` like native `addEventListener` – e.g. "update") or native `EventListener` name.
  * @param {...Mixed} args See {@link module:jaaJSU~$dom~component_listener}[1].
  * @returns {module:jaaJSU~$dom~component_listener}
  */
-$dom.componentListener= function(event_name, ...args){
-    const supported= [ "oninit", "onmount", "onupdate" ];
-    const event_name_id= supported.indexOf((/^on/g.test(event_name) ? "" : "on")+event_name);
-    if(event_name_id===-1) throw new Error(`Unsupported event name '${event_name}'!`);
-    return Object.freeze([ supported[event_name_id], args ]);
-};
+$dom.componentListener= (function(){
+    const internal_component_events= [ "oninit", "onmount", "onupdate" ];
+    const EventListener_interface= {
+        /*
+         api: {},
+         event_function: listener function,
+         */
+        registerListener: function(target_element, api, event_name, event_function, event_options= { passive: true }){
+            this.api= { getReference: api.getReference, update: api.update, removeEventListener: this.removeEventListener.bind(this) };
+            this.event_name= event_name;
+            this.event_function= event_function;
+            target_element.addEventListener(event_name, this, event_options);
+        },
+        removeEventListener: function(){ this.api.getReference().removeEventListener(this.event_name, this); },
+        handleEvent: function(event){ this.event_function.call(this.api, event); }
+    };
+    
+    return function(event_name, ...args){
+        const event_name_id= internal_component_events.indexOf((/^on/g.test(event_name) ? "" : "on")+event_name);
+        if(event_name_id===-1) return Object.freeze([ "oninit", [ function(el){ Object.create(EventListener_interface).registerListener(el, this, event_name, ...args); } ] ]);
+        return Object.freeze([ internal_component_events[event_name_id], args ]);
+    };
+})();
 /**
  * Object shall holds **NodeElement** properties like `className`, `textContent`, …. This is primary argument for {@link module:jaaJSU~$dom.assign}. There are some notes and changes:
  *  - In most cases, you can use native propertie such as [MDN WEB/API/Element](https://developer.mozilla.org/en-US/docs/Web/API/Element).
@@ -736,6 +745,7 @@ $dom.componentListener= function(event_name, ...args){
  *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList.toggle(class_name)` others `el.classList.toggle(class_name, Booleans(...))`
  *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
  *  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
+ *  - **IMPORTANT!**: There is difference between [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element) and [`Text`](https://developer.mozilla.org/en-US/docs/Web/API/Text), ….
  * @typedef DomAssignObject
  * @memberof module:jaaJSU~$dom
  * @category types descriptions
@@ -748,7 +758,7 @@ $dom.componentListener= function(event_name, ...args){
  * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
  * @method assign
  * @memberof module:jaaJSU~$dom
- * @param {NodeElement} element
+ * @param {Element|Text} element See [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node).
  * @param {...module:jaaJSU~$dom~DomAssignObject} object_attributes
  * @returns {NodeElement} Givven `element` (follows similar behaviour in `Object.assign`)
  * @example <caption>#1: All together</caption>

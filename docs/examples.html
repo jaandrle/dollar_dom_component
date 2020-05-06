@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>$dom.component — Examples</title>
-    <script type="text/javascript" src="$dom_component-min.js?v=1.1.0"></script>
+    <script type="text/javascript" src="$dom_component-min.js?v=1.1.1"></script>
     <style>
         body{
             color: #eeeeee;
@@ -514,12 +514,10 @@
                 }
                 function dotsAnimationEffect(update, interval){
                     return clearInterval.bind(null, setInterval(update.bind(null, ({ animation })=> ({ animation: nextStep(animation) })), interval));
-            
+                    
                     function nextStep(current){
-                        if(current==="") return ". ";
-                        if(current===". ") return ". . ";
-                        if(current===". . ") return ". . . ";
                         if(current===". . . ") return "";
+                        return current+". ";
                     }
                 }
                 
@@ -545,28 +543,29 @@
                 //EXAMPLE START
             
                 const container= document.getElementById(element_id);
-                const sum_updated= $dom.componentListener("update", { sum: 0 }, ({ sum })=> ({ textContent: sum }));
-                const color_updated= $dom.componentListener("update", { color: "blue" }, ({ color })=> ({ className: `example_${color}_color` }));
+                const update_ChangeSum= $dom.componentListener("update", { sum: 0 }, ({ sum })=> ({ textContent: sum }));
+                const update_ChangeColor= $dom.componentListener("update", { color: "blue" }, ({ color })=> ({ className: `example_${color}_color` }));
             
                 counterComponent({ textContent: "Number of yours socks: " }).mount(container);
             
                 function counterComponent({ textContent }){
+                    const click_addOne= $dom.componentListener("click", function(){ this.update(({ sum })=> ({ sum: sum+1 })) });
+                    
                     const { add, share, update }= $dom.component("DIV", null);
-                        add("BUTTON", { textContent: "+", onclick: addOne });
+                        add("BUTTON", { textContent: "+" }).on(click_addOne);
                         add("BUTTON", { textContent: "red", onclick: setColor }, -1);
                         add("BUTTON", { textContent: "blue", onclick: setColor }, -1);
                         add("P", { textContent }, -1);
-                            add("STRONG", null).on(sum_updated, color_updated);
+                            add("STRONG", null).on(update_ChangeSum, update_ChangeColor);
                     return share;
             
-                    function addOne(){ update(({ sum })=> ({ sum: sum+1 })); }
                     function setColor(){ update({ color: this.textContent }); }
                 }
                 
                 //EXAMPLE END
             })("example_element_016");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L545" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L543" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>You can use another component inside current one (see <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/%24dom_component.md#module_jaaJSU..$dom..instance_component.component"><code>.component</code></a>):</p>
@@ -632,7 +631,7 @@
                 //EXAMPLE END
             })("example_element_017");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L576" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L575" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>As previou with different usuage of <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L485"><code>setShift</code></a>:</p>
@@ -698,7 +697,7 @@
                 //EXAMPLE END
             })("example_element_018");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L642" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L641" target="_blank">View with highliting (link to source of this file)</a></p>
 
             
             <p>As previou with different usuage of <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L485"><code>setShift</code></a>:</p>
@@ -742,7 +741,7 @@
                 //EXAMPLE END
             })("example_element_019");
             </script>
-            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L708" target="_blank">View with highliting (link to source of this file)</a></p>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L707" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
 
         <h2>SVG</h2>

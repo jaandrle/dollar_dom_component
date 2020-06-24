@@ -52,7 +52,7 @@ const $dom_emptyPseudoComponent= (function(){
  * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
  * @method component
  * @memberof module:jaaJSU~$dom
- * @version 1.1.1
+ * @version 1.1.2
  * @see {@link https://github.com/jaandrle/dollar_dom_component}
  * @param {string} [el_name= EMPTY] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See {@link module:jaaJSU~$dom~instance_component.add}.
  * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
@@ -124,7 +124,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
          * }
          */
         on: function(add_out, el, ...listeners){
-            listeners.forEach(([ event_name, args ])=> add_out[event_name].apply(this, args));
+            listeners.forEach(([ event_name, args ]= [])=> event_name && add_out[event_name].apply(this, args));
             return add_out;
         },
         /**

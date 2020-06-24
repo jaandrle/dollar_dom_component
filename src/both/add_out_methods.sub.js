@@ -33,7 +33,7 @@ let add_out_methods= {
      * }
      */
     on: function(add_out, el, ...listeners){
-        listeners.forEach(([ event_name, args ])=> add_out[event_name].apply(this, args));
+        listeners.forEach(([ event_name, args ]= [])=> event_name && add_out[event_name].apply(this, args));
         return add_out;
     },
     /**

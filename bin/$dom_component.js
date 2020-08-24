@@ -51,6 +51,20 @@ function init(global){
      * @global
      */
     /* standalone= "standalone"; */
+    const component_utils= Object.freeze({
+        registerToMap: function(store, current, indexGenerator){
+            let current_index= -1;
+            for(const [i, v] of store){
+                if(v===current) current_index= i;
+                if(current_index!==-1) break;
+            }
+            if(current_index!==-1) return current_index;
+            current_index= indexGenerator();
+            store.set(current_index, current);
+            return current_index;
+        },
+        indexGenerator: (index= 0)=> ()=> index++
+    });
     /**
      * In generall, all methods from {@link module:jaaJSU~$dom~instance_component} don't do anything. Also during "mounting" there are some changes see method {@link module:jaaJSU~$dom~instance_componentEmpty.mount}.
      * @typedef instance_componentEmpty
@@ -614,12 +628,13 @@ function init(global){
                 components= [], els= new Map(),
                 functions= new Map(),
                 listeners= new Map();
-            let 
-                counter= 0;
+            const
+                { registerToMap, indexGenerator }= component_utils,
+                getIndex= indexGenerator(0);
             return {
                 register: function(el, init_data, fun){
                     Object.assign(data, init_data);
-                    const ids= registerToMap(els, el)+"_"+registerToMap(functions, fun);
+                    const ids= registerToMap(els, el, getIndex)+"_"+registerToMap(functions, fun, getIndex);
                     const init_data_keys= Object.keys(init_data);
                     for(let i=0, i_key, i_length= init_data_keys.length; i<i_length; i++){
                         i_key= init_data_keys[i];
@@ -677,14 +692,6 @@ function init(global){
                 });
                 if(!funcs_counter) functions.delete(fun_id);
                 function el_idFilter(ids){ return Number(ids.split("_")[0])!==el_id; }
-            }
-            function registerToMap(store, current){
-                let current_index= -1;
-                store.forEach(function(v, i){ if(current_index===-1&&v===current) current_index= i; });
-                if(current_index!==-1) return current_index;
-                current_index= counter++;
-                store.set(current_index, current);
-                return current_index;
             }
         }
         

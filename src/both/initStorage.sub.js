@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxdepth: 3 */
-/* global assign, mapUpdate */
+/* parent *//* global assign, mapUpdate, component_utils */
 /**
  * Initialize internal storage
  * @method initStorage
@@ -13,12 +13,13 @@ function initStorage(){
         components= [], els= new Map(),
         functions= new Map(),
         listeners= new Map();
-    let 
-        counter= 0;
+    const
+        { registerToMap, indexGenerator }= component_utils,
+        getIndex= indexGenerator(0);
     return {
         register: function(el, init_data, fun){
             Object.assign(data, init_data);
-            const ids= registerToMap(els, el)+"_"+registerToMap(functions, fun);
+            const ids= registerToMap(els, el, getIndex)+"_"+registerToMap(functions, fun, getIndex);
             const init_data_keys= Object.keys(init_data);
             for(let i=0, i_key, i_length= init_data_keys.length; i<i_length; i++){
                 i_key= init_data_keys[i];
@@ -76,13 +77,5 @@ function initStorage(){
         });
         if(!funcs_counter) functions.delete(fun_id);
         function el_idFilter(ids){ return Number(ids.split("_")[0])!==el_id; }
-    }
-    function registerToMap(store, current){
-        let current_index= -1;
-        store.forEach(function(v, i){ if(current_index===-1&&v===current) current_index= i; });
-        if(current_index!==-1) return current_index;
-        current_index= counter++;
-        store.set(current_index, current);
-        return current_index;
     }
 }

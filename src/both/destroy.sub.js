@@ -26,7 +26,10 @@ function destroy(){
     assign= undefined;
     createElement= undefined;
     container= undefined;
-    internal_storage= undefined;
+    if(internal_storage&&internal_storage.clear){
+        internal_storage.clear();
+        internal_storage= undefined;
+    }
     component_out= undefined;
     add_out_methods= undefined;
     return null;

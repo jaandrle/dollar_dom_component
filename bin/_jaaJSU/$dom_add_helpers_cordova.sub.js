@@ -474,7 +474,10 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
         assign= undefined;
         createElement= undefined;
         container= undefined;
-        internal_storage= undefined;
+        if(internal_storage&&internal_storage.clear){
+            internal_storage.clear();
+            internal_storage= undefined;
+        }
         component_out= undefined;
         add_out_methods= undefined;
         return null;
@@ -562,14 +565,11 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
      * @returns {Object} `{ register, registerComponent, update, unregister}`
      */
     function initStorage(){
-        const /* storage for component, functions for updates and mapping data keys and corresponding elements */
-            data= {},
-            components= [], els= new Map(),
-            functions= new Map(),
-            listeners= new Map();
         const
-            { registerToMap, indexGenerator }= component_utils,
-            getIndex= indexGenerator(0);
+            { registerToMap, indexGenerator }= component_utils;
+        let /* storage for component, functions for updates and mapping data keys and corresponding elements */
+            data, components, els, functions, listeners, getIndex;
+        internalVars(indexGenerator(0));
         return {
             register: function(el, init_data, fun){
                 Object.assign(data, init_data);
@@ -615,11 +615,25 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
                     assign(el, new_data);
                 }
             },
+            clear: function(){
+                internalVars();
+            },
             getData: function(){
                 return data;
             },
             unregister
         };
+        function internalVars(initIndex){
+            data= {};
+            
+            components= [];
+            els= new Map();
+            
+            functions= new Map();
+            listeners= new Map();
+            
+            getIndex= initIndex;
+        }
         function unregister(el_id, fun_id, data_keys){
             let funcs_counter= 0;
             els.delete(el_id);

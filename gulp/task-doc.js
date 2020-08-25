@@ -8,7 +8,7 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
         jsdoc2md= require('jsdoc-to-markdown'),
         generateDoc= files=> jsdoc2md.render(Object.assign({ files }, global_options)),
         writeDoc= file=> markdown=> new Promise(function(resolve,reject){ $o.fs.writeFile(file, markdown, err=> !err ? resolve() : reject(err)); });
-    /* jshint -W061 */const gulp_place= require("./gulp_place.js")({gulp_replace: $g.replace, fs: $o.fs, variable_eval: (str)=> eval(str)});/* jshint +W061 */
+    /* jshint -W061 */const gulp_place= $g.place({ variable_eval: (str)=> eval(str) });/* jshint +W061 */
     return function(cb){
         gulp.src([docs_modifications+"*_pre.js"])
             .pipe(gulp_place({folder: docs_modifications, string_wrapper: ''}))

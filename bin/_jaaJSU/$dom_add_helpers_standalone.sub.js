@@ -1,7 +1,20 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxcomplexity: 19, maxparams: 5, maxdepth: 3 */
 /* $dom *//* global $dom */
 /* standalone= "standalone"; */
-
+const component_utils= Object.freeze({
+    registerToMap: function(store, current, indexGenerator){
+        let current_index= -1;
+        for(const [i, v] of store){
+            if(v===current) current_index= i;
+            if(current_index!==-1) break;
+        }
+        if(current_index!==-1) return current_index;
+        current_index= indexGenerator();
+        store.set(current_index, current);
+        return current_index;
+    },
+    indexGenerator: (index= 0)=> ()=> index++
+});
 /**
  * In generall, all methods from {@link module:jaaJSU~$dom~instance_component} don't do anything. Also during "mounting" there are some changes see method {@link module:jaaJSU~$dom~instance_componentEmpty.mount}.
  * @typedef instance_componentEmpty

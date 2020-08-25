@@ -1,8 +1,6 @@
 /* jshint esversion: 6,-W097, -W040, node: true, expr: true, undef: true */
 module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
-    /* jshint -W061 */const gulp_place= require("./gulp_place.js")({
-        gulp_replace: $g.replace,
-        fs: $o.fs,
+    /* jshint -W061 */const gulp_place= $g.place({
         variable_eval: (str)=> eval(str),
         filesCleaner: require("./gulp_cleanJSHINT.js")
     });/* jshint +W061 */

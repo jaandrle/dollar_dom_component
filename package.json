@@ -41,11 +41,12 @@
     "gulp-concat": "2.6.1",
     "gulp-javascript-obfuscator": "1.1.5",
     "gulp-minify": "3.1.0",
+    "gulp-place": "^1.8.0",
     "gulp-rename": "1.4.0",
     "gulp-replace": "1.0.0",
     "gulp-sourcemaps": "2.6.4",
     "gulp-util": "3.0.8",
-    "jshint": "~2.9.6"
+    "jshint": "^2.12.0"
   },
   "__SECTION__JSHINT": "",
   "jshintConfig": {

@@ -62,22 +62,73 @@ const $dom_emptyPseudoComponent= (function(){
     function isStatic(){ return true; }
     function ondestroy(){ return true; }
     function destroy(){ component_out= null; return null; }
-})();
+})(); 
+const special_components_names= { empty: [ "", "empty" ], fragment: [ "<>", "fragment" ] };
+function isInternalElement( target, candidate, safe_only ){
+    const [ short, long ]= special_components_names[target];
+    if(safe_only) return short===candidate;
+    return short===candidate||long===candidate.toLowerCase();
+} 
 /**
- * This 'functional class' is syntax sugar around [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) for creating DOM components and their adding to live DOM in performance friendly way.
+ * Name of element supproted by this library – so {@link module:jaaJSU~$dom.component} and {@link module:jaaJSU~$dom~instance_component.add}. You can use:
+ * 
+ * - For HTML tags you can use lowercase/uppercase convention (e. g. `p`, `P`, `div`, `DIV`) – all possibilities can be found at [HTML | MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
+ * - For SVG tags use exact form (e. g. `svg`, `polyline`, `clipPath`)! All possibilities can be found at [SVG | MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Element).
+ * @typedef {String} EL_NAME
+ * @memberof module:jaaJSU~$dom
+ */
+/**
+ * Name of component main element. In addition to {@link module:jaaJSU~$dom.EL_NAME}, it is possible to use special keywords:
+ * 
+ * - undefined, "" (, "empty", "EMPTY"): Empty placeholder component (see {@link module:jaaJSU~$dom~instance_componentEmpty})
+ * - "<>" (, "fragment", "FRAGMENT"): see [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment)
+ * 
+ * Keywords inside round parentheses are not preferred because of collision risk with Custom Elements names.
+ * 
+ * The `$dom.component` can disable these keywords by `safe_el_name_only` option (by default `false` – backward compability).
+ * @typedef {module:jaaJSU~$dom.EL_NAME|String|undefined} cEL_NAME
+ * @memberof module:jaaJSU~$dom
+ */
+/**
+ * This 'functional class' is syntax sugar around ` document.createElement`(`NS`) and `document.createDocumentFragment` for creating DOM components and their adding to live DOM in performance friendly way.
+ * 
+ * So pseudo code:
+ * ```JavaScript
+ * function Component(…){
+ *  const { add, share }= $dom.component(…Parent Element…);
+ *      add(…Child Element…);
+ *      add(…Child Element…, -1);
+ *          add(…Child Element…);
+ *  …
+ *  return share;
+ * }
+ * ```
+ * Yelds into:
+ * ```HTML
+ * <!--<Component>-->
+ *  <Parent Element>
+ *   <Child Element></Child Element>
+ *   <Child Element>
+ *      <Child Element></Child Element>
+ *   </Child Element>
+ *  …
+ *  </Parent Element>
+ * <!--</Component>-->
+ * ```
  * @method component
  * @memberof module:jaaJSU~$dom
- * @version 1.1.3
+ * @version 1.2.0
  * @see {@link https://github.com/jaandrle/dollar_dom_component}
- * @param {string} [el_name= EMPTY] Name of element (for example `LI`, `P`, `A`, …). This is parent element of component. By default the "empty" element is generated. See {@link module:jaaJSU~$dom~instance_component.add}.
+ * @param {module:jaaJSU~$dom.cEL_NAME} [el_name= undefined] `LI`, `P`, `A`, …, `svg`, `polyline`, `clipPath`, …, "", "<>"
  * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
  * @param {Object} [params= {}] Parameters
  * @param {Function} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}
  * @param {string|undefined} [params.namespace_group=undefined] This parameter provides ability to defined elements for diferent [`namespaceURI`s](https://developer.mozilla.org/en-US/docs/Web/API/Element/namespaceURI). Use "__SVG__" for "http://www.w3.org/2000/svg" (full list [Important Namespace URIs](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElementNS#Important_Namespace_URIs)).
+ * @param {boolean} [params.safe_el_name_only=undefined] This parameter provides ability to disable long components names like `empty`, `fragment` – see {@link module:jaaJSU~$dom.cEL_NAME}.
  * @return {module:jaaJSU~$dom~instance_componentAdd|module:jaaJSU~$dom~instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
  */
-$dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
-    if(!el_name||el_name==="EMPTY"||el_name==="empty") return $dom_emptyPseudoComponent;
+$dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_name_only }={}){
+    if(!el_name||isInternalElement("empty", el_name, safe_el_name_only)) return $dom_emptyPseudoComponent;
     if(el_name==="svg") namespace_group= "SVG";
     let assign, createElement;
     if(namespace_group==="SVG"){
@@ -93,8 +144,6 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
         /* on first mount */
         on_mount_funs= null,
         observer= null;
-    const /* 'drawer' (container) for component elements */
-        fragment= document.createDocumentFragment();
     let /* main parent (wrapper), container for children elements */
         container,
         /* store for all registered elements */
@@ -233,7 +282,11 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
      * @inner
      * @type {Object}
      */
-    return add(el_name, attrs);
+    if(!isInternalElement("fragment", el_name, safe_el_name_only)) return add(el_name, attrs);
+    recalculateDeep(0);
+    container= els[0]= document.createDocumentFragment();
+    all_els_counter+= 1;
+    return component_out;
     /**
      * This is `Component` with aditional methods
      * @typedef instance_componentAdd
@@ -248,7 +301,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
      * @memberof module:jaaJSU~$dom~instance_component
      * @public
      * @chainable
-     * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...). For [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) you can use lowercase/uppercase convention (e. g. 'p', 'P', 'div', 'DIV'), for [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Element) use exact form (e. g. 'svg', 'polyline', 'clipPath')!
+     * @param {module:jaaJSU~$dom.EL_NAME} el_name `LI`, `P`, `A`, …, `svg`, `polyline`, `clipPath`, …
      * @param {module:jaaJSU~$dom~DomAssignObject} attrs Internally uses {@link module:jaaJSU~$dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
      * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
      * @returns {module:jaaJSU~$dom~instance_componentAdd}
@@ -276,7 +329,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
         recalculateDeep(shift);
         attrs= attrs || {};
         const prepare_el= createElement(el_name);
-        if(!all_els_counter) container= els[0]= fragment.appendChild(prepare_el);
+        if(!all_els_counter) container= els[0]= prepare_el;
         else els[all_els_counter]= getParentElement().appendChild(prepare_el);
         let el= els[all_els_counter];
         all_els_counter+= 1;
@@ -421,29 +474,28 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
      */
     function mount(element, call_parseHTML, type= "childLast"){
         if(observer) observer.disconnect();
-        const component_el= !fragment.firstChild&&container ? container : fragment;
         let parent_node;
         switch ( type ) {
             case "replace":
                 parent_node= element.parentNode;
-                $dom.replace(element, component_el);
+                $dom.replace(element, container);
                 break;
             case "replaceContent":
                 $dom.empty(element);
-                element.appendChild(component_el);
+                element.appendChild(container);
                 parent_node= element;
                 break;
             case "before":
                 parent_node= element.parentNode;
-                parent_node.insertBefore(component_el, element);
+                parent_node.insertBefore(container, element);
                 break;
             case "after":
-                $dom.insertAfter(component_el, element);
+                $dom.insertAfter(container, element);
                 parent_node= element.parentNode;
                 break;
             default:
-                if(type==="childFirst" && element.childNodes.length) element.insertBefore(component_el, element.childNodes[0]);
-                else element.appendChild(component_el);
+                if(type==="childFirst" && element.childNodes.length) element.insertBefore(container, element.childNodes[0]);
+                else element.appendChild(container);
                 parent_node= element;
                 break;
         }
@@ -522,14 +574,14 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group }={}){
     }
     
     /**
-     * Returns parent element (or "fragment pseudo element")
+     * Returns parent element (or "container pseudo element")
      * @method getParentElement
      * @memberof module:jaaJSU~$dom~instance_component
      * @private
      * @returns {NodeElement} Returns parent element (i. e. `DocumenFragment` if component is empty)
      */
     function getParentElement(){
-        return els[deep[deep.length-2]] || fragment;
+        return els[deep[deep.length-2]] || container;
     }
     
     /**

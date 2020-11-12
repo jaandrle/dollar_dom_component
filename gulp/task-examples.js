@@ -13,7 +13,7 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
             .pipe($g.replace(/(\/\/EXAMPLE START|<!-- example source links -->)/g, addSourceLink))
             .pipe(gulp.dest(to_folder))
             .on('end', function(){
-                gulp.src([app.bin_folder+"$dom_component-min.js"])
+                gulp.src([app.bin_folder+"$dom_component.js"])
                 .pipe(gulp.dest(to_folder))
                 .on('end', cb);
             });

@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
-/* global deep, all_els_counter, els, fragment */
+/* global deep, all_els_counter, els */
 /**
  * Updates `deep`
  * @private

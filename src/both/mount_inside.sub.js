@@ -1,30 +1,29 @@
-/* global $dom, fragment, container, destroy, on_mount_funs: true, observer: true */
+/* global $dom, container, destroy, on_mount_funs: true, observer: true */
 /* function arguments *//* global element, type */
 /* inside functions *//* global onMountFunctionCall */
 if(observer) observer.disconnect();
-const component_el= !fragment.firstChild&&container ? container : fragment;
 let parent_node;
 switch ( type ) {
     case "replace":
         parent_node= element.parentNode;
-        $dom.replace(element, component_el);
+        $dom.replace(element, container);
         break;
     case "replaceContent":
         $dom.empty(element);
-        element.appendChild(component_el);
+        element.appendChild(container);
         parent_node= element;
         break;
     case "before":
         parent_node= element.parentNode;
-        parent_node.insertBefore(component_el, element);
+        parent_node.insertBefore(container, element);
         break;
     case "after":
-        $dom.insertAfter(component_el, element);
+        $dom.insertAfter(container, element);
         parent_node= element.parentNode;
         break;
     default:
-        if(type==="childFirst" && element.childNodes.length) element.insertBefore(component_el, element.childNodes[0]);
-        else element.appendChild(component_el);
+        if(type==="childFirst" && element.childNodes.length) element.insertBefore(container, element.childNodes[0]);
+        else element.appendChild(container);
         parent_node= element;
         break;
 }

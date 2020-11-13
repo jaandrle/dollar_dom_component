@@ -1,7 +1,7 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
 /* internal methods *//* global recalculateDeep, getParentElement, assign, createElement */
 /* internal vars *//* global all_els_counter: true, container: true, add_out_methods */
-/* out *//* global els, fragment, component_out */
+/* out *//* global els, component_out */
 /**
  * This is `Component` with aditional methods
  * @typedef instance_componentAdd
@@ -16,7 +16,7 @@
  * @memberof module:jaaJSU~$dom~instance_component
  * @public
  * @chainable
- * @param {String} el_name Name of element (for example `LI`, `P`, `A`, ...). For [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) you can use lowercase/uppercase convention (e. g. 'p', 'P', 'div', 'DIV'), for [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG/Element) use exact form (e. g. 'svg', 'polyline', 'clipPath')!
+ * @param {module:jaaJSU~$dom.EL_NAME} el_name `LI`, `P`, `A`, …, `svg`, `polyline`, `clipPath`, …
  * @param {module:jaaJSU~$dom~DomAssignObject} attrs Internally uses {@link module:jaaJSU~$dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
  * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
  * @returns {module:jaaJSU~$dom~instance_componentAdd}
@@ -44,7 +44,7 @@ function add(el_name, attrs, shift= 0){
     recalculateDeep(shift);
     attrs= attrs || {};
     const prepare_el= createElement(el_name);
-    if(!all_els_counter) container= els[0]= fragment.appendChild(prepare_el);
+    if(!all_els_counter) container= els[0]= prepare_el;
     else els[all_els_counter]= getParentElement().appendChild(prepare_el);
     let el= els[all_els_counter];
     all_els_counter+= 1;

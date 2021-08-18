@@ -38,18 +38,7 @@
     "url": "https://github.com/jaandrle/dollar_dom_component/issues"
   },
   "homepage": "https://github.com/jaandrle/dollar_dom_component",
-  "dependencies": {
-    "gulp": ">3.9.1",
-    "gulp-concat": "2.6.1",
-    "gulp-javascript-obfuscator": "1.1.5",
-    "gulp-minify": "3.1.0",
-    "gulp-place": "^1.8.0",
-    "gulp-rename": "1.4.0",
-    "gulp-replace": "1.0.0",
-    "gulp-sourcemaps": "2.6.4",
-    "gulp-util": "3.0.8",
-    "jshint": "^2.12.0"
-  },
+  "dependencies": {},
   "__SECTION__JSHINT": "",
   "jshintConfig": {
     "esversion": 6,
@@ -61,6 +50,16 @@
     "maxcomplexity": 11
   },
   "devDependencies": {
-    "jsdoc-to-markdown": "^5.0.1"
+    "gulp": ">3.9.1",
+    "gulp-concat": "2.6.1",
+    "gulp-javascript-obfuscator": "1.1.5",
+    "gulp-minify": "3.1.0",
+    "gulp-place": "^1.8.2",
+    "gulp-rename": "1.4.0",
+    "gulp-replace": "1.0.0",
+    "gulp-sourcemaps": "2.6.4",
+    "gulp-util": "3.0.8",
+    "jsdoc-to-markdown": "^5.0.3",
+    "jshint": "^2.13.1"
   }
 }

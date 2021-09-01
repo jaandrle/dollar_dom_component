@@ -16,47 +16,20 @@ declare namespace $dom {
          */
         style: string
         /**
-         * Provide option to add/remove/toggle CSS clasess (index of object) using 1/0/-1.
+         * Provide option to add/remove/toggle CSS clasess (index of object) using 1/0/-1. In fact `el.classList.toggle(class_name)` for `-1` and `el.classList.toggle(class_name, Boolean(...))` for others.
          */
         classList: Record<string,-1|0|1>
     }
     /**
      * Just element attributtes
+     * 
+     * In most cases, you can use native propertie such as [MDN WEB/API/Element](https://developer.mozilla.org/en-US/docs/Web/API/Element) and so on (e.g. [`Text`](https://developer.mozilla.org/en-US/docs/Web/API/Text)).
      * @private
      */
     type T_DOM_ATTRS<T extends keyof T_DOM_HETNM | T_DOM_HETNM[keyof T_DOM_HETNM]>=
         T extends keyof T_DOM_HETNM ?
         Omit<T_DOM_HETNM[T],"classList"> & T_DOM_ATTRS_MODIFIED :
         Omit<T,"classList"> & T_DOM_ATTRS_MODIFIED;
-    /**
-     * @private
-     */
-    interface component_mainOut<elOut extends T_DOM_HETNM[keyof T_DOM_HETNM]= HTMLElement>{
-        destroy(): void,
-        isStatic(): boolean,
-        /**
-         * 
-         * @param el Element where to places this component
-         * @param call_parseHTML If call parseHTML (default: `false`)
-         * @param type Default `childLast`
-         */
-        mount(el: HTMLElement, call_parseHTML?: boolean, type?: "childLast"|"childFirst"|"replaceContent"|"replace"|"before"|"after"): elOut
-        update(data: object): boolean
-    }
-    /**
-     * @private
-     */
-    interface dynamicComponentGenerator<DATA>{
-        /**
-         * This is function for registering component for {@link component_main.dynamicComponent}
-         * @param mount Function which consumes {@link component_mainOut}
-         * @param current_component Previously registered component
-         * @param data Includes all subsribed keys from `data` see method {@link component_add.onupdate}
-         * @param current_value Shared value across multiple calling
-         * @returns `current_value`
-         */
-        <iDATA extends any>(mount: (componentMainOut: component_mainOut)=> void, current_component: component_mainOut|null, data: DATA, current_value: iDATA): iDATA
-    }
     /**
      * @private
      */
@@ -156,22 +129,100 @@ declare namespace $dom {
          * //=> div> 5*p
          * ```
          * 
-         * @param shif See {@link component_main.add}
+         * @param shift See {@link component_main.add}
          */
-        setShift(shif: number): component_main<elOut>
+        setShift(shift: number): component_main<elOut>
+        /**
+         * This provide ability to register function which should be called when the component will be destroyed.
+         * @param onDestroyFunction Function will be called when the component will be destroyed.
+         */
+        ondestroy(cb: (onDestroyFunction: HTMLElement)=> void): component_main<elOut>
         share: component_mainOut<elOut>
     }
     /**
      * @private
      */
     interface component_add<cEL extends keyof T_DOM_HETNM> extends component_main<T_DOM_HETNM[cEL]>{
+        /**
+         * Returns reference of currently added element
+         */
         getReference(): T_DOM_HETNM[cEL]
+        /**
+         * Method for batch registering `on*` methods for current element.
+         * ```javascript
+         * const select_component= select();
+         * select_component.mount(parent);
+         * // default ⇣
+         * select_component.update({ value: "no_default_1" });
+         * // no_default_1 ⇣
+         * 
+         * function select(init= { value: "default" }){
+         *     const default_value= $dom.componentListener("mount", ()=> init);
+         *     const update_value= $dom.componentListener("update", init, ({ value })=> ({ value }));
+         *     
+         *     const c= $dom.component("SELECT", null).on( default_value, update_value );
+         *         c.add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
+         *         c.add("OPTION", { value: "default", textContent: "default" }, -1);
+         *     return share;
+         * }
+         * ```
+         * @param events Consumes {@link component_listener}.
+         */
         on(...events: component_listener[]): component_add<cEL>
+        /**
+         * This method allows to register function which shoul be invoke when given **keys** in `data` will be changed (see {@link component_mainOut.update}).
+         * ```javascript
+         * const c= $dom.component("DIV", null);
+         * …
+         * c.add("P", null).onupdate({ key: "This is init value" }, ({ key })=> ({ textContent: key }));//=> <p>This is init value</p>
+         * …
+         * c.update({ key: "Value changed" });//=> <p>Value changed</p>
+         * ```
+         * 
+         * ```javascript
+         * const c= $dom.component("DIV", null);
+         * …
+         * c.add("P", null).onupdate({ A: "A", B: "b" }, ({ A, B })=> ({ textContent: A+B }));//=> <p>Ab</p>
+         * …
+         * c.update({ B: "B" });//=> <p>AB</p>
+         * ```
+         * 
+         * @param data This allows register listener for given **keys** of Object `data`. For `data= { a: "A", b: "B" }` it means that when `a` or `b` will be changed the `onUpdate` is called.
+         */
         onupdate<DATA extends object>(data: DATA, onUpdate: (data: DATA)=> T_DOM_ATTRS<cEL>): component_add<cEL>
+        /**
+         * This procedure allows to call given function `cb` during registering element.
+         */
         oninit(cb: (el: T_DOM_HETNM[cEL])=> void): component_add<cEL>
+        /**
+         * This procedure allows to call given function `cb` during mounting component.
+         * 
+         * It can for example solve problem setting default value for `select` (`option`s elements not exist when the `select` itself is declared!).
+         * 
+         * As alternative for some cases, you can use `active` label for `option`s instead.
+         * 
+         * **For now, only first mount!**
+         * ```javascript
+         * const select_component= select({ value: "default" });
+         * select_component.mount(parent);
+         * // default ⇣
+         * 
+         * function select(init){
+         *     const c= $dom.component("SELECT", null)
+         *      .onmount(()=> init);
+         *         c.add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
+         *         c.add("OPTION", { value: "no_default_2", textContent: "no_default_2" }, -1);
+         *         c.add("OPTION", { value: "no_default_3", textContent: "no_default_3" }, -1);
+         *         c.add("OPTION", { value: "default", textContent: "default" }, -1);
+         *     return c.share;
+         * }
+         * ```
+         */
         onmount(cb: ()=> T_DOM_ATTRS<cEL>): component_add<cEL>
     }
     /**
+     * In generall, all methods from {@link component_add} don't do anything.
+     * In case of mounting only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
      * @private
      */
     interface component_empty extends component_add<"">{}
@@ -180,6 +231,7 @@ declare namespace $dom {
      */
     type componentOut<T extends keyof T_DOM_HETNM>= T extends '' ? component_empty : component_add<T>;
     /**
+     * Interface consumed by {@link component_add.on}.
      * @private
      */
     interface component_listener{
@@ -198,20 +250,58 @@ declare namespace $dom {
         /**
          * This parameter provides ability to defined elements for diferent [`namespaceURI`s](https://developer.mozilla.org/en-US/docs/Web/API/Element/namespaceURI). Use "__SVG__" for "http://www.w3.org/2000/svg" (full list [Important Namespace URIs](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElementNS#Important_Namespace_URIs)).
          */
-        namespace_group?: string
+        namespace_group?: "SVG"|""
         /**
          * This parameter provides ability to disable long components names like `empty`, `fragment` – see {@link module:jaaJSU~$dom.cEL_NAME}.
          */
         safe_el_name_only?: boolean
     }
     /**
+     * Procedure for merging object into the element properties.
+     * Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
+     * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
      * 
+     * **#1: All together**
+     * ```javascript
+     * const el= document.body;
+     * const onclick= function(){ console.log(this.dataset.js_param); };
+     * $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
+     * //result HTML: <body style="color: red;" data-js_param="CLICKED">BODY</body>
+     * //console output on click: "CLICKED"
+     * $dom.assign(el, { style: { color: "green" } });
+     * //result HTML: <body style="color: green;" data-js_param="CLICKED">BODY</body>
+     * //console output on click: "CLICKED"
+     * ```
+     * 
+     * **`\*.classList.toggle`**
+     * ```javascript
+     * const el= document.body;
+     * $dom.assign(el, { classList: { testClass: -1 } });
+     * //result HTML: <body class="testClass">…</body>
+     * $dom.assign(el, { classList: { testClass: -1 } });
+     * //result HTML: <body class="">…</body>
+     * 
+     * $dom.assign(el, { classList: { testClass: true } });//or 1
+     * //result HTML: <body class="testClass">…</body>
+     * $dom.assign(el, { classList: { testClass: false } });//or 0
+     * //result HTML: <body class="">…</body>
+     * //...
+     * ```
+     * 
+     * **#3 Links and images**
+     * ```javascript
+     * $dom.assign(A_ELEMENT, { href: "www.google.com" });//=> <a href="www.google.com" …
+     * $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
+     * ```
      * @category Public
-     * @param element 
-     * @param attrs_array 
      */
     function assign<EL extends HTMLElement>(element: EL, ...attrs_array: T_DOM_ATTRS<EL>[]): EL
-    function assignNS<EL extends HTMLElement>(namespace_group: string, element: EL, ...attrs_array: EL[]): EL
+    /**
+     * Procedure for merging object into the element properties (see `html` version {@link assign}).
+     * @category Public
+     * @param namespace_group Group representation of [`namespace`](https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttributeNS), use "__SVG__" for setting attributes for `svg`s.
+     */
+    function assignNS<EL extends SVGElement>(namespace_group: string, element: EL, ...attrs_array: T_DOM_ATTRS<EL>[]): EL
     /**
      * This 'functional class' is syntax sugar around ` document.createElement`(`NS`) and `document.createDocumentFragment` for creating DOM components and their adding to live DOM in performance friendly way.
      * 
@@ -251,7 +341,48 @@ declare namespace $dom {
         init: [ (el: HTMLElement)=> void ]
         mount: [ ()=> HTMLElement ]
     }
-    function componentListener<K extends keyof DocumentEventMap>(event: K, callback: (ev: DocumentEventMap[K])=> any): component_listener
+    /**
+     * @private
+     */
+    interface T_DOM_ListenersAPI{
+        /**
+         * Component element
+         */
+        getReference(): HTMLOrSVGElement
+        /**
+         * See {@link component_mainOut.update}
+         */
+        update(data: object): boolean
+        update(map: (data: object)=> object): boolean
+        /**
+         * Remove this listener
+         */
+        removeEventListener(): void
+    }
+    /**
+     * This provide more DRY way to register native events listeners inside {@link component} such as `click`, `touchemove`, ….
+     * @param event Browser events
+     * @param callback Callback with arguments based on [EventTarget.addEventListener()](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
+     * @category Public
+     */
+    function componentListener<K extends keyof DocumentEventMap>(event: K, callback: (this: T_DOM_ListenersAPI, ev: DocumentEventMap[K])=> any): component_listener
+    /**
+     * This provide more DRY way to register events listeners for {@link component} such as `init`, `mount`, ….
+     * @param event Component lifecycle events
+     * @category Public
+     */
     function componentListener<K extends keyof T_DOM_ListenersMap>(event: K, ...attrs: T_DOM_ListenersMap[K]): component_listener
-    function componentListener<DATA extends object>(event: "update", data: DATA, onUpdate: (data: DATA)=> HTMLElement): component_listener
+    /**
+     * This provide more DRY way to register `onupdate` handler inside {@link component}.
+     * @param data Inittial data similar to {@link component_add.onupdate}.
+     * @param onUpdate Callback simira to {@link component_add.onupdate}.
+     * @category Public
+     */
+    function componentListener<DATA extends object>(event: "update", data: DATA, onUpdate: (data: DATA)=> T_DOM_ATTRS<HTMLElement>): component_listener
+    /**
+     * Please stop using this
+     * @deprecated
+     * @category Public
+     */
+    function add(): HTMLElement
 }

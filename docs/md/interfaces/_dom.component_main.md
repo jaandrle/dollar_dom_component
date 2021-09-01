@@ -1,4 +1,4 @@
-[dollar_dom_component](../README.md) / [%24dom](../modules/_dom.md) / component_main
+[$dom.component](../README.md) / [%24dom](../modules/_dom.md) / component_main
 
 # Interface: component\_main<elOut\>
 
@@ -33,6 +33,7 @@
 - [dynamicComponent](_dom.component_main.md#dynamiccomponent)
 - [isStatic](_dom.component_main.md#isstatic)
 - [mount](_dom.component_main.md#mount)
+- [ondestroy](_dom.component_main.md#ondestroy)
 - [setShift](_dom.component_main.md#setshift)
 - [update](_dom.component_main.md#update)
 
@@ -44,7 +45,7 @@
 
 #### Defined in
 
-types.d.ts:157
+$dom_component.d.ts:157
 
 ## Methods
 
@@ -94,7 +95,7 @@ add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2
 
 #### Defined in
 
-types.d.ts:83
+$dom_component.d.ts:78
 
 ___
 
@@ -136,7 +137,7 @@ function testTextLi({ href= "https://www.seznam.cz" }= {}){
 
 #### Defined in
 
-types.d.ts:106
+$dom_component.d.ts:101
 
 ___
 
@@ -169,13 +170,21 @@ c.mount(document.body, "replaceContent");
 
 #### Defined in
 
-types.d.ts:120
+$dom_component.d.ts:115
 
 ___
 
 ### destroy
 
 ▸ **destroy**(): `void`
+
+Method remove element form live DOM and returns null
+```javascript
+let c= $dom.component("DIV", null);
+c.mount(document.body, "replaceContent");
+c= c.share.destroy();
+//=> c===null AND <body></body>
+```
 
 #### Returns
 
@@ -187,7 +196,7 @@ ___
 
 #### Defined in
 
-types.d.ts:30
+$dom_component.d.ts:434
 
 ___
 
@@ -217,13 +226,15 @@ Method for including another component by using `generator` function, which can 
 
 #### Defined in
 
-types.d.ts:126
+$dom_component.d.ts:121
 
 ___
 
 ### isStatic
 
 ▸ **isStatic**(): `boolean`
+
+Methods returns if it was `onupdate` used
 
 #### Returns
 
@@ -235,20 +246,19 @@ ___
 
 #### Defined in
 
-types.d.ts:31
+$dom_component.d.ts:438
 
 ___
 
 ### mount
 
-▸ **mount**(`el`, `call_parseHTML?`, `type?`): `elOut`
+▸ **mount**(`el`, `type?`): `elOut`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `el` | `HTMLElement` | Element where to places this component |
-| `call_parseHTML?` | `boolean` | If call parseHTML (default: `false`) |
 | `type?` | ``"childLast"`` \| ``"childFirst"`` \| ``"replaceContent"`` \| ``"replace"`` \| ``"before"`` \| ``"after"`` | Default `childLast` |
 
 #### Returns
@@ -261,13 +271,35 @@ ___
 
 #### Defined in
 
-types.d.ts:38
+$dom_component.d.ts:444
+
+___
+
+### ondestroy
+
+▸ **ondestroy**(`cb`): [`component_main`](_dom.component_main.md)<`elOut`\>
+
+This provide ability to register function which should be called when the component will be destroyed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`onDestroyFunction`: `HTMLElement`) => `void` |
+
+#### Returns
+
+[`component_main`](_dom.component_main.md)<`elOut`\>
+
+#### Defined in
+
+$dom_component.d.ts:156
 
 ___
 
 ### setShift
 
-▸ **setShift**(`shif`): [`component_main`](_dom.component_main.md)<`elOut`\>
+▸ **setShift**(`shift`): [`component_main`](_dom.component_main.md)<`elOut`\>
 
 Method provide way to change nesting behaviour. It can be helpful for loops
 ```javascript
@@ -299,7 +331,7 @@ function testNesting(){
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `shif` | `number` | See [component_main.add](_dom.component_main.md#add) |
+| `shift` | `number` | See [component_main.add](_dom.component_main.md#add) |
 
 #### Returns
 
@@ -307,7 +339,7 @@ function testNesting(){
 
 #### Defined in
 
-types.d.ts:156
+$dom_component.d.ts:151
 
 ___
 
@@ -315,11 +347,34 @@ ___
 
 ▸ **update**(`data`): `boolean`
 
+Method updates all registered varibles by keys `onupdates` and calls follower functions
+```javascript
+// SIMPLE example
+const data_A= { a: "A" };
+const data_A_update= { a: "AAA" };
+const c= $dom.component("UL", null);
+    c.add("LI", null)
+         .onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
+c.mount(document.body);
+c.update(data_A_update);
+```
+
+```javascript
+// EXAMPLE WITH `mapUpdate`
+const data_B= { a: { b: "A" }};
+const data_B_update= { a: { b: "AAA" }};
+const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+    c.add("LI", null)
+         .onupdate(data_B, ({ a })=>({ textContent: a }));
+c.mount(document.body);
+c.update(data_B_update);
+```
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | `object` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `object` | Updates internal storage (via `Object.assign` – no deep copy!) |
 
 #### Returns
 
@@ -331,4 +386,34 @@ ___
 
 #### Defined in
 
-types.d.ts:39
+$dom_component.d.ts:470
+
+▸ **update**(`map`): `boolean`
+
+Method updates all registered varibles by keys `onupdates` and calls follower functions
+```javascript
+// EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
+const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+    c.add("LI", null)
+         .onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
+c.mount(document.body);
+c.update(({ a })=> { a: ++a });
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `map` | (`data`: `object`) => `object` | Function takes as parameter previous internal storage and returns updated one (internally used `Object.assign` – no deep copy!) |
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[component_mainOut](_dom.component_mainOut.md).[update](_dom.component_mainOut.md#update)
+
+#### Defined in
+
+$dom_component.d.ts:483

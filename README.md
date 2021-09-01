@@ -1,3 +1,5 @@
+$dom.component / [Exports](docs/md/modules/_dom.md)
+
 # $dom_component
 Subrepository for [jaandrle/jaaJSU ($dom namespace)](https://github.com/jaandrle/jaaJSU).
 
@@ -56,7 +58,7 @@ function textInputComponent({ label_type= "name", placeholder= "Type text" }){
 
 ## Resources
 - __[Examples](https://jaandrle.github.io/dollar_dom_component/examples.html)__
-- __[Documentation](docs/$dom_component.md)__
+- __[Documentation](docs/md/modules/_dom.md)__
 - You can also create SVG elements (e.g. charts), see [$dom_svg](https://github.com/jaandrle/dollar_dom_svg).
 
 ## Contribute

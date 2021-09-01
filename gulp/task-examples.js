@@ -5,7 +5,7 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
     });/* jshint +W061 */
     const 
         to_folder= "docs/",
-        from_folder= "src_docs/examples/";
+        from_folder= "docs/examples/";
     let links_paragraphs_buffer= [];
     return function(cb){
         gulp.src([from_folder+"*.html", '!'+from_folder+'*.sub.html'])

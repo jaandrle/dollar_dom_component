@@ -1,12 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxdepth: 3 */
 /* parent *//* global assign, mapUpdate, component_utils */
-/**
- * Initialize internal storage
- * @method initStorage
- * @memberof module:jaaJSU~$dom~instance_component
- * @private
- * @returns {Object} `{ register, registerComponent, update, unregister}`
- */
 function initStorage(){
     const
         { registerToMap, indexGenerator }= component_utils;

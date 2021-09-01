@@ -1,4 +1,4 @@
-[dollar_dom_component](../README.md) / [%24dom](../modules/_dom.md) / T_DOM_ListenersMap
+[$dom.component](../README.md) / [%24dom](../modules/_dom.md) / T_DOM_ListenersMap
 
 # Interface: T\_DOM\_ListenersMap
 
@@ -19,7 +19,7 @@
 
 #### Defined in
 
-types.d.ts:246
+$dom_component.d.ts:358
 
 ___
 
@@ -29,4 +29,4 @@ ___
 
 #### Defined in
 
-types.d.ts:247
+$dom_component.d.ts:359

@@ -16,23 +16,10 @@ const component_utils= Object.freeze({
     },
     indexGenerator: (index= 0)=> ()=> index++
 });
-/**
- * In generall, all methods from {@link module:jaaJSU~$dom~instance_component} don't do anything. Also during "mounting" there are some changes see method {@link module:jaaJSU~$dom~instance_componentEmpty.mount}.
- * @typedef instance_componentEmpty
- * @memberof module:jaaJSU~$dom
- * @category types descriptions
- * @inner
- * @type {module:jaaJSU~$dom~instance_component}
- */
 const $dom_emptyPseudoComponent= (function(){
     const share= { mount, update, destroy, ondestroy, isStatic };
     let component_out= { add, component, mount, update, ondestroy, share };
     return component_out;
-    /**
-     * The same syntax as {@link module:jaaJSU~$dom~instance_component.mount}. But only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
-     * @method mount
-     * @memberof module:jaaJSU~$dom~instance_componentEmpty
-     */
     function mount(element, call_parseHTML, type= "childLast"){
         // let temp_el;
         switch ( type ) {
@@ -69,64 +56,6 @@ function isInternalElement( target, candidate, safe_only ){
     if(safe_only) return short===candidate;
     return short===candidate||long===candidate.toLowerCase();
 } 
-/**
- * Name of element supproted by this library – so {@link module:jaaJSU~$dom.component} and {@link module:jaaJSU~$dom~instance_component.add}. You can use:
- * 
- * - For HTML tags you can use lowercase/uppercase convention (e. g. `p`, `P`, `div`, `DIV`) – all possibilities can be found at [HTML | MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
- * - For SVG tags use exact form (e. g. `svg`, `polyline`, `clipPath`)! All possibilities can be found at [SVG | MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Element).
- * @typedef {String} EL_NAME
- * @memberof module:jaaJSU~$dom
- */
-/**
- * Name of component main element. In addition to {@link module:jaaJSU~$dom.EL_NAME}, it is possible to use special keywords:
- * 
- * - undefined, "" (, "empty", "EMPTY"): Empty placeholder component (see {@link module:jaaJSU~$dom~instance_componentEmpty})
- * - "<>" (, "fragment", "FRAGMENT"): see [`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment)
- * 
- * Keywords inside round parentheses are not preferred because of collision risk with Custom Elements names.
- * 
- * The `$dom.component` can disable these keywords by `safe_el_name_only` option (by default `false` – backward compability).
- * @typedef {module:jaaJSU~$dom.EL_NAME|String|undefined} cEL_NAME
- * @memberof module:jaaJSU~$dom
- */
-/**
- * This 'functional class' is syntax sugar around ` document.createElement`(`NS`) and `document.createDocumentFragment` for creating DOM components and their adding to live DOM in performance friendly way.
- * 
- * So pseudo code:
- * ```JavaScript
- * function Component(…){
- *  const { add, share }= $dom.component(…Parent Element…);
- *      add(…Child Element…);
- *      add(…Child Element…, -1);
- *          add(…Child Element…);
- *  …
- *  return share;
- * }
- * ```
- * Yelds into:
- * ```HTML
- * <!--<Component>-->
- *  <Parent Element>
- *   <Child Element></Child Element>
- *   <Child Element>
- *      <Child Element></Child Element>
- *   </Child Element>
- *  …
- *  </Parent Element>
- * <!--</Component>-->
- * ```
- * @method component
- * @memberof module:jaaJSU~$dom
- * @version 1.2.0
- * @see {@link https://github.com/jaandrle/dollar_dom_component}
- * @param {module:jaaJSU~$dom.cEL_NAME} [el_name= undefined] `LI`, `P`, `A`, …, `svg`, `polyline`, `clipPath`, …, "", "<>"
- * @param {module:jaaJSU~$dom~DomAssignObject} attrs The second argument for {@link module:jaaJSU~$dom.assign}
- * @param {Object} [params= {}] Parameters
- * @param {Function} [params.mapUpdate=undefined] This function (if defined) remap `update(DATA)` to varibales used in keys `attrs.onupdate` … see method {@link module:jaaJSU~$dom~instance_component.add}
- * @param {string|undefined} [params.namespace_group=undefined] This parameter provides ability to defined elements for diferent [`namespaceURI`s](https://developer.mozilla.org/en-US/docs/Web/API/Element/namespaceURI). Use "__SVG__" for "http://www.w3.org/2000/svg" (full list [Important Namespace URIs](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElementNS#Important_Namespace_URIs)).
- * @param {boolean} [params.safe_el_name_only=undefined] This parameter provides ability to disable long components names like `empty`, `fragment` – see {@link module:jaaJSU~$dom.cEL_NAME}.
- * @return {module:jaaJSU~$dom~instance_componentAdd|module:jaaJSU~$dom~instance_componentEmpty} Returns `ComponentEmpty` when `el_name` is **"EMPTY"**!
- */
 $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_name_only }={}){
     if(!el_name||isInternalElement("empty", el_name, safe_el_name_only)) return $dom_emptyPseudoComponent;
     if(el_name==="svg") namespace_group= "SVG";
@@ -157,108 +86,17 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
     const share= { mount, update, destroy, ondestroy, isStatic };
     let component_out= { add, addText, component, dynamicComponent, setShift, mount, update, ondestroy, share };
     let add_out_methods= {
-        /**
-         * Returns reference of currently added element
-         * @method getReference
-         * @memberof module:jaaJSU~$dom~instance_componentAdd
-         * @returns {Element|Text} See [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node).
-         */
         getReference: function(add_out, el){ return el; },
-        /**
-         * Method for batch registering `on*` methods for current element.
-         * @method on
-         * @memberof module:jaaJSU~$dom~instance_componentAdd
-         * @param  {...module:jaaJSU~$dom~component_listener} listeners
-         * @returns {module:jaaJSU~$dom~instance_componentAdd}
-         * @example
-         * const select_component= select();
-         * select_component.mount(parent);
-         * // default ⇣
-         * select_component.update({ value: "no_default_1" });
-         * // no_default_1 ⇣
-         * 
-         * function select(init= { value: "default" }){
-         *     const default_value= $dom.componentListener("mount", ()=> init);
-         *     const update_value= $dom.componentListener("update", init, ({ value })=> ({ value }));
-         *     
-         *     const c= $dom.component("SELECT", null).on( default_value, update_value );
-         *         c.add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
-         *         c.add("OPTION", { value: "default", textContent: "default" }, -1);
-         *     return share;
-         * }
-         */
         on: function(add_out, el, ...listeners){
             listeners.forEach(([ event_name, args ]= [])=> event_name && add_out[event_name].apply(this, args));
             return add_out;
         },
-        /**
-         * This procedure allows to call given function `fn` during registering element.
-         * @method oninit
-         * @memberof module:jaaJSU~$dom~instance_componentAdd
-         * @param {Function} fn
-         * @returns {module:jaaJSU~$dom~instance_componentAdd}
-         */
         oninit: function(add_out, el, fn){ fn.call(add_out, el); return add_out; },
-        /**
-         * This procedure allows to call given function `onMountFunction` during mounting component.
-         * 
-         * It can for example solve problem setting default value for `select` (`option`s elements not exist when the `select` itself is declared!).
-         * 
-         * As alternative for some cases, you can use `active` label for `option`s instead.
-         * 
-         * For now, only first mount!
-         * @method onmount
-         * @memberof module:jaaJSU~$dom~instance_componentAdd
-         * @param {Function} onMountFunction
-         * @returns {module:jaaJSU~$dom~instance_componentAdd}
-         * @example
-         * const select_component= select({ value: "default" });
-         * select_component.mount(parent);
-         * // default ⇣
-         * 
-         * function select(init){
-         *     const c= $dom.component("SELECT", null)
-         *      .onmount(()=> init);
-         *         c.add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
-         *         c.add("OPTION", { value: "no_default_2", textContent: "no_default_2" }, -1);
-         *         c.add("OPTION", { value: "no_default_3", textContent: "no_default_3" }, -1);
-         *         c.add("OPTION", { value: "default", textContent: "default" }, -1);
-         *     return c.share;
-         * }
-         */
         onmount: function(add_out, el, onMountFunction){
             if(!on_mount_funs) on_mount_funs= new Map();
             on_mount_funs.set(el, onMountFunction);
             return add_out;
         },
-        /**
-         * This method allows to register function ({@link module:jaaJSU~$dom.onUpdateFunction}) which shoul be invoke when given **keys** in `data` will be changed (see {@link module:jaaJSU~$dom~instance_component.update}).
-         * @method onupdate
-         * @memberof module:jaaJSU~$dom~instance_componentAdd
-         * @param {Object} data This allows register listener for given **keys** of Object `data`. For `data= { a: "A", b: "B" }` it means that when `a` or `b` will be changed the `onUpdateFunction` is called.
-         * @param {module:jaaJSU~$dom~onUpdateFunction} onUpdateFunction This register function, which should be called when any key od `data` will be changed in future. It is also called during creating element.
-         * @returns {module:jaaJSU~$dom~instance_componentAdd}
-         * @example
-         * const c= $dom.component("DIV", null);
-         * …
-         * c.add("P", null).onupdate({ key: "This is init value" }, ({ key })=> ({ textContent: key }));//=> <p>This is init value</p>
-         * …
-         * c.update({ key: "Value changed" });//=> <p>Value changed</p>
-         * @example
-         * const c= $dom.component("DIV", null);
-         * …
-         * c.add("P", null).onupdate({ A: "A", B: "b" }, ({ A, B })=> ({ textContent: A+B }));//=> <p>Ab</p>
-         * …
-         * c.update({ B: "B" });//=> <p>AB</p>
-         */
-        /**
-         * @callback onUpdateFunction
-         * @memberof module:jaaJSU~$dom
-         * @category types descriptions
-         * @inner
-         * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom~instance_componentAdd.onupdate}
-         * @returns {*|module:jaaJSU~$dom~DomAssignObject} Primary should use `DomAssignObject`, but in generall this can do anything what make sence when method {@link module:jaaJSU~$dom~instance_component.update} is called. This callback can be registered when element is created (see method {@link module:jaaJSU~$dom~instance_component.add}) see {@link module:jaaJSU~$dom~instance_componentAdd}.
-         */
         onupdate: function(add_out, el, data, onUpdateFunction){
             if(!data) return add_out;
             if(!internal_storage) internal_storage= initStorage();
@@ -287,44 +125,6 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
     container= els[0]= document.createDocumentFragment();
     all_els_counter+= 1;
     return component_out;
-    /**
-     * This is `Component` with aditional methods
-     * @typedef instance_componentAdd
-     * @memberof module:jaaJSU~$dom
-     * @category types descriptions
-     * @inner
-     * @type module:jaaJSU~$dom~instance_component
-     */
-    /**
-     * This add element to component
-     * @method add
-     * @memberof module:jaaJSU~$dom~instance_component
-     * @public
-     * @chainable
-     * @param {module:jaaJSU~$dom.EL_NAME} el_name `LI`, `P`, `A`, …, `svg`, `polyline`, `clipPath`, …
-     * @param {module:jaaJSU~$dom~DomAssignObject} attrs Internally uses {@link module:jaaJSU~$dom.assign}, `null`\|`undefined` is also supported (`null` is probably better for readability).
-     * @param {Number} [shift= 0] Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example.
-     * @returns {module:jaaJSU~$dom~instance_componentAdd}
-     * @example
-     * const UL= document.getElementById('SOME UL');
-     * const { add }= $dom.component("LI", { className: "list_item" });
-     * //result: <li class="list_item">...</li>
-     * add("DIV", { textContent: "Child of .list_item", className: "deep1" });
-     * //result: <li class="list_item"><div class="deep1">...</div></li>
-     *     add("DIV", { textContent: "Child of div.deep1", className: "deep2" });
-     *     //result: ...<div class="deep1"><div class="deep2">...</div></div>...
-     *         add("DIV", { textContent: "Child of div.deep2", className: "deep3" });
-     *         //result: ...<div class="deep1"><div class="deep2"><div class="deep3">...</div></div></div>...
-     *         add("DIV", { textContent: "Child of div.deep2", className: "deep3 mark" }, -1);
-     *         //result: ...<div class="deep2"><div class="deep3">...</div><div class="deep3">...</div></div>...
-     * //next add(*) schoul be child of div.deep3.mark, by -1 it is ch.of div.deep2, by -2 ch.of div.deep1, by -3 ch.of li.list_item because div.deep3.mark is on 3rd level
-     *     add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
-     *     //result: this is on 2nd level
-     * add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
-     * //result: this is on 0 level
-     *     add("DIV", null);
-     *     //just DIV without attributes
-     */
     function add(el_name, attrs, shift= 0){
         recalculateDeep(shift);
         attrs= attrs || {};
@@ -344,33 +144,6 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
         return add_out;
     }
     
-    /**
-     * This add element to component
-     * @method addText
-     * @memberof module:jaaJSU~$dom~instance_component
-     * @public
-     * @chainable
-     * @param {String} text Argument for `document.createTextNode`
-     * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
-     * @returns {module:jaaJSU~$dom~instance_componentAdd}
-     * @example
-     * const c1= $dom.component("P", { textContent: "TEXT" });
-     * const c2= $dom.component("P", null);
-     *     c2.addText("TEXT");
-     * //c1-> <p>TEXT</p>  ===  <p>TEXT</p> <-c2
-     * @example
-     * function testTextLi({ href= "https://www.seznam.cz" }= {}){
-     *     const c= $dom.component("LI", null);
-     *         c.add("P", { textContent: "Link test: " });
-     *             c.add("A", { textContent: "link ", href });
-     *                 c.add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
-     *             c.addText("!", -2);
-     *             c.add("BR", null, -1);
-     *             c.addText("Test new line.", -1);
-     *     return c.share;
-     * }
-     * //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
-     */
     function addText(text= "", shift= 0){
         recalculateDeep(shift);
         const text_node= document.createTextNode(text);
@@ -386,25 +159,6 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
         return add_out;
     }
     
-    /**
-     * Method for including another component by usint its `share` key.
-     * @method component
-     * @memberof module:jaaJSU~$dom~instance_component
-     * @public
-     * @chainable
-     * @param {module:jaaJSU~$dom~instance_component.share} share
-     * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
-     * @return {module:jaaJSU~$dom~instance_component}
-     * @example
-     * function p({ textContent }){
-     *      const cP= $dom.component("P", { textContent });
-     *      return cP.share;
-     * }
-     * const c= $dom.component("DIV", null);
-     * for(let i=0; i<3; i++){ c.component(p({ textContent: i })); }
-     * c.mount(document.body, "replaceContent");
-     * //= <body><div><p>0</p><p>1</p><p>2</p></div></body>
-     */
     function component({ mount, update, isStatic }, shift= 0){
         recalculateDeep(shift);
         els[all_els_counter]= mount(getParentElement());
@@ -416,17 +170,6 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
         return component_out;
     }
     
-    /**
-     * Method for including another component by using `generator` function, which can change final `component` based on updated data `data`.
-     * @method dynamicComponent
-     * @memberof module:jaaJSU~$dom~instance_component
-     * @public
-     * @chainable
-     * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom~instance_componentAdd.onupdate}
-     * @param {module:jaaJSU~$dom~componentGenerator} generator Function for registering components based on updates of `data`.
-     * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
-     * @return {module:jaaJSU~$dom~instance_component}
-     */
     function dynamicComponent(data, generator, shift= 0){
         recalculateDeep(shift);
         const parent= getParentElement();
@@ -440,18 +183,6 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
             }
         }
         return add_out_methods.onupdate(component_out, parent, data, function(data){
-            /**
-             * This is function for registering component for {@link module:jaaJSU~$dom~instance_component.dynamicComponent}.
-             * @callback componentGenerator
-             * @memberof module:jaaJSU~$dom
-             * @category types descriptions
-             * @inner
-             * @param {Function} mount Function which consumes {@link module:jaaJSU~$dom~instance_component.share}.
-             * @param {Null|module:jaaJSU~$dom~instance_component.share} current_component Previously registered component
-             * @param {Object} data Includes all subsribed keys from `data` see method {@link module:jaaJSU~$dom~instance_componentAdd.onupdate}
-             * @param {Null|Mixed} current_value Shared value across multiple calling
-             * @returns {Mixed} current_value 
-             */
             current_value= generator.call(parent, mount, current_component, data, current_value);
         });
     }
@@ -513,18 +244,6 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
         function onMountFunctionCall(onMountFunction, el){ return assign(el, onMountFunction.call(el, element, call_parseHTML, type)); }
     }
     
-    /**
-     * Method remove element form live DOM and returns null
-     * @method destroy
-     * @memberof module:jaaJSU~$dom~instance_component.share
-     * @public
-     * @returns {Null}
-     * @example
-     * let c= $dom.component("DIV", null);
-     * c.mount(document.body, "replaceContent");
-     * c= c.share.destroy();
-     * //=> c===null AND <body></body>
-     */
     function destroy(){
         if(on_destroy_funs){
             on_destroy_funs.forEach(onDestroyFunction=> onDestroyFunction.call(container));
@@ -548,73 +267,21 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
         return null;
     }
     
-    /**
-     * This provide ability to register function which should be called when the component will be destroyed.
-     * @method ondestroy
-     * @memberof module:jaaJSU~$dom~instance_component
-     * @public
-     * @param {Function} onDestroyFunction Function will be called when the component will be destroyed.
-     */
     function ondestroy(onDestroyFunction){
         if(!on_destroy_funs) on_destroy_funs= new Set();
         on_destroy_funs.add(onDestroyFunction);
         return component_out;
     }
     
-    /**
-     * Updates `deep`
-     * @private
-     * @method recalculateDeep
-     * @memberof module:jaaJSU~$dom~instance_component
-     * @param {Number} shift see {@link module:jaaJSU~$dom~instance_component.add}
-     */
     function recalculateDeep(shift){
         if(!shift) deep.push(all_els_counter);
         else { deep.splice(deep.length+1+shift); deep[deep.length-1]= all_els_counter; }
     }
     
-    /**
-     * Returns parent element (or "container pseudo element")
-     * @method getParentElement
-     * @memberof module:jaaJSU~$dom~instance_component
-     * @private
-     * @returns {NodeElement} Returns parent element (i. e. `DocumenFragment` if component is empty)
-     */
     function getParentElement(){
         return els[deep[deep.length-2]] || container;
     }
     
-    /**
-     * Method provide way to change nesting behaviour. It can be helpful for loops
-     * @method setShift
-     * @memberof module:jaaJSU~$dom~instance_component
-     * @public
-     * @chainable
-     * @param {Number} [shift= 0] see {@link module:jaaJSU~$dom~instance_component.add}
-     * @returns {module:jaaJSU~$dom~instance_component}
-     * @example
-     * function testNesting(){
-     *     const c= $dom.component("DIV", null);
-     *         c.setShift(0);
-     *     for(let i= 0; i<5; i++){
-     *         c.add("P", { textContent: `Paragraph no. ${i}.` }, -1);
-     *     }
-     *     return c.share;
-     * }
-     * //=> div> 5*p
-     * @example
-     * function testNesting(){
-     *     const c= $dom.component("DIV", null);
-     *     for(let i= 0; i<5; i++){
-     *         c.add("P", { textContent: `Paragraph no. ${i}.` });
-     *          //c.setShift();//or 0 => div> p> p> p> …
-     *       //c.setShift(-1); => div> p> p> p> …
-     *     c.setShift(-2);
-     *     }
-     *     return c.share;
-     * }
-     * //=> div> 5*p
-     */
     function setShift(shift= 0){
         let last;
         if(!shift){ last= deep.pop(); deep.push(last, last); }
@@ -622,13 +289,6 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
         return component_out;
     }
     
-    /**
-     * Initialize internal storage
-     * @method initStorage
-     * @memberof module:jaaJSU~$dom~instance_component
-     * @private
-     * @returns {Object} `{ register, registerComponent, update, unregister}`
-     */
     function initStorage(){
         const
             { registerToMap, indexGenerator }= component_utils;
@@ -713,79 +373,16 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
         }
     }
     
-    /**
-     * Method updates all registered varibles by keys `onupdates` and calls follower functions
-     * @method update
-     * @memberof module:jaaJSU~$dom~instance_component
-     * @public
-     * @param {Object|Function} new_data
-     * <br/>- When `$dom.component` is initialized, it is possible to register `mapUpdate`
-     * <br/>- **It's because internally, it is used `Object.assign` (no deep copy) to merge new data with older one!!!**
-     * <br/>- It is also possible to register function to detect changes itself see examples
-     * @returns {Boolean} If success `1`, else `0`.
-     * @example
-     * // SIMPLE example
-     * const data_A= { a: "A" };
-     * const data_A_update= { a: "AAA" };
-     * const c= $dom.component("UL", null);
-     *     c.add("LI", null)
-     *          .onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
-     * c.mount(document.body);
-     * c.update(data_A_update);
-     * @example
-     * // EXAMPLE WITH `mapUpdate`
-     * const data_B= { a: { b: "A" }};
-     * const data_B_update= { a: { b: "AAA" }};
-     * const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-     *     c.add("LI", null)
-     *          .onupdate(data_B, ({ a })=>({ textContent: a }));
-     * c.mount(document.body);
-     * c.update(data_B_update);
-     * @example
-     * // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
-     * const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-     *     c.add("LI", null)
-     *          .onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
-     * c.mount(document.body);
-     * c.update(({ a })=> { a: ++a });
-     */
     function update(new_data){
         if(!internal_storage) return false;
         return internal_storage.update(typeof new_data==="function" ? new_data(internal_storage.getData()) : new_data);
     }
     
-    /**
-     * Methods returns if it was `onupdate` used
-     * @method isStatic
-     * @memberof module:jaaJSU~$dom~instance_component.share
-     * @public
-     * @return {Boolean} If there is some listeners `onupdate`
-     */
     function isStatic(){
         return !internal_storage;
     }
     
 };
-/**
- * This is in fact argument for {@link module:jaaJSU~$dom~instance_componentAdd.on}.
- * 
- * In case of native events (e.g. "click"), is used `passive=true` and `this` refers to `{ update, getReference, removeEventListener }`.
- * @typedef component_listener
- * @memberof module:jaaJSU~$dom
- * @type {Array}
- * @param {String} 0 Name of method in {@link module:jaaJSU~$dom~instance_componentAdd}.
- * @param {Array} 1 In fact arguments for `on*` methods in {@link module:jaaJSU~$dom~instance_componentAdd} or arguments for [EventTarget.addEventListener()](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
- * @category types descriptions
- * @inner
- */
-/**
- * This provide more DRY way to register events listeners for {@link module:jaaJSU~$dom.component} such as `onupdate`, `oninit`, ….
- * @method componentListener
- * @memberof module:jaaJSU~$dom
- * @param {String} event_name Name of component event (prefered way is to use without `on*` like native `addEventListener` – e.g. "update") or native `EventListener` name.
- * @param {...Mixed} args See {@link module:jaaJSU~$dom~component_listener}[1].
- * @returns {module:jaaJSU~$dom~component_listener}
- */
 $dom.componentListener= (function(){
     const internal_component_events= [ "oninit", "onmount", "onupdate" ];
     const EventListener_interface= {
@@ -809,56 +406,6 @@ $dom.componentListener= (function(){
         return Object.freeze([ internal_component_events[event_name_id], args ]);
     };
 })();
-/**
- * Object shall holds **NodeElement** properties like `className`, `textContent`, …. This is primary argument for {@link module:jaaJSU~$dom.assign}. There are some notes and changes:
- *  - In most cases, you can use native propertie such as [MDN WEB/API/Element](https://developer.mozilla.org/en-US/docs/Web/API/Element).
- *  - For `dataset` can be used also `Object` notation: `$dom.assign(document.getElementById("ID"), { dataset: { test: "TEST" } }); //<p id="ID" data-test="TEST"></p>`.
- *  - The same notation can be used for **CSS variables** (the key is called `style_vars`).
- *  - **IMPORTANT CHANGE**: Key `style` also supports **text**, so `$dom.assign(el, { style: "color: red;" });` and `$dom.assign(el, { style: { color: "red" } })` is equivalent to `el.setAttribute("style", "color: red;");`
- *  - **IMPORTANT DIFFERENCE**: `classList` accepts *Object* in the form of `class_name: -1|0|1` where '-1' means `el.classList.toggle(class_name)` others `el.classList.toggle(class_name, Booleans(...))`
- *  - *Speed optimalization*: It is recommended to use `textContent` (instead of `innerText`) and `$dom.add` or `$dom.component` (instead of `innerHTML`).
- *  - `href`, `src` or `class` are convereted to `element.setAttribute(key, …)`;
- *  - **IMPORTANT!**: There is difference between [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element) and [`Text`](https://developer.mozilla.org/en-US/docs/Web/API/Text), ….
- * @typedef DomAssignObject
- * @memberof module:jaaJSU~$dom
- * @category types descriptions
- * @inner
- * @type {Object}
- */
-/**
- * Procedure for merging object into the element properties.
- * Very simple example: `$dom.assign(document.body, { className: "test" });` is equivalent to `document.body.className= "test";`.
- * It is not deep copy in general, but it supports `style`, `style_vars` and `dataset` objects (see below).
- * @method assign
- * @memberof module:jaaJSU~$dom
- * @param {Element|Text} element See [`Node`](https://developer.mozilla.org/en-US/docs/Web/API/Node).
- * @param {...module:jaaJSU~$dom~DomAssignObject} object_attributes
- * @returns {NodeElement} Givven `element` (follows similar behaviour in `Object.assign`)
- * @example <caption>#1: All together</caption>
- * const el= document.body;
- * const onclick= function(){ console.log(this.dataset.js_param); };
- * $dom.assign(el, { textContent: "BODY", style: "color: red;", dataset: { js_param: "CLICKED" }, onclick });
- * //result HTML: <body style="color: red;" data-js_param="CLICKED">BODY</body>
- * //console output on click: "CLICKED"
- * $dom.assign(el, { style: { color: "green" } });
- * //result HTML: <body style="color: green;" data-js_param="CLICKED">BODY</body>
- * //console output on click: "CLICKED"
- * @example <caption>#2 **\*.classList.toggle**</caption>
- * const el= document.body;
- * $dom.assign(el, { classList: { testClass: -1 } });
- * //result HTML: <body class="testClass">…</body>
- * $dom.assign(el, { classList: { testClass: -1 } });
- * //result HTML: <body class="">…</body>
- * 
- * $dom.assign(el, { classList: { testClass: true } });//or 1
- * //result HTML: <body class="testClass">…</body>
- * $dom.assign(el, { classList: { testClass: false } });//or 0
- * //result HTML: <body class="">…</body>
- * //...
- * @example <caption>#3 Links and images</caption>
- * $dom.assign(A_ELEMENT, { href: "www.google.com" });//=> <a href="www.google.com" …
- * $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
- */
 $dom.assign= function(element, ...objects_attributes){
     const object_attributes= Object.assign({}, ...objects_attributes);
     const object_attributes_keys= Object.keys(object_attributes);
@@ -899,15 +446,6 @@ $dom.assign= function(element, ...objects_attributes){
     }
     return element;
 };
-/**
- * Procedure for merging object into the element properties (see `html` version {@link module:jaaJSU~$dom.assign}).
- * @method assignNS
- * @memberof module:jaaJSU~$dom
- * @param {string} namespace_group Group representation of [`namespace`](https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttributeNS), use "__SVG__" for setting attributes for `svg`s.
- * @param {NodeElement} element
- * @param {...module:jaaJSU~$dom~DomAssignObject} object_attributes
- * @returns {NodeElement} Givven `element` (follows similar behaviour in `Object.assign`)
- */
 $dom.assignNS= function(namespace, element, ...objects_attributes){
     const on_keys_regexp= /^on[a-z]+/;
     const object_attributes= Object.assign({}, ...objects_attributes);

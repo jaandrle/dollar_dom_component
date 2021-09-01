@@ -1,4 +1,4 @@
-[dollar_dom_component](../README.md) / [%24dom](../modules/_dom.md) / component_add
+[$dom.component](../README.md) / [%24dom](../modules/_dom.md) / component_add
 
 # Interface: component\_add<cEL\>
 
@@ -35,6 +35,7 @@
 - [isStatic](_dom.component_add.md#isstatic)
 - [mount](_dom.component_add.md#mount)
 - [on](_dom.component_add.md#on)
+- [ondestroy](_dom.component_add.md#ondestroy)
 - [oninit](_dom.component_add.md#oninit)
 - [onmount](_dom.component_add.md#onmount)
 - [onupdate](_dom.component_add.md#onupdate)
@@ -53,7 +54,7 @@
 
 #### Defined in
 
-types.d.ts:157
+$dom_component.d.ts:157
 
 ## Methods
 
@@ -107,7 +108,7 @@ add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2
 
 #### Defined in
 
-types.d.ts:83
+$dom_component.d.ts:78
 
 ___
 
@@ -153,7 +154,7 @@ function testTextLi({ href= "https://www.seznam.cz" }= {}){
 
 #### Defined in
 
-types.d.ts:106
+$dom_component.d.ts:101
 
 ___
 
@@ -190,13 +191,21 @@ c.mount(document.body, "replaceContent");
 
 #### Defined in
 
-types.d.ts:120
+$dom_component.d.ts:115
 
 ___
 
 ### destroy
 
 ▸ **destroy**(): `void`
+
+Method remove element form live DOM and returns null
+```javascript
+let c= $dom.component("DIV", null);
+c.mount(document.body, "replaceContent");
+c= c.share.destroy();
+//=> c===null AND <body></body>
+```
 
 #### Returns
 
@@ -208,7 +217,7 @@ ___
 
 #### Defined in
 
-types.d.ts:30
+$dom_component.d.ts:434
 
 ___
 
@@ -242,7 +251,7 @@ Method for including another component by using `generator` function, which can 
 
 #### Defined in
 
-types.d.ts:126
+$dom_component.d.ts:121
 
 ___
 
@@ -250,19 +259,23 @@ ___
 
 ▸ **getReference**(): [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]
 
+Returns reference of currently added element
+
 #### Returns
 
 [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]
 
 #### Defined in
 
-types.d.ts:163
+$dom_component.d.ts:166
 
 ___
 
 ### isStatic
 
 ▸ **isStatic**(): `boolean`
+
+Methods returns if it was `onupdate` used
 
 #### Returns
 
@@ -274,20 +287,19 @@ ___
 
 #### Defined in
 
-types.d.ts:31
+$dom_component.d.ts:438
 
 ___
 
 ### mount
 
-▸ **mount**(`el`, `call_parseHTML?`, `type?`): [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]
+▸ **mount**(`el`, `type?`): [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `el` | `HTMLElement` | Element where to places this component |
-| `call_parseHTML?` | `boolean` | If call parseHTML (default: `false`) |
 | `type?` | ``"childLast"`` \| ``"childFirst"`` \| ``"replaceContent"`` \| ``"replace"`` \| ``"before"`` \| ``"after"`` | Default `childLast` |
 
 #### Returns
@@ -300,7 +312,7 @@ ___
 
 #### Defined in
 
-types.d.ts:38
+$dom_component.d.ts:444
 
 ___
 
@@ -308,11 +320,30 @@ ___
 
 ▸ **on**(...`events`): [`component_add`](_dom.component_add.md)<`cEL`\>
 
+Method for batch registering `on*` methods for current element.
+```javascript
+const select_component= select();
+select_component.mount(parent);
+// default ⇣
+select_component.update({ value: "no_default_1" });
+// no_default_1 ⇣
+
+function select(init= { value: "default" }){
+    const default_value= $dom.componentListener("mount", ()=> init);
+    const update_value= $dom.componentListener("update", init, ({ value })=> ({ value }));
+    
+    const c= $dom.component("SELECT", null).on( default_value, update_value );
+        c.add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
+        c.add("OPTION", { value: "default", textContent: "default" }, -1);
+    return share;
+}
+```
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `...events` | [`component_listener`](_dom.component_listener.md)[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `...events` | [`component_listener`](_dom.component_listener.md)[] | Consumes [component_listener](_dom.component_listener.md). |
 
 #### Returns
 
@@ -320,13 +351,41 @@ ___
 
 #### Defined in
 
-types.d.ts:164
+$dom_component.d.ts:188
+
+___
+
+### ondestroy
+
+▸ **ondestroy**(`cb`): [`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+
+This provide ability to register function which should be called when the component will be destroyed.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`onDestroyFunction`: `HTMLElement`) => `void` |
+
+#### Returns
+
+[`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+
+#### Inherited from
+
+[component_main](_dom.component_main.md).[ondestroy](_dom.component_main.md#ondestroy)
+
+#### Defined in
+
+$dom_component.d.ts:156
 
 ___
 
 ### oninit
 
 ▸ **oninit**(`cb`): [`component_add`](_dom.component_add.md)<`cEL`\>
+
+This procedure allows to call given function `cb` during registering element.
 
 #### Parameters
 
@@ -340,13 +399,36 @@ ___
 
 #### Defined in
 
-types.d.ts:166
+$dom_component.d.ts:213
 
 ___
 
 ### onmount
 
-▸ **onmount**(`cb`): `any`
+▸ **onmount**(`cb`): [`component_add`](_dom.component_add.md)<`cEL`\>
+
+This procedure allows to call given function `cb` during mounting component.
+
+It can for example solve problem setting default value for `select` (`option`s elements not exist when the `select` itself is declared!).
+
+As alternative for some cases, you can use `active` label for `option`s instead.
+
+**For now, only first mount!**
+```javascript
+const select_component= select({ value: "default" });
+select_component.mount(parent);
+// default ⇣
+
+function select(init){
+    const c= $dom.component("SELECT", null)
+     .onmount(()=> init);
+        c.add("OPTION", { value: "no_default_1", textContent: "no_default_1" });
+        c.add("OPTION", { value: "no_default_2", textContent: "no_default_2" }, -1);
+        c.add("OPTION", { value: "no_default_3", textContent: "no_default_3" }, -1);
+        c.add("OPTION", { value: "default", textContent: "default" }, -1);
+    return c.share;
+}
+```
 
 #### Parameters
 
@@ -356,17 +438,34 @@ ___
 
 #### Returns
 
-`any`
+[`component_add`](_dom.component_add.md)<`cEL`\>
 
 #### Defined in
 
-types.d.ts:167
+$dom_component.d.ts:238
 
 ___
 
 ### onupdate
 
 ▸ **onupdate**<`DATA`\>(`data`, `onUpdate`): [`component_add`](_dom.component_add.md)<`cEL`\>
+
+This method allows to register function which shoul be invoke when given **keys** in `data` will be changed (see [component_mainOut.update](_dom.component_mainOut.md#update)).
+```javascript
+const c= $dom.component("DIV", null);
+…
+c.add("P", null).onupdate({ key: "This is init value" }, ({ key })=> ({ textContent: key }));//=> <p>This is init value</p>
+…
+c.update({ key: "Value changed" });//=> <p>Value changed</p>
+```
+
+```javascript
+const c= $dom.component("DIV", null);
+…
+c.add("P", null).onupdate({ A: "A", B: "b" }, ({ A, B })=> ({ textContent: A+B }));//=> <p>Ab</p>
+…
+c.update({ B: "B" });//=> <p>AB</p>
+```
 
 #### Type parameters
 
@@ -376,10 +475,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | `DATA` |
-| `onUpdate` | (`data`: `DATA`) => [`T_DOM_ATTRS`](../modules/_dom.md#t_dom_attrs)<`cEL`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `DATA` | This allows register listener for given **keys** of Object `data`. For `data= { a: "A", b: "B" }` it means that when `a` or `b` will be changed the `onUpdate` is called. |
+| `onUpdate` | (`data`: `DATA`) => [`T_DOM_ATTRS`](../modules/_dom.md#t_dom_attrs)<`cEL`\> | - |
 
 #### Returns
 
@@ -387,13 +486,13 @@ ___
 
 #### Defined in
 
-types.d.ts:165
+$dom_component.d.ts:209
 
 ___
 
 ### setShift
 
-▸ **setShift**(`shif`): [`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+▸ **setShift**(`shift`): [`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
 
 Method provide way to change nesting behaviour. It can be helpful for loops
 ```javascript
@@ -425,7 +524,7 @@ function testNesting(){
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `shif` | `number` | See [component_main.add](_dom.component_main.md#add) |
+| `shift` | `number` | See [component_main.add](_dom.component_main.md#add) |
 
 #### Returns
 
@@ -437,7 +536,7 @@ function testNesting(){
 
 #### Defined in
 
-types.d.ts:156
+$dom_component.d.ts:151
 
 ___
 
@@ -445,11 +544,34 @@ ___
 
 ▸ **update**(`data`): `boolean`
 
+Method updates all registered varibles by keys `onupdates` and calls follower functions
+```javascript
+// SIMPLE example
+const data_A= { a: "A" };
+const data_A_update= { a: "AAA" };
+const c= $dom.component("UL", null);
+    c.add("LI", null)
+         .onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
+c.mount(document.body);
+c.update(data_A_update);
+```
+
+```javascript
+// EXAMPLE WITH `mapUpdate`
+const data_B= { a: { b: "A" }};
+const data_B_update= { a: { b: "AAA" }};
+const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+    c.add("LI", null)
+         .onupdate(data_B, ({ a })=>({ textContent: a }));
+c.mount(document.body);
+c.update(data_B_update);
+```
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | `object` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `object` | Updates internal storage (via `Object.assign` – no deep copy!) |
 
 #### Returns
 
@@ -461,4 +583,34 @@ ___
 
 #### Defined in
 
-types.d.ts:39
+$dom_component.d.ts:470
+
+▸ **update**(`map`): `boolean`
+
+Method updates all registered varibles by keys `onupdates` and calls follower functions
+```javascript
+// EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
+const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
+    c.add("LI", null)
+         .onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
+c.mount(document.body);
+c.update(({ a })=> { a: ++a });
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `map` | (`data`: `object`) => `object` | Function takes as parameter previous internal storage and returns updated one (internally used `Object.assign` – no deep copy!) |
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[component_main](_dom.component_main.md).[update](_dom.component_main.md#update)
+
+#### Defined in
+
+$dom_component.d.ts:483

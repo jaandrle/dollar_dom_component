@@ -1,25 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxparams: 5 */
 /* global $dom */
-/**
- * This is in fact argument for {@link module:jaaJSU~$dom~instance_componentAdd.on}.
- * 
- * In case of native events (e.g. "click"), is used `passive=true` and `this` refers to `{ update, getReference, removeEventListener }`.
- * @typedef component_listener
- * @memberof module:jaaJSU~$dom
- * @type {Array}
- * @param {String} 0 Name of method in {@link module:jaaJSU~$dom~instance_componentAdd}.
- * @param {Array} 1 In fact arguments for `on*` methods in {@link module:jaaJSU~$dom~instance_componentAdd} or arguments for [EventTarget.addEventListener()](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
- * @category types descriptions
- * @inner
- */
-/**
- * This provide more DRY way to register events listeners for {@link module:jaaJSU~$dom.component} such as `onupdate`, `oninit`, ….
- * @method componentListener
- * @memberof module:jaaJSU~$dom
- * @param {String} event_name Name of component event (prefered way is to use without `on*` like native `addEventListener` – e.g. "update") or native `EventListener` name.
- * @param {...Mixed} args See {@link module:jaaJSU~$dom~component_listener}[1].
- * @returns {module:jaaJSU~$dom~component_listener}
- */
 $dom.componentListener= (function(){
     const internal_component_events= [ "oninit", "onmount", "onupdate" ];
     const EventListener_interface= {

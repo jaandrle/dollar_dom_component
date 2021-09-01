@@ -1,4 +1,4 @@
-[dollar_dom_component](../README.md) / [%24dom](../modules/_dom.md) / dynamicComponentGenerator
+[$dom.component](../README.md) / [%24dom](../modules/_dom.md) / dynamicComponentGenerator
 
 # Interface: dynamicComponentGenerator<DATA\>
 
@@ -28,7 +28,7 @@ This is function for registering component for [component_main.dynamicComponent]
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `mount` | (`componentMainOut`: `any`) => `void` | Function which consumes [component_mainOut](_dom.component_mainOut.md) |
+| `mount` | (`componentMainOut`: [`component_mainOut`](_dom.component_mainOut.md)<`HTMLElement`\>) => `void` | Function which consumes [component_mainOut](_dom.component_mainOut.md) |
 | `current_component` | [`component_mainOut`](_dom.component_mainOut.md)<`HTMLElement`\> | Previously registered component |
 | `data` | `DATA` | Includes all subsribed keys from `data` see method [component_add.onupdate](_dom.component_add.md#onupdate) |
 | `current_value` | `iDATA` | Shared value across multiple calling |
@@ -41,4 +41,4 @@ This is function for registering component for [component_main.dynamicComponent]
 
 #### Defined in
 
-types.d.ts:53
+$dom_component.d.ts:419

@@ -1,4 +1,4 @@
-[dollar_dom_component](../README.md) / [%24dom](../modules/_dom.md) / componentParams
+[$dom.component](../README.md) / [%24dom](../modules/_dom.md) / componentParams
 
 # Interface: componentParams
 
@@ -21,13 +21,13 @@ Options for {@link}
 
 ### namespace\_group
 
-• `Optional` **namespace\_group**: `string`
+• `Optional` **namespace\_group**: ``""`` \| ``"SVG"``
 
 This parameter provides ability to defined elements for diferent [`namespaceURI`s](https://developer.mozilla.org/en-US/docs/Web/API/Element/namespaceURI). Use "__SVG__" for "http://www.w3.org/2000/svg" (full list [Important Namespace URIs](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElementNS#Important_Namespace_URIs)).
 
 #### Defined in
 
-types.d.ts:196
+$dom_component.d.ts:270
 
 ___
 
@@ -39,7 +39,7 @@ This parameter provides ability to disable long components names like `empty`, `
 
 #### Defined in
 
-types.d.ts:200
+$dom_component.d.ts:274
 
 ## Methods
 
@@ -61,4 +61,4 @@ This function (if defined) remap `update(DATA)` to varibales used in keys `attrs
 
 #### Defined in
 
-types.d.ts:192
+$dom_component.d.ts:266

@@ -1,8 +1,10 @@
-[dollar_dom_component](../README.md) / [%24dom](../modules/_dom.md) / component_listener
+[$dom.component](../README.md) / [%24dom](../modules/_dom.md) / component_listener
 
 # Interface: component\_listener
 
 [$dom](../modules/_dom.md).component_listener
+
+Interface consumed by [component_add.on](_dom.component_add.md#on).
 
 ## Table of contents
 
@@ -19,7 +21,7 @@
 
 #### Defined in
 
-types.d.ts:181
+$dom_component.d.ts:255
 
 ___
 
@@ -29,4 +31,4 @@ ___
 
 #### Defined in
 
-types.d.ts:182
+$dom_component.d.ts:256

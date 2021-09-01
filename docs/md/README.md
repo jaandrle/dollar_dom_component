@@ -1,6 +1,6 @@
-dollar_dom_component
+$dom.component
 
-# dollar_dom_component
+# $dom.component
 
 ## Table of contents
 

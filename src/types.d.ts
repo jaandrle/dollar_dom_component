@@ -11,12 +11,17 @@ declare namespace $dom {
      * @private
      */
     type T_DOM_ATTRS_MODIFIED= {
-        /** test */
+        /**
+         * In fact argumen for `*.setAttribute("style", *)`.
+         */
         style: string
+        /**
+         * Provide option to add/remove/toggle CSS clasess (index of object) using 1/0/-1.
+         */
         classList: Record<string,-1|0|1>
     }
     /**
-     * Just attributtes
+     * Just element attributtes
      * @private
      */
     type T_DOM_ATTRS<T extends keyof T_DOM_HETNM | T_DOM_HETNM[keyof T_DOM_HETNM]>=
@@ -50,7 +55,7 @@ declare namespace $dom {
          * @param current_value Shared value across multiple calling
          * @returns `current_value`
          */
-        <iDATA extends any>(mount: (componentMainOut)=> void, current_component: component_mainOut|null, data: DATA, current_value: iDATA): iDATA
+        <iDATA extends any>(mount: (componentMainOut: component_mainOut)=> void, current_component: component_mainOut|null, data: DATA, current_value: iDATA): iDATA
     }
     /**
      * @private
@@ -164,7 +169,7 @@ declare namespace $dom {
         on(...events: component_listener[]): component_add<cEL>
         onupdate<DATA extends object>(data: DATA, onUpdate: (data: DATA)=> T_DOM_ATTRS<cEL>): component_add<cEL>
         oninit(cb: (el: T_DOM_HETNM[cEL])=> void): component_add<cEL>
-        onmount(cb: ()=> T_DOM_ATTRS<cEL>)
+        onmount(cb: ()=> T_DOM_ATTRS<cEL>): component_add<cEL>
     }
     /**
      * @private

@@ -1,11 +1,12 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true */
 /* global $dom, container: true, internal_storage: true, component_out: true, add_out_methods: true, els: true, on_destroy_funs: true, observer: true, assign: true, createElement: true */
 function destroy(){
+    console.log('ZDE'); /* jshint devel: true *///gulp.keep.line
     if(on_destroy_funs){
         on_destroy_funs.forEach(onDestroyFunction=> onDestroyFunction.call(container));
     }
     if(container) {
-        container.remove();
+        if(!(container instanceof DocumentFragment)) container.remove();
         els= [];
     }
     if(observer) observer.disconnect();

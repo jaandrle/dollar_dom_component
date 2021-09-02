@@ -52,10 +52,6 @@
 
 [component_main](_dom.component_main.md).[share](_dom.component_main.md#share)
 
-#### Defined in
-
-$dom_component.d.ts:157
-
 ## Methods
 
 ### add
@@ -106,10 +102,6 @@ add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2
 
 [component_main](_dom.component_main.md).[add](_dom.component_main.md#add)
 
-#### Defined in
-
-$dom_component.d.ts:78
-
 ___
 
 ### addText
@@ -152,10 +144,6 @@ function testTextLi({ href= "https://www.seznam.cz" }= {}){
 
 [component_main](_dom.component_main.md).[addText](_dom.component_main.md#addtext)
 
-#### Defined in
-
-$dom_component.d.ts:101
-
 ___
 
 ### component
@@ -189,10 +177,6 @@ c.mount(document.body, "replaceContent");
 
 [component_main](_dom.component_main.md).[component](_dom.component_main.md#component)
 
-#### Defined in
-
-$dom_component.d.ts:115
-
 ___
 
 ### destroy
@@ -214,10 +198,6 @@ c= c.share.destroy();
 #### Inherited from
 
 [component_main](_dom.component_main.md).[destroy](_dom.component_main.md#destroy)
-
-#### Defined in
-
-$dom_component.d.ts:434
 
 ___
 
@@ -249,10 +229,6 @@ Method for including another component by using `generator` function, which can 
 
 [component_main](_dom.component_main.md).[dynamicComponent](_dom.component_main.md#dynamiccomponent)
 
-#### Defined in
-
-$dom_component.d.ts:121
-
 ___
 
 ### getReference
@@ -264,10 +240,6 @@ Returns reference of currently added element
 #### Returns
 
 [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]
-
-#### Defined in
-
-$dom_component.d.ts:166
 
 ___
 
@@ -284,10 +256,6 @@ Methods returns if it was `onupdate` used
 #### Inherited from
 
 [component_main](_dom.component_main.md).[isStatic](_dom.component_main.md#isstatic)
-
-#### Defined in
-
-$dom_component.d.ts:438
 
 ___
 
@@ -309,10 +277,6 @@ ___
 #### Inherited from
 
 [component_main](_dom.component_main.md).[mount](_dom.component_main.md#mount)
-
-#### Defined in
-
-$dom_component.d.ts:444
 
 ___
 
@@ -349,10 +313,6 @@ function select(init= { value: "default" }){
 
 [`component_add`](_dom.component_add.md)<`cEL`\>
 
-#### Defined in
-
-$dom_component.d.ts:188
-
 ___
 
 ### ondestroy
@@ -375,10 +335,6 @@ This provide ability to register function which should be called when the compon
 
 [component_main](_dom.component_main.md).[ondestroy](_dom.component_main.md#ondestroy)
 
-#### Defined in
-
-$dom_component.d.ts:156
-
 ___
 
 ### oninit
@@ -396,10 +352,6 @@ This procedure allows to call given function `cb` during registering element.
 #### Returns
 
 [`component_add`](_dom.component_add.md)<`cEL`\>
-
-#### Defined in
-
-$dom_component.d.ts:213
 
 ___
 
@@ -440,10 +392,6 @@ function select(init){
 
 [`component_add`](_dom.component_add.md)<`cEL`\>
 
-#### Defined in
-
-$dom_component.d.ts:238
-
 ___
 
 ### onupdate
@@ -483,10 +431,6 @@ c.update({ B: "B" });//=> <p>AB</p>
 #### Returns
 
 [`component_add`](_dom.component_add.md)<`cEL`\>
-
-#### Defined in
-
-$dom_component.d.ts:209
 
 ___
 
@@ -534,10 +478,6 @@ function testNesting(){
 
 [component_main](_dom.component_main.md).[setShift](_dom.component_main.md#setshift)
 
-#### Defined in
-
-$dom_component.d.ts:151
-
 ___
 
 ### update
@@ -581,10 +521,6 @@ c.update(data_B_update);
 
 [component_main](_dom.component_main.md).[update](_dom.component_main.md#update)
 
-#### Defined in
-
-$dom_component.d.ts:470
-
 ▸ **update**(`map`): `boolean`
 
 Method updates all registered varibles by keys `onupdates` and calls follower functions
@@ -610,7 +546,3 @@ c.update(({ a })=> { a: ++a });
 #### Inherited from
 
 [component_main](_dom.component_main.md).[update](_dom.component_main.md#update)
-
-#### Defined in
-
-$dom_component.d.ts:483

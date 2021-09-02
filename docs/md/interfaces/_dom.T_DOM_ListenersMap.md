@@ -17,16 +17,8 @@
 
 • **init**: []
 
-#### Defined in
-
-$dom_component.d.ts:358
-
 ___
 
 ### mount
 
 • **mount**: []
-
-#### Defined in
-
-$dom_component.d.ts:359

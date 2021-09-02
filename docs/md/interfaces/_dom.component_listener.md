@@ -19,16 +19,8 @@ Interface consumed by [component_add.on](_dom.component_add.md#on).
 
 • **0**: `string`
 
-#### Defined in
-
-$dom_component.d.ts:255
-
 ___
 
 ### 1
 
 • **1**: `any`[]
-
-#### Defined in
-
-$dom_component.d.ts:256

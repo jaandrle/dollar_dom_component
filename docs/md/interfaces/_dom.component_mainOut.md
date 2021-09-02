@@ -43,10 +43,6 @@ c= c.share.destroy();
 
 `void`
 
-#### Defined in
-
-$dom_component.d.ts:434
-
 ___
 
 ### isStatic
@@ -58,10 +54,6 @@ Methods returns if it was `onupdate` used
 #### Returns
 
 `boolean`
-
-#### Defined in
-
-$dom_component.d.ts:438
 
 ___
 
@@ -79,10 +71,6 @@ ___
 #### Returns
 
 `elOut`
-
-#### Defined in
-
-$dom_component.d.ts:444
 
 ___
 
@@ -123,10 +111,6 @@ c.update(data_B_update);
 
 `boolean`
 
-#### Defined in
-
-$dom_component.d.ts:470
-
 ▸ **update**(`map`): `boolean`
 
 Method updates all registered varibles by keys `onupdates` and calls follower functions
@@ -148,7 +132,3 @@ c.update(({ a })=> { a: ++a });
 #### Returns
 
 `boolean`
-
-#### Defined in
-
-$dom_component.d.ts:483

@@ -159,11 +159,13 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
         return add_out;
     }
     
-    function component({ mount, update, isStatic }, shift= 0){
+    function component({ mount, update, isStatic: isStaticCandidate, destroy: destroyCandidate }, shift= 0){
         recalculateDeep(shift);
-        els[all_els_counter]= mount(getParentElement());
-        if(!isStatic()){
-            if(!internal_storage) internal_storage= initStorage();
+        const el_parent= getParentElement();
+        els[all_els_counter]= mount(el_parent);
+        if(el_parent instanceof DocumentFragment) ondestroy(destroyCandidate);
+        if(!isStaticCandidate()){
+            if(isStatic()) internal_storage= initStorage();
             internal_storage.registerComponent(update);
         }
         all_els_counter+= 1;
@@ -230,14 +232,22 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
                 parent_node= element;
                 break;
         }
-        observer= new MutationObserver(mutations=> mutations.forEach(function(record){
-            if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, container)===-1) return false;
-            destroy();
-        }));
-        observer.observe(parent_node, { childList: true, subtree: true, attributes: false, characterData: false });
+        if(!(element instanceof DocumentFragment)){//TODO/WIP
+            const [ el_c, el_p ]= __observedEls(container, parent_node);
+            observer= new MutationObserver(mutations=> mutations.forEach(function(record){
+                if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, el_c)===-1) return false;
+                destroy();
+            }));
+            observer.observe(el_p, { childList: true, subtree: true, attributes: false, characterData: false });
+        }
         if(on_mount_funs){
             on_mount_funs.forEach(onMountFunctionCall);
             on_mount_funs= undefined;
+        }
+        
+        function __observedEls(container, parent_node){
+            if(!(container instanceof DocumentFragment)) return [ container, parent_node ];
+            return [ parent_node, parent_node.parentNode ];
         }
         if(call_parseHTML) parseHTML(parent_node.querySelectorAll(c_CMD));
         return container;
@@ -245,11 +255,12 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
     }
     
     function destroy(){
+        console.log('ZDE'); /* jshint devel: true *///gulp.keep.line
         if(on_destroy_funs){
             on_destroy_funs.forEach(onDestroyFunction=> onDestroyFunction.call(container));
         }
         if(container) {
-            container.remove();
+            if(!(container instanceof DocumentFragment)) container.remove();
             els= [];
         }
         if(observer) observer.disconnect();

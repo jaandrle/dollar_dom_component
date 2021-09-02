@@ -1,4 +1,5 @@
 /* global $dom, container, destroy, on_mount_funs: true, observer: true */
+/* public methods *//* global isStatic */
 /* function arguments *//* global element, type */
 /* inside functions *//* global onMountFunctionCall */
 if(observer) observer.disconnect();
@@ -27,12 +28,20 @@ switch ( type ) {
         parent_node= element;
         break;
 }
-observer= new MutationObserver(mutations=> mutations.forEach(function(record){
-    if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, container)===-1) return false;
-    destroy();
-}));
-observer.observe(parent_node, { childList: true, subtree: true, attributes: false, characterData: false });
+if(!(element instanceof DocumentFragment)){//TODO/WIP
+    const [ el_c, el_p ]= __observedEls(container, parent_node);
+    observer= new MutationObserver(mutations=> mutations.forEach(function(record){
+        if(!record.removedNodes||Array.prototype.indexOf.call(record.removedNodes, el_c)===-1) return false;
+        destroy();
+    }));
+    observer.observe(el_p, { childList: true, subtree: true, attributes: false, characterData: false });
+}
 if(on_mount_funs){
     on_mount_funs.forEach(onMountFunctionCall);
     on_mount_funs= undefined;
+}
+
+function __observedEls(container, parent_node){
+    if(!(container instanceof DocumentFragment)) return [ container, parent_node ];
+    return [ parent_node, parent_node.parentNode ];
 }

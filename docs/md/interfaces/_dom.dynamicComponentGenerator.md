@@ -38,7 +38,3 @@ This is function for registering component for [component_main.dynamicComponent]
 `iDATA`
 
 `current_value`
-
-#### Defined in
-
-$dom_component.d.ts:419

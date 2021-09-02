@@ -24,10 +24,6 @@ Component element
 
 `HTMLOrSVGElement`
 
-#### Defined in
-
-$dom_component.d.ts:368
-
 ___
 
 ### removeEventListener
@@ -39,10 +35,6 @@ Remove this listener
 #### Returns
 
 `void`
-
-#### Defined in
-
-$dom_component.d.ts:377
 
 ___
 
@@ -62,10 +54,6 @@ See [component_mainOut.update](_dom.component_mainOut.md#update)
 
 `boolean`
 
-#### Defined in
-
-$dom_component.d.ts:372
-
 ▸ **update**(`map`): `boolean`
 
 #### Parameters
@@ -77,7 +65,3 @@ $dom_component.d.ts:372
 #### Returns
 
 `boolean`
-
-#### Defined in
-
-$dom_component.d.ts:373

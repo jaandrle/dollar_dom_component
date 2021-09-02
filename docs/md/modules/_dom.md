@@ -50,10 +50,6 @@ Please stop using this
 
 `HTMLElement`
 
-#### Defined in
-
-$dom_component.d.ts:404
-
 ___
 
 ### assign
@@ -114,10 +110,6 @@ $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
 
 `EL`
 
-#### Defined in
-
-$dom_component.d.ts:315
-
 ___
 
 ### assignNS
@@ -143,10 +135,6 @@ Procedure for merging object into the element properties (see `html` version [as
 #### Returns
 
 `EL`
-
-#### Defined in
-
-$dom_component.d.ts:321
 
 ___
 
@@ -199,10 +187,6 @@ Yelds into:
 
 [`componentOut`](_dom.md#componentout)<`K`\>
 
-#### Defined in
-
-$dom_component.d.ts:353
-
 ___
 
 ### componentListener
@@ -228,10 +212,6 @@ This provide more DRY way to register native events listeners inside [component]
 
 [`component_listener`](../interfaces/_dom.component_listener.md)
 
-#### Defined in
-
-$dom_component.d.ts:385
-
 ▸ **componentListener**<`K`\>(`event`, ...`attrs`): [`component_listener`](../interfaces/_dom.component_listener.md)
 
 This provide more DRY way to register events listeners for [component](_dom.md#component) such as `init`, `mount`, ….
@@ -252,10 +232,6 @@ This provide more DRY way to register events listeners for [component](_dom.md#c
 #### Returns
 
 [`component_listener`](../interfaces/_dom.component_listener.md)
-
-#### Defined in
-
-$dom_component.d.ts:391
 
 ▸ **componentListener**<`DATA`\>(`event`, `data`, `onUpdate`): [`component_listener`](../interfaces/_dom.component_listener.md)
 
@@ -279,10 +255,6 @@ This provide more DRY way to register `onupdate` handler inside [component](_dom
 
 [`component_listener`](../interfaces/_dom.component_listener.md)
 
-#### Defined in
-
-$dom_component.d.ts:398
-
 ## Private
 
 ### T\_DOM\_ATTRS
@@ -299,10 +271,6 @@ In most cases, you can use native propertie such as [MDN WEB/API/Element](https:
 | :------ | :------ |
 | `T` | extends keyof [`T_DOM_HETNM`](_dom.md#t_dom_hetnm) \| [`T_DOM_HETNM`](_dom.md#t_dom_hetnm)[keyof [`T_DOM_HETNM`](_dom.md#t_dom_hetnm)] |
 
-#### Defined in
-
-$dom_component.d.ts:46
-
 ___
 
 ### T\_DOM\_ATTRS\_MODIFIED
@@ -316,19 +284,11 @@ ___
 | `classList` | `Record`<`string`, ``-1`` \| ``0`` \| ``1``\> | Provide option to add/remove/toggle CSS clasess (index of object) using 1/0/-1. In fact `el.classList.toggle(class_name)` for `-1` and `el.classList.toggle(class_name, Boolean(...))` for others. |
 | `style` | `string` | In fact argumen for `*.setAttribute("style", *)`. |
 
-#### Defined in
-
-$dom_component.d.ts:30
-
 ___
 
 ### T\_DOM\_HETNM
 
 Ƭ `Private` **T\_DOM\_HETNM**: `HTMLElementTagNameMap` & `SVGElementTagNameMap` & { ``: `HTMLElement` ; `<>`: `DocumentFragment` ; `zzz_text`: `Text`  }
-
-#### Defined in
-
-$dom_component.d.ts:22
 
 ___
 
@@ -341,10 +301,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | extends keyof [`T_DOM_HETNM`](_dom.md#t_dom_hetnm) |
-
-#### Defined in
-
-$dom_component.d.ts:249
 
 ___
 
@@ -363,10 +319,6 @@ Procedure removes all children of `container`
 #### Returns
 
 `void`
-
-#### Defined in
-
-$dom_component.d.ts:8
 
 ___
 
@@ -387,10 +339,6 @@ Procedure places `new_element` after `reference` elements
 
 `void`
 
-#### Defined in
-
-$dom_component.d.ts:12
-
 ___
 
 ### replace
@@ -409,7 +357,3 @@ Procedure replaces `el_old` element by new one (`new_el`)
 #### Returns
 
 `void`
-
-#### Defined in
-
-$dom_component.d.ts:16

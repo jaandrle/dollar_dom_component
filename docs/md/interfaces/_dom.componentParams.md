@@ -25,10 +25,6 @@ Options for {@link}
 
 This parameter provides ability to defined elements for diferent [`namespaceURI`s](https://developer.mozilla.org/en-US/docs/Web/API/Element/namespaceURI). Use "__SVG__" for "http://www.w3.org/2000/svg" (full list [Important Namespace URIs](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElementNS#Important_Namespace_URIs)).
 
-#### Defined in
-
-$dom_component.d.ts:270
-
 ___
 
 ### safe\_el\_name\_only
@@ -36,10 +32,6 @@ ___
 • `Optional` **safe\_el\_name\_only**: `boolean`
 
 This parameter provides ability to disable long components names like `empty`, `fragment` – see {@link module:jaaJSU~$dom.cEL_NAME}.
-
-#### Defined in
-
-$dom_component.d.ts:274
 
 ## Methods
 
@@ -58,7 +50,3 @@ This function (if defined) remap `update(DATA)` to varibales used in keys `attrs
 #### Returns
 
 `object`
-
-#### Defined in
-
-$dom_component.d.ts:266

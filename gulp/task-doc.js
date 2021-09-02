@@ -19,7 +19,8 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o, $run}){
                 plugin: [ "typedoc-plugin-markdown" ],
                 categorizeByGroup: false,
                 defaultCategory: "Private",
-                categoryOrder: [ "Public", "Private", "*" ]
+                categoryOrder: [ "Public", "Private", "*" ],
+                disableSources: true
             }))
             .on("end", done);
     };

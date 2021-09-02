@@ -43,10 +43,6 @@
 
 • **share**: [`component_mainOut`](_dom.component_mainOut.md)<`elOut`\>
 
-#### Defined in
-
-$dom_component.d.ts:157
-
 ## Methods
 
 ### add
@@ -93,10 +89,6 @@ add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2
 
 [`component_add`](_dom.component_add.md)<`K`\>
 
-#### Defined in
-
-$dom_component.d.ts:78
-
 ___
 
 ### addText
@@ -135,10 +127,6 @@ function testTextLi({ href= "https://www.seznam.cz" }= {}){
 
 [`component_add`](_dom.component_add.md)<``"zzz_text"``\>
 
-#### Defined in
-
-$dom_component.d.ts:101
-
 ___
 
 ### component
@@ -168,10 +156,6 @@ c.mount(document.body, "replaceContent");
 
 [`component_main`](_dom.component_main.md)<`elOut`\>
 
-#### Defined in
-
-$dom_component.d.ts:115
-
 ___
 
 ### destroy
@@ -193,10 +177,6 @@ c= c.share.destroy();
 #### Inherited from
 
 [component_mainOut](_dom.component_mainOut.md).[destroy](_dom.component_mainOut.md#destroy)
-
-#### Defined in
-
-$dom_component.d.ts:434
 
 ___
 
@@ -224,10 +204,6 @@ Method for including another component by using `generator` function, which can 
 
 [`component_main`](_dom.component_main.md)<`elOut`\>
 
-#### Defined in
-
-$dom_component.d.ts:121
-
 ___
 
 ### isStatic
@@ -243,10 +219,6 @@ Methods returns if it was `onupdate` used
 #### Inherited from
 
 [component_mainOut](_dom.component_mainOut.md).[isStatic](_dom.component_mainOut.md#isstatic)
-
-#### Defined in
-
-$dom_component.d.ts:438
 
 ___
 
@@ -269,10 +241,6 @@ ___
 
 [component_mainOut](_dom.component_mainOut.md).[mount](_dom.component_mainOut.md#mount)
 
-#### Defined in
-
-$dom_component.d.ts:444
-
 ___
 
 ### ondestroy
@@ -290,10 +258,6 @@ This provide ability to register function which should be called when the compon
 #### Returns
 
 [`component_main`](_dom.component_main.md)<`elOut`\>
-
-#### Defined in
-
-$dom_component.d.ts:156
 
 ___
 
@@ -336,10 +300,6 @@ function testNesting(){
 #### Returns
 
 [`component_main`](_dom.component_main.md)<`elOut`\>
-
-#### Defined in
-
-$dom_component.d.ts:151
 
 ___
 
@@ -384,10 +344,6 @@ c.update(data_B_update);
 
 [component_mainOut](_dom.component_mainOut.md).[update](_dom.component_mainOut.md#update)
 
-#### Defined in
-
-$dom_component.d.ts:470
-
 ▸ **update**(`map`): `boolean`
 
 Method updates all registered varibles by keys `onupdates` and calls follower functions
@@ -413,7 +369,3 @@ c.update(({ a })=> { a: ++a });
 #### Inherited from
 
 [component_mainOut](_dom.component_mainOut.md).[update](_dom.component_mainOut.md#update)
-
-#### Defined in
-
-$dom_component.d.ts:483

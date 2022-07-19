@@ -8,17 +8,25 @@ module.exports= function({ app, $gulp_folder, gulp, error, $g, $o }){
 		.pipe(gulp_place({ folder, string_wrapper: '' }))
 		.pipe(gulp.dest(app.directories.dist));
 
-		return gulp.src([ app.directories.dist+"$dom_component.d.ts" ])
-		.pipe($g.typedoc({
-			out: app.directories.docs+"md",
-			readme: "none",
-			name: app.name,
-			version: true,
-			plugin: [ "typedoc-plugin-markdown" ],
-			categorizeByGroup: false,
-			defaultCategory: "Private",
-			categoryOrder: [ "Public", "Private", "*" ],
-			disableSources: true
-		}));
+		return new Promise(function(resolve, reject){
+			gulp.src([ app.directories.dist+"$dom_component.d.ts" ])
+			.pipe($g.typedoc({
+				out: app.directories.docs+"md",
+				readme: "none",
+				name: app.name,
+				version: true,
+				plugin: [ "typedoc-plugin-markdown" ],
+				categorizeByGroup: false,
+				defaultCategory: "Private",
+				categoryOrder: [ "Public", "Private", "*" ],
+				disableSources: true,
+				logger(message, level){
+					error.addText(message);
+					if(level>2) error.handler(message);
+				}
+			}))
+			.on('error', error.handler)
+			.on("end", code=> code ? reject(code) : resolve());
+		});
 	};
 };

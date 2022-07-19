@@ -22,12 +22,7 @@ module.exports= function({app, $gulp_folder, gulp, error, $g, $o}){
 			.pipe($g.minify_js({ noSource : true }))
 			.on('error', error.handler)
 			//.pipe($g.rename({suffix: ".min"}))
-			.pipe(gulp.dest(folder_dist)))
-		.catch(()=> new Promise(function(resolve){
-			$g.util.log($g.util.colors.red('[Error]'), "Error(s) in javascripts!");
-			$o.fs.writeFile($gulp_folder+'build.log', error.getText(), resolve);
-			error.addNum();
-		}));
+			.pipe(gulp.dest(folder_dist)));
 	};
 	function jshint_(folder_target){ return new Promise(function(resolve, reject){
 		const cmd= $o.spawn("npm", [ "run", "jshint", folder_target ], {});

@@ -1,5 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, node: true, expr: true */
-module.exports= function({ app, $gulp_folder, $o, gulp, error }){
+module.exports= function({ app, $gulp_folder, $g, $o, gulp, error }){
 	return function(cb){
 		$o.fs.writeFileSync($gulp_folder+'build.log', "");
 		$o.fs.readFile($gulp_folder+'gulpfile.log', function(err,data){
@@ -15,7 +15,12 @@ module.exports= function({ app, $gulp_folder, $o, gulp, error }){
 			for(let i= 0, i_length= app.sequence.length; i < i_length; i++){
 				if(app.sequence[i].charAt(0)!=="!") sequence[sequence.length]= app.sequence[i];
 			}
-			gulp.series(...sequence)(code=> cb(code || error.getNum()));
+			gulp.series(...sequence)(function(code){
+				$o.fs.writeFileSync($gulp_folder+'build.log', error.getText());
+				code= code || error.getNum();
+				if(code) $g.util.log($g.util.colors.red('[Error]'), "Error(s)! See `build.log` file.");
+				return cb();
+			});
 		});
 	};
 };

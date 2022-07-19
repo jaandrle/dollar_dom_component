@@ -96,6 +96,10 @@ $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
 $dom.assign(el, { ariaLabel: "The aria-label", dataExample: "data-example" });//=> <body aria-label="The aria-label" data-example="data-example">
 ```
 
+**`Version`**
+
+1.3.0
+
 #### Type parameters
 
 | Name | Type |
@@ -120,6 +124,10 @@ ___
 ▸ **assignNS**<`EL`\>(`namespace_group`, `element`, ...`attrs_array`): `EL`
 
 Procedure for merging object into the element properties (see `html` version [assign](dom.md#assign)).
+
+**`Version`**
+
+1.3.0
 
 #### Type parameters
 
@@ -243,6 +251,10 @@ This provide more DRY way to register events listeners for [component](dom.md#co
 ▸ **componentListener**<`DATA`\>(`event`, `data`, `onUpdate`): [`component_listener`](../interfaces/dom.component_listener.md)
 
 This provide more DRY way to register `onupdate` handler inside [component](dom.md#component).
+
+**`Version`**
+
+1.3.0
 
 #### Type parameters
 

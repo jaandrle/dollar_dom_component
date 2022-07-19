@@ -1,53 +1,53 @@
-[$dom.component](../README.md) / [%24dom](../modules/_dom.md) / component_main
+[$dom.component](../README.md) / [$dom](../modules/dom.md) / component\_main
 
 # Interface: component\_main<elOut\>
 
-[$dom](../modules/_dom.md).component_main
+[$dom](../modules/dom.md).component_main
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `elOut` | extends [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[keyof [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)] |
+| `elOut` | extends [`T_DOM_HETNM`](../modules/dom.md#t_dom_hetnm)[keyof [`T_DOM_HETNM`](../modules/dom.md#t_dom_hetnm)] |
 
 ## Hierarchy
 
-- [`component_mainOut`](_dom.component_mainOut.md)<`elOut`\>
+- [`component_mainOut`](dom.component_mainOut.md)<`elOut`\>
 
   ↳ **`component_main`**
 
-  ↳↳ [`component_add`](_dom.component_add.md)
+  ↳↳ [`component_add`](dom.component_add.md)
 
 ## Table of contents
 
 ### Properties
 
-- [share](_dom.component_main.md#share)
+- [share](dom.component_main.md#share)
 
 ### Methods
 
-- [add](_dom.component_main.md#add)
-- [addText](_dom.component_main.md#addtext)
-- [component](_dom.component_main.md#component)
-- [destroy](_dom.component_main.md#destroy)
-- [dynamicComponent](_dom.component_main.md#dynamiccomponent)
-- [isStatic](_dom.component_main.md#isstatic)
-- [mount](_dom.component_main.md#mount)
-- [ondestroy](_dom.component_main.md#ondestroy)
-- [setShift](_dom.component_main.md#setshift)
-- [update](_dom.component_main.md#update)
+- [add](dom.component_main.md#add)
+- [addText](dom.component_main.md#addtext)
+- [component](dom.component_main.md#component)
+- [destroy](dom.component_main.md#destroy)
+- [dynamicComponent](dom.component_main.md#dynamiccomponent)
+- [isStatic](dom.component_main.md#isstatic)
+- [mount](dom.component_main.md#mount)
+- [ondestroy](dom.component_main.md#ondestroy)
+- [setShift](dom.component_main.md#setshift)
+- [update](dom.component_main.md#update)
 
 ## Properties
 
 ### share
 
-• **share**: [`component_mainOut`](_dom.component_mainOut.md)<`elOut`\>
+• **share**: [`component_mainOut`](dom.component_mainOut.md)<`elOut`\>
 
 ## Methods
 
 ### add
 
-▸ **add**<`K`\>(`tag_name`, `attrs?`, `shift?`): [`component_add`](_dom.component_add.md)<`K`\>
+▸ **add**<`K`\>(`tag_name`, `attrs?`, `shift?`): [`component_add`](dom.component_add.md)<`K`\>
 
 This add element to component
 ```javascript
@@ -75,25 +75,25 @@ add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2
 
 | Name | Type |
 | :------ | :------ |
-| `K` | extends ``""`` \| ``"symbol"`` \| ``"object"`` \| ``"a"`` \| ``"abbr"`` \| ``"address"`` \| ``"applet"`` \| ``"area"`` \| ``"article"`` \| ``"aside"`` \| ``"audio"`` \| ``"b"`` \| ``"base"`` \| ``"basefont"`` \| ``"bdi"`` \| ``"bdo"`` \| ``"blockquote"`` \| ``"body"`` \| ``"br"`` \| ``"button"`` \| ``"canvas"`` \| ``"caption"`` \| ``"cite"`` \| ``"code"`` \| ``"col"`` \| ``"colgroup"`` \| ``"data"`` \| ``"datalist"`` \| ``"dd"`` \| ``"del"`` \| ``"details"`` \| ``"dfn"`` \| ``"dialog"`` \| ``"dir"`` \| ``"div"`` \| ``"dl"`` \| ``"dt"`` \| ``"em"`` \| ``"embed"`` \| ``"fieldset"`` \| ``"figcaption"`` \| ``"figure"`` \| ``"font"`` \| ``"footer"`` \| ``"form"`` \| ``"frame"`` \| ``"frameset"`` \| ``"h1"`` \| ``"h2"`` \| ``"h3"`` \| ``"h4"`` \| ``"h5"`` \| ``"h6"`` \| ``"head"`` \| ``"header"`` \| ``"hgroup"`` \| ``"hr"`` \| ``"html"`` \| ``"i"`` \| ``"iframe"`` \| ``"img"`` \| ``"input"`` \| ``"ins"`` \| ``"kbd"`` \| ``"label"`` \| ``"legend"`` \| ``"li"`` \| ``"link"`` \| ``"main"`` \| ``"map"`` \| ``"mark"`` \| ``"marquee"`` \| ``"menu"`` \| ``"meta"`` \| ``"meter"`` \| ``"nav"`` \| ``"noscript"`` \| ``"ol"`` \| ``"optgroup"`` \| ``"option"`` \| ``"output"`` \| ``"p"`` \| ``"param"`` \| ``"picture"`` \| ``"pre"`` \| ``"progress"`` \| ``"q"`` \| ``"rp"`` \| ``"rt"`` \| ``"ruby"`` \| ``"s"`` \| ``"samp"`` \| ``"script"`` \| ``"section"`` \| ``"select"`` \| ``"slot"`` \| ``"small"`` \| ``"source"`` \| ``"span"`` \| ``"strong"`` \| ``"style"`` \| ``"sub"`` \| ``"summary"`` \| ``"sup"`` \| ``"table"`` \| ``"tbody"`` \| ``"td"`` \| ``"template"`` \| ``"textarea"`` \| ``"tfoot"`` \| ``"th"`` \| ``"thead"`` \| ``"time"`` \| ``"title"`` \| ``"tr"`` \| ``"track"`` \| ``"u"`` \| ``"ul"`` \| ``"var"`` \| ``"video"`` \| ``"wbr"`` \| ``"circle"`` \| ``"clipPath"`` \| ``"defs"`` \| ``"desc"`` \| ``"ellipse"`` \| ``"feBlend"`` \| ``"feColorMatrix"`` \| ``"feComponentTransfer"`` \| ``"feComposite"`` \| ``"feConvolveMatrix"`` \| ``"feDiffuseLighting"`` \| ``"feDisplacementMap"`` \| ``"feDistantLight"`` \| ``"feFlood"`` \| ``"feFuncA"`` \| ``"feFuncB"`` \| ``"feFuncG"`` \| ``"feFuncR"`` \| ``"feGaussianBlur"`` \| ``"feImage"`` \| ``"feMerge"`` \| ``"feMergeNode"`` \| ``"feMorphology"`` \| ``"feOffset"`` \| ``"fePointLight"`` \| ``"feSpecularLighting"`` \| ``"feSpotLight"`` \| ``"feTile"`` \| ``"feTurbulence"`` \| ``"filter"`` \| ``"foreignObject"`` \| ``"g"`` \| ``"image"`` \| ``"line"`` \| ``"linearGradient"`` \| ``"marker"`` \| ``"mask"`` \| ``"metadata"`` \| ``"path"`` \| ``"pattern"`` \| ``"polygon"`` \| ``"polyline"`` \| ``"radialGradient"`` \| ``"rect"`` \| ``"stop"`` \| ``"svg"`` \| ``"switch"`` \| ``"text"`` \| ``"textPath"`` \| ``"tspan"`` \| ``"use"`` \| ``"view"`` \| ``"<>"`` \| ``"zzz_text"`` |
+| `K` | extends ``""`` \| ``"symbol"`` \| ``"object"`` \| ``"link"`` \| ``"small"`` \| ``"sub"`` \| ``"sup"`` \| ``"map"`` \| ``"filter"`` \| ``"input"`` \| ``"set"`` \| ``"code"`` \| ``"data"`` \| ``"progress"`` \| ``"stop"`` \| ``"track"`` \| ``"source"`` \| ``"button"`` \| ``"address"`` \| ``"view"`` \| ``"clipPath"`` \| ``"font"`` \| ``"marker"`` \| ``"mask"`` \| ``"a"`` \| ``"abbr"`` \| ``"area"`` \| ``"article"`` \| ``"aside"`` \| ``"audio"`` \| ``"b"`` \| ``"base"`` \| ``"bdi"`` \| ``"bdo"`` \| ``"blockquote"`` \| ``"body"`` \| ``"br"`` \| ``"canvas"`` \| ``"caption"`` \| ``"cite"`` \| ``"col"`` \| ``"colgroup"`` \| ``"datalist"`` \| ``"dd"`` \| ``"del"`` \| ``"details"`` \| ``"dfn"`` \| ``"dialog"`` \| ``"dir"`` \| ``"div"`` \| ``"dl"`` \| ``"dt"`` \| ``"em"`` \| ``"embed"`` \| ``"fieldset"`` \| ``"figcaption"`` \| ``"figure"`` \| ``"footer"`` \| ``"form"`` \| ``"frame"`` \| ``"frameset"`` \| ``"h1"`` \| ``"h2"`` \| ``"h3"`` \| ``"h4"`` \| ``"h5"`` \| ``"h6"`` \| ``"head"`` \| ``"header"`` \| ``"hgroup"`` \| ``"hr"`` \| ``"html"`` \| ``"i"`` \| ``"iframe"`` \| ``"img"`` \| ``"ins"`` \| ``"kbd"`` \| ``"label"`` \| ``"legend"`` \| ``"li"`` \| ``"main"`` \| ``"mark"`` \| ``"marquee"`` \| ``"menu"`` \| ``"meta"`` \| ``"meter"`` \| ``"nav"`` \| ``"noscript"`` \| ``"ol"`` \| ``"optgroup"`` \| ``"option"`` \| ``"output"`` \| ``"p"`` \| ``"param"`` \| ``"picture"`` \| ``"pre"`` \| ``"q"`` \| ``"rp"`` \| ``"rt"`` \| ``"ruby"`` \| ``"s"`` \| ``"samp"`` \| ``"script"`` \| ``"section"`` \| ``"select"`` \| ``"slot"`` \| ``"span"`` \| ``"strong"`` \| ``"style"`` \| ``"summary"`` \| ``"table"`` \| ``"tbody"`` \| ``"td"`` \| ``"template"`` \| ``"textarea"`` \| ``"tfoot"`` \| ``"th"`` \| ``"thead"`` \| ``"time"`` \| ``"title"`` \| ``"tr"`` \| ``"u"`` \| ``"ul"`` \| ``"var"`` \| ``"video"`` \| ``"wbr"`` \| ``"animate"`` \| ``"animateMotion"`` \| ``"animateTransform"`` \| ``"circle"`` \| ``"defs"`` \| ``"desc"`` \| ``"ellipse"`` \| ``"feBlend"`` \| ``"feColorMatrix"`` \| ``"feComponentTransfer"`` \| ``"feComposite"`` \| ``"feConvolveMatrix"`` \| ``"feDiffuseLighting"`` \| ``"feDisplacementMap"`` \| ``"feDistantLight"`` \| ``"feDropShadow"`` \| ``"feFlood"`` \| ``"feFuncA"`` \| ``"feFuncB"`` \| ``"feFuncG"`` \| ``"feFuncR"`` \| ``"feGaussianBlur"`` \| ``"feImage"`` \| ``"feMerge"`` \| ``"feMergeNode"`` \| ``"feMorphology"`` \| ``"feOffset"`` \| ``"fePointLight"`` \| ``"feSpecularLighting"`` \| ``"feSpotLight"`` \| ``"feTile"`` \| ``"feTurbulence"`` \| ``"foreignObject"`` \| ``"g"`` \| ``"image"`` \| ``"line"`` \| ``"linearGradient"`` \| ``"metadata"`` \| ``"mpath"`` \| ``"path"`` \| ``"pattern"`` \| ``"polygon"`` \| ``"polyline"`` \| ``"radialGradient"`` \| ``"rect"`` \| ``"svg"`` \| ``"switch"`` \| ``"text"`` \| ``"textPath"`` \| ``"tspan"`` \| ``"use"`` \| ``"<>"`` \| ``"zzz_text"`` |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `tag_name` | `K` | - |
-| `attrs?` | [`T_DOM_ATTRS`](../modules/_dom.md#t_dom_attrs)<`K`\> | - |
+| `attrs?` | [`T_DOM_ATTRS`](../modules/dom.md#t_dom_attrs)<`K`\> | - |
 | `shift?` | `number` | Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example. |
 
 #### Returns
 
-[`component_add`](_dom.component_add.md)<`K`\>
+[`component_add`](dom.component_add.md)<`K`\>
 
 ___
 
 ### addText
 
-▸ **addText**(`text`, `shift?`): [`component_add`](_dom.component_add.md)<``"zzz_text"``\>
+▸ **addText**(`text`, `shift?`): [`component_add`](dom.component_add.md)<``"zzz_text"``\>
 
 This add element to component
 ```javascript
@@ -125,13 +125,13 @@ function testTextLi({ href= "https://www.seznam.cz" }= {}){
 
 #### Returns
 
-[`component_add`](_dom.component_add.md)<``"zzz_text"``\>
+[`component_add`](dom.component_add.md)<``"zzz_text"``\>
 
 ___
 
 ### component
 
-▸ **component**(`share`, `shift`): [`component_main`](_dom.component_main.md)<`elOut`\>
+▸ **component**(`share`, `shift`): [`component_main`](dom.component_main.md)<`elOut`\>
 
 Method for including another component by usint its `share` key.
 ```javascript
@@ -149,12 +149,12 @@ c.mount(document.body, "replaceContent");
 
 | Name | Type |
 | :------ | :------ |
-| `share` | [`component_mainOut`](_dom.component_mainOut.md)<`HTMLElement`\> |
+| `share` | [`component_mainOut`](dom.component_mainOut.md)<`HTMLElement`\> |
 | `shift` | `number` |
 
 #### Returns
 
-[`component_main`](_dom.component_main.md)<`elOut`\>
+[`component_main`](dom.component_main.md)<`elOut`\>
 
 ___
 
@@ -176,13 +176,13 @@ c= c.share.destroy();
 
 #### Inherited from
 
-[component_mainOut](_dom.component_mainOut.md).[destroy](_dom.component_mainOut.md#destroy)
+[component_mainOut](dom.component_mainOut.md).[destroy](dom.component_mainOut.md#destroy)
 
 ___
 
 ### dynamicComponent
 
-▸ **dynamicComponent**<`DATA`\>(`data`, `generator`, `shift`): [`component_main`](_dom.component_main.md)<`elOut`\>
+▸ **dynamicComponent**<`DATA`\>(`data`, `generator`, `shift`): [`component_main`](dom.component_main.md)<`elOut`\>
 
 Method for including another component by using `generator` function, which can change final `component` based on updated data `data`.
 
@@ -196,13 +196,13 @@ Method for including another component by using `generator` function, which can 
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `data` | `DATA` | Includes all subsribed keys from `data` see method [component_add.onupdate](_dom.component_add.md#onupdate) |
-| `generator` | [`dynamicComponentGenerator`](_dom.dynamicComponentGenerator.md)<`DATA`\> | Function for registering components based on updates of `data`. |
+| `data` | `DATA` | Includes all subsribed keys from `data` see method [onupdate](dom.component_add.md#onupdate) |
+| `generator` | [`dynamicComponentGenerator`](dom.dynamicComponentGenerator.md)<`DATA`\> | Function for registering components based on updates of `data`. |
 | `shift` | `number` | - |
 
 #### Returns
 
-[`component_main`](_dom.component_main.md)<`elOut`\>
+[`component_main`](dom.component_main.md)<`elOut`\>
 
 ___
 
@@ -218,7 +218,7 @@ Methods returns if it was `onupdate` used
 
 #### Inherited from
 
-[component_mainOut](_dom.component_mainOut.md).[isStatic](_dom.component_mainOut.md#isstatic)
+[component_mainOut](dom.component_mainOut.md).[isStatic](dom.component_mainOut.md#isstatic)
 
 ___
 
@@ -231,7 +231,7 @@ ___
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `el` | `HTMLElement` | Element where to places this component |
-| `type?` | ``"childLast"`` \| ``"childFirst"`` \| ``"replaceContent"`` \| ``"replace"`` \| ``"before"`` \| ``"after"`` | Default `childLast` |
+| `type?` | ``"replace"`` \| ``"after"`` \| ``"before"`` \| ``"childLast"`` \| ``"childFirst"`` \| ``"replaceContent"`` | Default `childLast` |
 
 #### Returns
 
@@ -239,13 +239,13 @@ ___
 
 #### Inherited from
 
-[component_mainOut](_dom.component_mainOut.md).[mount](_dom.component_mainOut.md#mount)
+[component_mainOut](dom.component_mainOut.md).[mount](dom.component_mainOut.md#mount)
 
 ___
 
 ### ondestroy
 
-▸ **ondestroy**(`cb`): [`component_main`](_dom.component_main.md)<`elOut`\>
+▸ **ondestroy**(`cb`): [`component_main`](dom.component_main.md)<`elOut`\>
 
 This provide ability to register function which should be called when the component will be destroyed.
 
@@ -257,13 +257,13 @@ This provide ability to register function which should be called when the compon
 
 #### Returns
 
-[`component_main`](_dom.component_main.md)<`elOut`\>
+[`component_main`](dom.component_main.md)<`elOut`\>
 
 ___
 
 ### setShift
 
-▸ **setShift**(`shift`): [`component_main`](_dom.component_main.md)<`elOut`\>
+▸ **setShift**(`shift`): [`component_main`](dom.component_main.md)<`elOut`\>
 
 Method provide way to change nesting behaviour. It can be helpful for loops
 ```javascript
@@ -295,11 +295,11 @@ function testNesting(){
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `shift` | `number` | See [component_main.add](_dom.component_main.md#add) |
+| `shift` | `number` | See [add](dom.component_main.md#add) |
 
 #### Returns
 
-[`component_main`](_dom.component_main.md)<`elOut`\>
+[`component_main`](dom.component_main.md)<`elOut`\>
 
 ___
 
@@ -342,7 +342,7 @@ c.update(data_B_update);
 
 #### Inherited from
 
-[component_mainOut](_dom.component_mainOut.md).[update](_dom.component_mainOut.md#update)
+[component_mainOut](dom.component_mainOut.md).[update](dom.component_mainOut.md#update)
 
 ▸ **update**(`map`): `boolean`
 
@@ -368,4 +368,4 @@ c.update(({ a })=> { a: ++a });
 
 #### Inherited from
 
-[component_mainOut](_dom.component_mainOut.md).[update](_dom.component_mainOut.md#update)
+[component_mainOut](dom.component_mainOut.md).[update](dom.component_mainOut.md#update)

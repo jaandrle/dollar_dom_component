@@ -6,4 +6,4 @@ $dom.component
 
 ### Namespaces
 
-- [$dom](modules/_dom.md)
+- [$dom](modules/dom.md)

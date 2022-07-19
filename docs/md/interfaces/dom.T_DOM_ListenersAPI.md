@@ -1,16 +1,16 @@
-[$dom.component](../README.md) / [%24dom](../modules/_dom.md) / T_DOM_ListenersAPI
+[$dom.component](../README.md) / [$dom](../modules/dom.md) / T\_DOM\_ListenersAPI
 
 # Interface: T\_DOM\_ListenersAPI
 
-[$dom](../modules/_dom.md).T_DOM_ListenersAPI
+[$dom](../modules/dom.md).T_DOM_ListenersAPI
 
 ## Table of contents
 
 ### Methods
 
-- [getReference](_dom.T_DOM_ListenersAPI.md#getreference)
-- [removeEventListener](_dom.T_DOM_ListenersAPI.md#removeeventlistener)
-- [update](_dom.T_DOM_ListenersAPI.md#update)
+- [getReference](dom.T_DOM_ListenersAPI.md#getreference)
+- [removeEventListener](dom.T_DOM_ListenersAPI.md#removeeventlistener)
+- [update](dom.T_DOM_ListenersAPI.md#update)
 
 ## Methods
 
@@ -42,7 +42,7 @@ ___
 
 ▸ **update**(`data`): `boolean`
 
-See [component_mainOut.update](_dom.component_mainOut.md#update)
+See [update](dom.component_mainOut.md#update)
 
 #### Parameters
 

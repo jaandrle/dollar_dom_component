@@ -1,62 +1,57 @@
-[$dom.component](../README.md) / [%24dom](../modules/_dom.md) / component_add
+[$dom.component](../README.md) / [$dom](../modules/dom.md) / component\_empty
 
-# Interface: component\_add<cEL\>
+# Interface: component\_empty
 
-[$dom](../modules/_dom.md).component_add
+[$dom](../modules/dom.md).component_empty
 
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `cEL` | extends keyof [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm) |
+In generall, all methods from [component_add](dom.component_add.md) don't do anything.
+In case of mounting only "replace"/"replaceContent" types makes sence (deleting/replacing by "empty space").
 
 ## Hierarchy
 
-- [`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+- [`component_add`](dom.component_add.md)<``""``\>
 
-  ↳ **`component_add`**
-
-  ↳↳ [`component_empty`](_dom.component_empty.md)
+  ↳ **`component_empty`**
 
 ## Table of contents
 
 ### Properties
 
-- [share](_dom.component_add.md#share)
+- [share](dom.component_empty.md#share)
 
 ### Methods
 
-- [add](_dom.component_add.md#add)
-- [addText](_dom.component_add.md#addtext)
-- [component](_dom.component_add.md#component)
-- [destroy](_dom.component_add.md#destroy)
-- [dynamicComponent](_dom.component_add.md#dynamiccomponent)
-- [getReference](_dom.component_add.md#getreference)
-- [isStatic](_dom.component_add.md#isstatic)
-- [mount](_dom.component_add.md#mount)
-- [on](_dom.component_add.md#on)
-- [ondestroy](_dom.component_add.md#ondestroy)
-- [oninit](_dom.component_add.md#oninit)
-- [onmount](_dom.component_add.md#onmount)
-- [onupdate](_dom.component_add.md#onupdate)
-- [setShift](_dom.component_add.md#setshift)
-- [update](_dom.component_add.md#update)
+- [add](dom.component_empty.md#add)
+- [addText](dom.component_empty.md#addtext)
+- [component](dom.component_empty.md#component)
+- [destroy](dom.component_empty.md#destroy)
+- [dynamicComponent](dom.component_empty.md#dynamiccomponent)
+- [getReference](dom.component_empty.md#getreference)
+- [isStatic](dom.component_empty.md#isstatic)
+- [mount](dom.component_empty.md#mount)
+- [on](dom.component_empty.md#on)
+- [ondestroy](dom.component_empty.md#ondestroy)
+- [oninit](dom.component_empty.md#oninit)
+- [onmount](dom.component_empty.md#onmount)
+- [onupdate](dom.component_empty.md#onupdate)
+- [setShift](dom.component_empty.md#setshift)
+- [update](dom.component_empty.md#update)
 
 ## Properties
 
 ### share
 
-• **share**: [`component_mainOut`](_dom.component_mainOut.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+• **share**: [`component_mainOut`](dom.component_mainOut.md)<`HTMLElement`\>
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[share](_dom.component_main.md#share)
+[component_add](dom.component_add.md).[share](dom.component_add.md#share)
 
 ## Methods
 
 ### add
 
-▸ **add**<`K`\>(`tag_name`, `attrs?`, `shift?`): [`component_add`](_dom.component_add.md)<`K`\>
+▸ **add**<`K`\>(`tag_name`, `attrs?`, `shift?`): [`component_add`](dom.component_add.md)<`K`\>
 
 This add element to component
 ```javascript
@@ -84,29 +79,29 @@ add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2
 
 | Name | Type |
 | :------ | :------ |
-| `K` | extends ``""`` \| ``"symbol"`` \| ``"object"`` \| ``"a"`` \| ``"abbr"`` \| ``"address"`` \| ``"applet"`` \| ``"area"`` \| ``"article"`` \| ``"aside"`` \| ``"audio"`` \| ``"b"`` \| ``"base"`` \| ``"basefont"`` \| ``"bdi"`` \| ``"bdo"`` \| ``"blockquote"`` \| ``"body"`` \| ``"br"`` \| ``"button"`` \| ``"canvas"`` \| ``"caption"`` \| ``"cite"`` \| ``"code"`` \| ``"col"`` \| ``"colgroup"`` \| ``"data"`` \| ``"datalist"`` \| ``"dd"`` \| ``"del"`` \| ``"details"`` \| ``"dfn"`` \| ``"dialog"`` \| ``"dir"`` \| ``"div"`` \| ``"dl"`` \| ``"dt"`` \| ``"em"`` \| ``"embed"`` \| ``"fieldset"`` \| ``"figcaption"`` \| ``"figure"`` \| ``"font"`` \| ``"footer"`` \| ``"form"`` \| ``"frame"`` \| ``"frameset"`` \| ``"h1"`` \| ``"h2"`` \| ``"h3"`` \| ``"h4"`` \| ``"h5"`` \| ``"h6"`` \| ``"head"`` \| ``"header"`` \| ``"hgroup"`` \| ``"hr"`` \| ``"html"`` \| ``"i"`` \| ``"iframe"`` \| ``"img"`` \| ``"input"`` \| ``"ins"`` \| ``"kbd"`` \| ``"label"`` \| ``"legend"`` \| ``"li"`` \| ``"link"`` \| ``"main"`` \| ``"map"`` \| ``"mark"`` \| ``"marquee"`` \| ``"menu"`` \| ``"meta"`` \| ``"meter"`` \| ``"nav"`` \| ``"noscript"`` \| ``"ol"`` \| ``"optgroup"`` \| ``"option"`` \| ``"output"`` \| ``"p"`` \| ``"param"`` \| ``"picture"`` \| ``"pre"`` \| ``"progress"`` \| ``"q"`` \| ``"rp"`` \| ``"rt"`` \| ``"ruby"`` \| ``"s"`` \| ``"samp"`` \| ``"script"`` \| ``"section"`` \| ``"select"`` \| ``"slot"`` \| ``"small"`` \| ``"source"`` \| ``"span"`` \| ``"strong"`` \| ``"style"`` \| ``"sub"`` \| ``"summary"`` \| ``"sup"`` \| ``"table"`` \| ``"tbody"`` \| ``"td"`` \| ``"template"`` \| ``"textarea"`` \| ``"tfoot"`` \| ``"th"`` \| ``"thead"`` \| ``"time"`` \| ``"title"`` \| ``"tr"`` \| ``"track"`` \| ``"u"`` \| ``"ul"`` \| ``"var"`` \| ``"video"`` \| ``"wbr"`` \| ``"circle"`` \| ``"clipPath"`` \| ``"defs"`` \| ``"desc"`` \| ``"ellipse"`` \| ``"feBlend"`` \| ``"feColorMatrix"`` \| ``"feComponentTransfer"`` \| ``"feComposite"`` \| ``"feConvolveMatrix"`` \| ``"feDiffuseLighting"`` \| ``"feDisplacementMap"`` \| ``"feDistantLight"`` \| ``"feFlood"`` \| ``"feFuncA"`` \| ``"feFuncB"`` \| ``"feFuncG"`` \| ``"feFuncR"`` \| ``"feGaussianBlur"`` \| ``"feImage"`` \| ``"feMerge"`` \| ``"feMergeNode"`` \| ``"feMorphology"`` \| ``"feOffset"`` \| ``"fePointLight"`` \| ``"feSpecularLighting"`` \| ``"feSpotLight"`` \| ``"feTile"`` \| ``"feTurbulence"`` \| ``"filter"`` \| ``"foreignObject"`` \| ``"g"`` \| ``"image"`` \| ``"line"`` \| ``"linearGradient"`` \| ``"marker"`` \| ``"mask"`` \| ``"metadata"`` \| ``"path"`` \| ``"pattern"`` \| ``"polygon"`` \| ``"polyline"`` \| ``"radialGradient"`` \| ``"rect"`` \| ``"stop"`` \| ``"svg"`` \| ``"switch"`` \| ``"text"`` \| ``"textPath"`` \| ``"tspan"`` \| ``"use"`` \| ``"view"`` \| ``"<>"`` \| ``"zzz_text"`` |
+| `K` | extends ``""`` \| ``"symbol"`` \| ``"object"`` \| ``"link"`` \| ``"small"`` \| ``"sub"`` \| ``"sup"`` \| ``"map"`` \| ``"filter"`` \| ``"input"`` \| ``"set"`` \| ``"code"`` \| ``"data"`` \| ``"progress"`` \| ``"stop"`` \| ``"track"`` \| ``"source"`` \| ``"button"`` \| ``"address"`` \| ``"view"`` \| ``"clipPath"`` \| ``"font"`` \| ``"marker"`` \| ``"mask"`` \| ``"a"`` \| ``"abbr"`` \| ``"area"`` \| ``"article"`` \| ``"aside"`` \| ``"audio"`` \| ``"b"`` \| ``"base"`` \| ``"bdi"`` \| ``"bdo"`` \| ``"blockquote"`` \| ``"body"`` \| ``"br"`` \| ``"canvas"`` \| ``"caption"`` \| ``"cite"`` \| ``"col"`` \| ``"colgroup"`` \| ``"datalist"`` \| ``"dd"`` \| ``"del"`` \| ``"details"`` \| ``"dfn"`` \| ``"dialog"`` \| ``"dir"`` \| ``"div"`` \| ``"dl"`` \| ``"dt"`` \| ``"em"`` \| ``"embed"`` \| ``"fieldset"`` \| ``"figcaption"`` \| ``"figure"`` \| ``"footer"`` \| ``"form"`` \| ``"frame"`` \| ``"frameset"`` \| ``"h1"`` \| ``"h2"`` \| ``"h3"`` \| ``"h4"`` \| ``"h5"`` \| ``"h6"`` \| ``"head"`` \| ``"header"`` \| ``"hgroup"`` \| ``"hr"`` \| ``"html"`` \| ``"i"`` \| ``"iframe"`` \| ``"img"`` \| ``"ins"`` \| ``"kbd"`` \| ``"label"`` \| ``"legend"`` \| ``"li"`` \| ``"main"`` \| ``"mark"`` \| ``"marquee"`` \| ``"menu"`` \| ``"meta"`` \| ``"meter"`` \| ``"nav"`` \| ``"noscript"`` \| ``"ol"`` \| ``"optgroup"`` \| ``"option"`` \| ``"output"`` \| ``"p"`` \| ``"param"`` \| ``"picture"`` \| ``"pre"`` \| ``"q"`` \| ``"rp"`` \| ``"rt"`` \| ``"ruby"`` \| ``"s"`` \| ``"samp"`` \| ``"script"`` \| ``"section"`` \| ``"select"`` \| ``"slot"`` \| ``"span"`` \| ``"strong"`` \| ``"style"`` \| ``"summary"`` \| ``"table"`` \| ``"tbody"`` \| ``"td"`` \| ``"template"`` \| ``"textarea"`` \| ``"tfoot"`` \| ``"th"`` \| ``"thead"`` \| ``"time"`` \| ``"title"`` \| ``"tr"`` \| ``"u"`` \| ``"ul"`` \| ``"var"`` \| ``"video"`` \| ``"wbr"`` \| ``"animate"`` \| ``"animateMotion"`` \| ``"animateTransform"`` \| ``"circle"`` \| ``"defs"`` \| ``"desc"`` \| ``"ellipse"`` \| ``"feBlend"`` \| ``"feColorMatrix"`` \| ``"feComponentTransfer"`` \| ``"feComposite"`` \| ``"feConvolveMatrix"`` \| ``"feDiffuseLighting"`` \| ``"feDisplacementMap"`` \| ``"feDistantLight"`` \| ``"feDropShadow"`` \| ``"feFlood"`` \| ``"feFuncA"`` \| ``"feFuncB"`` \| ``"feFuncG"`` \| ``"feFuncR"`` \| ``"feGaussianBlur"`` \| ``"feImage"`` \| ``"feMerge"`` \| ``"feMergeNode"`` \| ``"feMorphology"`` \| ``"feOffset"`` \| ``"fePointLight"`` \| ``"feSpecularLighting"`` \| ``"feSpotLight"`` \| ``"feTile"`` \| ``"feTurbulence"`` \| ``"foreignObject"`` \| ``"g"`` \| ``"image"`` \| ``"line"`` \| ``"linearGradient"`` \| ``"metadata"`` \| ``"mpath"`` \| ``"path"`` \| ``"pattern"`` \| ``"polygon"`` \| ``"polyline"`` \| ``"radialGradient"`` \| ``"rect"`` \| ``"svg"`` \| ``"switch"`` \| ``"text"`` \| ``"textPath"`` \| ``"tspan"`` \| ``"use"`` \| ``"<>"`` \| ``"zzz_text"`` |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `tag_name` | `K` | - |
-| `attrs?` | [`T_DOM_ATTRS`](../modules/_dom.md#t_dom_attrs)<`K`\> | - |
+| `attrs?` | [`T_DOM_ATTRS`](../modules/dom.md#t_dom_attrs)<`K`\> | - |
 | `shift?` | `number` | Modify nesting behaviour. By default (`shift= 0`), new element is child of previus element. Every `-1` means moving to the upper level against current one - see example. |
 
 #### Returns
 
-[`component_add`](_dom.component_add.md)<`K`\>
+[`component_add`](dom.component_add.md)<`K`\>
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[add](_dom.component_main.md#add)
+[component_add](dom.component_add.md).[add](dom.component_add.md#add)
 
 ___
 
 ### addText
 
-▸ **addText**(`text`, `shift?`): [`component_add`](_dom.component_add.md)<``"zzz_text"``\>
+▸ **addText**(`text`, `shift?`): [`component_add`](dom.component_add.md)<``"zzz_text"``\>
 
 This add element to component
 ```javascript
@@ -138,17 +133,17 @@ function testTextLi({ href= "https://www.seznam.cz" }= {}){
 
 #### Returns
 
-[`component_add`](_dom.component_add.md)<``"zzz_text"``\>
+[`component_add`](dom.component_add.md)<``"zzz_text"``\>
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[addText](_dom.component_main.md#addtext)
+[component_add](dom.component_add.md).[addText](dom.component_add.md#addtext)
 
 ___
 
 ### component
 
-▸ **component**(`share`, `shift`): [`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+▸ **component**(`share`, `shift`): [`component_main`](dom.component_main.md)<`HTMLElement`\>
 
 Method for including another component by usint its `share` key.
 ```javascript
@@ -166,16 +161,16 @@ c.mount(document.body, "replaceContent");
 
 | Name | Type |
 | :------ | :------ |
-| `share` | [`component_mainOut`](_dom.component_mainOut.md)<`HTMLElement`\> |
+| `share` | [`component_mainOut`](dom.component_mainOut.md)<`HTMLElement`\> |
 | `shift` | `number` |
 
 #### Returns
 
-[`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+[`component_main`](dom.component_main.md)<`HTMLElement`\>
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[component](_dom.component_main.md#component)
+[component_add](dom.component_add.md).[component](dom.component_add.md#component)
 
 ___
 
@@ -197,13 +192,13 @@ c= c.share.destroy();
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[destroy](_dom.component_main.md#destroy)
+[component_add](dom.component_add.md).[destroy](dom.component_add.md#destroy)
 
 ___
 
 ### dynamicComponent
 
-▸ **dynamicComponent**<`DATA`\>(`data`, `generator`, `shift`): [`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+▸ **dynamicComponent**<`DATA`\>(`data`, `generator`, `shift`): [`component_main`](dom.component_main.md)<`HTMLElement`\>
 
 Method for including another component by using `generator` function, which can change final `component` based on updated data `data`.
 
@@ -217,29 +212,33 @@ Method for including another component by using `generator` function, which can 
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `data` | `DATA` | Includes all subsribed keys from `data` see method [component_add.onupdate](_dom.component_add.md#onupdate) |
-| `generator` | [`dynamicComponentGenerator`](_dom.dynamicComponentGenerator.md)<`DATA`\> | Function for registering components based on updates of `data`. |
+| `data` | `DATA` | Includes all subsribed keys from `data` see method [onupdate](dom.component_add.md#onupdate) |
+| `generator` | [`dynamicComponentGenerator`](dom.dynamicComponentGenerator.md)<`DATA`\> | Function for registering components based on updates of `data`. |
 | `shift` | `number` | - |
 
 #### Returns
 
-[`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+[`component_main`](dom.component_main.md)<`HTMLElement`\>
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[dynamicComponent](_dom.component_main.md#dynamiccomponent)
+[component_add](dom.component_add.md).[dynamicComponent](dom.component_add.md#dynamiccomponent)
 
 ___
 
 ### getReference
 
-▸ **getReference**(): [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]
+▸ **getReference**(): `HTMLElement`
 
 Returns reference of currently added element
 
 #### Returns
 
-[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]
+`HTMLElement`
+
+#### Inherited from
+
+[component_add](dom.component_add.md).[getReference](dom.component_add.md#getreference)
 
 ___
 
@@ -255,34 +254,34 @@ Methods returns if it was `onupdate` used
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[isStatic](_dom.component_main.md#isstatic)
+[component_add](dom.component_add.md).[isStatic](dom.component_add.md#isstatic)
 
 ___
 
 ### mount
 
-▸ **mount**(`el`, `type?`): [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]
+▸ **mount**(`el`, `type?`): `HTMLElement`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `el` | `HTMLElement` | Element where to places this component |
-| `type?` | ``"childLast"`` \| ``"childFirst"`` \| ``"replaceContent"`` \| ``"replace"`` \| ``"before"`` \| ``"after"`` | Default `childLast` |
+| `type?` | ``"replace"`` \| ``"after"`` \| ``"before"`` \| ``"childLast"`` \| ``"childFirst"`` \| ``"replaceContent"`` | Default `childLast` |
 
 #### Returns
 
-[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]
+`HTMLElement`
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[mount](_dom.component_main.md#mount)
+[component_add](dom.component_add.md).[mount](dom.component_add.md#mount)
 
 ___
 
 ### on
 
-▸ **on**(...`events`): [`component_add`](_dom.component_add.md)<`cEL`\>
+▸ **on**(...`events`): [`component_add`](dom.component_add.md)<``""``\>
 
 Method for batch registering `on*` methods for current element.
 ```javascript
@@ -307,17 +306,21 @@ function select(init= { value: "default" }){
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `...events` | [`component_listener`](_dom.component_listener.md)[] | Consumes [component_listener](_dom.component_listener.md). |
+| `...events` | [`component_listener`](dom.component_listener.md)[] | Consumes [component_listener](dom.component_listener.md). |
 
 #### Returns
 
-[`component_add`](_dom.component_add.md)<`cEL`\>
+[`component_add`](dom.component_add.md)<``""``\>
+
+#### Inherited from
+
+[component_add](dom.component_add.md).[on](dom.component_add.md#on)
 
 ___
 
 ### ondestroy
 
-▸ **ondestroy**(`cb`): [`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+▸ **ondestroy**(`cb`): [`component_main`](dom.component_main.md)<`HTMLElement`\>
 
 This provide ability to register function which should be called when the component will be destroyed.
 
@@ -329,17 +332,17 @@ This provide ability to register function which should be called when the compon
 
 #### Returns
 
-[`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+[`component_main`](dom.component_main.md)<`HTMLElement`\>
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[ondestroy](_dom.component_main.md#ondestroy)
+[component_add](dom.component_add.md).[ondestroy](dom.component_add.md#ondestroy)
 
 ___
 
 ### oninit
 
-▸ **oninit**(`cb`): [`component_add`](_dom.component_add.md)<`cEL`\>
+▸ **oninit**(`cb`): [`component_add`](dom.component_add.md)<``""``\>
 
 This procedure allows to call given function `cb` during registering element.
 
@@ -347,17 +350,21 @@ This procedure allows to call given function `cb` during registering element.
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`el`: [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]) => `void` |
+| `cb` | (`el`: `HTMLElement`) => `void` |
 
 #### Returns
 
-[`component_add`](_dom.component_add.md)<`cEL`\>
+[`component_add`](dom.component_add.md)<``""``\>
+
+#### Inherited from
+
+[component_add](dom.component_add.md).[oninit](dom.component_add.md#oninit)
 
 ___
 
 ### onmount
 
-▸ **onmount**(`cb`): [`component_add`](_dom.component_add.md)<`cEL`\>
+▸ **onmount**(`cb`): [`component_add`](dom.component_add.md)<``""``\>
 
 This procedure allows to call given function `cb` during mounting component.
 
@@ -386,19 +393,23 @@ function select(init){
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | () => [`T_DOM_ATTRS`](../modules/_dom.md#t_dom_attrs)<`cEL`\> |
+| `cb` | () => `Omit`<`HTMLElement`, ``"classList"``\> & [`T_DOM_ATTRS_MODIFIED`](../modules/dom.md#t_dom_attrs_modified) |
 
 #### Returns
 
-[`component_add`](_dom.component_add.md)<`cEL`\>
+[`component_add`](dom.component_add.md)<``""``\>
+
+#### Inherited from
+
+[component_add](dom.component_add.md).[onmount](dom.component_add.md#onmount)
 
 ___
 
 ### onupdate
 
-▸ **onupdate**<`DATA`\>(`data`, `onUpdate`): [`component_add`](_dom.component_add.md)<`cEL`\>
+▸ **onupdate**<`DATA`\>(`data`, `onUpdate`): [`component_add`](dom.component_add.md)<``""``\>
 
-This method allows to register function which shoul be invoke when given **keys** in `data` will be changed (see [component_mainOut.update](_dom.component_mainOut.md#update)).
+This method allows to register function which shoul be invoke when given **keys** in `data` will be changed (see [update](dom.component_mainOut.md#update)).
 ```javascript
 const c= $dom.component("DIV", null);
 …
@@ -426,17 +437,21 @@ c.update({ B: "B" });//=> <p>AB</p>
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `data` | `DATA` | This allows register listener for given **keys** of Object `data`. For `data= { a: "A", b: "B" }` it means that when `a` or `b` will be changed the `onUpdate` is called. |
-| `onUpdate` | (`data`: `DATA`) => [`T_DOM_ATTRS`](../modules/_dom.md#t_dom_attrs)<`cEL`\> | - |
+| `onUpdate` | (`data`: `DATA`) => `Omit`<`HTMLElement`, ``"classList"``\> & [`T_DOM_ATTRS_MODIFIED`](../modules/dom.md#t_dom_attrs_modified) | - |
 
 #### Returns
 
-[`component_add`](_dom.component_add.md)<`cEL`\>
+[`component_add`](dom.component_add.md)<``""``\>
+
+#### Inherited from
+
+[component_add](dom.component_add.md).[onupdate](dom.component_add.md#onupdate)
 
 ___
 
 ### setShift
 
-▸ **setShift**(`shift`): [`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+▸ **setShift**(`shift`): [`component_main`](dom.component_main.md)<`HTMLElement`\>
 
 Method provide way to change nesting behaviour. It can be helpful for loops
 ```javascript
@@ -468,15 +483,15 @@ function testNesting(){
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `shift` | `number` | See [component_main.add](_dom.component_main.md#add) |
+| `shift` | `number` | See [add](dom.component_main.md#add) |
 
 #### Returns
 
-[`component_main`](_dom.component_main.md)<[`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[`cEL`]\>
+[`component_main`](dom.component_main.md)<`HTMLElement`\>
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[setShift](_dom.component_main.md#setshift)
+[component_add](dom.component_add.md).[setShift](dom.component_add.md#setshift)
 
 ___
 
@@ -519,7 +534,7 @@ c.update(data_B_update);
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[update](_dom.component_main.md#update)
+[component_add](dom.component_add.md).[update](dom.component_add.md#update)
 
 ▸ **update**(`map`): `boolean`
 
@@ -545,4 +560,4 @@ c.update(({ a })=> { a: ++a });
 
 #### Inherited from
 
-[component_main](_dom.component_main.md).[update](_dom.component_main.md#update)
+[component_add](dom.component_add.md).[update](dom.component_add.md#update)

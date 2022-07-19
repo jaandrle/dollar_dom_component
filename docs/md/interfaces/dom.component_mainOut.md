@@ -1,29 +1,29 @@
-[$dom.component](../README.md) / [%24dom](../modules/_dom.md) / component_mainOut
+[$dom.component](../README.md) / [$dom](../modules/dom.md) / component\_mainOut
 
 # Interface: component\_mainOut<elOut\>
 
-[$dom](../modules/_dom.md).component_mainOut
+[$dom](../modules/dom.md).component_mainOut
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `elOut` | extends [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)[keyof [`T_DOM_HETNM`](../modules/_dom.md#t_dom_hetnm)]`HTMLElement` |
+| `elOut` | extends [`T_DOM_HETNM`](../modules/dom.md#t_dom_hetnm)[keyof [`T_DOM_HETNM`](../modules/dom.md#t_dom_hetnm)] = `HTMLElement` |
 
 ## Hierarchy
 
 - **`component_mainOut`**
 
-  ↳ [`component_main`](_dom.component_main.md)
+  ↳ [`component_main`](dom.component_main.md)
 
 ## Table of contents
 
 ### Methods
 
-- [destroy](_dom.component_mainOut.md#destroy)
-- [isStatic](_dom.component_mainOut.md#isstatic)
-- [mount](_dom.component_mainOut.md#mount)
-- [update](_dom.component_mainOut.md#update)
+- [destroy](dom.component_mainOut.md#destroy)
+- [isStatic](dom.component_mainOut.md#isstatic)
+- [mount](dom.component_mainOut.md#mount)
+- [update](dom.component_mainOut.md#update)
 
 ## Methods
 
@@ -66,7 +66,7 @@ ___
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `el` | `HTMLElement` | Element where to places this component |
-| `type?` | ``"childLast"`` \| ``"childFirst"`` \| ``"replaceContent"`` \| ``"replace"`` \| ``"before"`` \| ``"after"`` | Default `childLast` |
+| `type?` | ``"replace"`` \| ``"after"`` \| ``"before"`` \| ``"childLast"`` \| ``"childFirst"`` \| ``"replaceContent"`` | Default `childLast` |
 
 #### Returns
 

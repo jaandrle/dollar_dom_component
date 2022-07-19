@@ -1,6 +1,9 @@
 {
-	"__SECTION_GULP": "",
-	"fullName": "$dom.component",
+	"name": "dollar_dom_component",
+	"description": "JavaScript Utils",
+	"author": "Jan Andrle <andrle.jan@centrum.cz>",
+	"license": "MIT",
+	"homepage": "https://github.com/jaandrle/dollar_dom_component",
 	"version": "1.3.0",
 	"build": "0001",
 	"standalone": "standalone",
@@ -10,16 +13,14 @@
 		"doc",
 		"examples"
 	],
-	"__SECTION_NPM": "",
-	"name": "dollar_dom_component",
-	"description": "JavaScript Utils",
-	"main": "bin/$dom_component-min.js",
+	"fullName": "$dom.component",
 	"directories": {
 		"examples": "docs/examples/",
 		"docs": "docs/",
 		"dist": "bin/",
 		"src": "src/"
 	},
+	"main": "bin/$dom_component-min.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"jshint": "node ./node_modules/jshint/bin/jshint --verbose",
@@ -29,13 +30,9 @@
 		"type": "git",
 		"url": "git+https://github.com/jaandrle/dollar_dom_component.git"
 	},
-	"author": "Jan Andrle <andrle.jan@centrum.cz>",
-	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/jaandrle/dollar_dom_component/issues"
 	},
-	"homepage": "https://github.com/jaandrle/dollar_dom_component",
-	"__SECTION__JSHINT": "",
 	"jshintConfig": {
 		"esversion": 6,
 		"browser": "true",
@@ -46,17 +43,17 @@
 		"maxcomplexity": 11
 	},
 	"devDependencies": {
-		"gulp": ">=3.9.1",
+		"gulp": ">=4.0.2",
 		"gulp-concat": ">=2.6.1",
 		"gulp-minify": ">=3.1.0",
-		"gulp-place": ">=1.8.2",
-		"gulp-rename": ">=1.4.0",
-		"gulp-replace": ">=1.0.0",
-		"gulp-sourcemaps": ">=2.6.4",
-		"gulp-typedoc": ">=3.0.1",
-		"gulp-util": ">=1.0.0",
-		"jshint": ">=2.13.1",
-		"typedoc": ">=0.21.9",
-		"typedoc-plugin-markdown": ">=3.10.4"
+		"gulp-place": ">=1.8.4",
+		"gulp-rename": ">=2.0.0",
+		"gulp-replace": ">=1.1.3",
+		"gulp-sourcemaps": ">=3.0.0",
+		"gulp-typedoc": ">=3.0.2",
+		"gulp-util": ">=3.0.8",
+		"jshint": ">=2.13.5",
+		"typedoc": ">=0.23.8",
+		"typedoc-plugin-markdown": ">=3.13.3"
 	}
 }

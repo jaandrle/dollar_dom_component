@@ -84,8 +84,8 @@ Method updates all registered varibles by keys `onupdates` and calls follower fu
 const data_A= { a: "A" };
 const data_A_update= { a: "AAA" };
 const c= $dom.component("UL", null);
-    c.add("LI", null)
-         .onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
+	   c.add("LI", null)
+			.onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
 c.mount(document.body);
 c.update(data_A_update);
 ```
@@ -95,8 +95,8 @@ c.update(data_A_update);
 const data_B= { a: { b: "A" }};
 const data_B_update= { a: { b: "AAA" }};
 const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-    c.add("LI", null)
-         .onupdate(data_B, ({ a })=>({ textContent: a }));
+	   c.add("LI", null)
+			.onupdate(data_B, ({ a })=>({ textContent: a }));
 c.mount(document.body);
 c.update(data_B_update);
 ```
@@ -117,8 +117,8 @@ Method updates all registered varibles by keys `onupdates` and calls follower fu
 ```javascript
 // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
 const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-    c.add("LI", null)
-         .onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
+	   c.add("LI", null)
+			.onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
 c.mount(document.body);
 c.update(({ a })=> { a: ++a });
 ```

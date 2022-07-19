@@ -91,6 +91,9 @@ $dom.assign(el, { classList: { testClass: false } });//or 0
 ```javascript
 $dom.assign(A_ELEMENT, { href: "www.google.com" });//=> <a href="www.google.com" …
 $dom.assign(IMG_ELEMENT, { src: "image.png" });//=> <img src="image.png" …
+
+**#4 data\* and aria\***
+$dom.assign(el, { ariaLabel: "The aria-label", dataExample: "data-example" });//=> <body aria-label="The aria-label" data-example="data-example">
 ```
 
 #### Type parameters
@@ -147,25 +150,25 @@ This 'functional class' is syntax sugar around ` document.createElement`(`NS`) a
 So pseudo code:
 ```javascript
 function Component(…){
- const { add, share }= $dom.component(…Parent Element…);
-     add(…Child Element…);
-     add(…Child Element…, -1);
-         add(…Child Element…);
- …
- return share;
+	const { add, share }= $dom.component(…Parent Element…);
+		add(…Child Element…);
+		add(…Child Element…, -1);
+			add(…Child Element…);
+	…
+	return share;
 }
 ```
 
 Yelds into:
 ```html
 <!--<Component>-->
- <Parent Element>
-  <Child Element></Child Element>
-  <Child Element>
-     <Child Element></Child Element>
-  </Child Element>
- …
- </Parent Element>
+	<Parent Element>
+	 <Child Element></Child Element>
+	 <Child Element>
+		<Child Element></Child Element>
+	 </Child Element>
+	…
+	</Parent Element>
 <!--</Component>-->
 ```
 
@@ -264,6 +267,8 @@ This provide more DRY way to register `onupdate` handler inside [component](dom.
 Just element attributtes
 
 In most cases, you can use native propertie such as [MDN WEB/API/Element](https://developer.mozilla.org/en-US/docs/Web/API/Element) and so on (e.g. [`Text`](https://developer.mozilla.org/en-US/docs/Web/API/Text)).
+
+There is added support for `data[A-Z].*`/`aria[A-Z].*` to be converted to the kebab-case alternatives.
 
 #### Type parameters
 

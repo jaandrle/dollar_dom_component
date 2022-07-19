@@ -56,19 +56,19 @@ const { add }= $dom.component("LI", { className: "list_item" });
 //result: <li class="list_item">...</li>
 add("DIV", { textContent: "Child of .list_item", className: "deep1" });
 //result: <li class="list_item"><div class="deep1">...</div></li>
-    add("DIV", { textContent: "Child of div.deep1", className: "deep2" });
-    //result: ...<div class="deep1"><div class="deep2">...</div></div>...
-        add("DIV", { textContent: "Child of div.deep2", className: "deep3" });
-        //result: ...<div class="deep1"><div class="deep2"><div class="deep3">...</div></div></div>...
-        add("DIV", { textContent: "Child of div.deep2", className: "deep3 mark" }, -1);
-        //result: ...<div class="deep2"><div class="deep3">...</div><div class="deep3">...</div></div>...
+	   add("DIV", { textContent: "Child of div.deep1", className: "deep2" });
+	   //result: ...<div class="deep1"><div class="deep2">...</div></div>...
+		   add("DIV", { textContent: "Child of div.deep2", className: "deep3" });
+		   //result: ...<div class="deep1"><div class="deep2"><div class="deep3">...</div></div></div>...
+		   add("DIV", { textContent: "Child of div.deep2", className: "deep3 mark" }, -1);
+		   //result: ...<div class="deep2"><div class="deep3">...</div><div class="deep3">...</div></div>...
 //next add(*) schoul be child of div.deep3.mark, by -1 it is ch.of div.deep2, by -2 ch.of div.deep1, by -3 ch.of li.list_item because div.deep3.mark is on 3rd level
-    add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
-    //result: this is on 2nd level
+	   add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
+	   //result: this is on 2nd level
 add("DIV", { textContent: "Child of div.deep1", className: "deep2 nextone" }, -2);
 //result: this is on 0 level
-    add("DIV", null);
-    //just DIV without attributes
+	   add("DIV", null);
+	   //just DIV without attributes
 ```
 
 #### Type parameters
@@ -99,19 +99,19 @@ This add element to component
 ```javascript
 const c1= $dom.component("P", { textContent: "TEXT" });
 const c2= $dom.component("P", null);
-    c2.addText("TEXT");
-//c1-> <p>TEXT</p>  ===  <p>TEXT</p> <-c2
+	   c2.addText("TEXT");
+//c1-> <p>TEXT</p>  ===	<p>TEXT</p> <-c2
 ```
 ```javascript
 function testTextLi({ href= "https://www.seznam.cz" }= {}){
-    const c= $dom.component("LI", null);
-        c.add("P", { textContent: "Link test: " });
-            c.add("A", { textContent: "link ", href });
-                c.add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
-            c.addText("!", -2);
-            c.add("BR", null, -1);
-            c.addText("Test new line.", -1);
-    return c.share;
+	   const c= $dom.component("LI", null);
+		   c.add("P", { textContent: "Link test: " });
+			   c.add("A", { textContent: "link ", href });
+				   c.add("STRONG", { textContent: `(${href.replace("https://www.", "")})` });
+			   c.addText("!", -2);
+			   c.add("BR", null, -1);
+			   c.addText("Test new line.", -1);
+	   return c.share;
 }
 //result: '<p>Link test: <a href="...">link <strong>...</strong></a>!<br>Test new line.</p>'
 ```
@@ -136,8 +136,8 @@ ___
 Method for including another component by usint its `share` key.
 ```javascript
 function p({ textContent }){
-     const cP= $dom.component("P", { textContent });
-     return cP.share;
+		const cP= $dom.component("P", { textContent });
+		return cP.share;
 }
 const c= $dom.component("DIV", null);
 for(let i=0; i<3; i++){ c.component(p({ textContent: i })); }
@@ -268,25 +268,25 @@ ___
 Method provide way to change nesting behaviour. It can be helpful for loops
 ```javascript
 function testNesting(){
-    const c= $dom.component("DIV", null);
-        c.setShift(0);
-    for(let i= 0; i<5; i++){
-        c.add("P", { textContent: `Paragraph no. ${i}.` }, -1);
-    }
-    return c.share;
+	   const c= $dom.component("DIV", null);
+		   c.setShift(0);
+	   for(let i= 0; i<5; i++){
+		   c.add("P", { textContent: `Paragraph no. ${i}.` }, -1);
+	   }
+	   return c.share;
 }
 //=> div> 5*p
 ```
 ```javascript
 function testNesting(){
-    const c= $dom.component("DIV", null);
-    for(let i= 0; i<5; i++){
-        c.add("P", { textContent: `Paragraph no. ${i}.` });
-         //c.setShift();//or 0 => div> p> p> p> …
-      //c.setShift(-1); => div> p> p> p> …
-    c.setShift(-2);
-    }
-    return c.share;
+	   const c= $dom.component("DIV", null);
+	   for(let i= 0; i<5; i++){
+		   c.add("P", { textContent: `Paragraph no. ${i}.` });
+			//c.setShift();//or 0 => div> p> p> p> …
+		 //c.setShift(-1); => div> p> p> p> …
+	   c.setShift(-2);
+	   }
+	   return c.share;
 }
 //=> div> 5*p
 ```
@@ -313,8 +313,8 @@ Method updates all registered varibles by keys `onupdates` and calls follower fu
 const data_A= { a: "A" };
 const data_A_update= { a: "AAA" };
 const c= $dom.component("UL", null);
-    c.add("LI", null)
-         .onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
+	   c.add("LI", null)
+			.onupdate(data_A, ({ a })=>({ textContent: a }));//`{ a }` add listener for "a"
 c.mount(document.body);
 c.update(data_A_update);
 ```
@@ -324,8 +324,8 @@ c.update(data_A_update);
 const data_B= { a: { b: "A" }};
 const data_B_update= { a: { b: "AAA" }};
 const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-    c.add("LI", null)
-         .onupdate(data_B, ({ a })=>({ textContent: a }));
+	   c.add("LI", null)
+			.onupdate(data_B, ({ a })=>({ textContent: a }));
 c.mount(document.body);
 c.update(data_B_update);
 ```
@@ -350,8 +350,8 @@ Method updates all registered varibles by keys `onupdates` and calls follower fu
 ```javascript
 // EXAMPLE WITH FUNCTION AS ARGUMENT OF `update`
 const c= $dom.component("UL", null, { mapUpdate: d=>({ a: d.a.b }) });
-    c.add("LI", null)
-         .onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
+	   c.add("LI", null)
+			.onupdate({ a: 1 }, ({ a })=>({ textContent: a }));
 c.mount(document.body);
 c.update(({ a })=> { a: ++a });
 ```

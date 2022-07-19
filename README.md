@@ -1,4 +1,4 @@
-$dom.component / [Exports](docs/md/modules/_dom.md)
+$dom.component / [Exports](docs/md/modules/dom.md)
 
 # $dom_component
 Subrepository for [jaandrle/jaaJSU ($dom namespace)](https://github.com/jaandrle/jaaJSU).
@@ -45,11 +45,11 @@ textInputComponent({ label_type: "name", placeholder: "Peter" })
 </body>
 */
 function textInputComponent({ label_type= "name", placeholder= "Type text" }){
-    const { add, share, update }= $dom.component("DIV");
-        add("LABEL", { textContent: `Type your ${label_type}: ` });
-            add("INPUT", { type: "text", placeholder, onkeyup });
-        add("P", { textContent: `Your ${label_type} is: ` }, -2);
-            add("STRONG", null).onupdate({ textContent: " - " }, ({ textContent })=> ({ textContent }));
+    const { add, share, update }= $dom.component("div");
+        add("label", { textContent: `Type your ${label_type}: ` });
+            add("input", { type: "text", placeholder, onkeyup });
+        add("p", { textContent: `Your ${label_type} is: ` }, -2);
+            add("strong", null).onupdate({ textContent: " - " }, ({ textContent })=> ({ textContent }));
     return share;
 
     function onkeyup(){ update({ textContent: this.value }); }

@@ -20,7 +20,8 @@
 		"dist": "bin/",
 		"src": "src/"
 	},
-	"main": "bin/$dom_component-min.js",
+	"main": "bin/$dom_component.js",
+	"types": "bin/$dom_component.d.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"jshint": "node ./node_modules/jshint/bin/jshint --verbose",

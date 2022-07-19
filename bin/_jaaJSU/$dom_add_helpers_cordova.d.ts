@@ -299,11 +299,13 @@ declare namespace $dom {
 	 * $dom.assign(el, { ariaLabel: "The aria-label", dataExample: "data-example" });//=> <body aria-label="The aria-label" data-example="data-example">
 	 * ```
 	 * @category Public
+	 * @version 1.3.0
 	 */
 	function assign<EL extends HTMLElement>(element: EL, ...attrs_array: T_DOM_ATTRS<EL>[]): EL
 	/**
 	 * Procedure for merging object into the element properties (see `html` version {@link assign}).
 	 * @category Public
+	 * @version 1.3.0
 	 * @param namespace_group Group representation of [`namespace`](https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttributeNS), use "__SVG__" for setting attributes for `svg`s.
 	 */
 	function assignNS<EL extends SVGElement>(namespace_group: string, element: EL, ...attrs_array: T_DOM_ATTRS<EL>[]): EL
@@ -336,6 +338,7 @@ declare namespace $dom {
 	 * ```
 	 * 
 	 * @category Public
+	 * @version 1.3.0
 	 * @param tag_name HTML Element tag name such as `p`, `li`, …, also `svg`, `polyline`, `clipPath`, …. **Important**: You must choose proper `params`, see {@link componentParams.namespace_group}!
 	 */
 	function component <K extends keyof T_DOM_HETNM>(tag_name: K, attrs?: T_DOM_ATTRS<K>, params?: componentParams): componentOut<K>
@@ -381,6 +384,7 @@ declare namespace $dom {
 	 * This provide more DRY way to register `onupdate` handler inside {@link component}.
 	 * @param data Inittial data similar to {@link component_add.onupdate}.
 	 * @param onUpdate Callback simira to {@link component_add.onupdate}.
+	 * @version 1.3.0
 	 * @category Public
 	 */
 	function componentListener<DATA extends object>(event: "update", data: DATA, onUpdate: (data: DATA)=> T_DOM_ATTRS<HTMLElement>): component_listener

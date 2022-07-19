@@ -172,6 +172,10 @@ Yelds into:
 <!--</Component>-->
 ```
 
+**`Version`**
+
+1.3.0
+
 #### Type parameters
 
 | Name | Type |

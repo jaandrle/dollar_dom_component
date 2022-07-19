@@ -5,7 +5,7 @@ module.exports= function({ app, $gulp_folder, gulp, error, $g, $o }){
 	return async function(){
 		if(error.getNum()) return;
 		await gulp.src([ `${folder}*.d.ts`, `${folder}*/*.d.ts`, `!${folder}*.sub.d.ts`, `!${folder}*/*.sub.d.ts` ])
-		.pipe(gulp_place({ folder, string_wrapper: '"' }))
+		.pipe(gulp_place({ folder, string_wrapper: '' }))
 		.pipe(gulp.dest(app.directories.dist));
 
 		return gulp.src([ app.directories.dist+"$dom_component.d.ts" ])

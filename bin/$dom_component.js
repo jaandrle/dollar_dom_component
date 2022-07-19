@@ -160,6 +160,7 @@ function init(global){
             return add_out;
         }
         
+        
         function addText(text= "", shift= 0){
             recalculateDeep(shift);
             const text_node= document.createTextNode(text);

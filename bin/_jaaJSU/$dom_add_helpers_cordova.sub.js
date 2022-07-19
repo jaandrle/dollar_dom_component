@@ -144,6 +144,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
         return add_out;
     }
     
+    
     function addText(text= "", shift= 0){
         recalculateDeep(shift);
         const text_node= document.createTextNode(text);

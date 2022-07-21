@@ -98,7 +98,7 @@ $dom.assign(el, { ariaLabel: "The aria-label", dataExample: "data-example" });//
 
 **`Version`**
 
-1.3.0
+2.0.0
 
 #### Type parameters
 
@@ -127,7 +127,7 @@ Procedure for merging object into the element properties (see `html` version [as
 
 **`Version`**
 
-1.3.0
+2.0.0
 
 #### Type parameters
 
@@ -182,7 +182,7 @@ Yelds into:
 
 **`Version`**
 
-1.3.0
+2.0.0
 
 #### Type parameters
 
@@ -254,7 +254,7 @@ This provide more DRY way to register `onupdate` handler inside [component](dom.
 
 **`Version`**
 
-1.3.0
+2.0.0
 
 #### Type parameters
 

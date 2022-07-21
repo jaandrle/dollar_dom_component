@@ -1,7 +1,7 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, -W027 */
 /* global $dom, gulp_place */
 gulp_place("both/$dom_component_utils.sub.js", "file");
-gulp_place("${app.standalone}/$dom_emptyPseudoComponent.sub.js", "file"); /* global $dom_emptyPseudoComponent */
+gulp_place("both/$dom_emptyPseudoComponent.sub.js", "file"); /* global $dom_emptyPseudoComponent */
 gulp_place("both/$dom_special_components_names.sub.js", "file"); /* global isInternalElement */
 $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_name_only }={}){
 	if(!el_name||isInternalElement("empty", el_name, safe_el_name_only)) return $dom_emptyPseudoComponent;
@@ -59,7 +59,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
 	/* global component */
 	gulp_place("both/dynamicComponent.sub.js", "file");
 	/* global dynamicComponent */
-	gulp_place("${app.standalone}/mount.sub.js", "file");
+	gulp_place("both/mount.sub.js", "file");
 	/* global mount */
 	gulp_place("both/destroy.sub.js", "file");
 	/* global destroy */

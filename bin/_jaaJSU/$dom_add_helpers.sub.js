@@ -1,6 +1,5 @@
 /* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxcomplexity: 19, maxparams: 5, maxdepth: 3 */
 /* $dom *//* global $dom */
-/* standalone= "standalone"; */
 const component_utils= Object.freeze({
 	registerToMap: function(store, current, indexGenerator){
 		let current_index= -1;
@@ -181,6 +180,9 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
 		recalculateDeep(shift);
 		const parent= getParentElement();
 		let current_value= null, current_component= null, current_element= null;
+		return add_out_methods.onupdate(component_out, parent, data, function(data){
+			current_value= generator.call(parent, mount, current_component, data, current_value);
+		});
 		function mount(component_share){
 			current_component= component_share;
 			if(current_element){
@@ -189,29 +191,9 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
 				current_element= current_component.mount(parent);
 			}
 		}
-		
-		return add_out_methods.onupdate(component_out, parent, data, function(data){
-			current_value= generator.call(parent, mount, current_component, data, current_value);
-		});
 	}
 	
 	
-	/**
-	 * Add element to live DOM
-	 * @method mount
-	 * @memberof module:jaaJSU~$dom~instance_component
-	 * @public
-	 * @param {NodeElement} element Element where to places this component
-	 * @param {String} [type= "childLast"]
-	 *	<br/>- Change type of mounting
-	 *	<br/>- `childLast` places component as last child
-	 *	<br/>- `childFirst` places component as first child
-	 *	<br/>- `replaceContent` removes content of `element` and places component as child (uses `$dom.empty`)
-	 *	<br/>- `replace` replaces `element` by component
-	 *	<br/>- `before` places component before `element`
-	 *	<br/>- `after` places component after `element` (uses `$dom.insertAfter`)
-	 * @returns {NodeElement} `container`
-	 */
 	function mount(element, type= "childLast"){
 		if(observer) observer.disconnect();
 		let parent_node;
@@ -251,12 +233,11 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
 			on_mount_funs.forEach(onMountFunctionCall);
 			on_mount_funs= undefined;
 		}
-		
+	
 		function __observedEls(container, parent_node){
 			if(!(container instanceof DocumentFragment)) return [ container, parent_node ];
 			return [ parent_node, parent_node.parentNode ];
 		}
-		
 		return container;
 		function onMountFunctionCall(onMountFunction, el){ return assign(el, onMountFunction.call(el, element, type)); }
 	}
@@ -462,7 +443,6 @@ $dom.assign= function(element, ...objects_attributes){
 				break;
 			case "dataset":
 				for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.dataset[k_key]= attr[k_key]; }
-				
 				break;
 			case "href" || "src" || "class":
 				element.setAttribute(key, attr);
@@ -519,49 +499,3 @@ $dom.assignNS= function(namespace, element, ...objects_attributes){
 };
 
 
-/**
- * Procedure for adding elements into the `parent` (in background use `createDocumentFragment`, `createElement`, `appendChild`)
- * @method add
- * @memberof module:jaaJSU~$dom
- * @deprecated Please use {@link module:jaaJSU~$dom.component}
- * @param {NodeElement} parent Wrapper (for example `<ul>`) where to cerate children elements (for example `<li>`)
- * @param $$$ {...Array}
- *	<br/>* `[ [ __NAME__, __PARAMS__ ], [ __NAME__, __PARAMS__ ], ..., [ __NAME__, __PARAMS__ ] ]`
- *	<br/>* Element in array is automatically nested into the previous element. `[["UL",...], ["LI",...], ["SPAN",...]]` creates `<ul><li><span></span></li></ul>`
- *	<br/>* `__NAME__` **\<String\>**: Name of element (for example `LI`, `P`, `A`, ...)
- *	<br/>* `__PARAMS__` **\<Object\>**: Parameters for elements as "innerText", "className", "dataset", ...
- *	<br/>	 * see {@link module:jaaJSU~$dom.assign}
- *	<br/>	 * There is one change with using key "$", which modify elements order and it is not parsed by {@link module:jaaJSU~$dom.assign}
- *	<br/>		 * `__PARAMS__.$`: Modify nesting behaviur (accepts index of element in `$$$`). `[["UL",...], ["LI",...], ["LI",{$:0,...}]]` creates `<ul><li></li><li></li></ul>`
- * @return {NodeElement} First created element (usualy wrapper thanks nesting)
- * @example
- * $dom.add(ul_element,[
- *	   ["LI", {className: "nejake-tridy", onclick: clickFCE}],
- *		   ["SPAN", {innerText: "Prvni SPAN v LI"}],
- *		   ["SPAN", {$:0, innerText: "Druhy SPAN v LI"}]
- * ]);
- * // = <ul><li class="nejake-tridy" onclick="clickFCE"><span>Prvni SPAN v LI</span><span>Druhy SPAN v LI</span></li></ul>
- * // !!! VS !!!
- * $dom.add(ul_element,[
- *	   ["LI", {className: "nejake-tridy", onclick: clickFCE}],
- *		   ["SPAN", {innerText: "Prvni SPAN v LI"}],
- *			   ["SPAN", {innerText: "Druhy SPAN v LI"}]
- * ]);
- * // = <ul><li class="nejake-tridy" onclick="clickFCE"><span>Prvni SPAN v LI<span>Druhy SPAN v LI</span></span></li></ul>
- */
-$dom.add= function(parent,$$$){
-	let fragment= document.createDocumentFragment();
-	let prepare_els= [], els= [];
-	for(var i=0, i_length= $$$.length; i<i_length;i++){
-		prepare_els[i]= document.createElement($$$[i][0]);
-		if(!i) els[i]= fragment.appendChild(prepare_els[i]);
-		else if(typeof $$$[i][1].$!=="undefined"){
-			els[i]= els[$$$[i][1].$].appendChild(prepare_els[i]);
-			delete $$$[i][1].$;
-		}
-		else els[i]= els[i-1].appendChild(prepare_els[i]);
-		$dom.assign(els[i], $$$[i][1]);
-	}
-	parent.appendChild(fragment);
-	if(i) return els[0];
-};

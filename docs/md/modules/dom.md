@@ -341,6 +341,20 @@ Procedure removes all children of `container`
 
 `void`
 
+▸ **empty**(`container`): `void`
+
+Procedure removes all children of `container`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `container` | `HTMLElement` |
+
+#### Returns
+
+`void`
+
 ___
 
 ### insertAfter
@@ -360,9 +374,39 @@ Procedure places `new_element` after `reference` elements
 
 `void`
 
+▸ **insertAfter**(`new_element`, `reference`): `void`
+
+Procedure places `new_element` after `reference` elements
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `new_element` | `HTMLElement` |
+| `reference` | `HTMLElement` |
+
+#### Returns
+
+`void`
+
 ___
 
 ### replace
+
+▸ **replace**(`el_old`, `le_new`): `void`
+
+Procedure replaces `el_old` element by new one (`new_el`)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `el_old` | `HTMLElement` |
+| `le_new` | `HTMLElement` |
+
+#### Returns
+
+`void`
 
 ▸ **replace**(`el_old`, `le_new`): `void`
 

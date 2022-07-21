@@ -1,3 +1,21 @@
+/**
+ * This NAMESPACE provides features for DOM elements.
+ */
+declare namespace $dom{
+	/**
+	 * Procedure removes all children of `container`
+	 */
+	function empty(container: HTMLElement): void;
+	/**
+	 * Procedure places `new_element` after `reference` elements
+	 */
+	function insertAfter(new_element: HTMLElement, reference: HTMLElement): void;
+	/**
+	 * Procedure replaces `el_old` element by new one (`new_el`)
+	 */
+	function replace(el_old: HTMLElement, le_new: HTMLElement): void;
+}
+
 declare namespace $dom {
 	/**
 	 * @private
@@ -394,9 +412,6 @@ declare namespace $dom {
 	 * @category Public
 	 */
 	function add(): HTMLElement
-}
-
-declare namespace $dom{
 	/**
 	 * @private
 	 */
@@ -409,7 +424,7 @@ declare namespace $dom{
 		 * @param current_value Shared value across multiple calling
 		 * @returns `current_value`
 		 */
-		<iDATA extends any>(mount: (componentMainOut: component_mainOut, call_parseHTML: boolean)=> void, current_component: component_mainOut|null, data: DATA, current_value: iDATA): iDATA
+		<iDATA extends any>(mount: (componentMainOut: component_mainOut)=> void, current_component: component_mainOut|null, data: DATA, current_value: iDATA): iDATA
 	}
 	/**
 	 * @private
@@ -430,12 +445,11 @@ declare namespace $dom{
 		 */
 		isStatic(): boolean,
 		/**
-		 * 
+		 * Add element to live DOM
 		 * @param el Element where to places this component
-		 * @param call_parseHTML If call parseHTML (default: `false`)
 		 * @param type Default `childLast`
 		 */
-		mount(el: HTMLElement, call_parseHTML?: boolean, type?: "childLast"|"childFirst"|"replaceContent"|"replace"|"before"|"after"): elOut
+		mount(el: HTMLElement, type?: "childLast"|"childFirst"|"replaceContent"|"replace"|"before"|"after"): elOut
 		/**
 		 * Method updates all registered varibles by keys `onupdates` and calls follower functions
 		 * ```javascript

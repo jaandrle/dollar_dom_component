@@ -263,6 +263,8 @@ ___
 
 ▸ **mount**(`el`, `type?`): [`T_DOM_HETNM`](../modules/dom.md#t_dom_hetnm)[`cEL`]
 
+Add element to live DOM
+
 #### Parameters
 
 | Name | Type | Description |

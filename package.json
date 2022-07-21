@@ -4,9 +4,8 @@
 	"author": "Jan Andrle <andrle.jan@centrum.cz>",
 	"license": "MIT",
 	"homepage": "https://github.com/jaandrle/dollar_dom_component",
-	"version": "1.3.0",
+	"version": "2.0.0",
 	"build": "0001",
-	"standalone": "standalone",
 	"__Comment__sequence": "exclamation mark (!) on the start of task name means to escape it",
 	"sequence": [
 		"javascript",

@@ -262,6 +262,8 @@ ___
 
 ▸ **mount**(`el`, `type?`): `HTMLElement`
 
+Add element to live DOM
+
 #### Parameters
 
 | Name | Type | Description |

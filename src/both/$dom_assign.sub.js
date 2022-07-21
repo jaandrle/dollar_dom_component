@@ -1,4 +1,4 @@
-/* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxcomplexity: 20, maxdepth: 3 */
+/* jshint esversion: 6,-W097, -W040, browser: true, expr: true, undef: true, maxcomplexity: 21, maxdepth: 3 */
 /* global $dom, gulp_place */
 $dom.assign= function(element, ...objects_attributes){
 	const object_attributes= Object.assign({}, ...objects_attributes);
@@ -29,7 +29,7 @@ $dom.assign= function(element, ...objects_attributes){
 				}
 				break;
 			case "dataset":
-				gulp_place("${app.standalone}/$dom_assign_dataset.sub.js", "file");
+				for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.dataset[k_key]= attr[k_key]; }
 				break;
 			case "href" || "src" || "class":
 				element.setAttribute(key, attr);

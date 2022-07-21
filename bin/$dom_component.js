@@ -18,7 +18,6 @@ function init(global){
 		}
 	};
 	
-	/* standalone= "standalone"; */
 	const component_utils= Object.freeze({
 		registerToMap: function(store, current, indexGenerator){
 			let current_index= -1;
@@ -199,6 +198,9 @@ function init(global){
 			recalculateDeep(shift);
 			const parent= getParentElement();
 			let current_value= null, current_component= null, current_element= null;
+			return add_out_methods.onupdate(component_out, parent, data, function(data){
+				current_value= generator.call(parent, mount, current_component, data, current_value);
+			});
 			function mount(component_share){
 				current_component= component_share;
 				if(current_element){
@@ -207,29 +209,9 @@ function init(global){
 					current_element= current_component.mount(parent);
 				}
 			}
-			
-			return add_out_methods.onupdate(component_out, parent, data, function(data){
-				current_value= generator.call(parent, mount, current_component, data, current_value);
-			});
 		}
 		
 		
-		/**
-		 * Add element to live DOM
-		 * @method mount
-		 * @memberof module:jaaJSU~$dom~instance_component
-		 * @public
-		 * @param {NodeElement} element Element where to places this component
-		 * @param {String} [type= "childLast"]
-		 *	<br/>- Change type of mounting
-		 *	<br/>- `childLast` places component as last child
-		 *	<br/>- `childFirst` places component as first child
-		 *	<br/>- `replaceContent` removes content of `element` and places component as child (uses `$dom.empty`)
-		 *	<br/>- `replace` replaces `element` by component
-		 *	<br/>- `before` places component before `element`
-		 *	<br/>- `after` places component after `element` (uses `$dom.insertAfter`)
-		 * @returns {NodeElement} `container`
-		 */
 		function mount(element, type= "childLast"){
 			if(observer) observer.disconnect();
 			let parent_node;
@@ -269,12 +251,11 @@ function init(global){
 				on_mount_funs.forEach(onMountFunctionCall);
 				on_mount_funs= undefined;
 			}
-			
+		
 			function __observedEls(container, parent_node){
 				if(!(container instanceof DocumentFragment)) return [ container, parent_node ];
 				return [ parent_node, parent_node.parentNode ];
 			}
-			
 			return container;
 			function onMountFunctionCall(onMountFunction, el){ return assign(el, onMountFunction.call(el, element, type)); }
 		}
@@ -480,7 +461,6 @@ function init(global){
 					break;
 				case "dataset":
 					for(let k=0, k_key, k_keys= Object.keys(attr), k_length= k_keys.length; k<k_length; k++){ k_key= k_keys[k]; element.dataset[k_key]= attr[k_key]; }
-					
 					break;
 				case "href" || "src" || "class":
 					element.setAttribute(key, attr);

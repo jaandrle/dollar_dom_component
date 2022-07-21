@@ -61,6 +61,8 @@ ___
 
 ▸ **mount**(`el`, `type?`): `elOut`
 
+Add element to live DOM
+
 #### Parameters
 
 | Name | Type | Description |

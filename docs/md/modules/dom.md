@@ -33,8 +33,7 @@ This NAMESPACE provides features for DOM elements.
 - [component](dom.md#component)
 - [componentListener](dom.md#componentlistener)
 - [empty](dom.md#empty)
-- [insertAfter](dom.md#insertafter)
-- [replace](dom.md#replace)
+- [mount](dom.md#mount)
 
 ## Public
 
@@ -357,68 +356,70 @@ Procedure removes all children of `container`
 
 ___
 
-### insertAfter
+### mount
 
-▸ **insertAfter**(`new_element`, `reference`): `void`
+▸ **mount**(`element_target`, `type`): <T\>(`element`: `T`) => `T`
 
-Procedure places `new_element` after `reference` elements
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `new_element` | `HTMLElement` |
-| `reference` | `HTMLElement` |
-
-#### Returns
-
-`void`
-
-▸ **insertAfter**(`new_element`, `reference`): `void`
-
-Procedure places `new_element` after `reference` elements
+Procedure provide ways to insert elements into DOM in relation to `element_target`.
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `new_element` | `HTMLElement` |
-| `reference` | `HTMLElement` |
+| `element_target` | `HTMLElement` \| `SVGElement` |
+| `type` | ``"replace"`` \| ``"after"`` \| ``"before"`` \| ``"replaceContent"`` \| ``"childFirst"`` \| ``"childLast"`` |
 
 #### Returns
 
-`void`
+`fn`
 
-___
+▸ <`T`\>(`element`): `T`
 
-### replace
+##### Type parameters
 
-▸ **replace**(`el_old`, `le_new`): `void`
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `HTMLElement` \| `SVGElement` \| [`componentOut`](dom.md#componentout)<keyof [`T_DOM_HETNM`](dom.md#t_dom_hetnm)\> |
 
-Procedure replaces `el_old` element by new one (`new_el`)
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `element` | `T` |
+
+##### Returns
+
+`T`
+
+▸ **mount**(`element_target`, `type`): <T\>(`element`: `T`) => `T`
+
+Procedure provide ways to insert elements into DOM in relation to `element_target`.
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `el_old` | `HTMLElement` |
-| `le_new` | `HTMLElement` |
+| `element_target` | `HTMLElement` \| `SVGElement` |
+| `type` | ``"replace"`` \| ``"after"`` \| ``"before"`` \| ``"replaceContent"`` \| ``"childFirst"`` \| ``"childLast"`` |
 
 #### Returns
 
-`void`
+`fn`
 
-▸ **replace**(`el_old`, `le_new`): `void`
+▸ <`T`\>(`element`): `T`
 
-Procedure replaces `el_old` element by new one (`new_el`)
-
-#### Parameters
+##### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `el_old` | `HTMLElement` |
-| `le_new` | `HTMLElement` |
+| `T` | extends `HTMLElement` \| `SVGElement` \| [`componentOut`](dom.md#componentout)<keyof [`T_DOM_HETNM`](dom.md#t_dom_hetnm)\> |
 
-#### Returns
+##### Parameters
 
-`void`
+| Name | Type |
+| :------ | :------ |
+| `element` | `T` |
+
+##### Returns
+
+`T`

@@ -200,7 +200,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
 		switch ( type ) {
 			case "replace":
 				parent_node= element.parentNode;
-				$dom.replace(element, container);
+				$dom.mount(element, "replace")(container);
 				break;
 			case "replaceContent":
 				$dom.empty(element);
@@ -212,7 +212,7 @@ $dom.component= function(el_name, attrs, { mapUpdate, namespace_group, safe_el_n
 				parent_node.insertBefore(container, element);
 				break;
 			case "after":
-				$dom.insertAfter(container, element);
+				$dom.mount(element, "after")(container);
 				parent_node= element.parentNode;
 				break;
 			default:

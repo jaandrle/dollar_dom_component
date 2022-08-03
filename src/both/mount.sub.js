@@ -6,7 +6,7 @@ function mount(element, type= "childLast"){
 	switch ( type ) {
 		case "replace":
 			parent_node= element.parentNode;
-			$dom.replace(element, container);
+			$dom.mount(element, "replace")(container);
 			break;
 		case "replaceContent":
 			$dom.empty(element);
@@ -18,7 +18,7 @@ function mount(element, type= "childLast"){
 			parent_node.insertBefore(container, element);
 			break;
 		case "after":
-			$dom.insertAfter(container, element);
+			$dom.mount(element, "after")(container);
 			parent_node= element.parentNode;
 			break;
 		default:

@@ -1,37 +1,16 @@
 /**
  * This NAMESPACE provides features for DOM elements.
  */
-declare namespace $dom{
+interface $dom{
 	/**
 	 * Procedure removes all children of `container`
 	 */
-	function empty(container: HTMLElement): void;
+	empty(container: HTMLElement): void;
 	/**
-	 * Procedure places `new_element` after `reference` elements
+	 * Procedure provide ways to insert elements into DOM in relation to `element_target`.
 	 */
-	function insertAfter(new_element: HTMLElement, reference: HTMLElement): void;
-	/**
-	 * Procedure replaces `el_old` element by new one (`new_el`)
-	 */
-	function replace(el_old: HTMLElement, le_new: HTMLElement): void;
-}
-
-/**
- * This NAMESPACE provides features for DOM elements.
- */
-declare namespace $dom{
-	/**
-	 * Procedure removes all children of `container`
-	 */
-	function empty(container: HTMLElement): void;
-	/**
-	 * Procedure places `new_element` after `reference` elements
-	 */
-	function insertAfter(new_element: HTMLElement, reference: HTMLElement): void;
-	/**
-	 * Procedure replaces `el_old` element by new one (`new_el`)
-	 */
-	function replace(el_old: HTMLElement, le_new: HTMLElement): void;
+	mount(element_target: HTMLElement | SVGElement, type: "after"|"before"|"replace"|"replaceContent"|"childFirst"|"childLast"):
+		<T extends HTMLElement | SVGElement | $dom.componentOut<keyof $dom.T_DOM_HETNM>>(element: T) => T
 }
 
 declare namespace $dom {
@@ -510,3 +489,4 @@ declare namespace $dom {
 	}
 }
 
+declare var $dom: { prototype: $dom };

@@ -68,7 +68,7 @@ Add element to live DOM
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `el` | `HTMLElement` | Element where to places this component |
-| `type?` | ``"replace"`` \| ``"after"`` \| ``"before"`` \| ``"childLast"`` \| ``"childFirst"`` \| ``"replaceContent"`` | Default `childLast` |
+| `type?` | ``"replace"`` \| ``"after"`` \| ``"before"`` \| ``"replaceContent"`` \| ``"childFirst"`` \| ``"childLast"`` | Default `childLast` |
 
 #### Returns
 

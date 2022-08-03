@@ -1,4 +1,3 @@
-gulp_place("$dom_minimal_shim.sub.d.ts", "file");
 declare namespace $dom {
 	/**
 	 * @private

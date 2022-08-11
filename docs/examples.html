@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>$dom.component — Examples</title>
-    <script type="text/javascript" src="$dom_component.js?v=1.2.0"></script>
+    <script type="text/javascript" src="$dom_component.js?v=2.0.0"></script>
     <style>
         body{
             color: #eeeeee;
@@ -742,13 +742,39 @@
             })("example_element_019");
             </script>
             <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L707" target="_blank">View with highliting (link to source of this file)</a></p>
+            
+            
+            <p>As previou with different usuage of <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L485"><code>setShift</code></a>:</p>
+            <div class="output" id="example_element_020"></div>
+            <script onkeyup="onKeyup(this, 'example_element_020')" contenteditable="">
+            (function(element_id){
+                //EXAMPLE START
+            
+                const container= document.getElementById(element_id);
+                const div= container.appendChild(document.createElement("div"));
+                window.__test= mainComponent({ textContent: "`dynamicComponent` example: " });
+                window.__test.mount(div);
+            
+                function mainComponent({ textContent }){
+                    const { component, share }= $dom.component("<>");
+                        component(paragraph({ test: "Test" }));
+                    return share;
+                }
+                function paragraph({ test }){
+                    return $dom.component("p").onupdate({ test: "A" }, ({ test: textContent })=> ({ textContent })).share;
+                }
+                
+                //EXAMPLE END
+            })("example_element_020");
+            </script>
+            <p class="notes"><a href="https://github.com/jaandrle/dollar_dom_component/blob/master/docs/examples.html#L751" target="_blank">View with highliting (link to source of this file)</a></p>
         </details>
         
         <h2>SVG</h2>
         <details open="">
         <summary>Notes</summary>
             <p>It is also possible to use this library for generating `svg` elements.</p>
-            <p>Some function helpers and examples can be found on repository [`$dom_svg`](https://github.com/jaandrle/dollar_dom_svg).</p>
+            <p>Some function helpers and examples can be found on repository <a href="https://github.com/jaandrle/dollar_dom_svg"><code>$dom_svg</code></a>.</p>
         </details>
 
 

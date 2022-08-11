@@ -1,0 +1,26 @@
+gulp_place("app._BUILD_.example_el= toELID(app._BUILD_.example_el_id++)", "eval");
+gulp_place("app._BUILD_.example_onkeyup= toKeyUp(app._BUILD_.example_el)", "eval");
+<p>As previou with different usuage of <a href="https://github.com/jaandrle/dollar_dom_component/blob/master/bin/$dom_component.js#L485"><code>setShift</code></a>:</p>
+<div class="output" id="gulp_place('app._BUILD_.example_el', 'variable')"></div>
+<script onkeyup="gulp_place('app._BUILD_.example_onkeyup', 'variable')" contenteditable="">
+(function(element_id){
+    //EXAMPLE START
+
+    const container= document.getElementById(element_id);
+    const div= container.appendChild(document.createElement("div"));
+    window.__test= mainComponent({ textContent: "`dynamicComponent` example: " });
+    window.__test.mount(div);
+
+    function mainComponent({ textContent }){
+        const { component, share }= $dom.component("<>");
+            component(paragraph({ test: "Test" }));
+        return share;
+    }
+    function paragraph({ test }){
+        return $dom.component("p").onupdate({ test: "A" }, ({ test: textContent })=> ({ textContent })).share;
+    }
+    
+    //EXAMPLE END
+})("gulp_place('app._BUILD_.example_el', 'variable')");
+</script>
+<!-- example source links -->

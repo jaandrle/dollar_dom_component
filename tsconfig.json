@@ -1,0 +1,5 @@
+{
+    "include": [
+        "bin/$dom_component.d.ts"
+    ]
+}

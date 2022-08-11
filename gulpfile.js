@@ -1,25 +1,25 @@
 /* jshint esversion: 6, undef: true, node: true */
 /* \CONFIG\ */
 const config= (function(){
-        let $o_default= {spawn: require('child_process').spawn, fs: require("fs")};
+        const { spawn, exec }= require("child_process");
+        let $o_default= {spawn, exec, fs: require("fs")};
         const gulp= require('gulp'),
               $gulp_folder= "./gulp/",
-              $run= require($gulp_folder+'gulp-crossplatform')(),
-              {fullName, name, version, build, src_folder, bin_folder, standalone, sequence, dependencies, devDependencies, homepage}= JSON.parse($o_default.fs.readFileSync('./package.json')),
-              {$g,$o}= mapDependencies(Object.assign({}, dependencies, devDependencies), $o_default);
-        const app= {name: fullName, folderName: name, version, build, src_folder, bin_folder, standalone, sequence, homepage};
-        return {gulp, $gulp_folder, $run, $g, $o, app, error: error()};
+              { fullName, name, version, build, directories, sequence, dependencies, devDependencies, homepage }= JSON.parse($o_default.fs.readFileSync('./package.json')),
+              { $g, $o }= mapDependencies(Object.assign({}, dependencies, devDependencies), $o_default);
+        const app= { name: fullName, folderName: name, version, build, directories, sequence, homepage };
+        return {gulp, $gulp_folder, $g, $o, app, error: error()};
 })();
 /* /CONFIG/ */
 /* \Tasks\ */
-var c_output= "", if_error= 0;
+var c_output= [], if_error= 0;
 const tasks= ['default', 'doc', 'javascript', 'examples'], tasks_length= tasks.length;
 for(let i=0, task; i<tasks_length; i++){ task= tasks[i]; config.gulp.task(task, require(config.$gulp_folder+'task-'+task)(config)); }
 /* /Tasks/ */
 /* \Global functions\ */
 function error(){
-    function getText(){     return c_output; }
-    function addText(err){  c_output+= err; }
+    function getText(){     return c_output.join("\n"); }
+    function addText(err){  c_output.push(err); }
     function getNum(){      return if_error; }
     function addNum(num=1){ if_error+= num; }
     function handler(err){  addNum(); config.$g.util.log(config.$g.util.colors.red('[Error]'), err.toString()); }

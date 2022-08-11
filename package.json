@@ -1,65 +1,59 @@
 {
-  "__SECTION_GULP": "",
-  "fullName": "$dom.component",
-  "version": "1.2.0",
-  "build": "0001",
-  "src_folder": "src/",
-  "bin_folder": "bin/",
-  "standalone": "standalone",
-  "__Comment__sequence": "exclamation mark (!) on the start of task name means to escape it",
-  "sequence": [
-    "javascript",
-    "doc",
-    "examples"
-  ],
-  "__SECTION_NPM": "",
-  "name": "dollar_dom_component",
-  "description": "JavaScript Utils",
-  "main": "gulpfile.js",
-  "bin": {
-    "jaajsu": "$dom_component-min.js"
-  },
-  "directories": {
-    "example": "example",
-    "bin": "bin"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "jshint": "node ./node_modules/jshint/bin/jshint --verbose",
-    "jshint_full": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jaandrle/dollar_dom_component.git"
-  },
-  "author": "Jan Andrle <andrle.jan@centrum.cz>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jaandrle/dollar_dom_component/issues"
-  },
-  "homepage": "https://github.com/jaandrle/dollar_dom_component",
-  "dependencies": {},
-  "__SECTION__JSHINT": "",
-  "jshintConfig": {
-    "esversion": 6,
-    "browser": "true",
-    "undef": "true",
-    "latedef": "true",
-    "maxparams": 3,
-    "maxdepth": 2,
-    "maxcomplexity": 11
-  },
-  "devDependencies": {
-    "gulp": ">3.9.1",
-    "gulp-concat": "2.6.1",
-    "gulp-javascript-obfuscator": "1.1.5",
-    "gulp-minify": "3.1.0",
-    "gulp-place": "^1.8.2",
-    "gulp-rename": "1.4.0",
-    "gulp-replace": "1.0.0",
-    "gulp-sourcemaps": "2.6.4",
-    "gulp-util": "3.0.8",
-    "jsdoc-to-markdown": "^5.0.3",
-    "jshint": "^2.13.1"
-  }
+	"name": "dollar_dom_component",
+	"description": "JavaScript Utils",
+	"author": "Jan Andrle <andrle.jan@centrum.cz>",
+	"license": "MIT",
+	"homepage": "https://github.com/jaandrle/dollar_dom_component",
+	"version": "2.0.0",
+	"build": "0001",
+	"__Comment__sequence": "exclamation mark (!) on the start of task name means to escape it",
+	"sequence": [
+		"javascript",
+		"doc",
+		"examples"
+	],
+	"fullName": "$dom.component",
+	"directories": {
+		"examples": "docs/examples/",
+		"docs": "docs/",
+		"dist": "bin/",
+		"src": "src/"
+	},
+	"main": "bin/$dom_component.js",
+	"types": "bin/$dom_component.d.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"jshint": "node ./node_modules/jshint/bin/jshint --verbose",
+		"jshint_full": "node ./node_modules/jshint/bin/jshint --verbose --show-non-errors"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jaandrle/dollar_dom_component.git"
+	},
+	"bugs": {
+		"url": "https://github.com/jaandrle/dollar_dom_component/issues"
+	},
+	"jshintConfig": {
+		"esversion": 6,
+		"browser": "true",
+		"undef": "true",
+		"latedef": "true",
+		"maxparams": 3,
+		"maxdepth": 2,
+		"maxcomplexity": 11
+	},
+	"devDependencies": {
+		"gulp": ">=4.0.2",
+		"gulp-concat": ">=2.6.1",
+		"gulp-minify": ">=3.1.0",
+		"gulp-place": ">=1.8.5",
+		"gulp-rename": ">=2.0.0",
+		"gulp-replace": ">=1.1.3",
+		"gulp-sourcemaps": ">=3.0.0",
+		"gulp-typedoc": ">=3.0.2",
+		"gulp-util": ">=3.0.8",
+		"jshint": ">=2.13.5",
+		"typedoc": ">=0.23.8",
+		"typedoc-plugin-markdown": ">=3.13.3"
+	}
 }

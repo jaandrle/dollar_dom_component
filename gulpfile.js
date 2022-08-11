@@ -1,7 +1,8 @@
 /* jshint esversion: 6, undef: true, node: true */
 /* \CONFIG\ */
 const config= (function(){
-        let $o_default= {spawn: require('child_process').spawn, fs: require("fs")};
+        const { spawn, exec }= require("child_process");
+        let $o_default= {spawn, exec, fs: require("fs")};
         const gulp= require('gulp'),
               $gulp_folder= "./gulp/",
               { fullName, name, version, build, directories, sequence, dependencies, devDependencies, homepage }= JSON.parse($o_default.fs.readFileSync('./package.json')),

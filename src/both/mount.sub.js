@@ -2,31 +2,8 @@
 /* global container, assign, $dom, destroy, on_mount_funs: true, observer: true */
 function mount(element, type= "childLast"){
 	if(observer) observer.disconnect();
-	let parent_node;
-	switch ( type ) {
-		case "replace":
-			parent_node= element.parentNode;
-			$dom.mount(element, "replace")(container);
-			break;
-		case "replaceContent":
-			$dom.empty(element);
-			element.appendChild(container);
-			parent_node= element;
-			break;
-		case "before":
-			parent_node= element.parentNode;
-			parent_node.insertBefore(container, element);
-			break;
-		case "after":
-			$dom.mount(element, "after")(container);
-			parent_node= element.parentNode;
-			break;
-		default:
-			if(type==="childFirst" && element.childNodes.length) element.insertBefore(container, element.childNodes[0]);
-			else element.appendChild(container);
-			parent_node= element;
-			break;
-	}
+	$dom.mount(element, type)(container);
+	const parent_node= type==="after"||type==="before" ? element.parentNode : element;
 	if(!(element instanceof DocumentFragment)){//TODO/WIP
 		const [ el_c, el_p ]= __observedEls(container, parent_node);
 		observer= new MutationObserver(mutations=> mutations.forEach(function(record){

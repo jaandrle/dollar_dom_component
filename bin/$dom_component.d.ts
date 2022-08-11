@@ -1,15 +1,15 @@
 /**
  * This NAMESPACE provides features for DOM elements.
  */
-interface $dom{
+declare namespace $dom{
 	/**
 	 * Procedure removes all children of `container`
 	 */
-	empty(container: HTMLElement): void;
+	function empty(container: HTMLElement): void;
 	/**
 	 * Procedure provide ways to insert elements into DOM in relation to `element_target`.
 	 */
-	mount(element_target: HTMLElement | SVGElement, type: "after"|"before"|"replace"|"replaceContent"|"childFirst"|"childLast"):
+	function mount(element_target: HTMLElement | SVGElement, type: "after"|"before"|"replace"|"replaceContent"|"childFirst"|"childLast"):
 		<T extends HTMLElement | SVGElement | $dom.componentOut<keyof $dom.T_DOM_HETNM>>(element: T) => T
 }
 
@@ -489,4 +489,3 @@ declare namespace $dom {
 	}
 }
 
-declare var $dom: { prototype: $dom };

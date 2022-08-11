@@ -340,56 +340,9 @@ Procedure removes all children of `container`
 
 `void`
 
-▸ **empty**(`container`): `void`
-
-Procedure removes all children of `container`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `container` | `HTMLElement` |
-
-#### Returns
-
-`void`
-
 ___
 
 ### mount
-
-▸ **mount**(`element_target`, `type`): <T\>(`element`: `T`) => `T`
-
-Procedure provide ways to insert elements into DOM in relation to `element_target`.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `element_target` | `HTMLElement` \| `SVGElement` |
-| `type` | ``"replace"`` \| ``"after"`` \| ``"before"`` \| ``"replaceContent"`` \| ``"childFirst"`` \| ``"childLast"`` |
-
-#### Returns
-
-`fn`
-
-▸ <`T`\>(`element`): `T`
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `HTMLElement` \| `SVGElement` \| [`componentOut`](dom.md#componentout)<keyof [`T_DOM_HETNM`](dom.md#t_dom_hetnm)\> |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `element` | `T` |
-
-##### Returns
-
-`T`
 
 ▸ **mount**(`element_target`, `type`): <T\>(`element`: `T`) => `T`
 

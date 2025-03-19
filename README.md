@@ -1,4 +1,4 @@
-See successor [jaandrle/deka-dom-el: A library expanding the capabilities of the native DOM API with the aim of offering the possibility of writing reactive UI templates/components declaratively directly in JavaScript.](https://github.com/jaandrle/deka-dom-el).
+**See successor [jaandrle/deka-dom-el: A library expanding the capabilities of the native DOM API with the aim of offering the possibility of writing reactive UI templates/components declaratively directly in JavaScript.](https://github.com/jaandrle/deka-dom-el)**
 
 $dom.component / [Exports](docs/md/modules/dom.md)
 
